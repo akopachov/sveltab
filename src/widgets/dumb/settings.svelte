@@ -1,9 +1,9 @@
 <script lang="ts">
   import ColorPicker from '$components/color-picker.svelte';
-  import type { DumbSettings } from './dumb-settings';
-  import { BackgroundTabId } from './dumb-settings-tabs';
+  import type { Settings } from './settings';
+  import { BackgroundTabId } from './settings-tabs';
 
-  export let settings: DumbSettings;
+  export let settings: Settings;
   export let tab: number;
 </script>
 

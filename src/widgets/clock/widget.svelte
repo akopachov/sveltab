@@ -1,15 +1,15 @@
 <script lang="ts">
   import DynamicSizeText from '$components/dynamic-size-text.svelte';
-  import { ClockFormat, type ClockSettings } from './clock-settings.js';
+  import { ClockFormat, type Settings } from './settings';
   import { format } from 'date-fns';
-  import { getClockStore } from './clock-store.js';
-  import { fontsource } from '$actions/fontsource.js';
+  import { getClockStore } from '$stores/clock-store';
+  import { fontsource } from '$actions/fontsource';
 
   let clockStore = getClockStore(1000);
   let timeDisplay: DynamicSizeText | null;
   let amPmDisplay: DynamicSizeText | null;
 
-  export let settings: ClockSettings;
+  export let settings: Settings;
 
   $: fontSettings = settings.font;
 

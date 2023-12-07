@@ -18,6 +18,7 @@ const config = {
       $models: 'src/models',
       $stores: 'src/stores',
       $widgets: 'src/widgets',
+      $backgrounds: 'src/backgrounds',
       $actions: 'src/actions',
     },
     paths: {

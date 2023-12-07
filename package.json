@@ -2,6 +2,10 @@
 	"name": "my-own-tab",
 	"version": "0.0.1",
 	"private": true,
+	"packageManager": "pnpm@8.11.0",
+	"engines": {
+		"pnpm": ">=8.0.0"
+	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && node removeInlineScript.cjs",
@@ -14,42 +18,56 @@
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.5.3",
-		"@skeletonlabs/skeleton": "^2.5.1",
-		"@skeletonlabs/tw-plugin": "^0.2.4",
+		"@skeletonlabs/skeleton": "^2.6.0",
+		"@skeletonlabs/tw-plugin": "^0.3.0",
 		"@svelte-put/resize": "^3.0.0",
 		"@sveltejs/adapter-static": "^2.0.3",
-		"@sveltejs/kit": "^1.27.4",
+		"@sveltejs/kit": "^1.27.7",
 		"@tailwindcss/container-queries": "^0.1.1",
 		"@tailwindcss/forms": "^0.5.7",
 		"@tailwindcss/typography": "^0.5.10",
 		"@types/webextension-polyfill": "^0.10.7",
 		"@typescript-eslint/eslint-plugin": "^6.13.2",
 		"@typescript-eslint/parser": "^6.13.2",
-		"autoprefixer": "^10.4.14",
+		"autoprefixer": "^10.4.16",
 		"browser-storage-polyfill": "^1.0.2",
 		"date-fns": "^2.30.0",
 		"eslint": "^8.55.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.30.0",
+		"eslint-plugin-svelte": "^2.35.1",
 		"postcss": "^8.4.32",
-		"prettier": "^3.0.0",
+		"prettier": "^3.1.0",
 		"prettier-plugin-svelte": "^3.1.2",
-		"prettier-plugin-tailwindcss": "^0.5.7",
-		"svelte": "^4.2.7",
+		"prettier-plugin-tailwindcss": "^0.5.9",
+		"randomcolor": "^0.6.2",
+		"svelte": "^4.2.8",
 		"svelte-awesome-color-picker": "3.0.0-beta.9",
-		"svelte-check": "^3.6.0",
+		"svelte-check": "^3.6.2",
 		"svelte-moveable": "^0.45.0",
 		"svelte-use-debounce": "^0.0.2",
 		"svelte-virtual-scroll-list": "^1.3.0",
 		"svelte-webext-storage-adapter": "^3.0.1",
 		"tailwindcss": "^3.3.6",
 		"tiny-glob": "^0.2.9",
-		"tslib": "^2.4.1",
-		"typescript": "^5.0.0",
+		"tslib": "^2.6.2",
+		"typescript": "^5.3.3",
 		"vite": "^4.4.2",
 		"vite-plugin-tailwind-purgecss": "^0.1.4",
 		"web-ext": "^7.9.0",
 		"webextension-polyfill": "^0.10.0"
+	},
+	"pnpm": {
+		"updateConfig": {
+			"ignoreDependencies": [
+				"vite"
+			]
+		},
+		"peerDependencyRules": {
+			"allowedVersions": {
+				"svelte-use-debounce>svelte": "^4.0.0",
+				"addons-scanner-utils>node-fetch": "^3.0.0"
+			}
+		}
 	},
 	"type": "module"
 }

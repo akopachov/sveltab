@@ -5,8 +5,8 @@ export enum ClockFormat {
   TwentyFourHrs
 }
 
-export class ClockSettings extends WidgetSettingsExtra {
-  constructor(initial: WidgetSettingsExtraInitial<ClockSettings>) {
+export class Settings extends WidgetSettingsExtra {
+  constructor(initial: WidgetSettingsExtraInitial<Settings>) {
     super();
     this.backgroundColor = initial.backgroundColor || '#fff';
     this.textColor = initial.textColor || '#000';

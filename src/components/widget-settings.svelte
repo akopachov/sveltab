@@ -4,7 +4,7 @@
 
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import { RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import { ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
 
   export let widget: WidgetInstance;
   let widgetSettingsComponent: any;
@@ -23,7 +23,9 @@
   {/await}
   <svelte:fragment slot="panel">
     <div class="overflow-scroll max-h-[calc(100cqh-92px)]">
-      {#await widget.components.settings.component.getValue() then component}
+      {#await widget.components.settings.component.getValue()}
+        <ProgressRadial />
+      {:then component}
         <svelte:component
           this={component}
           bind:this={widgetSettingsComponent}

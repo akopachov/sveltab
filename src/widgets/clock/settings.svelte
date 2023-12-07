@@ -2,11 +2,11 @@
   import ColorPicker from '$components/color-picker.svelte';
   import { GeneralTabId } from '$components/widget-settings.svelte';
   import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
-  import { ClockFormat, type ClockSettings } from './clock-settings';
-  import { ColorTabId, FontTabId } from './clock-settings-tabs';
+  import { ClockFormat, type Settings } from './settings';
+  import { ColorTabId, FontTabId } from './settings-tabs';
   import FontSelector from '$components/font-selector.svelte';
 
-  export let settings: ClockSettings;
+  export let settings: Settings;
   export let tab: number;
 
   $: fontSettings = settings.font;

@@ -5,11 +5,11 @@ export const Widget: WidgetCatalogItem = {
   name: 'Dumb widget',
   previewImageUri: '/widgets/dumb/preview.png',
   components: {
-    widget: new Lazy(() => import('./dumb.svelte').then(r => r.default)),
+    widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),
     settings: {
-      component: new Lazy(() => import('./dumb-settings.svelte').then(r => r.default)),
-      tabs: new Lazy(() => import('./dumb-settings-tabs').then(r => r.Tabs)),
-      model: new Lazy(() => import('./dumb-settings').then(r => r.DumbSettings))
+      component: new Lazy(() => import('./settings.svelte').then(r => r.default)),
+      tabs: new Lazy(() => import('./settings-tabs').then(r => r.Tabs)),
+      model: new Lazy(() => import('./settings').then(r => r.Settings))
     }
   },
   settings: {

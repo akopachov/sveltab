@@ -1,7 +1,7 @@
 import { WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$models/widget-settings';
 
-export class DumbSettings extends WidgetSettingsExtra {
-  constructor(initial: WidgetSettingsExtraInitial<DumbSettings>) {
+export class Settings extends WidgetSettingsExtra {
+  constructor(initial: WidgetSettingsExtraInitial<Settings>) {
     super();
     this.color = initial.color || '#000';
   }

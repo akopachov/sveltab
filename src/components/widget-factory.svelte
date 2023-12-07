@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
+  import { getModalStore, popup, ProgressRadial, type PopupSettings } from '@skeletonlabs/skeleton';
   import { createEventDispatcher, onMount } from 'svelte';
 
   export let widget: WidgetInstance;
@@ -81,7 +81,9 @@
     </button>
   {/if}
   <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
-    {#await widget.components.widget.getValue() then component}
+    {#await widget.components.widget.getValue()}
+      <ProgressRadial />
+    {:then component}
       <svelte:component this={component} settings={widgetSettings.extra} />
     {/await}
   </div>

@@ -1,10 +1,11 @@
 <script lang="ts">
   import ColorPicker from 'svelte-awesome-color-picker';
   export let color: string;
+  export let inline: boolean = false;
 </script>
 
 <div class="color-picker">
-  <ColorPicker bind:hex={color} label="" />
+  <ColorPicker bind:hex={color} label="" isDialog={!inline} />
 </div>
 
 <style>
