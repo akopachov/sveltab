@@ -5,10 +5,12 @@
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
+  import ColorPicker from './color-picker.svelte';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
 
   export let font: string | null | undefined;
+  export let color: string | null | undefined = null;
   export let weight: number | null | undefined;
 
   let selectedFontInfo: FontInfo;
@@ -101,23 +103,34 @@
   });
 </script>
 
-<div class="input-group input-group-divider grid-cols-[1fr_auto]">
-  <input
-    class="input"
-    type="search"
-    name="demo"
-    bind:value={$searchValue}
-    placeholder="Search..."
-    use:popup={popupSettings}
-    use:debounce={debounceOpts} />
-  {#if selectedFontInfo}
-    <select bind:value={weight}>
-      {#each selectedFontInfo.weights as w}
-        <option value={w}>{fontWeightsMap.get(w)}</option>
-      {/each}
-    </select>
-  {/if}
+<div class="contents">
+  <div
+    class="input-group input-group-divider"
+    class:grid-cols-[auto_1fr_auto]={!!color}
+    class:grid-cols-[1fr_auto]={!color}>
+    {#if color}
+      <div class="input-group-shim !p-[0_20px]"></div>
+    {/if}
+    <input
+      type="search"
+      bind:value={$searchValue}
+      placeholder="Search..."
+      use:popup={popupSettings}
+      use:debounce={debounceOpts} />
+    {#if selectedFontInfo}
+      <select bind:value={weight}>
+        {#each selectedFontInfo.weights as w}
+          <option value={w}>{fontWeightsMap.get(w)}</option>
+        {/each}
+      </select>
+    {/if}
+  </div>
 </div>
+{#if color}
+  <div class="absolute w-6 h-6 !mt-[-32px] !ml-[9px]">
+    <ColorPicker bind:color class="!p-0 font-color-picker bg-transparent" />
+  </div>
+{/if}
 <div
   class="card w-fit max-w-[100cqw] max-h-[calc(100cqh-16px)] h-fit overflow-y-auto flex"
   tabindex="-1"

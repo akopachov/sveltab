@@ -1,16 +1,52 @@
 <script lang="ts">
+  import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import ColorPicker from 'svelte-awesome-color-picker';
+
   export let color: string;
   export let inline: boolean = false;
+
+  let popupVisible: boolean = false;
+
+  let popupSettings: PopupSettings = {
+    event: 'click',
+    target: `popupColorPicker_${Math.floor(Math.random() * 10000)}`,
+    closeQuery: '',
+    placement: 'bottom',
+    middleware: {
+      flip: {
+        fallbackAxisSideDirection: 'start',
+      },
+    },
+    state: v => (popupVisible = v.state),
+  };
 </script>
 
-<div class="color-picker">
-  <ColorPicker bind:hex={color} label="" isDialog={!inline} />
-</div>
+{#if inline}
+  <ColorPicker bind:hex={color} label="" isDialog={false} />
+{:else}
+  <button
+    class="btn rounded-full !p-0 w-6 h-6 {$$restProps.class || ''}"
+    tabindex="-1"
+    use:popup={popupSettings}
+    style:background-color={color}>
+  </button>
+  <div
+    class="w-fit h-fit overflow-y-auto flex z-[99999]"
+    tabindex="-1"
+    style:visibility={popupVisible ? 'visible' : 'hidden'}
+    data-popup={popupSettings.target}>
+    {#if popupVisible}
+      <ColorPicker bind:hex={color} label="" isDialog={false} />
+    {/if}
+  </div>
+{/if}
 
 <style>
-  .color-picker {
+  :global(.color-picker) {
     --picker-width: min(max(10cqmin, 150px), 250px);
     --picker-height: min(max(10cqmin, 150px), 250px);
+  }
+  :global(.color-picker .wrapper) {
+    margin: 0;
   }
 </style>

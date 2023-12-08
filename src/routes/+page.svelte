@@ -29,9 +29,24 @@
 
   onMount(async () => {
     $widgets = new Set([
-      await WidgetInstance.create({ type: 'dumb', x: 10, y: 10, extra: { color: '#234' }, keepRatio: false }),
-      await WidgetInstance.create({ type: 'dumb', x: 40, y: 40, extra: { color: '#808080' }, keepRatio: false }),
-      await WidgetInstance.create({ type: 'dumb', x: 70, y: 70, extra: { color: '#fff' }, keepRatio: false }),
+      await WidgetInstance.create({
+        type: 'dumb',
+        position: { x: 10, y: 10, offsetX: 50, offsetY: 50 },
+        extra: { color: '#234' },
+        keepRatio: false,
+      }),
+      await WidgetInstance.create({
+        type: 'dumb',
+        position: { x: 40, y: 40 },
+        extra: { color: '#808080' },
+        keepRatio: false,
+      }),
+      await WidgetInstance.create({
+        type: 'dumb',
+        position: { x: 70, y: 70 },
+        extra: { color: '#fff' },
+        keepRatio: false,
+      }),
     ]);
     $background = await BackgroundInstance.create({ type: 'static-color' });
   });
@@ -79,11 +94,17 @@
       $selectedWidget = widget;
 
       const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+      const widgetPos = widget.settings.position;
 
-      selectedWidgetEl.style.left = `${(widget.settings.x / 100) * cqminBase}px`;
-      selectedWidgetEl.style.top = `${(widget.settings.y / 100) * cqminBase}px`;
-      selectedWidgetEl.style.width = `${(widget.settings.width / 100) * cqminBase}px`;
-      selectedWidgetEl.style.height = `${(widget.settings.height / 100) * cqminBase}px`;
+      selectedWidgetEl.style.left = `${
+        (widgetPos.x / 100) * cqminBase + (widgetPos.offsetX / 100) * workspace.clientWidth
+      }px`;
+      selectedWidgetEl.style.top = `${
+        (widgetPos.y / 100) * cqminBase + (widgetPos.offsetY / 100) * workspace.clientHeight
+      }px`;
+      selectedWidgetEl.style.width = `${(widgetPos.width / 100) * cqminBase}px`;
+      selectedWidgetEl.style.height = `${(widgetPos.height / 100) * cqminBase}px`;
+      selectedWidgetEl.classList.add('selected');
 
       setTimeout(() => {
         moveable.dragStart(e);
@@ -94,34 +115,33 @@
   function unselectWidget() {
     if (selectedWidgetEl && selectedWidgetSettings) {
       const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+      const widgetPos = selectedWidgetSettings.position;
 
-      if (selectedWidgetEl.style.left.endsWith('px')) {
-        selectedWidgetSettings.x = (parseFloat(selectedWidgetEl.style.left) / cqminBase) * 100;
-        selectedWidgetEl.style.left = `${selectedWidgetSettings.x}cqmin`;
-      } else {
-        selectedWidgetSettings.x = parseFloat(selectedWidgetEl.style.left);
+      if (selectedWidgetEl.style.left) {
+        const absOffsetX = (workspace.clientWidth * widgetPos.offsetX) / cqminBase;
+        widgetPos.x = (parseFloat(selectedWidgetEl.style.left) / cqminBase) * 100 - absOffsetX;
+        selectedWidgetEl.style.left = '';
       }
 
-      if (selectedWidgetEl.style.top.endsWith('px')) {
-        selectedWidgetSettings.y = (parseFloat(selectedWidgetEl.style.top) / cqminBase) * 100;
-        selectedWidgetEl.style.top = `${selectedWidgetSettings.y}cqmin`;
-      } else {
-        selectedWidgetSettings.y = parseFloat(selectedWidgetEl.style.top);
+      if (selectedWidgetEl.style.top) {
+        const absOffsetY = (workspace.clientHeight * widgetPos.offsetY) / cqminBase;
+        widgetPos.y = (parseFloat(selectedWidgetEl.style.top) / cqminBase) * 100 - absOffsetY;
+        selectedWidgetEl.style.top = '';
       }
 
-      if (selectedWidgetEl.style.width.endsWith('px')) {
-        selectedWidgetSettings.width = (parseFloat(selectedWidgetEl.style.width) / cqminBase) * 100;
-        selectedWidgetEl.style.width = `${selectedWidgetSettings.width}cqmin`;
-      } else {
-        selectedWidgetSettings.width = parseFloat(selectedWidgetEl.style.width);
+      if (selectedWidgetEl.style.width) {
+        widgetPos.width = (parseFloat(selectedWidgetEl.style.width) / cqminBase) * 100;
+        selectedWidgetEl.style.width = '';
       }
 
-      if (selectedWidgetEl.style.height.endsWith('px')) {
-        selectedWidgetSettings.height = (parseFloat(selectedWidgetEl.style.height) / cqminBase) * 100;
-        selectedWidgetEl.style.height = `${selectedWidgetSettings.height}cqmin`;
-      } else {
-        selectedWidgetSettings.height = parseFloat(selectedWidgetEl.style.height);
+      if (selectedWidgetEl.style.height) {
+        widgetPos.height = (parseFloat(selectedWidgetEl.style.height) / cqminBase) * 100;
+        selectedWidgetEl.style.height = '';
       }
+
+      selectedWidgetEl.classList.remove('selected');
+
+      widgetPos.notifyPropertiesChanged();
     }
     selectedWidgetEl = null;
     $selectedWidget = null;
@@ -132,8 +152,10 @@
     $widgets.add(
       await WidgetInstance.create({
         ...widgetSettings,
-        x: (workspace.clientWidth / cqminBase) * 50,
-        y: (workspace.clientHeight / cqminBase) * 50,
+        position: {
+          x: (workspace.clientWidth / cqminBase) * 50,
+          y: (workspace.clientHeight / cqminBase) * 50,
+        },
       }),
     );
     $widgets = $widgets;
@@ -147,8 +169,8 @@
       const img = new Image();
       img.src = widgetCatalogItem.previewImageUri;
       const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
-      const baseWidth = (widgetCatalogItem.settings.width! / 100) * cqminBase;
-      const baseHeight = (widgetCatalogItem.settings.height! / 100) * cqminBase;
+      const baseWidth = (widgetCatalogItem.settings.position.width! / 100) * cqminBase;
+      const baseHeight = (widgetCatalogItem.settings.position.height! / 100) * cqminBase;
       dragnDropPreviewCanvas.width = baseWidth;
       dragnDropPreviewCanvas.height = baseHeight;
       dragnDropPreviewCanvas
@@ -161,13 +183,16 @@
   async function onWidgetCatalogItemDragDrop(e: DragEvent) {
     if (e.dataTransfer) {
       e.preventDefault();
-      const widgetSettings = JSON.parse(e.dataTransfer.getData('text/json'));
+      const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(e.dataTransfer.getData('text/json'));
       const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
       $widgets.add(
         await WidgetInstance.create({
           ...widgetSettings,
-          x: (e.x / cqminBase) * 100,
-          y: (e.y / cqminBase) * 100,
+          position: {
+            ...widgetSettings.position,
+            x: (e.x / cqminBase) * 100,
+            y: (e.y / cqminBase) * 100,
+          },
         }),
       );
       $widgets = $widgets;
@@ -275,7 +300,7 @@
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
-    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh]"
+    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
     on:mousedown={unselectWidget}
@@ -300,7 +325,8 @@
         {widgetSettingsPopupSettings}
         on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
-        isSelected={!workspaceLocked && widget === $selectedWidget} />
+        isSelected={!workspaceLocked && widget === $selectedWidget}
+        class="widget-container" />
     {/each}
     {#if !workspaceLocked}
       <Moveable
@@ -319,6 +345,11 @@
         warpable={false}
         pinchable={false}
         keepRatio={selectedWidgetSettings?.keepRatio}
+        snappable={true}
+        snapGap={true}
+        snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
+        elementSnapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
+        elementGuidelines={['.widget-container:not(.selected)', '.workspace']}
         on:drag={({ detail: e }) => {
           e.target.style.left = `${e.left}px`;
           e.target.style.top = `${e.top}px`;
@@ -344,7 +375,7 @@
     data-popup={widgetSettingsPopupSettings.target}
     style:visibility={!workspaceLocked && $selectedWidget ? 'visible' : 'hidden'}>
     {#if widgetSettingsVisible && $selectedWidget}
-      <WidgetSettingsComponent widget={$selectedWidget} />
+      <WidgetSettingsComponent widget={$selectedWidget} {workspace} />
     {/if}
   </div>
 </AppShell>

@@ -14,7 +14,9 @@ export const Widget: WidgetCatalogItem = {
   },
   settings: {
     type: 'clock',
-    height: 20,
-    width: 30
+    position: {
+      height: 20,
+      width: 30
+    }
   }
 }

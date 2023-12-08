@@ -14,7 +14,9 @@ export const Widget: WidgetCatalogItem = {
   },
   settings: {
     type: 'dumb',
-    height: 10,
-    width: 10
+    position: {
+      height: 10,
+      width: 10
+    }
   }
 }

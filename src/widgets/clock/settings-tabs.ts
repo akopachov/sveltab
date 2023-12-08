@@ -1,12 +1,12 @@
-export const ColorTabId = 1;
-export const FontTabId = 2;
+export const TextTabId = 1;
+export const BackgroundTabId = 2;
 export const Tabs = [
   {
-    id: ColorTabId,
-    title: 'Color',
+    id: TextTabId,
+    title: 'Text',
   },
   {
-    id: FontTabId,
-    title: 'Font',
+    id: BackgroundTabId,
+    title: 'Background',
   },
 ];

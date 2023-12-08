@@ -27,6 +27,7 @@
   style:background-color={$settings.backgroundColor}
   style:color={$settings.textColor}
   style:font-weight={$fontSettings.weight}
+  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
   use:fontsource={{
     font: $fontSettings.id,
     subsets: ['latin'],

@@ -86,6 +86,9 @@ devDependencies:
   svelte-moveable:
     specifier: ^0.45.0
     version: 0.45.0(svelte@4.2.8)
+  svelte-portal:
+    specifier: ^2.2.0
+    version: 2.2.0
   svelte-use-debounce:
     specifier: ^0.0.2
     version: 0.0.2(svelte@4.2.8)
@@ -4497,6 +4500,10 @@ packages:
       framework-utils: 1.1.0
       moveable: 0.53.0
       svelte: 4.2.8
+    dev: true
+
+  /svelte-portal@2.2.0:
+    resolution: {integrity: sha512-jhtZWtD6cUE2nMw46dJ5VXWYiqnER+JH+V/BmNBQ5fNP/YdsJCpJi+DemUy9msklqGb0f+wLhJPBtKHLWQvzjg==}
     dev: true
 
   /svelte-preprocess@5.1.1(postcss@8.4.32)(svelte@4.2.8)(typescript@5.3.3):

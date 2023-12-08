@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
   import { getModalStore, popup, ProgressRadial, type PopupSettings } from '@skeletonlabs/skeleton';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { createEventDispatcher } from 'svelte';
 
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;
@@ -12,16 +12,7 @@
   let fakeEditButton: HTMLElement;
 
   $: widgetSettings = widget.settings;
-
-  let widgetEl: HTMLElement;
-
-  onMount(() => {
-    widgetEl.style.width = `${widget.settings.width}cqmin`;
-    widgetEl.style.height = `${widget.settings.height}cqmin`;
-    widgetEl.style.top = `${widget.settings.y}cqmin`;
-    widgetEl.style.left = `${widget.settings.x}cqmin`;
-    widgetEl.style.transform = `rotate(${widget.settings.rotation}deg)`;
-  });
+  $: widgetPosition = widget.settings.position;
 
   function onDeleteWidgetClick() {
     modalStore.trigger({
@@ -38,7 +29,17 @@
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
-<div class="absolute [container-type:size]" bind:this={widgetEl} on:mousedown style:z-index={$widgetSettings.zIndex}>
+<div
+  class="absolute [container-type:size] relative-position {$$restProps.class || ''}"
+  on:mousedown
+  style:z-index={$widgetSettings.zIndex}
+  style:--relative-width="{$widgetPosition.width}cqmin"
+  style:--relative-height="{$widgetPosition.height}cqmin"
+  style:--relative-y="{$widgetPosition.y}cqmin"
+  style:--relative-x="{$widgetPosition.x}cqmin"
+  style:--relative-offset-y="{$widgetPosition.offsetY}cqh"
+  style:--relative-offset-x="{$widgetPosition.offsetX}cqw"
+  style:transform="rotate({widget.settings.rotation}deg)">
   <button
     class="absolute transparent top-0 left-0 w-full h-full invisible"
     bind:this={fakeEditButton}
@@ -47,7 +48,7 @@
   </button>
   {#if isSelected}
     <button
-      class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
+      class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
       on:click={() => fakeEditButton.click()}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -64,7 +65,7 @@
       </svg>
     </button>
     <button
-      class="absolute btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
+      class="absolute btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
       on:click={onDeleteWidgetClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -88,3 +89,12 @@
     {/await}
   </div>
 </div>
+
+<style>
+  .relative-position {
+    left: calc(var(--relative-offset-x) + var(--relative-x));
+    top: calc(var(--relative-offset-y) + var(--relative-y));
+    width: var(--relative-width);
+    height: var(--relative-height);
+  }
+</style>

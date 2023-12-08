@@ -1,10 +1,10 @@
-import type { WidgetSettingsExtra, WidgetSettingsExtraInitial, WidgetSettingsInitial } from "$models/widget-settings";
+import type { WidgetPositionInitial, WidgetSettingsExtra, WidgetSettingsExtraInitial, WidgetSettingsInitial } from "$models/widget-settings";
 import type { ComponentType, SvelteComponent  } from "svelte";
 import { Widget as DumbWidget } from "$widgets/dumb";
 import { Widget as ClockWidget } from "$widgets/clock";
 import type { Lazy } from "$lib/lazy";
 
-export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'x' | 'y'>;
+export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & { position: Omit<WidgetPositionInitial, 'x' | 'y'> };
 
 export interface WidgetCatalogItem {
   readonly name: string;

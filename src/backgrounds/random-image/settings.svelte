@@ -10,6 +10,6 @@
 </script>
 
 <label class="label">
-  <span>URL</span>
-  <input type="url" class="input" bind:value={settings.url} />
+  <span>Search terms</span>
+  <input type="search" class="input" bind:value={settings.searchTerms} />
 </label>

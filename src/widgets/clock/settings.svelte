@@ -1,9 +1,9 @@
 <script lang="ts">
   import ColorPicker from '$components/color-picker.svelte';
   import { GeneralTabId } from '$components/widget-settings.svelte';
-  import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+  import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
   import { ClockFormat, type Settings } from './settings';
-  import { ColorTabId, FontTabId } from './settings-tabs';
+  import { TextTabId, BackgroundTabId } from './settings-tabs';
   import FontSelector from '$components/font-selector.svelte';
 
   export let settings: Settings;
@@ -23,23 +23,23 @@
       </RadioItem>
     </RadioGroup>
   </label>
-{:else if tab === ColorTabId}
+{:else if tab === TextTabId}
   <div>
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label class="label mb-2">
-      <span>Text</span>
-      <ColorPicker bind:color={$settings.textColor} />
-    </label>
-    <!-- svelte-ignore a11y-label-has-associated-control -->
-    <label class="label">
-      <span>Background</span>
-      <ColorPicker bind:color={$settings.backgroundColor} />
-    </label>
+    <div class="label">
+      <span>Font</span>
+      <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+    </div>
   </div>
-{:else if tab === FontTabId}
+{:else if tab === BackgroundTabId}
+  <div class="label">
+    <span>Color</span>
+    <div>
+      <ColorPicker bind:color={$settings.backgroundColor} />
+    </div>
+  </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label class="label">
-    <span>Text font</span>
-    <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} />
+  <label class="label mb-2">
+    <span>Blur</span>
+    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}
