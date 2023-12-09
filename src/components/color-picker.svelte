@@ -9,7 +9,7 @@
 
   let popupSettings: PopupSettings = {
     event: 'click',
-    target: `popupColorPicker_${Math.floor(Math.random() * 10000)}`,
+    target: `popupColorPicker_${Math.floor(Math.random() * Date.now())}`,
     closeQuery: '',
     placement: 'bottom',
     middleware: {

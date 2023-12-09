@@ -1,4 +1,5 @@
-import { BackgroundProvider } from "$stores/background-catalog";
+import { ImageBackgroundProviderBase } from "$backgrounds/common-image/provider-base";
+import type { Storage } from 'webextension-polyfill';
 import { getStorage } from "$stores/storage";
 import type { Settings } from "./settings";
 
@@ -7,11 +8,13 @@ const LocalSettingsKey = 'RandomImageBackgroundProvider_LocalSettings';
 interface LocalSettings {
   lastChangedTime: number;
   lastUrl: string;
+  lastSearchTerm: string;
 }
 
-export class RandomImageBackgroundProvider extends BackgroundProvider {
-  #interval: unknown;
+export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
+  #interval: any;
   #lastSettings: Settings | undefined;
+  #localSettings: LocalSettings | undefined;
   constructor(node: HTMLElement) {
     super(node);
     this.#interval = setInterval(() => { 
@@ -23,25 +26,28 @@ export class RandomImageBackgroundProvider extends BackgroundProvider {
 
   async update(settings: Settings) {
     this.#lastSettings = settings;
-    const storage = await getStorage();
-    const localSettings: LocalSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || { lastChangedTime: 0, lastUrl: '' };
-    const timeSinceLastChange = (new Date().valueOf() - localSettings.lastChangedTime) / 1000;
-    if (timeSinceLastChange >= settings.updateInterval) {
-      const response = await fetch(`https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${settings.searchTerms}`, { method: 'head' })
-      localSettings.lastUrl = response.url;
-      localSettings.lastChangedTime = new Date().valueOf();
-      storage.local.set({ [LocalSettingsKey]: localSettings });
+    if (!this.#localSettings) {
+      const storage = await getStorage();
+      this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || { lastChangedTime: 0, lastUrl: '' };
     }
-    this.node.style.backgroundImage = `url("${localSettings.lastUrl}")`;
-    this.node.style.backgroundSize = 'cover';
-    this.node.style.backgroundPosition = 'center';
-    this.node.style.transition = 'background-image 0.3s ease-in-out';
+    const timeSinceLastChange = (new Date().valueOf() - this.#localSettings!.lastChangedTime) / 1000;
+    if (timeSinceLastChange >= settings.updateInterval || this.#localSettings!.lastSearchTerm !== settings.searchTerms) {
+      try {
+        const response = await fetch(`https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${settings.searchTerms}`, { method: 'head' })
+        this.#localSettings!.lastUrl = response.url;
+        this.#localSettings!.lastChangedTime = new Date().valueOf();
+        this.#localSettings!.lastSearchTerm = settings.searchTerms;
+        const storage = await getStorage();
+        await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+      } catch (e) {
+        console.warn(this, '->', e);
+      }
+    }
+    this.setImage({url: this.#localSettings!.lastUrl, blur: settings.blur});
   }
+
   destroy() {
+    super.destroy();
     clearInterval(this.#interval);
-    this.node.style.backgroundImage = '';
-    this.node.style.backgroundSize = '';
-    this.node.style.backgroundPosition = '';
-    this.node.style.transition = '';
   }
 }

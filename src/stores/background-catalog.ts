@@ -5,6 +5,7 @@ import { Background as StaticColorBackground } from "../backgrounds/static-color
 import { Background as RandomColorBackground } from "../backgrounds/random-color";
 import { Background as StaticImageBackground } from "../backgrounds/static-image";
 import { Background as RandomImageBackground } from "../backgrounds/random-image";
+import { Background as BingDailyImageBackground } from "../backgrounds/bing-daily-image";
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
@@ -38,5 +39,6 @@ export const BackgroundCatalog: Readonly<BackgroundCatalogItem[]> = [
   StaticColorBackground,
   RandomColorBackground,
   StaticImageBackground,
-  RandomImageBackground
+  RandomImageBackground,
+  BingDailyImageBackground
 ];

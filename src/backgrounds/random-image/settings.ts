@@ -5,8 +5,10 @@ export class Settings extends BackgroundSettingsExtra {
     super();
     this.searchTerms = initial.searchTerms || '';
     this.updateInterval = initial.updateInterval || 60;
+    this.blur = initial.blur || 0;
   }
 
   searchTerms: string;
   updateInterval: number;
+  blur: number;
 }

@@ -153,6 +153,7 @@
       await WidgetInstance.create({
         ...widgetSettings,
         position: {
+          ...widgetSettings.position,
           x: (workspace.clientWidth / cqminBase) * 50,
           y: (workspace.clientHeight / cqminBase) * 50,
         },
@@ -297,18 +298,20 @@
   </div>
 </Drawer>
 <AppShell>
+  <div class="w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] absolute -z-10">
+    <div class="w-full h-full" use:dynamicBackground={$background}></div>
+  </div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
-    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
+    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace bg-transparent"
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
     on:mousedown={unselectWidget}
     bind:this={workspace}
     use:resize
-    on:resized={unselectWidget}
-    use:dynamicBackground={$background}>
-    <button type="button" class="btn-icon bg-initial invert mix-blend-difference" on:click={openWidgetsMenu}>
+    on:resized={unselectWidget}>
+    <button type="button" class="btn-icon bg-transparent text-white hover:bg-surface-500" on:click={openWidgetsMenu}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

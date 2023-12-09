@@ -3,10 +3,10 @@ import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from "$m
 export class Settings extends BackgroundSettingsExtra {
   constructor(initial: BackgroundSettingsExtraInitial<Settings>) {
     super();
-    this.url = initial.url || '';
+    this.locale = initial.url || 'us';
     this.blur = initial.blur || 0;
   }
 
-  url: string;
+  locale: string;
   blur: number;
 }
