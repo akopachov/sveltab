@@ -2,6 +2,7 @@
   import type { WidgetInstance } from '$models/widget-instance';
   import { getModalStore, popup, ProgressRadial, type PopupSettings } from '@skeletonlabs/skeleton';
   import { createEventDispatcher } from 'svelte';
+  import * as m from '$i18n/messages';
 
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;
@@ -49,6 +50,7 @@
   {#if isSelected}
     <button
       class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
+      title={m.Widgets_Common_Menu_OpenSettings()}
       on:click={() => fakeEditButton.click()}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -66,6 +68,7 @@
     </button>
     <button
       class="absolute btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
+      title={m.Widgets_Common_Menu_Delete()}
       on:click={onDeleteWidgetClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"

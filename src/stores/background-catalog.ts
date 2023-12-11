@@ -26,7 +26,7 @@ export abstract class BackgroundProvider extends EventTarget {
 }
 
 export interface BackgroundCatalogItem {
-  readonly name: string;
+  readonly name: () => string;
   readonly settings: CatalogBackgroundSettingsInitial;
   readonly components: BackgroundCatalogItemComponents;
 }

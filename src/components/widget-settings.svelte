@@ -6,6 +6,7 @@
   import type { WidgetInstance } from '$models/widget-instance';
   import { ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
+  import * as m from '$i18n/messages';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -32,10 +33,10 @@
 </script>
 
 <TabGroup>
-  <Tab bind:group={currentTabId} name="tabCommon" value={0}>General</Tab>
+  <Tab bind:group={currentTabId} name="tabCommon" value={0}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
   {#await tabs.getValue() then resolvedTabs}
     {#each resolvedTabs as tab (tab.id)}
-      <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title}</Tab>
+      <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title()}</Tab>
     {/each}
   {/await}
   <svelte:fragment slot="panel">
@@ -52,7 +53,7 @@
       {#if currentTabId === GeneralTabId}
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <div class="label mb-2">
-          <span>Anchor</span>
+          <span>{m.Widgets_Common_Settings_Anchor()}</span>
           <div class="grid gap-1 grid-cols-3 grid-rows-3 w-fit h-fit">
             <button
               class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
@@ -186,14 +187,14 @@
         </div>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
-          <span>Border radius</span>
+          <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
           <RangeSlider name="range-slider" bind:value={$widgetSettings.borderRadius} min={0} max={50} step={0.5}
           ></RangeSlider>
         </label>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">
-          <span>Z-Index</span>
-          <NumberInput placeholder="Z-Index" bind:value={$widgetSettings.zIndex} />
+          <span>{m.Widgets_Common_Settings_ZIndex()}</span>
+          <NumberInput placeholder={m.Widgets_Common_Settings_ZIndex()} bind:value={$widgetSettings.zIndex} />
         </label>
       {/if}
     </div>

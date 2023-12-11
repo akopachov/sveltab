@@ -4,6 +4,7 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { forceUpdateBackground } from '$actions/dynamic-background';
   import NumberInput from '$components/number-input.svelte';
+  import * as m from '$i18n/messages';
 
   export let settings: Settings;
   let searchTerms = settings.searchTerms;
@@ -18,20 +19,26 @@
 </script>
 
 <label class="label mb-2">
-  <span>Search terms</span>
-  <input type="search" class="input" bind:value={searchTerms} placeholder="Fruits, animals, buildings, ..." />
+  <span>{m.Backgrounds_RandomImage_Settings_SearchTerms()}</span>
+  <input
+    type="search"
+    class="input"
+    bind:value={searchTerms}
+    placeholder={m.Backgrounds_RandomImage_Settings_SearchTerms_Placeholder()} />
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
-  <span>Update interval (minutes)</span>
+  <span>{m.Backgrounds_RandomImage_Settings_UpdateInterval()}</span>
   <div>
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
-  <span>Blur</span>
+  <span>{m.Backgrounds_RandomImage_Settings_Blur()}</span>
   <RangeSlider name="range-slider" bind:value={$settings.blur} min={0} max={15} step={0.1}></RangeSlider>
 </label>
 
-<button class="btn variant-soft" on:click={forceUpdateBackground}>Refresh</button>
+<button class="btn variant-soft" on:click={forceUpdateBackground}>
+  {m.Backgrounds_RandomImage_Settings_Refresh()}
+</button>

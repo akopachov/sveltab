@@ -13,10 +13,7 @@
   on:dragend
   {...otherProps}>
   <header class="overflow-hidden">
-    <img
-      class="w-full max-h-fit"
-      src={widgetCatalogItem.previewImageUri}
-      alt="{widgetCatalogItem.name} widget preview" />
+    <img class="w-full max-h-fit" src={widgetCatalogItem.previewImageUri} alt={widgetCatalogItem.name()} />
   </header>
-  <h4 class="text-center">{widgetCatalogItem.name}</h4>
+  <h4 class="text-center">{widgetCatalogItem.name()}</h4>
 </button>
