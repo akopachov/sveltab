@@ -8,18 +8,15 @@
 <label class="label mb-2">
   <span>Country</span>
   <select class="select" bind:value={$settings.locale}>
-    <option value="au">Australia</option>
-    <option value="br">Brazil</option>
-    <option value="ca">Canada</option>
-    <option value="cn">China</option>
-    <option value="de">Germany</option>
-    <option value="fr">France</option>
-    <option value="in">India</option>
-    <option value="it">Italy</option>
-    <option value="jp">Japan</option>
-    <option value="es">Spain</option>
-    <option value="gb">United Kingdom</option>
-    <option value="us">United States</option>
+    <option value="random">Any</option>
+    <option value="en-AU">Australia</option>
+    <option value="en-CA">Canada</option>
+    <option value="zh-CN">China</option>
+    <option value="de-DE">Germany</option>
+    <option value="ja-JP">Japan</option>
+    <option value="en-NZ">New Zealand</option>
+    <option value="en-GB">United Kingdom</option>
+    <option value="en-US">United States</option>
   </select>
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->

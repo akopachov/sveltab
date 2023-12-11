@@ -280,7 +280,7 @@
           <hr />
           {#if $background}
             {#await $background.components.settings.component.getValue()}
-              <ProgressRadial />
+              <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
             {:then component}
               <svelte:component this={component} settings={$background.settings.extra} />
             {/await}
@@ -298,20 +298,21 @@
   </div>
 </Drawer>
 <AppShell>
-  <div class="w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] absolute -z-10">
-    <div class="w-full h-full" use:dynamicBackground={$background}></div>
-  </div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
-    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace bg-transparent"
+    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
     on:mousedown={unselectWidget}
     bind:this={workspace}
     use:resize
     on:resized={unselectWidget}>
-    <button type="button" class="btn-icon bg-transparent text-white hover:bg-surface-500" on:click={openWidgetsMenu}>
+    <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
+    <button
+      type="button"
+      class="btn-icon bg-transparent text-white hover:bg-surface-500 fixed top-0 left-0"
+      on:click={openWidgetsMenu}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         fill="none"

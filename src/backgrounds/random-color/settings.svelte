@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { forceUpdateBackground } from '$actions/dynamic-background';
   import type { Settings } from './settings';
 
   export let settings: Settings;
@@ -27,3 +28,5 @@
     <option value="pink">Pink</option>
   </select>
 </label>
+
+<button class="btn variant-soft" on:click={forceUpdateBackground}>Refresh</button>

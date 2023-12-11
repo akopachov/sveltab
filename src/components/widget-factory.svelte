@@ -83,7 +83,7 @@
   {/if}
   <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
     {#await widget.components.widget.getValue()}
-      <ProgressRadial />
+      <ProgressRadial width="w-[100cqmin] ml-[auto] mr-[auto]" />
     {:then component}
       <svelte:component this={component} settings={widgetSettings.extra} />
     {/await}

@@ -5,6 +5,7 @@
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
   import { ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import NumberInput from './number-input.svelte';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -40,7 +41,7 @@
   <svelte:fragment slot="panel">
     <div class="overflow-scroll max-h-[calc(100cqh-92px)]">
       {#await widget.components.settings.component.getValue()}
-        <ProgressRadial />
+        <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
       {:then component}
         <svelte:component
           this={component}
@@ -189,9 +190,10 @@
           <RangeSlider name="range-slider" bind:value={$widgetSettings.borderRadius} min={0} max={50} step={0.5}
           ></RangeSlider>
         </label>
+        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">
           <span>Z-Index</span>
-          <input class="input pt-1 pb-1" type="number" placeholder="Z-Index" bind:value={$widgetSettings.zIndex} />
+          <NumberInput placeholder="Z-Index" bind:value={$widgetSettings.zIndex} />
         </label>
       {/if}
     </div>
