@@ -18,8 +18,8 @@
   function onDeleteWidgetClick() {
     modalStore.trigger({
       type: 'confirm',
-      title: 'Please Confirm',
-      body: 'Are you sure you wish to delete widget instance?',
+      title: m.Widgets_Common_Menu_Delete_Confirm_Title(),
+      body: m.Widgets_Common_Menu_Delete_Confirm_Body(),
       response: (confirmed: boolean) => {
         if (confirmed) {
           dispatch('delete', widget);

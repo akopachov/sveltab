@@ -12,8 +12,8 @@
   on:dragstart
   on:dragend
   {...otherProps}>
-  <header class="overflow-hidden">
-    <img class="w-full max-h-fit" src={widgetCatalogItem.previewImageUri} alt={widgetCatalogItem.name()} />
+  <header class="overflow-hidden h-full">
+    <img class="h-full w-full object-cover" src={widgetCatalogItem.previewImageUri} alt={widgetCatalogItem.name()} />
   </header>
   <h4 class="text-center">{widgetCatalogItem.name()}</h4>
 </button>

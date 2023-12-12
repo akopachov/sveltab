@@ -9,9 +9,9 @@ export function forceUpdateBackground() {
 
 export const dynamicBackground: Action<
   HTMLElement,
-  BackgroundInstance,
+  BackgroundInstance | undefined | null,
   { 'on:backgroundChanged': (e: CustomEvent) => void }
-> = function (node: HTMLElement, background: BackgroundInstance) {
+> = function (node: HTMLElement, background: BackgroundInstance | undefined | null) {
   let backgroundProviderDestroyPromise: Promise<() => void> | undefined;
   initializeNew(background);
 
@@ -26,7 +26,7 @@ export const dynamicBackground: Action<
     }
   }
 
-  async function initializeNew(background: BackgroundInstance) {
+  async function initializeNew(background: BackgroundInstance | undefined | null) {
     if (background) {
       backgroundProviderDestroyPromise = background.components.provider.getValue().then(providerClass => {
         const provider = new providerClass(node);
@@ -35,7 +35,9 @@ export const dynamicBackground: Action<
           provider.update(background.settings.extra);
         });
         function forceNew() {
-          provider.update(background.settings.extra, true);
+          if (background) {
+            provider.update(background.settings.extra, true);
+          }
         }
         forceNewSubscribers.add(forceNew);
         return () => {

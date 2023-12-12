@@ -1,10 +1,10 @@
-import { Subscribable, type OmitSubscribable } from "./subscribable";
+import { Subscribable, type OmitSubscribable } from './subscribable';
 
 export type WidgetPositionInitial = Partial<OmitSubscribable<WidgetPosition>>;
 
-export class WidgetPosition extends Subscribable {
+export class WidgetPosition extends Subscribable implements WidgetPositionInitial {
   constructor(initial: WidgetPositionInitial) {
-    super()
+    super();
     this.x = initial.x || 0;
     this.y = initial.y || 0;
     this.offsetX = initial.offsetX || 0;
@@ -21,15 +21,21 @@ export class WidgetPosition extends Subscribable {
   height: number;
 }
 
-export class WidgetSettingsExtra extends Subscribable {
+export class WidgetSettingsExtra extends Subscribable implements WidgetSettingsExtraInitial<any> {
   [key: string | number | symbol]: any;
 }
-export type WidgetSettingsExtraInitial<T extends WidgetSettingsExtra> = Partial<OmitSubscribable<T>>
-export type WidgetSettingsInitial = Partial<Omit<OmitSubscribable<WidgetSettings>, 'extra' | 'position'>> & Required<Pick<WidgetSettings, 'type'>> & { extra?: WidgetSettingsExtraInitial<WidgetSettingsExtra> } & { position?: WidgetPositionInitial }
+export type WidgetSettingsExtraInitial<T extends WidgetSettingsExtra> = Partial<OmitSubscribable<T>>;
+export type WidgetSettingsInitial = Partial<Omit<OmitSubscribable<WidgetSettings>, 'extra' | 'position'>> &
+  Required<Pick<WidgetSettings, 'type'>> & { extra?: WidgetSettingsExtraInitial<WidgetSettingsExtra> } & {
+    position?: WidgetPositionInitial;
+  };
 
-export class WidgetSettings extends Subscribable {
-  constructor(initial: WidgetSettingsInitial, extraConstructor: (new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra)) {
-    super()
+export class WidgetSettings extends Subscribable implements WidgetSettingsInitial {
+  constructor(
+    initial: WidgetSettingsInitial,
+    extraConstructor: new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra,
+  ) {
+    super();
     this.type = initial.type;
     this.rotation = initial.rotation || 0;
     this.zIndex = initial.zIndex || 0;
@@ -39,17 +45,17 @@ export class WidgetSettings extends Subscribable {
     this.position = new WidgetPosition(initial.position || {});
   }
 
-  type: string;
-  position: WidgetPosition;
+  readonly type: string;
+  readonly position: WidgetPosition;
   rotation: number;
   zIndex: number;
   borderRadius: number;
-  extra: WidgetSettingsExtra;
+  readonly extra: WidgetSettingsExtra;
   keepRatio: boolean;
 }
 
-export type FontSettingsInitial = Partial<OmitSubscribable<FontSettings>>
-export class FontSettings extends Subscribable {
+export type FontSettingsInitial = Partial<OmitSubscribable<FontSettings>>;
+export class FontSettings extends Subscribable implements FontSettingsInitial {
   constructor(initial: FontSettingsInitial) {
     super();
     this.id = initial.id || 'noto-sans';

@@ -6,6 +6,7 @@
   import { writable } from 'svelte/store';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import ColorPicker from './color-picker.svelte';
+  import * as m from '$i18n/messages';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
 
@@ -42,16 +43,16 @@
     60 * 60 * 24, // 1 Day
   );
 
-  const fontWeightsMap = new Map<number, string>([
-    [100, 'Thin'],
-    [200, 'Extra Light'],
-    [300, 'Light'],
-    [400, 'Normal'],
-    [500, 'Medium'],
-    [600, 'Semi Bold'],
-    [700, 'Bold'],
-    [800, 'Extra Bold'],
-    [900, 'Heavy'],
+  const fontWeightsMap = new Map<number, () => string>([
+    [100, m.FontSelector_Weight_Thin],
+    [200, m.FontSelector_Weight_ExtraLight],
+    [300, m.FontSelector_Weight_Light],
+    [400, m.FontSelector_Weight_Normal],
+    [500, m.FontSelector_Weight_Medium],
+    [600, m.FontSelector_Weight_SemiBold],
+    [700, m.FontSelector_Weight_Bold],
+    [800, m.FontSelector_Weight_ExtraBold],
+    [900, m.FontSelector_Weight_Heavy],
   ]);
 
   let searchValue = writable('');
@@ -88,6 +89,9 @@
     selectedFontInfo = e;
     $searchValue = e.label;
     font = e.id;
+    if (weight && !e.weights.includes(weight)) {
+      weight = e.weights[0];
+    }
   }
 
   onMount(async () => {
@@ -114,13 +118,14 @@
     <input
       type="search"
       bind:value={$searchValue}
-      placeholder="Search..."
+      placeholder={m.FontSelector_Search_Placeholder()}
       use:popup={popupSettings}
       use:debounce={debounceOpts} />
     {#if selectedFontInfo}
       <select bind:value={weight}>
         {#each selectedFontInfo.weights as w}
-          <option value={w}>{fontWeightsMap.get(w)}</option>
+          {@const optionTextFn = fontWeightsMap.get(w) || (() => String(w))}
+          <option value={w}>{optionTextFn()}</option>
         {/each}
       </select>
     {/if}

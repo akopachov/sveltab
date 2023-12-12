@@ -1,8 +1,6 @@
 import { browser } from '$app/environment';
-import { availableLanguageTags, isAvailableLanguageTag, setLanguageTag, sourceLanguageTag } from '$i18n/runtime';
+import { isAvailableLanguageTag, setLanguageTag, sourceLanguageTag, type AvailableLanguageTag } from '$i18n/runtime';
 import { writable } from 'svelte/store';
-
-export type AvailableLanguageTag = (typeof availableLanguageTags)[number];
 
 const LocalStorageLocaleKey = 'locale';
 

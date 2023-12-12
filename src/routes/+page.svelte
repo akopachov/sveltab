@@ -11,7 +11,6 @@
   } from '@skeletonlabs/skeleton';
   import Moveable from 'svelte-moveable';
   import { resize } from '@svelte-put/resize';
-  import { WidgetInstance } from '$models/widget-instance';
   import WidgetFactorty from '$components/widget-factory.svelte';
   import { writable } from 'svelte/store';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
@@ -19,50 +18,43 @@
   import WidgetSettingsComponent from '$components/widget-settings.svelte';
   import { onMount } from 'svelte';
   import { BackgroundCatalog } from '$stores/background-catalog';
-  import { BackgroundInstance } from '$models/background-instance';
   import { dynamicBackground } from '$actions/dynamic-background';
   import * as m from '$i18n/messages';
+  import type { WorkspaceInstance } from '$models/workspace-instance';
+  import type { WidgetInstance } from '$models/widget-instance';
+  import { getWorkspace, saveWorkspace } from '$stores/workspace-store';
+  import { fade } from 'svelte/transition';
+  import pDebounce from 'p-debounce';
+  import LanguageSelect from '$components/language-select.svelte';
 
   const drawerStore = getDrawerStore();
 
-  let background = writable<BackgroundInstance>();
-  let widgets = writable<Set<WidgetInstance>>(new Set());
+  const workspaceId = 'default';
+  let workspace: WorkspaceInstance | undefined;
+
+  $: background = $workspace?.background;
+  $: widgets = $workspace?.widgets || [];
 
   onMount(async () => {
-    $widgets = new Set([
-      await WidgetInstance.create({
-        type: 'dumb',
-        position: { x: 10, y: 10, offsetX: 50, offsetY: 50 },
-        extra: { color: '#234' },
-        keepRatio: false,
-      }),
-      await WidgetInstance.create({
-        type: 'dumb',
-        position: { x: 40, y: 40 },
-        extra: { color: '#808080' },
-        keepRatio: false,
-      }),
-      await WidgetInstance.create({
-        type: 'dumb',
-        position: { x: 70, y: 70 },
-        extra: { color: '#fff' },
-        keepRatio: false,
-      }),
-    ]);
-    $background = await BackgroundInstance.create({ type: 'static-color' });
+    workspace = await getWorkspace(workspaceId);
   });
 
-  let workspace: HTMLElement;
+  let workspaceEl: HTMLElement;
   let dragnDropPreviewCanvas: HTMLCanvasElement;
   let selectedWidgetEl: HTMLElement | undefined | null;
   let selectedWidget = writable<WidgetInstance | null | undefined>();
   $: selectedWidgetSettings = $selectedWidget?.settings;
   let moveable: Moveable;
   let widgetSettingsVisible = false;
-  let workspaceLocked = false;
+  $: workspaceLocked = $workspace?.isLocked || false;
   $: {
     if (workspaceLocked) {
       unselectWidget();
+    }
+  }
+  $: {
+    if ($workspace?.hasChanges === true) {
+      saveWorkspaceChangesDefer();
     }
   }
 
@@ -81,6 +73,23 @@
     },
   };
 
+  const saveWorkspaceChangesDefer = pDebounce(async () => {
+    if (workspace?.hasChanges === true) {
+      await saveWorkspace(workspaceId, workspace);
+    }
+  }, 10_000);
+
+  function onBeforeUnload(event: BeforeUnloadEvent) {
+    if (workspace?.hasChanges === true) {
+      saveWorkspace(workspaceId, workspace);
+    }
+
+    if (workspace?.hasChanges === true) {
+      event.preventDefault();
+      event.returnValue = true;
+    }
+  }
+
   function openWidgetsMenu() {
     drawerStore.open({
       width: 'w-[280px]',
@@ -94,14 +103,14 @@
       selectedWidgetEl = e.currentTarget as HTMLElement;
       $selectedWidget = widget;
 
-      const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
       const widgetPos = widget.settings.position;
 
       selectedWidgetEl.style.left = `${
-        (widgetPos.x / 100) * cqminBase + (widgetPos.offsetX / 100) * workspace.clientWidth
+        (widgetPos.x / 100) * cqminBase + (widgetPos.offsetX / 100) * workspaceEl.clientWidth
       }px`;
       selectedWidgetEl.style.top = `${
-        (widgetPos.y / 100) * cqminBase + (widgetPos.offsetY / 100) * workspace.clientHeight
+        (widgetPos.y / 100) * cqminBase + (widgetPos.offsetY / 100) * workspaceEl.clientHeight
       }px`;
       selectedWidgetEl.style.width = `${(widgetPos.width / 100) * cqminBase}px`;
       selectedWidgetEl.style.height = `${(widgetPos.height / 100) * cqminBase}px`;
@@ -115,53 +124,70 @@
 
   function unselectWidget() {
     if (selectedWidgetEl && selectedWidgetSettings) {
-      const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
       const widgetPos = selectedWidgetSettings.position;
+      let moved = false;
 
       if (selectedWidgetEl.style.left) {
-        const absOffsetX = (workspace.clientWidth * widgetPos.offsetX) / cqminBase;
-        widgetPos.x = (parseFloat(selectedWidgetEl.style.left) / cqminBase) * 100 - absOffsetX;
+        const absOffsetX = (workspaceEl.clientWidth * widgetPos.offsetX) / cqminBase;
+        const widgetPosX = (parseFloat(selectedWidgetEl.style.left) / cqminBase) * 100 - absOffsetX;
         selectedWidgetEl.style.left = '';
+        if (widgetPosX != widgetPos.x) {
+          widgetPos.x = widgetPosX;
+          moved = true;
+        }
       }
 
       if (selectedWidgetEl.style.top) {
-        const absOffsetY = (workspace.clientHeight * widgetPos.offsetY) / cqminBase;
-        widgetPos.y = (parseFloat(selectedWidgetEl.style.top) / cqminBase) * 100 - absOffsetY;
+        const absOffsetY = (workspaceEl.clientHeight * widgetPos.offsetY) / cqminBase;
+        const widgetPosY = (parseFloat(selectedWidgetEl.style.top) / cqminBase) * 100 - absOffsetY;
         selectedWidgetEl.style.top = '';
+        if (widgetPosY != widgetPos.y) {
+          widgetPos.y = widgetPosY;
+          moved = true;
+        }
       }
 
       if (selectedWidgetEl.style.width) {
-        widgetPos.width = (parseFloat(selectedWidgetEl.style.width) / cqminBase) * 100;
+        let widgetPosWidth = (parseFloat(selectedWidgetEl.style.width) / cqminBase) * 100;
         selectedWidgetEl.style.width = '';
+        if (widgetPosWidth != widgetPos.width) {
+          widgetPos.width = widgetPosWidth;
+          moved = true;
+        }
       }
 
       if (selectedWidgetEl.style.height) {
-        widgetPos.height = (parseFloat(selectedWidgetEl.style.height) / cqminBase) * 100;
+        let widgetPosHeight = (parseFloat(selectedWidgetEl.style.height) / cqminBase) * 100;
         selectedWidgetEl.style.height = '';
+        if (widgetPosHeight != widgetPos.height) {
+          widgetPos.height = widgetPosHeight;
+          moved = true;
+        }
       }
 
       selectedWidgetEl.classList.remove('selected');
 
-      widgetPos.notifyPropertiesChanged();
+      if (moved) {
+        widgetPos.notifyPropertiesChanged();
+      }
     }
     selectedWidgetEl = null;
     $selectedWidget = null;
   }
 
   async function onWidgetCatalogItemClick(widgetSettings: CatalogWidgetSettingsInitial) {
-    const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
-    $widgets.add(
-      await WidgetInstance.create({
-        ...widgetSettings,
-        position: {
-          ...widgetSettings.position,
-          x: (workspace.clientWidth / cqminBase) * 50,
-          y: (workspace.clientHeight / cqminBase) * 50,
-        },
-      }),
-    );
-    $widgets = $widgets;
-    workspaceLocked = false;
+    if (!workspace) return;
+    const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
+    workspace.isLocked = false;
+    await workspace.addWidget({
+      ...widgetSettings,
+      position: {
+        ...widgetSettings.position,
+        x: (workspaceEl.clientWidth / cqminBase) * 50,
+        y: (workspaceEl.clientHeight / cqminBase) * 50,
+      },
+    });
   }
 
   function onWidgetCatalogItemDragStart(ev: DragEvent, widgetCatalogItem: WidgetCatalogItem) {
@@ -170,7 +196,7 @@
       ev.dataTransfer.setData('text/json', JSON.stringify(widgetCatalogItem.settings));
       const img = new Image();
       img.src = widgetCatalogItem.previewImageUri;
-      const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
       const baseWidth = (widgetCatalogItem.settings.position.width! / 100) * cqminBase;
       const baseHeight = (widgetCatalogItem.settings.position.height! / 100) * cqminBase;
       dragnDropPreviewCanvas.width = baseWidth;
@@ -185,20 +211,18 @@
   async function onWidgetCatalogItemDragDrop(e: DragEvent) {
     if (e.dataTransfer) {
       e.preventDefault();
+      if (!workspace) return;
       const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(e.dataTransfer.getData('text/json'));
-      const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
-      $widgets.add(
-        await WidgetInstance.create({
-          ...widgetSettings,
-          position: {
-            ...widgetSettings.position,
-            x: (e.x / cqminBase) * 100,
-            y: (e.y / cqminBase) * 100,
-          },
-        }),
-      );
-      $widgets = $widgets;
-      workspaceLocked = false;
+      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
+      workspace.isLocked = false;
+      await workspace.addWidget({
+        ...widgetSettings,
+        position: {
+          ...widgetSettings.position,
+          x: (e.x / cqminBase) * 100,
+          y: (e.y / cqminBase) * 100,
+        },
+      });
     }
   }
 
@@ -210,18 +234,29 @@
   }
 
   function onWidgetDelete(e: CustomEvent<WidgetInstance>) {
+    if (!workspace) return;
     unselectWidget();
-    $widgets.delete(e.detail);
-    $widgets = $widgets;
+    workspace.removeWidget(e.detail);
   }
 
   async function onBackgroundTypeChanged(e: Event) {
+    if (!workspace) return;
     const selectedIndex = Number((<HTMLSelectElement>e.target).selectedOptions[0].value);
     if (selectedIndex >= 0) {
-      $background = await BackgroundInstance.create(BackgroundCatalog[selectedIndex].settings);
+      await workspace.setBackground(BackgroundCatalog[selectedIndex].settings);
     }
   }
 </script>
+
+<svelte:window on:beforeunload={onBeforeUnload} />
+
+{#if !workspace}
+  <div
+    out:fade={{ duration: 300 }}
+    class="fixed top-0 left-0 w-screen h-screen z-50 flex items-center justify-center flex-col backdrop-blur-md bg-surface-50 dark:bg-surface-600 !bg-opacity-50">
+    <ProgressRadial meter="stroke-primary-500" track="stroke-primary-500/30" />
+  </div>
+{/if}
 
 <Drawer>
   <div class="flex flex-col h-full w-full">
@@ -275,17 +310,41 @@
         <svelte:fragment slot="content">
           <select class="select" on:change={onBackgroundTypeChanged}>
             {#each BackgroundCatalog as item, index (item.settings.type)}
-              <option value={index} selected={$background?.settings?.type === item.settings.type}>{item.name()}</option>
+              <option value={index} selected={background?.settings?.type === item.settings.type}>{item.name()}</option>
             {/each}
           </select>
           <hr />
-          {#if $background}
-            {#await $background.components.settings.component.getValue()}
+          {#if background}
+            {#await background.components.settings.component.getValue()}
               <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
             {:then component}
-              <svelte:component this={component} settings={$background.settings.extra} />
+              <svelte:component this={component} settings={background.settings.extra} />
             {/await}
           {/if}
+        </svelte:fragment>
+      </AccordionItem>
+      <AccordionItem>
+        <svelte:fragment slot="lead">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
+          </svg>
+        </svelte:fragment>
+        <svelte:fragment slot="summary">{m.Core_Sidebar_Settings()}</svelte:fragment>
+        <svelte:fragment slot="content">
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <label class="label">
+            <span>{m.Core_Sidebar_Settings_Language()}</span>
+            <LanguageSelect />
+          </label>
         </svelte:fragment>
       </AccordionItem>
     </Accordion>
@@ -306,10 +365,10 @@
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
     on:mousedown={unselectWidget}
-    bind:this={workspace}
+    bind:this={workspaceEl}
     use:resize
     on:resized={unselectWidget}>
-    <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
+    <div class="w-full h-full -z-10" use:dynamicBackground={background}></div>
     <button
       type="button"
       class="btn-icon bg-transparent text-white hover:bg-surface-500 fixed top-0 left-0"
@@ -324,7 +383,8 @@
         <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
     </button>
-    {#each $widgets as widget (widget.id)}
+    <p class="absolute top-0 left-28">{$workspace?.hasChanges}</p>
+    {#each widgets as widget (widget.id)}
       <WidgetFactorty
         {widget}
         {widgetSettingsPopupSettings}
@@ -380,7 +440,7 @@
     data-popup={widgetSettingsPopupSettings.target}
     style:visibility={!workspaceLocked && $selectedWidget ? 'visible' : 'hidden'}>
     {#if widgetSettingsVisible && $selectedWidget}
-      <WidgetSettingsComponent widget={$selectedWidget} {workspace} />
+      <WidgetSettingsComponent widget={$selectedWidget} workspace={workspaceEl} />
     {/if}
   </div>
 </AppShell>

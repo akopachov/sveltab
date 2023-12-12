@@ -31,7 +31,7 @@
     style:background-color={color}>
   </button>
   <div
-    class="w-fit h-fit overflow-y-auto flex z-[99999]"
+    class="card w-fit h-fit overflow-y-auto flex z-[99999]"
     tabindex="-1"
     style:visibility={popupVisible ? 'visible' : 'hidden'}
     data-popup={popupSettings.target}>
@@ -41,12 +41,9 @@
   </div>
 {/if}
 
-<style>
+<style lang="postcss">
   :global(.color-picker) {
     --picker-width: min(max(10cqmin, 150px), 250px);
     --picker-height: min(max(10cqmin, 150px), 250px);
-  }
-  :global(.color-picker .wrapper) {
-    margin: 0;
   }
 </style>

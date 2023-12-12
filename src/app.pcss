@@ -2,3 +2,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.color-picker .wrapper {
+    @apply m-0 bg-surface-800 border-none;
+}
+
+.color-picker .wrapper .text-input input {
+    @apply input !w-1 !outline-none;
+}
+
+.color-picker .wrapper .text-input input[type="number"] {
+    @apply hidden;
+}
+
+.color-picker .wrapper .text-input button {
+    @apply btn variant-filled-surface;
+}

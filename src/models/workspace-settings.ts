@@ -1,10 +1,10 @@
-import type { BackgroundSettingsInitial } from "./background-settings";
-import { Subscribable, type OmitSubscribable } from "./subscribable";
-import type { WidgetSettingsInitial } from "./widget-settings";
+import type { BackgroundSettingsInitial } from './background-settings';
+import { Subscribable, type OmitSubscribable } from './subscribable';
+import type { WidgetSettingsInitial } from './widget-settings';
 
 export type WorkspaceSettingsInitial = Partial<OmitSubscribable<WorkspaceSettings>>;
 
-export class WorkspaceSettings extends Subscribable {
+export class WorkspaceSettings extends Subscribable implements WorkspaceSettingsInitial {
   constructor(initial: WorkspaceSettingsInitial) {
     super();
     this.widgets = initial.widgets || [];

@@ -2,7 +2,20 @@
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "Core_Sidebar_NewWidget": "New Widget",
   "Core_Sidebar_Background": "Background",
+  "Core_Sidebar_Settings": "Settings",
+  "Core_Sidebar_Settings_Language": "Language",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
+
+  "FontSelector_Search_Placeholder": "Search...",
+  "FontSelector_Weight_Thin": "Thin",
+  "FontSelector_Weight_ExtraLight": "Extra Light",
+  "FontSelector_Weight_Light": "Light",
+  "FontSelector_Weight_Normal": "Normal",
+  "FontSelector_Weight_Medium": "Medium",
+  "FontSelector_Weight_SemiBold": "Semi Bold",
+  "FontSelector_Weight_Bold": "Bold",
+  "FontSelector_Weight_ExtraBold": "Extra Bold",
+  "FontSelector_Weight_Heavy": "Heavy",
 
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
@@ -55,6 +68,8 @@
   
   "Widgets_Common_Menu_OpenSettings": "Settings",
   "Widgets_Common_Menu_Delete": "Delete",
+  "Widgets_Common_Menu_Delete_Confirm_Title": "Please Confirm",
+  "Widgets_Common_Menu_Delete_Confirm_Body": "Are you sure you wish to delete widget instance?",
 
   "Widgets_Clock_Name": "Clock",
   "Widgets_Clock_Settings_Tabs_Text": "Text",

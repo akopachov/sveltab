@@ -1,10 +1,12 @@
 export class Subscribable {
   #subscribers = new Set<any>();
 
-  subscribe(run: ((v: typeof this) => void), invalidate = () => {}) {
+  subscribe(run: (v: typeof this) => void, invalidate = () => {}, skipCurrent: boolean = false) {
     const subscriber = [run, invalidate];
     this.#subscribers.add(subscriber);
-    run(this);
+    if (!skipCurrent) {
+      run(this);
+    }
     return () => {
       this.#subscribers.delete(subscriber);
     };
