@@ -1,27 +1,27 @@
 <script lang="ts">
   import DynamicSizeText from '$components/dynamic-size-text.svelte';
-  import { ClockFormat, type Settings } from './settings';
+  import type { Settings } from './settings';
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
-  import { locale } from '$stores/locale';
+  import { locale, localeCharSubset } from '$stores/locale';
 
-  let clockStore = getClockStore(1000);
-  let timeDisplay: DynamicSizeText | null;
-
+  let clockStore = getClockStore(60000);
+  let dateDisplay: DynamicSizeText | null;
   export let settings: Settings;
 
   $: fontSettings = settings.font;
   $: textShadowSettings = settings.textShadow;
 
   $: intlFormat = new Intl.DateTimeFormat($locale, {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: $settings.clockFormat == ClockFormat.TwelveHrs,
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
   });
-  $: time = intlFormat.format($clockStore);
+
+  $: date = intlFormat.format($clockStore);
 
   function redrawAll() {
-    timeDisplay?.refresh();
+    dateDisplay?.refresh();
   }
 </script>
 
@@ -35,10 +35,10 @@
   {$textShadowSettings.color})"
   use:fontsource={{
     font: $fontSettings.id,
-    subsets: ['latin'],
+    subsets: $localeCharSubset,
     styles: ['normal'],
     weights: [$fontSettings.weight],
   }}
   on:fontChanged={redrawAll}>
-  <DynamicSizeText bind:this={timeDisplay} text={time} class="max-h-[100cqh] max-w-[100cqw] cursor-default" />
+  <DynamicSizeText bind:this={dateDisplay} text={date} class="max-h-[100cqh] max-w-[100cqw] cursor-default" />
 </div>

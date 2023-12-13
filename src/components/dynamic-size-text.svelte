@@ -29,5 +29,7 @@
   xmlns="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink"
   {...$$restProps}>
-  <text x="0" y="100" font-size="100" fill="currentColor">{text}</text>
+  <text x="0" y="100" font-size="100" fill="currentColor" text-rendering="optimizeLegibility">
+    {text}
+  </text>
 </svg>

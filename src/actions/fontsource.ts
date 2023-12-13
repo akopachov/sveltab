@@ -2,7 +2,7 @@ import type { Action } from 'svelte/action';
 
 const activeFonts = new Map<
   string,
-  { fontFamily: string; fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>; raw: any }
+  Promise<{ fontFamily: string; fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>; raw: any }>
 >();
 
 export type FontSourceActionSettings = {
@@ -37,18 +37,53 @@ export const fontsource: Action<
 
     let fontId = s.font;
 
-    const fontFacesToRemove = removeCurrentFont();
+    const fontFacesToRemove = await removeCurrentFont();
     if (fontId) {
-      let activeFontRef = activeFonts.get(fontId);
-      if (!activeFontRef) {
-        const fontObj = await fetch(`https://api.fontsource.org/v1/fonts/${fontId}`).then(r => r.json());
-        activeFontRef = { fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() };
-        activeFonts.set(fontId, activeFontRef);
+      let activeFontRefPromise = activeFonts.get(fontId);
+      if (!activeFontRefPromise) {
+        activeFontRefPromise = new Promise(resolve => {
+          fetch(`https://api.fontsource.org/v1/fonts/${fontId}`)
+            .then(r => r.json())
+            .then(fontObj => resolve({ fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() }));
+        });
+        activeFonts.set(fontId, activeFontRefPromise);
       }
 
-      let subsets = s.subsets || <string[]>activeFontRef.raw.subsets;
-      let styles = s.styles || <string[]>activeFontRef.raw.styles;
-      let weights = s.weights || <number[]>activeFontRef.raw.weights;
+      const activeFontRef = await activeFontRefPromise;
+
+      const availableSubsets = <string[]>activeFontRef.raw.subsets;
+      let subsets = s.subsets;
+      if (subsets) {
+        subsets = subsets.filter(s => availableSubsets.includes(s));
+        if (subsets.length <= 0) {
+          subsets = ['latin'];
+        }
+      } else {
+        subsets = availableSubsets;
+      }
+
+      const availableStyles = <string[]>activeFontRef.raw.styles;
+      let styles = s.styles;
+      if (styles) {
+        styles = styles.filter(s => availableStyles.includes(s));
+        if (styles.length <= 0) {
+          styles = ['normal'];
+        }
+      } else {
+        styles = availableStyles;
+      }
+
+      const availableWeights = <number[]>activeFontRef.raw.weights;
+      let weights = s.weights;
+      if (weights) {
+        weights = weights.filter(s => availableWeights.includes(s));
+        if (weights.length <= 0) {
+          weights = [400];
+        }
+      } else {
+        weights = availableWeights;
+      }
+
       const promisesToWait = [];
 
       for (const subset of subsets) {
@@ -99,12 +134,13 @@ export const fontsource: Action<
     currentFont = fontId;
   }
 
-  function removeCurrentFont() {
+  async function removeCurrentFont() {
     if (!currentFont) return [];
 
     const fontFacesToRemove = [];
-    const activeFontRef = activeFonts.get(currentFont);
-    if (activeFontRef) {
+    const activeFontRefPromise = activeFonts.get(currentFont);
+    if (activeFontRefPromise) {
+      const activeFontRef = await activeFontRefPromise;
       for (const subset of currentSubsets) {
         for (const weight of currentWeights) {
           for (const style of currentStyles) {
@@ -139,7 +175,7 @@ export const fontsource: Action<
       updateFont(settings);
     },
     destroy() {
-      removeCurrentFont().forEach(f => document.fonts.delete(f));
+      removeCurrentFont().then(ff => ff.forEach(f => document.fonts.delete(f)));
       node.style.fontFamily = '';
     },
   };

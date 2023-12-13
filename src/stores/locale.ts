@@ -1,6 +1,8 @@
 import { browser } from '$app/environment';
 import { isAvailableLanguageTag, setLanguageTag, sourceLanguageTag, type AvailableLanguageTag } from '$i18n/runtime';
-import { writable } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
+
+const localeCharSubsetMap = new Map<AvailableLanguageTag, string[]>([['en', ['latin', 'latin-ext']]]);
 
 const LocalStorageLocaleKey = 'locale';
 
@@ -14,6 +16,8 @@ export const locale = {
     set(locale);
   },
 };
+
+export const localeCharSubset = derived(locale, $locale => localeCharSubsetMap.get($locale));
 
 export function initLocaleStore() {
   function initLocale(locale: AvailableLanguageTag) {

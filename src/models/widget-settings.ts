@@ -65,3 +65,19 @@ export class FontSettings extends Subscribable implements FontSettingsInitial {
   id: string;
   weight: number;
 }
+
+export type ShadowSettingsInitial = Partial<OmitSubscribable<ShadowSettings>>;
+export class ShadowSettings extends Subscribable implements ShadowSettingsInitial {
+  constructor(initial: ShadowSettingsInitial) {
+    super();
+    this.offsetX = initial.offsetX || 0;
+    this.offsetY = initial.offsetY || 0;
+    this.blur = initial.blur || 0;
+    this.color = initial.color || '#000';
+  }
+
+  offsetX: number;
+  offsetY: number;
+  blur: number;
+  color: string;
+}

@@ -16,13 +16,10 @@ export class WorkspaceInstance extends Subscribable {
     this.#widgets = new Set(widgets);
     this.#widgets.forEach(w => {
       this.#trackObjectChange(w.settings);
-      this.#trackObjectChange(w.settings.extra);
-      this.#trackObjectChange(w.settings.position);
     });
 
     this.#background = background;
     this.#trackObjectChange(this.#background.settings);
-    this.#trackObjectChange(this.#background.settings.extra);
     this.isLocked = false;
   }
 
@@ -43,6 +40,12 @@ export class WorkspaceInstance extends Subscribable {
           true,
         ),
       );
+      for (const property of Object.getOwnPropertyNames(instance)) {
+        const value = (<any>instance)[property];
+        if (value instanceof Subscribable) {
+          this.#trackObjectChange(value);
+        }
+      }
     }
   }
 
@@ -51,6 +54,13 @@ export class WorkspaceInstance extends Subscribable {
     if (unsubscribe) {
       unsubscribe();
       this.#trackingObjects.delete(instance);
+    }
+
+    for (const property of Object.getOwnPropertyNames(instance)) {
+      const value = (<any>instance)[property];
+      if (value instanceof Subscribable) {
+        this.#untrackObjectChange(value);
+      }
     }
   }
 
@@ -69,12 +79,10 @@ export class WorkspaceInstance extends Subscribable {
   async setBackground(settings: BackgroundSettingsInitial) {
     if (this.#background) {
       this.#untrackObjectChange(this.#background.settings);
-      this.#untrackObjectChange(this.#background.settings.extra);
     }
     this.#background = await BackgroundInstance.create(settings);
     this.#hasChanges = true;
     this.#trackObjectChange(this.#background.settings);
-    this.#trackObjectChange(this.#background.settings.extra);
     this.notifyPropertiesChanged();
   }
 
@@ -83,8 +91,6 @@ export class WorkspaceInstance extends Subscribable {
     this.#widgets.add(widget);
     this.#hasChanges = true;
     this.#trackObjectChange(widget.settings);
-    this.#trackObjectChange(widget.settings.extra);
-    this.#trackObjectChange(widget.settings.position);
     this.notifyPropertiesChanged();
   }
 
@@ -92,7 +98,6 @@ export class WorkspaceInstance extends Subscribable {
     this.#widgets.delete(instance);
     this.#hasChanges = true;
     this.#untrackObjectChange(instance.settings);
-    this.#untrackObjectChange(instance.settings.extra);
     this.notifyPropertiesChanged();
   }
 

@@ -5,8 +5,8 @@ import type {
   WidgetSettingsInitial,
 } from '$models/widget-settings';
 import type { ComponentType, SvelteComponent } from 'svelte';
-import { Widget as DumbWidget } from '$widgets/dumb';
 import { Widget as ClockWidget } from '$widgets/clock';
+import { Widget as DateWidget } from '$widgets/date';
 import type { Lazy } from '$lib/lazy';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
@@ -29,4 +29,4 @@ export interface WidgetCatalogItemComponents {
   };
 }
 
-export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [DumbWidget, ClockWidget];
+export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [ClockWidget, DateWidget];

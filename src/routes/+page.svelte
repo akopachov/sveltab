@@ -262,7 +262,7 @@
 <Drawer>
   <div class="flex flex-col h-full w-full">
     <canvas bind:this={dragnDropPreviewCanvas} class="hidden"></canvas>
-    <Accordion>
+    <Accordion autocollapse>
       <AccordionItem>
         <svelte:fragment slot="lead">
           <svg
