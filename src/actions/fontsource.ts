@@ -1,24 +1,39 @@
-import type { Action } from "svelte/action";
+import type { Action } from 'svelte/action';
 
-const activeFonts = new Map<string, { fontFamily: string, fontSets: Map<string, { fontSet: Set<FontFace>, usage: number }>, raw: any }>();
+const activeFonts = new Map<
+  string,
+  { fontFamily: string; fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>; raw: any }
+>();
 
-export type FontSourceActionSettings = { font: string, subsets?: string[] | null, weights?: number[] | null, styles?: string[] | null };
+export type FontSourceActionSettings = {
+  font: string;
+  subsets?: string[] | null;
+  weights?: number[] | null;
+  styles?: string[] | null;
+};
 
 function getKey(subset: string, weight: number, style: string) {
   return `${subset}_${weight}_${style}`;
 }
 
-export const fontsource: Action<HTMLElement, FontSourceActionSettings, { 'on:fontChanged': (e: CustomEvent<string>) => void }> = function (node: HTMLElement, settings: FontSourceActionSettings) {
+export const fontsource: Action<
+  HTMLElement,
+  FontSourceActionSettings,
+  { 'on:fontChanged': (e: CustomEvent<string>) => void }
+> = function (node: HTMLElement, settings: FontSourceActionSettings) {
   let currentFont: string | null = '';
   let currentSubsets: Set<string> = new Set<string>();
   let currentWeights: Set<number> = new Set<number>();
   let currentStyles: Set<string> = new Set<string>();
 
   async function updateFont(s: FontSourceActionSettings) {
-    if (currentFont === s.font &&
+    if (
+      currentFont === s.font &&
       (!s.subsets || s.subsets.every(v => currentSubsets.has(v))) &&
       (!s.weights || s.weights.every(v => currentWeights.has(v))) &&
-      (!s.styles || s.styles.every(v => currentStyles.has(v)))) return;
+      (!s.styles || s.styles.every(v => currentStyles.has(v)))
+    )
+      return;
 
     let fontId = s.font;
 
@@ -54,34 +69,39 @@ export const fontsource: Action<HTMLElement, FontSourceActionSettings, { 'on:fon
               const fontObj = ((activeFontRef.raw.variants[String(weight)] || {})[style] || {})[subset];
               if (!fontObj) continue;
               const url = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
-              const fontFace = new FontFace(activeFontRef.fontFamily, `url(${url})`, { weight: String(weight), style: style, unicodeRange: unicodeRange });
-              promisesToWait.push(fontFace.load().then(ff => { 
-                document.fonts.add(ff);
-                loadedFontSet!.fontSet.add(ff);
-              }));
+              const fontFace = new FontFace(activeFontRef.fontFamily, `url(${url})`, {
+                weight: String(weight),
+                style: style,
+                unicodeRange: unicodeRange,
+              });
+              promisesToWait.push(
+                fontFace.load().then(ff => {
+                  document.fonts.add(ff);
+                  loadedFontSet!.fontSet.add(ff);
+                }),
+              );
             }
           }
         }
       }
 
-      Promise.allSettled(promisesToWait)
-        .then(() => {
-          node.style.fontFamily = `"${activeFontRef!.fontFamily}", sans-serif`;
-          node.dispatchEvent(new CustomEvent('fontChanged', { detail: activeFontRef!.fontFamily }));
-          fontFacesToRemove.forEach(f => document.fonts.delete(f));
-        });
+      Promise.allSettled(promisesToWait).then(() => {
+        node.style.fontFamily = `"${activeFontRef!.fontFamily}", sans-serif`;
+        node.dispatchEvent(new CustomEvent('fontChanged', { detail: activeFontRef!.fontFamily }));
+        fontFacesToRemove.forEach(f => document.fonts.delete(f));
+      });
     } else {
       node.style.fontFamily = '';
       node.dispatchEvent(new CustomEvent('fontChanged', { detail: '' }));
       fontFacesToRemove.forEach(f => document.fonts.delete(f));
     }
-    
+
     currentFont = fontId;
   }
 
   function removeCurrentFont() {
     if (!currentFont) return [];
-    
+
     const fontFacesToRemove = [];
     const activeFontRef = activeFonts.get(currentFont);
     if (activeFontRef) {
@@ -121,6 +141,6 @@ export const fontsource: Action<HTMLElement, FontSourceActionSettings, { 'on:fon
     destroy() {
       removeCurrentFont().forEach(f => document.fonts.delete(f));
       node.style.fontFamily = '';
-    }
-  }
-}
+    },
+  };
+};

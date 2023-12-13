@@ -26,6 +26,7 @@
   import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
   import LanguageSelect from '$components/language-select.svelte';
+  import Lightswitch from '$components/lightswitch.svelte';
 
   const drawerStore = getDrawerStore();
 
@@ -340,6 +341,10 @@
         </svelte:fragment>
         <svelte:fragment slot="summary">{m.Core_Sidebar_Settings()}</svelte:fragment>
         <svelte:fragment slot="content">
+          <div class="label">
+            <span>{m.Core_Sidebar_Settings_ColorScheme()}</span>
+            <Lightswitch />
+          </div>
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label class="label">
             <span>{m.Core_Sidebar_Settings_Language()}</span>

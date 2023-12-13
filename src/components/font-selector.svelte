@@ -9,10 +9,21 @@
   import * as m from '$i18n/messages';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
+  enum FontWeight {
+    Thin = 100,
+    ExtraLight = 200,
+    Light = 300,
+    Normal = 400,
+    Medium = 500,
+    SemiBold = 600,
+    Bold = 700,
+    ExtraBold = 800,
+    Heavy = 900,
+  }
 
   export let font: string | null | undefined;
   export let color: string | null | undefined = null;
-  export let weight: number | null | undefined;
+  export let weight: FontWeight | null | undefined;
 
   let selectedFontInfo: FontInfo;
   $: {
@@ -21,38 +32,33 @@
     }
   }
 
-  const fonts: Promise<FontInfo[]> = cache(
-    'fonts',
-    async () =>
-      fetch('https://api.fontsource.org/v1/fonts')
-        .then(r => r.json())
-        .then(r =>
-          r
-            .filter((f: any) => f.type !== 'icons')
-            .map(
-              (f: any) =>
-                <FontInfo>{
-                  label: f.family,
-                  id: f.id,
-                  searchIndex: f.family.toLowerCase(),
-                  weights: f.weights,
-                  styles: f.styles,
-                },
-            ),
+  const fonts: Promise<FontInfo[]> = fetch('https://api.fontsource.org/v1/fonts')
+    .then(r => r.json())
+    .then(r =>
+      r
+        .filter((f: any) => f.type !== 'icons')
+        .map(
+          (f: any) =>
+            <FontInfo>{
+              label: f.family,
+              id: f.id,
+              searchIndex: f.family.toLowerCase(),
+              weights: f.weights,
+              styles: f.styles,
+            },
         ),
-    60 * 60 * 24, // 1 Day
-  );
+    );
 
-  const fontWeightsMap = new Map<number, () => string>([
-    [100, m.FontSelector_Weight_Thin],
-    [200, m.FontSelector_Weight_ExtraLight],
-    [300, m.FontSelector_Weight_Light],
-    [400, m.FontSelector_Weight_Normal],
-    [500, m.FontSelector_Weight_Medium],
-    [600, m.FontSelector_Weight_SemiBold],
-    [700, m.FontSelector_Weight_Bold],
-    [800, m.FontSelector_Weight_ExtraBold],
-    [900, m.FontSelector_Weight_Heavy],
+  const fontWeightsMap = new Map<FontWeight, () => string>([
+    [FontWeight.Thin, m.FontSelector_Weight_Thin],
+    [FontWeight.ExtraLight, m.FontSelector_Weight_ExtraLight],
+    [FontWeight.Light, m.FontSelector_Weight_Light],
+    [FontWeight.Normal, m.FontSelector_Weight_Normal],
+    [FontWeight.Medium, m.FontSelector_Weight_Medium],
+    [FontWeight.SemiBold, m.FontSelector_Weight_SemiBold],
+    [FontWeight.Bold, m.FontSelector_Weight_Bold],
+    [FontWeight.ExtraBold, m.FontSelector_Weight_ExtraBold],
+    [FontWeight.Heavy, m.FontSelector_Weight_Heavy],
   ]);
 
   let searchValue = writable('');

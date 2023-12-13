@@ -1,16 +1,40 @@
 <script lang="ts">
+  import { colorScheme } from '$actions/color-scheme';
+  import { setupCacheHouseKeeping } from '$stores/cache';
   import { initLocaleStore } from '$stores/locale';
   import '../app.pcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { Modal, initializeStores, storePopup } from '@skeletonlabs/skeleton';
-  import { autoModeWatcher } from '@skeletonlabs/skeleton';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
   initializeStores();
   initLocaleStore();
+  setupCacheHouseKeeping();
 </script>
 
-<svelte:head>{@html `<script>${autoModeWatcher.toString()} autoModeWatcher();</script>`}</svelte:head>
+<svelte:head>
+  <script>
+    (function () {
+      const preferedColorScheme = localStorage.getItem('preferedColorScheme') || 'auto';
+      const elemHtmlClasses = document.documentElement.classList;
+      const classDark = 'dark';
+      if (preferedColorScheme === 'auto') {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        if (mql.matches) {
+          elemHtmlClasses.add(classDark);
+        } else {
+          elemHtmlClasses.remove(classDark);
+        }
+      } else if (preferedColorScheme === 'dark') {
+        elemHtmlClasses.add(classDark);
+      } else {
+        elemHtmlClasses.remove(classDark);
+      }
+    })();
+  </script>
+</svelte:head>
+
+<svelte:document use:colorScheme />
 
 <slot />
 <Modal />

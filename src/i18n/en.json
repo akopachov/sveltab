@@ -4,6 +4,7 @@
   "Core_Sidebar_Background": "Background",
   "Core_Sidebar_Settings": "Settings",
   "Core_Sidebar_Settings_Language": "Language",
+  "Core_Sidebar_Settings_ColorScheme": "Color scheme",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
 
   "FontSelector_Search_Placeholder": "Search...",
@@ -16,6 +17,10 @@
   "FontSelector_Weight_Bold": "Bold",
   "FontSelector_Weight_ExtraBold": "Extra Bold",
   "FontSelector_Weight_Heavy": "Heavy",
+
+  "Lightswitch_ColorScheme_Light": "Light",
+  "Lightswitch_ColorScheme_Auto": "Auto",
+  "Lightswitch_ColorScheme_Dark": "Dark",
 
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
