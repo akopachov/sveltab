@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { cache } from '$stores/cache';
   import { ProgressRadial, type PopupSettings, popup, RangeSlider } from '@skeletonlabs/skeleton';
   import VirtualScroll from 'svelte-virtual-scroll-list';
   import { onMount } from 'svelte';
@@ -7,6 +6,7 @@
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import ColorPicker from './color-picker.svelte';
   import * as m from '$i18n/messages';
+  import { nanoid } from 'nanoid/non-secure';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
   enum FontWeight {
@@ -82,7 +82,7 @@
 
   let popupSettings: PopupSettings = {
     event: 'focus-click',
-    target: 'popupAutocomplete',
+    target: `FontSelect_PopupAutocomplete_${nanoid()}`,
     placement: 'bottom',
     middleware: {
       flip: {

@@ -1,29 +1,51 @@
-<script context="module" lang="ts">
-  const SearchProviderUrlGenerators = new Map<SearchProvider, (searchTerm: string) => string>([
-    ['duckduckgo', (searchTerm: string) => `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`],
-    ['google', (searchTerm: string) => `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`],
-    ['bing', (searchTerm: string) => `https://www.bing.com/search?q=${encodeURIComponent(searchTerm)}`],
-  ]);
-</script>
-
 <script lang="ts">
-  import type { SearchProvider, Settings } from './settings';
+  import type { Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { localeCharSubset } from '$stores/locale';
   import * as m from '$i18n/messages';
   import { goto } from '$app/navigation';
+  import { SearchProviderAdapters } from './search-provider-adapters';
+  import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
+  import { debounce, type DebounceOptions } from 'svelte-use-debounce';
 
   export let settings: Settings;
+  export let id: string;
+
+  const popupSettings: PopupSettings = {
+    event: 'focus-click',
+    target: `Widget_Search_SuggestionPopup_${id}`,
+    placement: 'bottom',
+  };
+
+  const debounceOpts: DebounceOptions = {
+    ms: 500,
+    callback: async str => {
+      if (str?.length > 2 && searchProviderAdapter) {
+        const suggestionUrl = searchProviderAdapter.suggestionUrl(str);
+        const response = await fetch(suggestionUrl).then(r => r.json());
+        searchSuggestions = searchProviderAdapter.adaptSuggestions(response);
+      } else {
+        searchSuggestions = [];
+      }
+    },
+  };
 
   let searchTerm: string = '';
+  let searchSuggestions: string[] = [];
 
   $: fontSettings = settings.font;
+  $: searchProviderAdapter = SearchProviderAdapters.get($settings.searchProvider);
+
+  $: {
+    if (!searchTerm) {
+      searchSuggestions = [];
+    }
+  }
 
   function doSearch() {
     if (searchTerm) {
-      const urlGenerator = SearchProviderUrlGenerators.get($settings.searchProvider);
-      if (urlGenerator) {
-        goto(urlGenerator(searchTerm));
+      if (searchProviderAdapter) {
+        goto(searchProviderAdapter.searchUrl(searchTerm));
       }
       searchTerm = '';
     }
@@ -53,6 +75,26 @@
       type="search"
       class="pl-0 text-[calc(75cqh-1rem)] w-full h-full"
       placeholder={m.Widgets_Search_Placeholder()}
-      bind:value={searchTerm} />
+      bind:value={searchTerm}
+      use:popup={popupSettings}
+      use:debounce={debounceOpts} />
   </form>
+</div>
+<div
+  class="w-full ml-[-50cqh] rounded"
+  style:background-color={$settings.backgroundColor}
+  style:color={$settings.textColor}
+  style:font-weight={$fontSettings.weight}
+  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
+  data-popup={popupSettings.target}
+  style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
+  <nav class="list-nav text-[calc(70cqh-1rem)]">
+    <ul>
+      {#each searchSuggestions as suggestion}
+        <li>
+          <a href={searchProviderAdapter?.searchUrl(suggestion)}>{suggestion}</a>
+        </li>
+      {/each}
+    </ul>
+  </nav>
 </div>
