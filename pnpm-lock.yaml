@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^1.5.3
     version: 1.5.3
   '@inlang/paraglide-js':
-    specifier: 1.0.0-prerelease.18
-    version: 1.0.0-prerelease.18
+    specifier: 1.0.0-prerelease.19
+    version: 1.0.0-prerelease.19
   '@inlang/paraglide-js-adapter-vite':
     specifier: ^1.0.1
     version: 1.0.1
@@ -25,10 +25,10 @@ devDependencies:
     version: 3.0.0
   '@sveltejs/adapter-static':
     specifier: ^2.0.3
-    version: 2.0.3(@sveltejs/kit@1.30.0)
+    version: 2.0.3(@sveltejs/kit@1.30.3)
   '@sveltejs/kit':
-    specifier: ^1.30.0
-    version: 1.30.0(svelte@4.2.8)(vite@4.5.0)
+    specifier: ^1.30.3
+    version: 1.30.3(svelte@4.2.8)(vite@4.5.0)
   '@tailwindcss/container-queries':
     specifier: ^0.1.1
     version: 0.1.1(tailwindcss@3.3.6)
@@ -51,8 +51,8 @@ devDependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.32)
   browser-storage-polyfill:
-    specifier: ^1.0.6
-    version: 1.0.6
+    specifier: ^1.0.7
+    version: 1.0.7
   eslint:
     specifier: ^8.55.0
     version: 8.55.0
@@ -62,6 +62,9 @@ devDependencies:
   eslint-plugin-svelte:
     specifier: ^2.35.1
     version: 2.35.1(eslint@8.55.0)(svelte@4.2.8)
+  nanoid:
+    specifier: ^5.0.4
+    version: 5.0.4
   npm-run-all:
     specifier: ^4.1.5
     version: 4.1.5
@@ -609,8 +612,8 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js@1.0.0-prerelease.18:
-    resolution: {integrity: sha512-umsvAQCExRw7P+yGWFUN5l6yKi+4KNW6x5etzwLpPNkcYoOaoQu71EG7eFgvzD6opi9nmH2GMvTlCBJSoHQPjg==}
+  /@inlang/paraglide-js@1.0.0-prerelease.19:
+    resolution: {integrity: sha512-hWsZVsW6rTBzEN4dWjcaO9bXnpokvjjF3Ath1VpLm/hFvGLN5Ij+rkE2GKoR0It6HSKjEV8qBLkuU9KGTp0G5A==}
     hasBin: true
     dependencies:
       '@inlang/detect-json-formatting': 1.0.0
@@ -841,16 +844,16 @@ packages:
     resolution: {integrity: sha512-DHz3fk5BQgEtckQfqk9VfJJwDO3QRqlRFsVJE8HSHwxDjRB09J2oiY7rATFMVOE4F5Q83JQlvJsAfmHqouUgow==}
     dev: true
 
-  /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.30.0):
+  /@sveltejs/adapter-static@2.0.3(@sveltejs/kit@1.30.3):
     resolution: {integrity: sha512-VUqTfXsxYGugCpMqQv1U0LIdbR3S5nBkMMDmpjGVJyM6Q2jHVMFtdWJCkeHMySc6mZxJ+0eZK3T7IgmUCDrcUQ==}
     peerDependencies:
       '@sveltejs/kit': ^1.5.0
     dependencies:
-      '@sveltejs/kit': 1.30.0(svelte@4.2.8)(vite@4.5.0)
+      '@sveltejs/kit': 1.30.3(svelte@4.2.8)(vite@4.5.0)
     dev: true
 
-  /@sveltejs/kit@1.30.0(svelte@4.2.8)(vite@4.5.0):
-    resolution: {integrity: sha512-HK7XE8ZAL7cGreRRxCCVEpcNA3x2KM0mfJlDv7geEyCElYjJsdBoANEb00HcYlvs/2ShNAsX8lY/A60s9Xdfew==}
+  /@sveltejs/kit@1.30.3(svelte@4.2.8)(vite@4.5.0):
+    resolution: {integrity: sha512-0DzVXfU4h+tChFvoc8C61IqErCyskD4ydSIDjpKS2lYlEzIYrtYrY7juSqACFxqcvZAnOEXvSY+zZ8br0+ZMMg==}
     engines: {node: ^16.14 || >=18}
     hasBin: true
     requiresBuild: true
@@ -1482,8 +1485,8 @@ packages:
       fill-range: 7.0.1
     dev: true
 
-  /browser-storage-polyfill@1.0.6:
-    resolution: {integrity: sha512-2/WnsYYVF0sc9FjY7ze1lCpkrO7K22Kdv7S0c3X4NflyyNpHAOElIM+O4n8zwEbdL7Te4PMPd4qqAh459TF/jw==}
+  /browser-storage-polyfill@1.0.7:
+    resolution: {integrity: sha512-sCzNuoxcK4Cd9nfbBNn6i0xAs/eM0WpX6RU7ipxxyo+SBTTwwiCIA8kzhHXSdWuRsZ85T+gb3OgQK3cPide7Og==}
     dev: true
 
   /browserslist@4.22.2:
@@ -1492,7 +1495,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001570
-      electron-to-chromium: 1.4.611
+      electron-to-chromium: 1.4.612
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -2159,8 +2162,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /electron-to-chromium@1.4.611:
-    resolution: {integrity: sha512-ZtRpDxrjHapOwxtv+nuth5ByB8clyn8crVynmRNGO3wG3LOp8RTcyZDqwaI6Ng6y8FCK2hVZmJoqwCskKbNMaw==}
+  /electron-to-chromium@1.4.612:
+    resolution: {integrity: sha512-dM8BMtXtlH237ecSMnYdYuCkib2QHq0kpWfUnavjdYsyr/6OsAwg5ZGUfnQ9KD1Ga4QgB2sqXlB2NT8zy2GnVg==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -3875,6 +3878,12 @@ packages:
   /nanoid@3.3.7:
     resolution: {integrity: sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: true
+
+  /nanoid@5.0.4:
+    resolution: {integrity: sha512-vAjmBf13gsmhXSgBrtIclinISzFFy22WwCYoyilZlsrRXNIHSwgFQ1bEdjRwMT3aoadeIF6HMuDRlOxzfXV8ig==}
+    engines: {node: ^18 || >=20}
     hasBin: true
     dev: true
 

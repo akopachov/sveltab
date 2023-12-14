@@ -4,7 +4,7 @@
   import * as m from '$i18n/messages';
 </script>
 
-<RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
+<RadioGroup display="flex" active="variant-filled-primary" hover="hover:variant-soft-primary">
   <RadioItem bind:group={$PreferedColorScheme} name="justify" value="light">
     {m.Lightswitch_ColorScheme_Light()}
   </RadioItem>

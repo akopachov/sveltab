@@ -1,15 +1,19 @@
-import { WidgetSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial, type WidgetSettingsInitial } from "./widget-settings";
+import {
+  WidgetSettings,
+  WidgetSettingsExtra,
+  type WidgetSettingsExtraInitial,
+  type WidgetSettingsInitial,
+} from './widget-settings';
 import { WidgetsCatalog, type WidgetCatalogItem, type WidgetCatalogItemComponents } from '$stores/widgets-catalog';
 
-
-const WidgetsCatalogIndex = new Map<string, WidgetCatalogItem>(
-  WidgetsCatalog.map(c => [c.settings.type, c])  
-);
+const WidgetsCatalogIndex = new Map<string, WidgetCatalogItem>(WidgetsCatalog.map(c => [c.settings.type, c]));
 
 export class WidgetInstance {
-  static #lastId = 0;
-  private constructor(catalogItem: WidgetCatalogItem, settings: WidgetSettingsInitial, extraConstructor: (new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra)) { 
-    this.id = WidgetInstance.#lastId++;
+  private constructor(
+    catalogItem: WidgetCatalogItem,
+    settings: WidgetSettingsInitial,
+    extraConstructor: new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra,
+  ) {
     this.settings = new WidgetSettings(settings, extraConstructor);
     this.components = catalogItem.components;
   }
@@ -23,7 +27,9 @@ export class WidgetInstance {
     return new WidgetInstance(catalogItem, settings, extra);
   }
 
-  readonly id: number;
+  get id() {
+    return this.settings.id;
+  }
   readonly components: WidgetCatalogItemComponents;
   readonly settings: WidgetSettings;
 }

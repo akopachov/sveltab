@@ -47,7 +47,4 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     }
     this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur });
   }
-  destroy(): void {
-    super.destroy();
-  }
 }

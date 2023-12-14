@@ -1,16 +1,24 @@
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
   import { getModalStore, popup, ProgressRadial, type PopupSettings } from '@skeletonlabs/skeleton';
-  import { createEventDispatcher } from 'svelte';
+  import { SvelteComponent, createEventDispatcher } from 'svelte';
   import * as m from '$i18n/messages';
+  import type { WidgetSettingsExtra } from '$models/widget-settings';
 
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;
   export let isSelected: boolean;
 
+  type WidgetComponent = SvelteComponent & {
+    onDelete?: () => void | Promise<void>;
+    settings?: WidgetSettingsExtra;
+    id?: string;
+  };
+
   const dispatch = createEventDispatcher();
   const modalStore = getModalStore();
   let fakeEditButton: HTMLElement;
+  let widgetComponent: WidgetComponent;
 
   $: widgetSettings = widget.settings;
   $: widgetPosition = widget.settings.position;
@@ -20,8 +28,11 @@
       type: 'confirm',
       title: m.Widgets_Common_Menu_Delete_Confirm_Title(),
       body: m.Widgets_Common_Menu_Delete_Confirm_Body(),
-      response: (confirmed: boolean) => {
+      response: async (confirmed: boolean) => {
         if (confirmed) {
+          if (widgetComponent.onDelete) {
+            await widgetComponent.onDelete();
+          }
           dispatch('delete', widget);
         }
       },
@@ -88,7 +99,7 @@
     {#await widget.components.widget.getValue()}
       <ProgressRadial width="w-[100cqmin] ml-[auto] mr-[auto]" />
     {:then component}
-      <svelte:component this={component} settings={widgetSettings.extra} />
+      <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
     {/await}
   </div>
 </div>

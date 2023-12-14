@@ -16,11 +16,15 @@
 {#if tab === TextTabId}
   <div>
     <div class="label">
-      <span>{m.Widgets_Date_Settings_Font()}</span>
-      <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+      <span>{m.Widgets_Quote_Settings_Font()}</span>
+      <FontSelector
+        bind:font={$fontSettings.id}
+        bind:weight={$fontSettings.weight}
+        bind:color={$settings.textColor}
+        bind:size={$fontSettings.size} />
     </div>
     <div class="mt-2">
-      <h4>{m.Widgets_Date_Settings_Shadow()}</h4>
+      <h4>{m.Widgets_Quote_Settings_Shadow()}</h4>
       <div class="pl-4 pr-4">
         <ShadowSelector shadowSettings={settings.textShadow} />
       </div>
@@ -28,14 +32,14 @@
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">
-    <span>{m.Widgets_Date_Settings_Color()}</span>
+    <span>{m.Widgets_Quote_Settings_Color()}</span>
     <div>
       <ColorPicker bind:color={$settings.backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
-    <span>{m.Widgets_Date_Settings_Blur()}</span>
+    <span>{m.Widgets_Quote_Settings_Blur()}</span>
     <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import { Subscribable, type OmitSubscribable } from './subscribable';
 
 export type WidgetPositionInitial = Partial<OmitSubscribable<WidgetPosition>>;
@@ -36,6 +37,7 @@ export class WidgetSettings extends Subscribable implements WidgetSettingsInitia
     extraConstructor: new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra,
   ) {
     super();
+    this.id = initial.id || nanoid();
     this.type = initial.type;
     this.rotation = initial.rotation || 0;
     this.zIndex = initial.zIndex || 0;
@@ -45,6 +47,7 @@ export class WidgetSettings extends Subscribable implements WidgetSettingsInitia
     this.position = new WidgetPosition(initial.position || {});
   }
 
+  readonly id: string;
   readonly type: string;
   readonly position: WidgetPosition;
   rotation: number;
@@ -60,10 +63,12 @@ export class FontSettings extends Subscribable implements FontSettingsInitial {
     super();
     this.id = initial.id || 'noto-sans';
     this.weight = initial.weight || 400;
+    this.size = initial.size;
   }
 
   id: string;
   weight: number;
+  size: number | undefined;
 }
 
 export type ShadowSettingsInitial = Partial<OmitSubscribable<ShadowSettings>>;

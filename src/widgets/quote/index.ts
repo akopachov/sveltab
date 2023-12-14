@@ -1,9 +1,10 @@
 import type { WidgetCatalogItem } from '$stores/widgets-catalog';
 import { Lazy } from '$lib/lazy';
+import * as m from '$i18n/messages';
 
 export const Widget: WidgetCatalogItem = {
-  name: () => 'Dumb',
-  previewImageUri: '/widgets/dumb/preview.png',
+  name: m.Widgets_Quote_Name,
+  previewImageUri: '/widgets/quote/preview.png',
   components: {
     widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),
     settings: {
@@ -13,10 +14,10 @@ export const Widget: WidgetCatalogItem = {
     },
   },
   settings: {
-    type: 'dumb',
+    type: 'random-quote',
     position: {
       height: 10,
-      width: 10,
+      width: 50,
     },
   },
 };

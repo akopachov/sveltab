@@ -1,6 +1,6 @@
 <script lang="ts">
   import { cache } from '$stores/cache';
-  import { ProgressRadial, type PopupSettings, popup } from '@skeletonlabs/skeleton';
+  import { ProgressRadial, type PopupSettings, popup, RangeSlider } from '@skeletonlabs/skeleton';
   import VirtualScroll from 'svelte-virtual-scroll-list';
   import { onMount } from 'svelte';
   import { writable } from 'svelte/store';
@@ -24,6 +24,7 @@
   export let font: string | null | undefined;
   export let color: string | null | undefined = null;
   export let weight: FontWeight | null | undefined;
+  export let size: number | null | undefined = null;
 
   let selectedFontInfo: FontInfo;
   $: {
@@ -160,4 +161,11 @@
       </VirtualScroll>
     </div>
   </div>
+  {#if size}
+    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <label class="label mt-2">
+      <span>{m.FontSelector_Size()}</span>
+      <RangeSlider name="range-slider" bind:value={size} min={5} max={20} step={0.1} />
+    </label>
+  {/if}
 {/await}
