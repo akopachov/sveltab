@@ -52,8 +52,15 @@
   style:--relative-offset-y="{$widgetPosition.offsetY}cqh"
   style:--relative-offset-x="{$widgetPosition.offsetX}cqw"
   style:transform="rotate({widget.settings.rotation}deg)">
+  <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
+    {#await widget.components.widget.getValue()}
+      <ProgressRadial width="w-[100cqmin] ml-[auto] mr-[auto]" />
+    {:then component}
+      <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
+    {/await}
+  </div>
   <button
-    class="absolute transparent top-0 left-0 w-full h-full invisible"
+    class="absolute transparent top-0 left-0 w-full h-full opacity-0 cursor-move"
     bind:this={fakeEditButton}
     use:popup={widgetSettingsPopupSettings}
     class:hidden={!isSelected}>
@@ -95,13 +102,6 @@
       </svg>
     </button>
   {/if}
-  <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
-    {#await widget.components.widget.getValue()}
-      <ProgressRadial width="w-[100cqmin] ml-[auto] mr-[auto]" />
-    {:then component}
-      <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
-    {/await}
-  </div>
 </div>
 
 <style>

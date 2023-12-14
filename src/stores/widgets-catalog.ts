@@ -9,6 +9,7 @@ import type { Lazy } from '$lib/lazy';
 import { Widget as ClockWidget } from '$widgets/clock';
 import { Widget as DateWidget } from '$widgets/date';
 import { Widget as RandomQuoteWidget } from '$widgets/quote';
+import { Widget as SearchWidget } from '$widgets/search';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
   position: Omit<WidgetPositionInitial, 'x' | 'y'>;
@@ -30,4 +31,4 @@ export interface WidgetCatalogItemComponents {
   };
 }
 
-export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [ClockWidget, DateWidget, RandomQuoteWidget];
+export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [ClockWidget, DateWidget, RandomQuoteWidget, SearchWidget];

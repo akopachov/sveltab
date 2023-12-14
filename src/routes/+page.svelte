@@ -258,7 +258,6 @@
     <ProgressRadial meter="stroke-primary-500" track="stroke-primary-500/30" />
   </div>
 {/if}
-
 <Drawer>
   <div class="flex flex-col h-full w-full">
     <canvas bind:this={dragnDropPreviewCanvas} class="hidden"></canvas>
@@ -357,7 +356,9 @@
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="label flex justify-center items-center">
         <span>{m.Core_Sidebar_LockWorkspace()}</span>
-        <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={workspaceLocked} size="sm" />
+        {#if $workspace}
+          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspace.isLocked} size="sm" />
+        {/if}
       </label>
     </div>
   </div>

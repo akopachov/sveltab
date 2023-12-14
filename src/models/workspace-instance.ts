@@ -20,7 +20,7 @@ export class WorkspaceInstance extends Subscribable {
 
     this.#background = background;
     this.#trackObjectChange(this.#background.settings);
-    this.isLocked = false;
+    this.isLocked = true;
   }
 
   isLocked: boolean;
