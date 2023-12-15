@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config}*/
 const { skeleton } = require('@skeletonlabs/tw-plugin');
+const { addDynamicIconSelectors } = require('@iconify/tailwind');
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
@@ -17,7 +18,8 @@ const config = {
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
-		skeleton({ themes: { preset: ['skeleton'] } })
+    addDynamicIconSelectors(),
+		skeleton({ themes: { preset: ['skeleton'] } }),
 	]
 };
 

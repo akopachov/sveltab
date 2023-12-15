@@ -54,8 +54,8 @@
   style:color={$settings.textColor}
   style:font-weight={$fontSettings.weight}
   style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:filter="drop-shadow({$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color})"
+  style:text-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
+  {$textShadowSettings.color}"
   style:font-size="{$fontSettings.size}cqmin"
   use:fontsource={{
     font: $fontSettings.id,

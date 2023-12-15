@@ -17,7 +17,7 @@ export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position
 
 export interface WidgetCatalogItem {
   readonly name: () => string;
-  readonly previewImageUri: string;
+  readonly previewImage: Lazy<Promise<string>>;
   readonly settings: CatalogWidgetSettingsInitial;
   readonly components: WidgetCatalogItemComponents;
 }

@@ -4,9 +4,9 @@
   import { localeCharSubset } from '$stores/locale';
   import * as m from '$i18n/messages';
   import { goto } from '$app/navigation';
-  import { SearchProviderAdapters } from './search-provider-adapters';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
+  import { SearchProviderAdapters } from './search-providers';
 
   export let settings: Settings;
   export let id: string;
@@ -64,16 +64,15 @@
     styles: ['normal'],
     weights: [$fontSettings.weight],
   }}>
-  <div class="input-group-shim !p-0">
-    <img
-      class="h-[100cqh] w-auto p-[15cqh] aspect-square"
-      alt={$settings.searchProvider}
-      src="./widgets/search/provider_logo_{$settings.searchProvider}.svg" />
+  <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
+    {#await searchProviderAdapter?.icon.getValue() then icon}
+      {@html icon}
+    {/await}
   </div>
   <form on:submit={doSearch}>
     <input
       type="search"
-      class="pl-0 text-[calc(75cqh-1rem)] w-full h-full"
+      class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-1rem),10px)] w-full h-full"
       placeholder={m.Widgets_Search_Placeholder()}
       bind:value={searchTerm}
       use:popup={popupSettings}
@@ -92,7 +91,11 @@
     <ul>
       {#each searchSuggestions as suggestion}
         <li>
-          <a href={searchProviderAdapter?.searchUrl(suggestion)}>{suggestion}</a>
+          <a
+            class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
+            href={searchProviderAdapter?.searchUrl(suggestion)}>
+            {suggestion}
+          </a>
         </li>
       {/each}
     </ul>

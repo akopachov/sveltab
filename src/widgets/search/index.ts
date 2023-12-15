@@ -4,7 +4,7 @@ import * as m from '$i18n/messages';
 
 export const Widget: WidgetCatalogItem = {
   name: m.Widgets_Search_Name,
-  previewImageUri: '/widgets/search/preview.png',
+  previewImage: new Lazy(() => import('./preview.svg?raw').then(r => r.default)),
   components: {
     widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),
     settings: {
@@ -16,8 +16,8 @@ export const Widget: WidgetCatalogItem = {
   settings: {
     type: 'search',
     position: {
-      height: 10,
-      width: 50,
+      height: 7,
+      width: 40,
     },
   },
 };

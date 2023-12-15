@@ -13,7 +13,11 @@
   on:dragend
   {...otherProps}>
   <header class="overflow-hidden h-full">
-    <img class="h-full w-full object-cover" src={widgetCatalogItem.previewImageUri} alt={widgetCatalogItem.name()} />
+    <div class="h-full w-full p-2 [&>*]:h-full [&>*]:w-full">
+      {#await widgetCatalogItem.previewImage.getValue() then image}
+        {@html image}
+      {/await}
+    </div>
   </header>
   <h4 class="text-center">{widgetCatalogItem.name()}</h4>
 </button>

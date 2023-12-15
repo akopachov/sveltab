@@ -4,7 +4,7 @@ import * as m from '$i18n/messages';
 
 export const Widget: WidgetCatalogItem = {
   name: m.Widgets_Date_Name,
-  previewImageUri: '/widgets/date/preview.png',
+  previewImage: new Lazy(() => import('./preview.svg?raw').then(r => r.default)),
   components: {
     widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),
     settings: {

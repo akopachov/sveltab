@@ -25,27 +25,11 @@
 
 <div class="input-group grid-cols-[auto_1fr_auto] {exClass || ''}">
   <button class="variant-soft !pl-2 !pr-2" on:click={dec}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 12h-15" />
-    </svg>
+    <span class="w-6 h-6 icon-[ic--baseline-minus]"></span>
   </button>
   <input class="no-spinner text-center !min-w-0" type="number" bind:value {min} {max} {placeholder} {step} />
   <button class="variant-soft !pl-2 !pr-2" on:click={inc}>
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke-width="1.5"
-      stroke="currentColor"
-      class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-    </svg>
+    <span class="w-6 h-6 icon-[ic--baseline-plus]"></span>
   </button>
 </div>
 
