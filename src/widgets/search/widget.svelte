@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
-  import { localeCharSubset } from '$stores/locale';
+  import { localeCharSubset, userPosssibleLocaleCharSubset } from '$stores/locale';
   import * as m from '$i18n/messages';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
@@ -44,7 +44,7 @@
   function doSearch() {
     if (searchTerm) {
       if (searchProviderAdapter) {
-        location.replace(searchProviderAdapter.searchUrl(searchTerm));
+        location.assign(searchProviderAdapter.searchUrl(searchTerm));
       }
       searchTerm = '';
     }
@@ -59,7 +59,7 @@
   style:backdrop-filter="blur({$settings.backgroundBlur}px)"
   use:fontsource={{
     font: $fontSettings.id,
-    subsets: $localeCharSubset,
+    subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
     weights: [$fontSettings.weight],
   }}>

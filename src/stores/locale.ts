@@ -2,7 +2,14 @@ import { browser } from '$app/environment';
 import { isAvailableLanguageTag, setLanguageTag, sourceLanguageTag, type AvailableLanguageTag } from '$i18n/runtime';
 import { derived, writable } from 'svelte/store';
 
-const localeCharSubsetMap = new Map<AvailableLanguageTag, string[]>([['en', ['latin', 'latin-ext']]]);
+const localeCharSubsetMap = new Map<string, string[]>([
+  ['en', ['latin', 'latin-ext']],
+  ['by', ['cyrillic', 'cyrillic-ext']],
+  ['ua', ['cyrillic', 'cyrillic-ext']],
+  ['ru', ['cyrillic', 'cyrillic-ext']],
+  ['gr', ['greek', 'greek-ext']],
+  ['vi', ['vietnamese']],
+]);
 
 const LocalStorageLocaleKey = 'locale';
 
@@ -18,6 +25,13 @@ export const locale = {
 };
 
 export const localeCharSubset = derived(locale, $locale => localeCharSubsetMap.get($locale));
+export const userPosssibleLocaleCharSubset = derived(localeCharSubset, v => {
+  const localeCharsets = v || [];
+  const possibleUserCharsets = navigator.languages.flatMap(
+    m => localeCharSubsetMap.get(new Intl.Locale(m).language) || [],
+  );
+  return [...new Set([...localeCharsets, ...possibleUserCharsets])];
+});
 
 export function initLocaleStore() {
   function initLocale(locale: AvailableLanguageTag) {

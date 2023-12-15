@@ -7,9 +7,9 @@ const activeFonts = new Map<
 
 export type FontSourceActionSettings = {
   font: string;
-  subsets?: string[] | null;
-  weights?: number[] | null;
-  styles?: string[] | null;
+  subsets?: ReadonlyArray<string> | null;
+  weights?: ReadonlyArray<number> | null;
+  styles?: ReadonlyArray<string> | null;
 };
 
 function getKey(subset: string, weight: number, style: string) {
