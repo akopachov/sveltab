@@ -104,6 +104,7 @@
   "Widgets_Quote_Name": "Quote",
   "Widgets_Quote_Settings_Tabs_Text": "Text",
   "Widgets_Quote_Settings_Tabs_Background": "Background",
+  "Widgets_Quote_Settings_UpdateInterval": "Update interval (minutes)",
   "Widgets_Quote_Settings_Font": "Font",
   "Widgets_Quote_Settings_Shadow": "Shadow",
   "Widgets_Quote_Settings_Color": "Color",
@@ -116,5 +117,22 @@
   "Widgets_Search_Settings_Font": "Font",
   "Widgets_Search_Settings_Color": "Color",
   "Widgets_Search_Settings_Blur": "Blur",
-  "Widgets_Search_Settings_SearchProvider": "Search provider"
+  "Widgets_Search_Settings_SearchProvider": "Search provider",
+
+  "Widgets_Greating_Name": "Greating",
+  "Widgets_Greating_Messages_Morning": "Good morning;Wakey, wakey};Rise and shine;Morning;Top of the morning to you;Have a great day",
+  "Widgets_Greating_Messages_Morning_Named": "Good morning, [name];Wakey, wakey, [name];Rise and shine, [name];Morning, [name];Top of the morning to you, [name];Have a great day, [name]",
+  "Widgets_Greating_Messages_Day": "Hiya;Hi;Good afternoon;Howdy;G'day;Hello there",
+  "Widgets_Greating_Messages_Day_Named": "Hiya, [name];Hi, [name];Good afternoon, [name];Howdy, [name];G'day, [name];Hello there, [name]",
+  "Widgets_Greating_Messages_Evening": "Good evening;Nice to see you;Hellooooo;Enjoy the rest of your evening;Fancy seeing you here;Hi there",
+  "Widgets_Greating_Messages_Evening_Named": "Good evening, [name];Nice to see you, [name];Hellooooo, [name];Enjoy the rest of your evening, [name];Fancy seeing you here;Hi there, [name]",
+  "Widgets_Greating_Messages_Night": "It's late. Time to rest;Goodnight;Sweet Dreams;Nighty Night",
+  "Widgets_Greating_Messages_Night_Named": "It's late, [name]. Time to rest;Goodnight, [name];Sweet Dreams, [name];Nighty Night, [name]",
+  "Widgets_Greating_Settings_Tabs_Text": "Text",
+  "Widgets_Greating_Settings_Tabs_Background": "Background",
+  "Widgets_Greating_Settings_Name": "Name",
+  "Widgets_Greating_Settings_Font": "Font",
+  "Widgets_Greating_Settings_Shadow": "Shadow",
+  "Widgets_Greating_Settings_Color": "Color",
+  "Widgets_Greating_Settings_Blur": "Blur"
 }

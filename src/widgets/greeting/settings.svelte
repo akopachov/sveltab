@@ -7,36 +7,30 @@
   import * as m from '$i18n/messages';
   import ShadowSelector from '$components/shadow-selector.svelte';
   import { GeneralTabId } from '$components/widget-settings.svelte';
-  import NumberInput from '$components/number-input.svelte';
 
   export let settings: Settings;
   export let tab: number;
-
-  let updateInterval = settings.updateInterval / 60;
-  $: {
-    settings.updateInterval = Math.max(updateInterval, 1) * 60;
-  }
 
   $: fontSettings = settings.font;
 </script>
 
 {#if tab === GeneralTabId}
-  <div class="label mb-2">
-    <span>{m.Widgets_Quote_Settings_UpdateInterval()}</span>
-    <NumberInput bind:value={updateInterval} min={1} />
-  </div>
+  <label class="label">
+    <span>{m.Widgets_Greating_Settings_Name()}</span>
+    <input type="text" class="input" bind:value={$settings.name} />
+  </label>
 {:else if tab === TextTabId}
   <div>
-    <div class="label mb-2">
-      <span>{m.Widgets_Quote_Settings_Font()}</span>
+    <div class="label">
+      <span>{m.Widgets_Greating_Settings_Font()}</span>
       <FontSelector
         bind:font={$fontSettings.id}
         bind:weight={$fontSettings.weight}
         bind:color={$settings.textColor}
         bind:size={$fontSettings.size} />
     </div>
-    <div>
-      <h4>{m.Widgets_Quote_Settings_Shadow()}</h4>
+    <div class="mt-2">
+      <h4>{m.Widgets_Greating_Settings_Shadow()}</h4>
       <div class="pl-4 pr-4">
         <ShadowSelector shadowSettings={settings.textShadow} />
       </div>
@@ -44,14 +38,14 @@
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">
-    <span>{m.Widgets_Quote_Settings_Color()}</span>
+    <span>{m.Widgets_Greating_Settings_Color()}</span>
     <div>
       <ColorPicker bind:color={$settings.backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
-    <span>{m.Widgets_Quote_Settings_Blur()}</span>
+    <span>{m.Widgets_Greating_Settings_Blur()}</span>
     <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

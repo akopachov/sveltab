@@ -26,7 +26,7 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center"
+  class="w-full h-full p-2 select-none flex justify-center content-center items-center"
   style:background-color={$settings.backgroundColor}
   style:color={$settings.textColor}
   style:font-weight={$fontSettings.weight}
