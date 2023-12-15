@@ -1,5 +1,5 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
-import { getStorage } from '$stores/storage';
+import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
@@ -22,7 +22,6 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
 
   async update(settings: Settings) {
     if (!this.#localSettings) {
-      const storage = await getStorage();
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
         lastUrl: '',
@@ -39,7 +38,6 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         this.#localSettings!.lastLocale = settings.locale;
         this.#localSettings!.lastChangedTime = new Date().valueOf();
         this.#localSettings!.lastUrl = response.url;
-        const storage = await getStorage();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         console.warn(this, '->', e);

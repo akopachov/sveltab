@@ -3,11 +3,10 @@
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
   import { onMount } from 'svelte';
-  import { getStorage } from '$stores/storage';
+  import { storage } from '$stores/storage';
   import { writable } from 'svelte/store';
 
   let clockStore = getClockStore(60000);
-  let storagePromise = getStorage();
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
   export let settings: Settings;
   export let id: string;
@@ -23,13 +22,11 @@
   }
 
   onMount(async () => {
-    const storage = await storagePromise;
     $quote = <LatestQuote>(await storage.local.get(storageKey))[storageKey] || { lastUpdate: 0 };
     await checkIfObsolete();
   });
 
   export async function onDelete() {
-    const storage = await storagePromise;
     await storage.local.remove(storageKey);
   }
 
@@ -42,7 +39,6 @@
   async function loadNewQuote() {
     const response = await fetch('https://api.quotable.io/random').then(r => r.json());
     const q: LatestQuote = { quote: response.content, author: response.author, lastUpdate: new Date().valueOf() };
-    const storage = await storagePromise;
     await storage.local.set({ [storageKey]: q });
     $quote = q;
   }

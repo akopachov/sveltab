@@ -1,12 +1,11 @@
 import { browser } from '$app/environment';
-import { getStorage } from './storage';
+import { storage } from './storage';
 
 const CachesTtlStorageKey = 'caches_ttl';
 let CachesTtl: Map<string, number>;
 const NotFoundObject = { NOT_FOUND: true };
 
 export async function cache<T>(key: string, generator: () => Promise<T> | T, ttl: number) {
-  const storage = await getStorage();
   const cacheKey = `cache_${key}`;
   if (!CachesTtl) {
     CachesTtl = new Map<string, number>((await storage.local.get(CachesTtlStorageKey))[CachesTtlStorageKey]);
@@ -38,7 +37,6 @@ export async function cache<T>(key: string, generator: () => Promise<T> | T, ttl
 
 export async function setupCacheHouseKeeping() {
   if (!browser) return;
-  const storage = await getStorage();
   if (!CachesTtl) {
     CachesTtl = new Map<string, number>((await storage.local.get(CachesTtlStorageKey))[CachesTtlStorageKey]);
   }

@@ -11,6 +11,7 @@ import { Widget as DateWidget } from '$widgets/date';
 import { Widget as RandomQuoteWidget } from '$widgets/quote';
 import { Widget as SearchWidget } from '$widgets/search';
 import { Widget as GreetingWidget } from '$widgets/greeting';
+import { Widget as FlickrWidget } from '$widgets/flickr-image';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
   position: Omit<WidgetPositionInitial, 'x' | 'y'>;
@@ -38,4 +39,5 @@ export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   RandomQuoteWidget,
   SearchWidget,
   GreetingWidget,
+  FlickrWidget,
 ];

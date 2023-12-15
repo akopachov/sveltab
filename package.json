@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.5.3",
-		"@iconify/json": "^2.2.157",
+		"@iconify/json": "^2.2.158",
 		"@iconify/tailwind": "^0.1.4",
 		"@inlang/paraglide-js": "1.0.0-prerelease.19",
 		"@inlang/paraglide-js-adapter-vite": "^1.0.2",
@@ -59,7 +59,7 @@
 		"tiny-glob": "^0.2.9",
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.9",
+		"vite": "^5.0.10",
 		"vite-plugin-tailwind-purgecss": "^0.1.4",
 		"web-ext": "^7.9.0",
 		"webextension-polyfill": "^0.10.0"

@@ -1,6 +1,5 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
-import type { Storage } from 'webextension-polyfill';
-import { getStorage } from '$stores/storage';
+import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 
 const LocalSettingsKey = 'RandomImageBackgroundProvider_LocalSettings';
@@ -27,7 +26,6 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
   async update(settings: Settings, forceUpdate?: boolean) {
     this.#lastSettings = settings;
     if (!this.#localSettings) {
-      const storage = await getStorage();
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
         lastUrl: '',
@@ -47,7 +45,6 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
         this.#localSettings!.lastUrl = response.url;
         this.#localSettings!.lastChangedTime = new Date().valueOf();
         this.#localSettings!.lastSearchTerm = settings.searchTerms;
-        const storage = await getStorage();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         console.warn(this, '->', e);
