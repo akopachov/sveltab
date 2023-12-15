@@ -9,7 +9,7 @@ export class GoogleSearchProviderAdapter implements SearchProviderAdapter {
     return response[1];
   }
   suggestionUrl(searchTerm: string) {
-    return `https://cors-bypass.kopachov.workers.dev/?https://suggestqueries.google.com/complete/search?client=chrome-omni&q=${encodeURIComponent(
+    return `https://cors-bypass.kopachov.workers.dev/?https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(
       searchTerm,
     )}`;
   }

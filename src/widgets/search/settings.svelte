@@ -20,6 +20,7 @@
       <option value="duckduckgo">DuckDuckGo</option>
       <option value="google">Google</option>
       <option value="bing">Bing</option>
+      <option value="youtube">YouTube</option>
     </select>
   </label>
 {:else if tab === TextTabId}

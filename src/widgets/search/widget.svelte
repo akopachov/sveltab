@@ -3,10 +3,9 @@
   import { fontsource } from '$actions/fontsource';
   import { localeCharSubset } from '$stores/locale';
   import * as m from '$i18n/messages';
-  import { goto } from '$app/navigation';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
-  import { SearchProviderAdapters } from './search-providers';
+  import { SearchProviderAdapters } from './providers';
 
   export let settings: Settings;
   export let id: string;
@@ -45,7 +44,7 @@
   function doSearch() {
     if (searchTerm) {
       if (searchProviderAdapter) {
-        goto(searchProviderAdapter.searchUrl(searchTerm));
+        location.replace(searchProviderAdapter.searchUrl(searchTerm));
       }
       searchTerm = '';
     }

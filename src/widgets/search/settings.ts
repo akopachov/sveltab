@@ -1,6 +1,6 @@
 import { FontSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$models/widget-settings';
 
-export type SearchProvider = 'google' | 'duckduckgo' | 'bing';
+export type SearchProvider = 'google' | 'duckduckgo' | 'bing' | 'youtube';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
