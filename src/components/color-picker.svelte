@@ -22,7 +22,9 @@
 </script>
 
 {#if inline}
-  <ColorPicker bind:hex={color} label="" isDialog={false} />
+  <div>
+    <ColorPicker bind:hex={color} label="" isDialog={false} />
+  </div>
 {:else}
   <button
     class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('./transparent-sm.png')] {$$restProps.class || ''}"
@@ -31,7 +33,7 @@
     style:box-shadow="inset 0 0 0 1.5rem {color}">
   </button>
   <div
-    class="card w-fit h-fit overflow-y-auto flex z-[99999]"
+    class="card shadow-xl w-fit h-fit overflow-y-auto flex z-[99999]"
     tabindex="-1"
     style:visibility={popupVisible ? 'visible' : 'hidden'}
     data-popup={popupSettings.target}>

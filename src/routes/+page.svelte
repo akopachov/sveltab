@@ -27,7 +27,6 @@
   import pDebounce from 'p-debounce';
   import LanguageSelect from '$components/language-select.svelte';
   import Lightswitch from '$components/lightswitch.svelte';
-  import { WidgetSizeType } from '$models/widget-settings';
 
   const drawerStore = getDrawerStore();
 
@@ -36,6 +35,7 @@
 
   $: background = $workspace?.background;
   $: widgets = $workspace?.widgets || [];
+  $: snappableList = Array.from(widgets, m => `.widget_${m.id}`);
 
   onMount(async () => {
     workspace = await getWorkspace(workspaceId);
@@ -62,7 +62,7 @@
   const widgetSettingsPopupSettings: PopupSettings = {
     event: 'click',
     target: 'widgetSettingsPopup',
-    placement: 'bottom',
+    placement: 'left',
     closeQuery: '',
     middleware: {
       flip: {
@@ -314,7 +314,7 @@
         on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
         isSelected={!workspaceLocked && widget === $selectedWidget}
-        class="widget-container" />
+        class="widget_{widget.id}" />
     {/each}
     {#if !workspaceLocked}
       <Moveable
@@ -337,7 +337,10 @@
         snapGap={true}
         snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
         elementSnapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
-        elementGuidelines={['.widget-container:not(.selected)', '.workspace']}
+        elementGuidelines={[...snappableList, '.workspace']}
+        snapContainer={'.workspace'}
+        bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}
+        isDisplaySnapDigit={true}
         on:drag={({ detail: e }) => {
           e.target.style.left = `${e.left}px`;
           e.target.style.top = `${e.top}px`;

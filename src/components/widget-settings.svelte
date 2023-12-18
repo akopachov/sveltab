@@ -4,7 +4,16 @@
 
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import { ProgressRadial, RadioGroup, RadioItem, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import {
+    ListBox,
+    ListBoxItem,
+    ProgressRadial,
+    RadioGroup,
+    RadioItem,
+    RangeSlider,
+    Tab,
+    TabGroup,
+  } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
   import { WidgetSizeType } from '$models/widget-settings';
@@ -46,87 +55,89 @@
           tab={currentTabId} />
       {/await}
       {#if currentTabId === GeneralTabId}
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <div class="label mb-2">
-          <span>{m.Widgets_Common_Settings_Anchor()}</span>
-          <div class="grid gap-1 grid-cols-3 grid-rows-3 w-fit h-fit">
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(0, 0)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 0}>
-              <span class="w-6 h-6 icon-[mdi--arrow-top-left]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(50, 0)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 0}>
-              <span class="w-6 h-6 icon-[mdi--arrow-top]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(100, 0)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 0}>
-              <span class="w-6 h-6 icon-[mdi--arrow-top-right]"></span>
-            </button>
+        <div class="flex flex-row gap-4 content-center">
+          <!-- svelte-ignore a11y-label-has-associated-control -->
+          <div class="label mb-2 text-center">
+            <span>{m.Widgets_Common_Settings_Anchor()}</span>
+            <div class="grid gap-1 grid-cols-3 grid-rows-3 w-fit h-fit">
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(0, 0)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 0}>
+                <span class="w-6 h-6 icon-[mdi--arrow-top-left]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(50, 0)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 0}>
+                <span class="w-6 h-6 icon-[mdi--arrow-top]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(100, 0)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 0}>
+                <span class="w-6 h-6 icon-[mdi--arrow-top-right]"></span>
+              </button>
 
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(0, 50)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 50}>
-              <span class="w-6 h-6 icon-[mdi--arrow-left]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(50, 50)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 50}>
-              <span class="w-6 h-6 icon-[material-symbols--align-flex-center]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(100, 50)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 50}>
-              <span class="w-6 h-6 icon-[mdi--arrow-right]"></span>
-            </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(0, 50)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 50}>
+                <span class="w-6 h-6 icon-[mdi--arrow-left]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(50, 50)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 50}>
+                <span class="w-6 h-6 icon-[material-symbols--align-flex-center]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(100, 50)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 50}>
+                <span class="w-6 h-6 icon-[mdi--arrow-right]"></span>
+              </button>
 
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(0, 100)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 100}>
-              <span class="w-6 h-6 icon-[mdi--arrow-bottom-left]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(50, 100)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 100}>
-              <span class="w-6 h-6 icon-[mdi--arrow-bottom]"></span>
-            </button>
-            <button
-              class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-              on:click={() => setAnchor(100, 100)}
-              class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 100}>
-              <span class="w-6 h-6 icon-[mdi--arrow-bottom-right]"></span>
-            </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(0, 100)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 100}>
+                <span class="w-6 h-6 icon-[mdi--arrow-bottom-left]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(50, 100)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 100}>
+                <span class="w-6 h-6 icon-[mdi--arrow-bottom]"></span>
+              </button>
+              <button
+                class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
+                on:click={() => setAnchor(100, 100)}
+                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 100}>
+                <span class="w-6 h-6 icon-[mdi--arrow-bottom-right]"></span>
+              </button>
+            </div>
           </div>
-        </div>
-        <div class="label mb-2">
-          <span>{m.Widgets_Common_Settings_SizeType()}</span>
-          <div class="!mt-0">
-            <RadioGroup>
-              <RadioItem
-                group={$widgetPosition.sizeType}
-                name="Widget_{widgetSettings.id}_SizeType"
-                value={WidgetSizeType.Scale}
-                on:change={() => setSizeType(WidgetSizeType.Scale)}>
-                {m.Widgets_Common_Settings_SizeType_Scale()}
-              </RadioItem>
-              <RadioItem
-                group={$widgetPosition.sizeType}
-                name="Widget_{widgetSettings.id}_SizeType"
-                value={WidgetSizeType.Fixed}
-                on:change={() => setSizeType(WidgetSizeType.Fixed)}>
-                {m.Widgets_Common_Settings_SizeType_Fixed()}
-              </RadioItem>
-            </RadioGroup>
+          <div class="label mb-4 text-center">
+            <span>{m.Widgets_Common_Settings_SizeType()}</span>
+            <div class="w-20">
+              <ListBox active="variant-filled-primary">
+                <ListBoxItem
+                  group={$widgetPosition.sizeType}
+                  name="Widget_{widgetSettings.id}_SizeType"
+                  value={WidgetSizeType.Scale}
+                  on:change={() => setSizeType(WidgetSizeType.Scale)}>
+                  {m.Widgets_Common_Settings_SizeType_Scale()}
+                </ListBoxItem>
+                <ListBoxItem
+                  group={$widgetPosition.sizeType}
+                  name="Widget_{widgetSettings.id}_SizeType"
+                  value={WidgetSizeType.Fixed}
+                  on:change={() => setSizeType(WidgetSizeType.Fixed)}>
+                  {m.Widgets_Common_Settings_SizeType_Fixed()}
+                </ListBoxItem>
+              </ListBox>
+            </div>
           </div>
         </div>
         <!-- svelte-ignore a11y-label-has-associated-control -->
