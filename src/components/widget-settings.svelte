@@ -4,9 +4,10 @@
 
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import { ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import { ProgressRadial, RadioGroup, RadioItem, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
+  import { WidgetSizeType } from '$models/widget-settings';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -18,17 +19,11 @@
   $: tabs = widget.components.settings.tabs;
 
   function setAnchor(offsetX: number, offsetY: number) {
-    const cqminBase = Math.min(workspace.clientWidth, workspace.clientHeight);
+    $widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
+  }
 
-    const absX = (widgetPosition.x / 100) * cqminBase + (widgetPosition.offsetX / 100) * workspace.clientWidth;
-    const absOffsetX = (workspace.clientWidth * offsetX) / cqminBase;
-    $widgetPosition.x = (absX / cqminBase) * 100 - absOffsetX;
-    $widgetPosition.offsetX = offsetX;
-
-    const absY = (widgetPosition.y / 100) * cqminBase + (widgetPosition.offsetY / 100) * workspace.clientHeight;
-    const absOffsetY = (workspace.clientHeight * offsetY) / cqminBase;
-    $widgetPosition.y = (absY / cqminBase) * 100 - absOffsetY;
-    $widgetPosition.offsetY = offsetY;
+  function setSizeType(newType: WidgetSizeType) {
+    $widgetPosition.updateMeasurement(workspace, { sizeType: newType });
   }
 </script>
 
@@ -111,6 +106,27 @@
               class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 100}>
               <span class="w-6 h-6 icon-[mdi--arrow-bottom-right]"></span>
             </button>
+          </div>
+        </div>
+        <div class="label mb-2">
+          <span>{m.Widgets_Common_Settings_SizeType()}</span>
+          <div class="!mt-0">
+            <RadioGroup>
+              <RadioItem
+                group={$widgetPosition.sizeType}
+                name="Widget_{widgetSettings.id}_SizeType"
+                value={WidgetSizeType.Scale}
+                on:change={() => setSizeType(WidgetSizeType.Scale)}>
+                {m.Widgets_Common_Settings_SizeType_Scale()}
+              </RadioItem>
+              <RadioItem
+                group={$widgetPosition.sizeType}
+                name="Widget_{widgetSettings.id}_SizeType"
+                value={WidgetSizeType.Fixed}
+                on:change={() => setSizeType(WidgetSizeType.Fixed)}>
+                {m.Widgets_Common_Settings_SizeType_Fixed()}
+              </RadioItem>
+            </RadioGroup>
           </div>
         </div>
         <!-- svelte-ignore a11y-label-has-associated-control -->

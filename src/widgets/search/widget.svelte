@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
-  import { localeCharSubset, userPosssibleLocaleCharSubset } from '$stores/locale';
+  import { userPosssibleLocaleCharSubset } from '$stores/locale';
   import * as m from '$i18n/messages';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';

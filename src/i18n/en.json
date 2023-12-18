@@ -74,6 +74,9 @@
 
   "Widgets_Common_Settings_Tabs_General": "General",
   "Widgets_Common_Settings_Anchor": "Anchor",
+  "Widgets_Common_Settings_SizeType": "Size type",
+  "Widgets_Common_Settings_SizeType_Scale": "Scale",
+  "Widgets_Common_Settings_SizeType_Fixed": "Fixed",
   "Widgets_Common_Settings_BorderRadius": "Border radius",
   "Widgets_Common_Settings_ZIndex": "Z-Index",
   

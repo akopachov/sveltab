@@ -27,6 +27,7 @@
   import pDebounce from 'p-debounce';
   import LanguageSelect from '$components/language-select.svelte';
   import Lightswitch from '$components/lightswitch.svelte';
+  import { WidgetSizeType } from '$models/widget-settings';
 
   const drawerStore = getDrawerStore();
 
@@ -103,17 +104,13 @@
       selectedWidgetEl = e.currentTarget as HTMLElement;
       $selectedWidget = widget;
 
-      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-      const widgetPos = widget.settings.position;
+      const absolutePos = widget.settings.position.getAbsolute(workspaceEl);
 
-      selectedWidgetEl.style.left = `${
-        (widgetPos.x / 100) * cqminBase + (widgetPos.offsetX / 100) * workspaceEl.clientWidth
-      }px`;
-      selectedWidgetEl.style.top = `${
-        (widgetPos.y / 100) * cqminBase + (widgetPos.offsetY / 100) * workspaceEl.clientHeight
-      }px`;
-      selectedWidgetEl.style.width = `${(widgetPos.width / 100) * cqminBase}px`;
-      selectedWidgetEl.style.height = `${(widgetPos.height / 100) * cqminBase}px`;
+      selectedWidgetEl.style.width = `${absolutePos.width}px`;
+      selectedWidgetEl.style.height = `${absolutePos.height}px`;
+      selectedWidgetEl.style.left = `${absolutePos.x}px`;
+      selectedWidgetEl.style.top = `${absolutePos.y}px`;
+
       selectedWidgetEl.classList.add('selected');
 
       setTimeout(() => {
@@ -124,53 +121,19 @@
 
   function unselectWidget() {
     if (selectedWidgetEl && selectedWidgetSettings) {
-      const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-      const widgetPos = selectedWidgetSettings.position;
-      let moved = false;
+      selectedWidgetSettings.position.setFromAbsolute(workspaceEl, {
+        x: parseFloat(selectedWidgetEl.style.left),
+        y: parseFloat(selectedWidgetEl.style.top),
+        width: parseFloat(selectedWidgetEl.style.width),
+        height: parseFloat(selectedWidgetEl.style.height),
+      });
 
-      if (selectedWidgetEl.style.left) {
-        const absOffsetX = (workspaceEl.clientWidth * widgetPos.offsetX) / cqminBase;
-        const widgetPosX = (parseFloat(selectedWidgetEl.style.left) / cqminBase) * 100 - absOffsetX;
-        selectedWidgetEl.style.left = '';
-        if (widgetPosX != widgetPos.x) {
-          widgetPos.x = widgetPosX;
-          moved = true;
-        }
-      }
-
-      if (selectedWidgetEl.style.top) {
-        const absOffsetY = (workspaceEl.clientHeight * widgetPos.offsetY) / cqminBase;
-        const widgetPosY = (parseFloat(selectedWidgetEl.style.top) / cqminBase) * 100 - absOffsetY;
-        selectedWidgetEl.style.top = '';
-        if (widgetPosY != widgetPos.y) {
-          widgetPos.y = widgetPosY;
-          moved = true;
-        }
-      }
-
-      if (selectedWidgetEl.style.width) {
-        let widgetPosWidth = (parseFloat(selectedWidgetEl.style.width) / cqminBase) * 100;
-        selectedWidgetEl.style.width = '';
-        if (widgetPosWidth != widgetPos.width) {
-          widgetPos.width = widgetPosWidth;
-          moved = true;
-        }
-      }
-
-      if (selectedWidgetEl.style.height) {
-        let widgetPosHeight = (parseFloat(selectedWidgetEl.style.height) / cqminBase) * 100;
-        selectedWidgetEl.style.height = '';
-        if (widgetPosHeight != widgetPos.height) {
-          widgetPos.height = widgetPosHeight;
-          moved = true;
-        }
-      }
+      selectedWidgetEl.style.width = '';
+      selectedWidgetEl.style.height = '';
+      selectedWidgetEl.style.left = '';
+      selectedWidgetEl.style.top = '';
 
       selectedWidgetEl.classList.remove('selected');
-
-      if (moved) {
-        widgetPos.notifyPropertiesChanged();
-      }
     }
     selectedWidgetEl = null;
     $selectedWidget = null;

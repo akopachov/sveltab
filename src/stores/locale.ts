@@ -2,13 +2,23 @@ import { browser } from '$app/environment';
 import { isAvailableLanguageTag, setLanguageTag, sourceLanguageTag, type AvailableLanguageTag } from '$i18n/runtime';
 import { derived, writable } from 'svelte/store';
 
-const localeCharSubsetMap = new Map<string, string[]>([
-  ['en', ['latin', 'latin-ext']],
+const LocaleCharSubsetMap = new Map<string, string[]>([
+  ['en', ['latin']],
+  ['cs', ['latin', 'latin-ext']],
+  ['ro', ['latin', 'latin-ext']],
+  ['pl', ['latin', 'latin-ext']],
+  ['hr', ['latin', 'latin-ext']],
+  ['hu', ['latin', 'latin-ext']],
+  ['sk', ['latin', 'latin-ext']],
+  ['tr', ['latin', 'latin-ext']],
+  ['lt', ['latin', 'latin-ext']],
   ['by', ['cyrillic', 'cyrillic-ext']],
-  ['ua', ['cyrillic', 'cyrillic-ext']],
-  ['ru', ['cyrillic', 'cyrillic-ext']],
-  ['gr', ['greek', 'greek-ext']],
+  ['uk', ['cyrillic', 'cyrillic-ext']],
+  ['bg', ['cyrillic']],
+  ['el', ['greek']],
   ['vi', ['vietnamese']],
+  ['he', ['hebrew']],
+  ['ru', ['cyrillic']],
 ]);
 
 const LocalStorageLocaleKey = 'locale';
@@ -24,11 +34,11 @@ export const locale = {
   },
 };
 
-export const localeCharSubset = derived(locale, $locale => localeCharSubsetMap.get($locale));
-export const userPosssibleLocaleCharSubset = derived(localeCharSubset, v => {
-  const localeCharsets = v || [];
+export const localeCharSubset = derived(locale, $locale => LocaleCharSubsetMap.get($locale));
+export const userPosssibleLocaleCharSubset = derived(localeCharSubset, $v => {
+  const localeCharsets = $v || [];
   const possibleUserCharsets = navigator.languages.flatMap(
-    m => localeCharSubsetMap.get(new Intl.Locale(m).language) || [],
+    m => LocaleCharSubsetMap.get(new Intl.Locale(m).language) || [],
   );
   return [...new Set([...localeCharsets, ...possibleUserCharsets])];
 });

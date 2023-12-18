@@ -45,10 +45,10 @@
   class="absolute [container-type:size] relative-position {$$restProps.class || ''}"
   on:mousedown
   style:z-index={$widgetSettings.zIndex}
-  style:--relative-width="{$widgetPosition.width}cqmin"
-  style:--relative-height="{$widgetPosition.height}cqmin"
-  style:--relative-y="{$widgetPosition.y}cqmin"
-  style:--relative-x="{$widgetPosition.x}cqmin"
+  style:--relative-width="{$widgetPosition.width}{$widgetPosition.sizeType}"
+  style:--relative-height="{$widgetPosition.height}{$widgetPosition.sizeType}"
+  style:--relative-y="{$widgetPosition.y}{$widgetPosition.sizeType}"
+  style:--relative-x="{$widgetPosition.x}{$widgetPosition.sizeType}"
   style:--relative-offset-y="{$widgetPosition.offsetY}cqh"
   style:--relative-offset-x="{$widgetPosition.offsetX}cqw"
   style:transform="rotate({widget.settings.rotation}deg)">
@@ -83,8 +83,8 @@
 
 <style>
   .relative-position {
-    left: calc(var(--relative-offset-x) + var(--relative-x));
-    top: calc(var(--relative-offset-y) + var(--relative-y));
+    left: calc(var(--relative-offset-x) + var(--relative-x) - (var(--relative-width) / 2));
+    top: calc(var(--relative-offset-y) + var(--relative-y) - (var(--relative-height) / 2));
     width: var(--relative-width);
     height: var(--relative-height);
   }
