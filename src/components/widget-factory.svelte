@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import { getModalStore, popup, ProgressRadial, type PopupSettings } from '@skeletonlabs/skeleton';
+  import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { SvelteComponent, createEventDispatcher } from 'svelte';
   import * as m from '$i18n/messages';
   import type { WidgetSettingsExtra } from '$models/widget-settings';
@@ -8,6 +8,7 @@
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;
   export let isSelected: boolean;
+  export let workspaceLocked: boolean;
 
   type WidgetComponent = SvelteComponent & {
     onDelete?: () => void | Promise<void>;
@@ -54,17 +55,17 @@
   style:transform="rotate({widget.settings.rotation}deg)">
   <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
     {#await widget.components.widget.getValue()}
-      <ProgressRadial width="w-[100cqmin] ml-[auto] mr-[auto]" />
+      <div class="w-full !h-full placeholder animate-pulse" />
     {:then component}
       <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
     {/await}
   </div>
-  <button
-    class="absolute transparent top-0 left-0 w-full h-full opacity-0 cursor-move"
+  <div
+    class="absolute top-0 left-0 w-full h-full invisible pointer-events-none"
     bind:this={fakeEditButton}
-    use:popup={widgetSettingsPopupSettings}
-    class:hidden={!isSelected}>
-  </button>
+    use:popup={widgetSettingsPopupSettings}>
+  </div>
+  <div class="absolute top-0 left-0 w-full h-full cursor-move" class:hidden={workspaceLocked}></div>
   {#if isSelected}
     <button
       class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"

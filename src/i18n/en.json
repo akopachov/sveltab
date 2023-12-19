@@ -142,5 +142,23 @@
   "Widgets_FlickrImage_Name": "Flickr",
   "Widgets_FlickrImage_Settings_Tabs_Image": "Image",
   "Widgets_FlickrImage_Settings_Topic": "Image topic",
-  "Widgets_FlickrImage_Settings_UpdateInterval": "Update interval (minutes)"
+  "Widgets_FlickrImage_Settings_UpdateInterval": "Update interval (minutes)",
+
+  "Widgets_Link_Name": "Link",
+  "Widgets_Link_Settings_Tabs_Icon": "Icon",
+  "Widgets_Link_Settings_Tabs_Background": "Background",
+  "Widgets_Link_Settings_Link_Label": "Url",
+  "Widgets_Link_Settings_Link_Placeholder": "https://...",
+  "Widgets_Link_Settings_IconSource": "Icon source",
+  "Widgets_Link_Settings_IconSource_Favicon": "Favicon",
+  "Widgets_Link_Settings_IconSource_Iconify": "Iconify.com",
+  "Widgets_Link_Settings_IconSource_Iconify_Search_Placeholder": "Search...",
+  "Widgets_Link_Settings_IconSource_Iconify_Search_IconAlt": "Icon {icon}",
+  "Widgets_Link_Settings_IconSource_Iconify_Search_NoIcons": "No icons found",
+  "Widgets_Link_Settings_IconSource_Iconify_Search_IconColor_Title": "Icon color",
+  "Widgets_Link_Settings_IconSource_Direct": "Manual",
+  "Widgets_Link_Settings_IconSource_Direct_Label": "Icon url",
+  "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
+  "Widgets_Link_Settings_Background_Color": "Color",
+  "Widgets_Link_Settings_Background_Blur": "Blur"
 }

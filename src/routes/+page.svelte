@@ -35,7 +35,7 @@
 
   $: background = $workspace?.background;
   $: widgets = $workspace?.widgets || [];
-  $: snappableList = Array.from(widgets, m => `.widget_${m.id}`);
+  $: snappableList = Array.from(widgets, m => ($selectedWidget?.id === m.id ? null : `.widget_${m.id}`));
 
   onMount(async () => {
     workspace = await getWorkspace(workspaceId);
@@ -314,6 +314,7 @@
         on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
         isSelected={!workspaceLocked && widget === $selectedWidget}
+        {workspaceLocked}
         class="widget_{widget.id}" />
     {/each}
     {#if !workspaceLocked}
