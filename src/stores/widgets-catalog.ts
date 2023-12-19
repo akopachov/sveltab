@@ -37,9 +37,9 @@ export interface WidgetCatalogItemComponents {
 export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   ClockWidget,
   DateWidget,
-  RandomQuoteWidget,
+  LinkWidget,
   SearchWidget,
   GreetingWidget,
+  RandomQuoteWidget,
   FlickrWidget,
-  LinkWidget,
 ];

@@ -5,25 +5,10 @@
   import { GeneralTabId } from '$components/widget-settings.svelte';
   import ColorPicker from '$components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
-  import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import IconifySearch from './iconify-search.svelte';
 
   export let settings: Settings;
   export let tab: number;
-
-  const urlDebounceOpts: DebounceOptions = {
-    ms: 1000,
-    callback: str => {
-      $settings.url = str;
-    },
-  };
-
-  const iconUrlDebounceOpts: DebounceOptions = {
-    ms: 1000,
-    callback: str => {
-      $settings.icon = str;
-    },
-  };
 
   function onIconSourceChange() {
     $settings.icon = '';
@@ -36,9 +21,8 @@
     <input
       type="url"
       class="input"
-      value={$settings.url}
-      placeholder={m.Widgets_Link_Settings_Link_Placeholder()}
-      use:debounce={urlDebounceOpts} />
+      bind:value={$settings.url}
+      placeholder={m.Widgets_Link_Settings_Link_Placeholder()} />
   </label>
 {:else if tab === IconTabId}
   <label class="label mb-2">
@@ -55,9 +39,8 @@
       <input
         type="url"
         class="input"
-        value={$settings.icon}
-        placeholder={m.Widgets_Link_Settings_IconSource_Direct_Placeholder()}
-        use:debounce={iconUrlDebounceOpts} />
+        bind:value={$settings.icon}
+        placeholder={m.Widgets_Link_Settings_IconSource_Direct_Placeholder()} />
     </label>
   {:else if $settings.iconSource === IconSource.Iconify}
     <IconifySearch bind:icon={$settings.icon} bind:color={$settings.iconColor} />
