@@ -5,10 +5,10 @@ export const BackgroundTabId = 2;
 export const Tabs = [
   {
     id: TextTabId,
-    title: m.Widgets_Search_Settings_Tabs_Text,
+    title: () => m.Widgets_Search_Settings_Tabs_Text(),
   },
   {
     id: BackgroundTabId,
-    title: m.Widgets_Search_Settings_Tabs_Background,
+    title: () => m.Widgets_Search_Settings_Tabs_Background(),
   },
 ];

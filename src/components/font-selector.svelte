@@ -2,7 +2,6 @@
   import { ProgressRadial, type PopupSettings, popup, RangeSlider } from '@skeletonlabs/skeleton';
   import VirtualScroll from 'svelte-virtual-scroll-list';
   import { onMount } from 'svelte';
-  import { writable } from 'svelte/store';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import ColorPicker from './color-picker.svelte';
   import * as m from '$i18n/messages';
@@ -62,7 +61,7 @@
     [FontWeight.Heavy, m.FontSelector_Weight_Heavy],
   ]);
 
-  let searchValue = writable('');
+  let searchValue = '';
   let fontList: VirtualScroll;
   let fontSelectVisible: boolean = false;
 
@@ -94,7 +93,7 @@
 
   function onSelected(e: FontInfo) {
     selectedFontInfo = e;
-    $searchValue = e.label;
+    searchValue = e.label;
     font = e.id;
     if (weight && !e.weights.includes(weight)) {
       weight = e.weights[0];
@@ -107,7 +106,7 @@
       const index = loadedFonts.findIndex(f => f.id == font);
       if (index >= 0) {
         selectedFontInfo = loadedFonts[index];
-        $searchValue = selectedFontInfo.label;
+        searchValue = selectedFontInfo.label;
         fontList.scrollToIndex(index);
       }
     }
@@ -127,7 +126,7 @@
       {/if}
       <input
         type="search"
-        bind:value={$searchValue}
+        bind:value={searchValue}
         placeholder={m.FontSelector_Search_Placeholder()}
         use:popup={popupSettings}
         use:debounce={debounceOpts} />

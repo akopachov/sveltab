@@ -36,7 +36,7 @@
     await storage.local.remove(storageKey);
   }
 
-  const pickRandomPhotoDebounced = pDebounce(pickRandomPhoto, 1000);
+  const pickRandomPhotoDebounced = pDebounce.promise(pickRandomPhoto);
 
   async function pickRandomPhoto() {
     if (

@@ -35,7 +35,7 @@
 
   $: background = $workspace?.background;
   $: widgets = $workspace?.widgets || [];
-  $: snappableList = Array.from(widgets, m => ($selectedWidget?.id === m.id ? null : `.widget_${m.id}`));
+  $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `.widget_${m.id}`));
 
   onMount(async () => {
     workspace = await getWorkspace(workspaceId);
@@ -43,8 +43,8 @@
 
   let workspaceEl: HTMLElement;
   let selectedWidgetEl: HTMLElement | undefined | null;
-  let selectedWidget = writable<WidgetInstance | null | undefined>();
-  $: selectedWidgetSettings = $selectedWidget?.settings;
+  let selectedWidget: WidgetInstance | null | undefined;
+  $: selectedWidgetSettings = selectedWidget?.settings;
   let moveable: Moveable;
   let widgetSettingsVisible = false;
   $: workspaceLocked = $workspace?.isLocked || false;
@@ -102,7 +102,7 @@
       e.stopPropagation();
       unselectWidget();
       selectedWidgetEl = e.currentTarget as HTMLElement;
-      $selectedWidget = widget;
+      selectedWidget = widget;
 
       const absolutePos = widget.settings.position.getAbsolute(workspaceEl);
 
@@ -136,7 +136,7 @@
       selectedWidgetEl.classList.remove('selected');
     }
     selectedWidgetEl = null;
-    $selectedWidget = null;
+    selectedWidget = null;
   }
 
   async function onWidgetCatalogItemClick(widgetSettings: CatalogWidgetSettingsInitial) {
@@ -164,7 +164,9 @@
     if (e.dataTransfer) {
       e.preventDefault();
       if (!workspace) return;
-      const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(e.dataTransfer.getData('text/json'));
+      const plainData = e.dataTransfer.getData('text/json');
+      if (!plainData) return;
+      const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(plainData);
       const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
       workspace.isLocked = false;
       await workspace.addWidget({
@@ -200,7 +202,7 @@
   }
 </script>
 
-<svelte:window on:beforeunload={onBeforeUnload} />
+<svelte:window on:beforeunload={onBeforeUnload} on:resize={() => unselectWidget()} />
 
 {#if !workspace}
   <div
@@ -313,7 +315,7 @@
         {widgetSettingsPopupSettings}
         on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
-        isSelected={!workspaceLocked && widget === $selectedWidget}
+        isSelected={!workspaceLocked && widget === selectedWidget}
         {workspaceLocked}
         class="widget_{widget.id}" />
     {/each}
@@ -365,9 +367,9 @@
   <div
     class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
     data-popup={widgetSettingsPopupSettings.target}
-    style:visibility={!workspaceLocked && $selectedWidget ? 'visible' : 'hidden'}>
-    {#if widgetSettingsVisible && $selectedWidget}
-      <WidgetSettingsComponent widget={$selectedWidget} workspace={workspaceEl} />
+    style:visibility={!workspaceLocked && selectedWidget ? 'visible' : 'hidden'}>
+    {#if widgetSettingsVisible && selectedWidget}
+      <WidgetSettingsComponent widget={selectedWidget} workspace={workspaceEl} />
     {/if}
   </div>
 </AppShell>

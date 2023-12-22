@@ -6,10 +6,10 @@ export const BackgroundTabId = 2;
 export const Tabs = [
   {
     id: IconTabId,
-    title: m.Widgets_Link_Settings_Tabs_Icon,
+    title: () => m.Widgets_Link_Settings_Tabs_Icon(),
   },
   {
     id: BackgroundTabId,
-    title: m.Widgets_Link_Settings_Tabs_Background,
+    title: () => m.Widgets_Link_Settings_Tabs_Background(),
   },
 ];

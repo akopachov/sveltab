@@ -4,7 +4,7 @@
   import { fontsource } from '$actions/fontsource';
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
-  import { writable } from 'svelte/store';
+  import pDebounce from 'p-debounce';
 
   let clockStore = getClockStore(60000);
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
@@ -13,25 +13,27 @@
 
   const storageKey = `Widget_Quote_${id}_LatestQuote`;
 
-  let quote = writable<LatestQuote>();
-
-  $: fontSettings = settings.font;
-  $: textShadowSettings = settings.textShadow;
-  $: {
-    $clockStore && checkIfObsolete();
-  }
-
-  onMount(async () => {
-    $quote = <LatestQuote>(await storage.local.get(storageKey))[storageKey] || { lastUpdate: 0 };
-    await checkIfObsolete();
-  });
-
   export async function onDelete() {
     await storage.local.remove(storageKey);
   }
 
+  let quote: LatestQuote;
+
+  $: fontSettings = settings.font;
+  $: textShadowSettings = settings.textShadow;
+  $: {
+    $clockStore && checkIfObsoleteDebounced();
+  }
+
+  onMount(async () => {
+    quote = <LatestQuote>(await storage.local.get(storageKey))[storageKey] || { lastUpdate: 0 };
+    await checkIfObsoleteDebounced();
+  });
+
+  const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
+
   async function checkIfObsolete() {
-    if ($quote && (new Date().valueOf() - $quote.lastUpdate) / 1000 > $settings.updateInterval) {
+    if (quote && (new Date().valueOf() - quote.lastUpdate) / 1000 > $settings.updateInterval) {
       await loadNewQuote();
     }
   }
@@ -40,7 +42,7 @@
     const response = await fetch('https://api.quotable.io/random').then(r => r.json());
     const q: LatestQuote = { quote: response.content, author: response.author, lastUpdate: new Date().valueOf() };
     await storage.local.set({ [storageKey]: q });
-    $quote = q;
+    quote = q;
   }
 </script>
 
@@ -59,8 +61,8 @@
     styles: ['normal'],
     weights: [$fontSettings.weight],
   }}>
-  {#if $quote?.lastUpdate > 0}
-    <blockquote>"{$quote.quote}"</blockquote>
-    <p class="text-right mt-2">{$quote.author}</p>
+  {#if quote?.lastUpdate > 0}
+    <blockquote>"{quote.quote}"</blockquote>
+    <p class="text-right mt-2">{quote.author}</p>
   {/if}
 </div>

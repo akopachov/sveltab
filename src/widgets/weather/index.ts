@@ -3,7 +3,7 @@ import { Lazy } from '$lib/lazy';
 import * as m from '$i18n/messages';
 
 export const Widget: WidgetCatalogItem = {
-  name: () => m.Widgets_Clock_Name(),
+  name: () => m.Widgets_Weather_Name(),
   previewImage: new Lazy(() => import('./preview.svg?raw').then(r => r.default)),
   components: {
     widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),
@@ -14,10 +14,10 @@ export const Widget: WidgetCatalogItem = {
     },
   },
   settings: {
-    type: 'clock',
+    type: 'weather',
     position: {
-      height: 20,
-      width: 30,
+      height: 40,
+      width: 50,
     },
   },
 };

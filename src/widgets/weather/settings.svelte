@@ -1,0 +1,50 @@
+<script lang="ts">
+  import ColorPicker from '$components/color-picker.svelte';
+  import { RangeSlider } from '@skeletonlabs/skeleton';
+  import { MeasurementUnits, type Settings } from './settings';
+  import { TextTabId, BackgroundTabId } from './settings-tabs';
+  import FontSelector from '$components/font-selector.svelte';
+  import * as m from '$i18n/messages';
+  import { GeneralTabId } from '$components/widget-settings.svelte';
+  import ShadowSelector from '$components/shadow-selector.svelte';
+  import LocationSelect from './location-select.svelte';
+
+  export let settings: Settings;
+  export let tab: number;
+
+  $: fontSettings = settings.font;
+</script>
+
+{#if tab === GeneralTabId}
+  <LocationSelect location={settings.location} />
+  <label class="label my-2">
+    <span>{m.Widgets_Weather_Settings_MeasurementUnits()}</span>
+    <select class="select" bind:value={$settings.measurementUnits}>
+      <option value={MeasurementUnits.Metric}>{m.Widgets_Weather_Settings_MeasurementUnits_Metric()}</option>
+      <option value={MeasurementUnits.Imperial}>{m.Widgets_Weather_Settings_MeasurementUnits_Imperial()}</option>
+    </select>
+  </label>
+{:else if tab === TextTabId}
+  <div class="label mb-2">
+    <span>{m.Widgets_Weather_Settings_Font()}</span>
+    <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+  </div>
+  <div class="mt-2">
+    <h4>{m.Widgets_Weather_Settings_Shadow()}</h4>
+    <div class="pl-4 pr-4">
+      <ShadowSelector shadowSettings={settings.textShadow} />
+    </div>
+  </div>
+{:else if tab === BackgroundTabId}
+  <div class="label">
+    <span>{m.Widgets_Weather_Settings_Color()}</span>
+    <div>
+      <ColorPicker bind:color={$settings.backgroundColor} />
+    </div>
+  </div>
+  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <label class="label mb-2">
+    <span>{m.Widgets_Weather_Settings_Blur()}</span>
+    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+  </label>
+{/if}

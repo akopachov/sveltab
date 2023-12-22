@@ -26,13 +26,13 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center"
+  class="w-full h-full p-4 select-none flex justify-center content-center [&>*]:drop-shadow-[var(--st-shadow)]"
   style:background-color={$settings.backgroundColor}
   style:color={$settings.textColor}
   style:font-weight={$fontSettings.weight}
   style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:filter="drop-shadow({$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color})"
+  style:--st-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
+  {$textShadowSettings.color}"
   use:fontsource={{
     font: $fontSettings.id,
     subsets: $localeCharSubset,

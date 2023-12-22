@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^1.5.3
     version: 1.5.3
   '@iconify/json':
-    specifier: ^2.2.159
-    version: 2.2.159
+    specifier: ^2.2.160
+    version: 2.2.160
   '@iconify/tailwind':
     specifier: ^0.1.4
     version: 0.1.4
@@ -18,38 +18,38 @@ devDependencies:
     specifier: ^2.1.13
     version: 2.1.13
   '@inlang/paraglide-js':
-    specifier: 1.0.0-prerelease.19
-    version: 1.0.0-prerelease.19
+    specifier: 1.0.0-prerelease.20
+    version: 1.0.0-prerelease.20
   '@inlang/paraglide-js-adapter-vite':
-    specifier: ^1.0.2
-    version: 1.0.2
+    specifier: ^1.0.3
+    version: 1.0.3
   '@skeletonlabs/skeleton':
-    specifier: ^2.6.0
-    version: 2.6.0(svelte@4.2.8)
+    specifier: ^2.6.1
+    version: 2.6.1(svelte@4.2.8)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.3.0
-    version: 0.3.0(tailwindcss@3.3.7)
+    version: 0.3.0(tailwindcss@3.4.0)
   '@svelte-put/resize':
     specifier: ^3.0.0
     version: 3.0.0
   '@sveltejs/adapter-static':
-    specifier: ^3.0.0
-    version: 3.0.0(@sveltejs/kit@2.0.3)
+    specifier: ^3.0.1
+    version: 3.0.1(@sveltejs/kit@2.0.4)
   '@sveltejs/kit':
-    specifier: ^2.0.3
-    version: 2.0.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10)
+    specifier: ^2.0.4
+    version: 2.0.4(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.1
     version: 3.0.1(svelte@4.2.8)(vite@5.0.10)
   '@tailwindcss/container-queries':
     specifier: ^0.1.1
-    version: 0.1.1(tailwindcss@3.3.7)
+    version: 0.1.1(tailwindcss@3.4.0)
   '@tailwindcss/forms':
     specifier: ^0.5.7
-    version: 0.5.7(tailwindcss@3.3.7)
+    version: 0.5.7(tailwindcss@3.4.0)
   '@tailwindcss/typography':
     specifier: ^0.5.10
-    version: 0.5.10(tailwindcss@3.3.7)
+    version: 0.5.10(tailwindcss@3.4.0)
   '@types/webextension-polyfill':
     specifier: ^0.10.7
     version: 0.10.7
@@ -77,12 +77,18 @@ devDependencies:
   eslint-plugin-svelte:
     specifier: ^2.35.1
     version: 2.35.1(eslint@8.56.0)(svelte@4.2.8)
+  glob:
+    specifier: ^10.3.10
+    version: 10.3.10
   nanoid:
     specifier: ^5.0.4
     version: 5.0.4
   npm-run-all:
     specifier: ^4.1.5
     version: 4.1.5
+  openmeteo:
+    specifier: ^1.1.3
+    version: 1.1.3
   p-debounce:
     specifier: ^4.0.0
     version: 4.0.0
@@ -123,8 +129,8 @@ devDependencies:
     specifier: ^3.0.1
     version: 3.0.1(svelte@4.2.8)
   tailwindcss:
-    specifier: ^3.3.7
-    version: 3.3.7
+    specifier: ^3.4.0
+    version: 3.4.0
   tiny-glob:
     specifier: ^0.2.9
     version: 0.2.9
@@ -137,6 +143,9 @@ devDependencies:
   vite:
     specifier: ^5.0.10
     version: 5.0.10
+  vite-plugin-run:
+    specifier: ^0.5.1
+    version: 0.5.1
   vite-plugin-tailwind-purgecss:
     specifier: ^0.2.0
     version: 0.2.0(vite@5.0.10)
@@ -562,8 +571,8 @@ packages:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
     dev: true
 
-  /@iconify/json@2.2.159:
-    resolution: {integrity: sha512-Hoc9gxrq3kqdWkdV7ZCpIgOrCgWtOvjyEASmYGpB7PpnCyd3SRCVU0VSX3mEs66qqPRNJz5qwCFK2tmC9zaSLQ==}
+  /@iconify/json@2.2.160:
+    resolution: {integrity: sha512-mjVikrD2ohux47NDrG22qzVBIf0BGS3W4HUZO3d+dnk7Sk3AYrmWVsGiMW6aoSGrBMIKAXpkLqCqgu57eu1oIw==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.1
@@ -646,10 +655,10 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/paraglide-js-adapter-unplugin@1.0.2:
-    resolution: {integrity: sha512-eckY8fWXDka4jLmrAtPhdlQzEKHJLWxDr7ix8I/C/OVr/HV5hMPlzcV0UD6ImoX2vWYJ9TZ/0Me+pO2QauCH3A==}
+  /@inlang/paraglide-js-adapter-unplugin@1.0.3:
+    resolution: {integrity: sha512-Wz6/4kThZZHUWFhOgcHeJMv49Am2zkUXux4fPw6yNcNw2JqxiAxKiH8Ang2CBcWePKKjnK/JBMRxn0NYIkOybw==}
     dependencies:
-      '@inlang/paraglide-js': 1.0.0-prerelease.19
+      '@inlang/paraglide-js': 1.0.0-prerelease.20
       '@inlang/sdk': 0.19.0
       unplugin: 1.5.1
     transitivePeerDependencies:
@@ -657,17 +666,17 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-vite@1.0.2:
-    resolution: {integrity: sha512-/o3S4kq/nH+bznI4b0nOSQt0EPP64w7gkLJcq01cOMCBB+j5EzfHiSVunE7FGwzUf3itw/E/h/FIZa3NWELONQ==}
+  /@inlang/paraglide-js-adapter-vite@1.0.3:
+    resolution: {integrity: sha512-jtM/xMXqUPxKuTM3kbmgds4MAgBsJRaHkEB4RuH4NsqPliBkHbqYXkT3FxlbPmLlLf5NqayTTQBtq9Va0ome6Q==}
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.0.2
+      '@inlang/paraglide-js-adapter-unplugin': 1.0.3
     transitivePeerDependencies:
       - babel-plugin-macros
       - debug
     dev: true
 
-  /@inlang/paraglide-js@1.0.0-prerelease.19:
-    resolution: {integrity: sha512-hWsZVsW6rTBzEN4dWjcaO9bXnpokvjjF3Ath1VpLm/hFvGLN5Ij+rkE2GKoR0It6HSKjEV8qBLkuU9KGTp0G5A==}
+  /@inlang/paraglide-js@1.0.0-prerelease.20:
+    resolution: {integrity: sha512-t8P15e05EHA5oovpDttENJ6bYmw5TLTOszd/CAdDZK5AI5ZggcrGnXObViL6XBMFjyJt+kmZG5YNOQDCJZsYEA==}
     hasBin: true
     dependencies:
       '@inlang/detect-json-formatting': 1.0.0
@@ -815,6 +824,13 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.16.0
+    dev: true
+
+  /@openmeteo/sdk@1.7.0:
+    resolution: {integrity: sha512-12LNtTy2AAWctMdwTS7pl1kKkFzhMleqWk4blcjhIP3E0D8r98aLr+3BvPxLo9FiRyC4FS4H3XgvL6qQ6h5yUg==}
+    engines: {node: '>=12.0'}
+    dependencies:
+      flatbuffers: 23.5.26
     dev: true
 
   /@pkgjs/parseargs@0.11.0:
@@ -981,8 +997,8 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /@skeletonlabs/skeleton@2.6.0(svelte@4.2.8):
-    resolution: {integrity: sha512-4+Fa7b5qGwKGTnQS5S3+XQQ8CQHfL6GIofPJc1ibhT/idi/4whotq0UAvgzdeAILFhvey5jlS9InqXDQFDXdyA==}
+  /@skeletonlabs/skeleton@2.6.1(svelte@4.2.8):
+    resolution: {integrity: sha512-LDdgsnCgD+ZsI/82F7tHXmBXwd0Kx0WnQSSvgd94qgf2zZVeDMaKh2C6lEvgF0z31tvi83dyGnL7vM3IJlmWhg==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
@@ -990,28 +1006,28 @@ packages:
       svelte: 4.2.8
     dev: true
 
-  /@skeletonlabs/tw-plugin@0.3.0(tailwindcss@3.3.7):
+  /@skeletonlabs/tw-plugin@0.3.0(tailwindcss@3.4.0):
     resolution: {integrity: sha512-0tBlZSHk791jvDTC41FlIafa8ZmaODjvOwmghcbla96Fbv9dI1u9+OJ2ScSxzy7xI6qjuQ80Uhw9kn53MMYi4Q==}
     peerDependencies:
       tailwindcss: '>=3.0.0'
     dependencies:
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: true
 
   /@svelte-put/resize@3.0.0:
     resolution: {integrity: sha512-DHz3fk5BQgEtckQfqk9VfJJwDO3QRqlRFsVJE8HSHwxDjRB09J2oiY7rATFMVOE4F5Q83JQlvJsAfmHqouUgow==}
     dev: true
 
-  /@sveltejs/adapter-static@3.0.0(@sveltejs/kit@2.0.3):
-    resolution: {integrity: sha512-nNsm8XChhJgQdeVegdXU+EnpznSUlsIjlLJa9SNmvSVN3rcPtB2BAnGuS/EWCtgPLkVcy9V2kW5knronqmF+KQ==}
+  /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.0.4):
+    resolution: {integrity: sha512-6lMvf7xYEJ+oGeR5L8DFJJrowkefTK6ZgA4JiMqoClMkKq0s6yvsd3FZfCFvX1fQ0tpCD7fkuRVHsnUVgsHyNg==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.0.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10)
+      '@sveltejs/kit': 2.0.4(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10)
     dev: true
 
-  /@sveltejs/kit@2.0.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10):
-    resolution: {integrity: sha512-TjqRBC7I3qnGeRfmxAkkwbQVnto9x+DsSDTtHC4qC+MgHPImIVzSgUiw//tZ3/uB5/MXhGNLhi5mztWZVM0sjw==}
+  /@sveltejs/kit@2.0.4(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.8)(vite@5.0.10):
+    resolution: {integrity: sha512-pqUOo1Slp2fybNjTouF7qgeN815hO2boRCNO1Z7/XtXu5IPNg9OSwI485qmQ0GUU2v2NmA0XZciFHGrgzOixyw==}
     engines: {node: '>=18.13'}
     hasBin: true
     requiresBuild: true
@@ -1030,7 +1046,7 @@ packages:
       mrmime: 1.0.1
       sade: 1.8.1
       set-cookie-parser: 2.6.0
-      sirv: 2.0.3
+      sirv: 2.0.4
       svelte: 4.2.8
       tiny-glob: 0.2.9
       vite: 5.0.10
@@ -1079,24 +1095,24 @@ packages:
       defer-to-connect: 2.0.1
     dev: true
 
-  /@tailwindcss/container-queries@0.1.1(tailwindcss@3.3.7):
+  /@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.0):
     resolution: {integrity: sha512-p18dswChx6WnTSaJCSGx6lTmrGzNNvm2FtXmiO6AuA1V4U5REyoqwmT6kgAsIMdjo07QdAfYXHJ4hnMtfHzWgA==}
     peerDependencies:
       tailwindcss: '>=3.2.0'
     dependencies:
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: true
 
-  /@tailwindcss/forms@0.5.7(tailwindcss@3.3.7):
+  /@tailwindcss/forms@0.5.7(tailwindcss@3.4.0):
     resolution: {integrity: sha512-QE7X69iQI+ZXwldE+rzasvbJiyV/ju1FGHH0Qn2W3FKbuYtqp8LKcy6iSw79fVUT5/Vvf+0XgLCeYVG+UV6hOw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || >= 3.0.0-alpha.1'
     dependencies:
       mini-svg-data-uri: 1.4.4
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: true
 
-  /@tailwindcss/typography@0.5.10(tailwindcss@3.3.7):
+  /@tailwindcss/typography@0.5.10(tailwindcss@3.4.0):
     resolution: {integrity: sha512-Pe8BuPJQJd3FfRnm6H0ulKIGoMEQS+Vq01R6M5aCrFB/ccR/shT+0kXLjouGC1gFLm9hopTFN+DMP0pfwRWzPw==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
@@ -1105,7 +1121,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.3.7
+      tailwindcss: 3.4.0
     dev: true
 
   /@types/cookie@0.6.0:
@@ -2838,6 +2854,10 @@ packages:
       rimraf: 3.0.2
     dev: true
 
+  /flatbuffers@23.5.26:
+    resolution: {integrity: sha512-vE+SI9vrJDwi1oETtTIFldC/o9GsVKRM+s6EL0nQgxXlYV1Vc4Tk30hj4xGICftInKQKj1F3up2n8UbIVobISQ==}
+    dev: true
+
   /flatted@3.2.9:
     resolution: {integrity: sha512-36yxDn5H7OFZQla0/jFJmbIKTdZAQHngCedGxiMmpNfEZM0sdEeT+WczLQrjK6D7o2aiyLYDnkw0R3JK0Qv1RQ==}
     dev: true
@@ -4059,6 +4079,11 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
+  /mrmime@2.0.0:
+    resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
+    engines: {node: '>=10'}
+    dev: true
+
   /ms@2.0.0:
     resolution: {integrity: sha512-Tpp60P6IUJDTuOq/5Z8cdskzJujfwqfOTkrwIwj7IRISpnkJnT6SyJ4PCPnGMoFjC9ddhal5KVIYtAt97ix05A==}
     dev: true
@@ -4278,6 +4303,14 @@ packages:
       define-lazy-prop: 2.0.0
       is-docker: 2.2.1
       is-wsl: 2.2.0
+    dev: true
+
+  /openmeteo@1.1.3:
+    resolution: {integrity: sha512-f4ycmEA9rnhH4mPkDSLAuZ9dCu33nZ2bP7pLUJmZp2YYAuIDrGDIWU/VXQPmG48l5s+vw0VcnH9+CMqL57oADQ==}
+    engines: {node: '>=12.0'}
+    dependencies:
+      '@openmeteo/sdk': 1.7.0
+      flatbuffers: 23.5.26
     dev: true
 
   /optionator@0.9.3:
@@ -5279,12 +5312,12 @@ packages:
       simple-concat: 1.0.1
     dev: true
 
-  /sirv@2.0.3:
-    resolution: {integrity: sha512-O9jm9BsID1P+0HOi81VpXPoDxYP374pkOLzACAoyUQ/3OUVndNpsz6wMnY2z+yOxzbllCKZrM+9QrWsv4THnyA==}
+  /sirv@2.0.4:
+    resolution: {integrity: sha512-94Bdh3cC2PKrbgSOUqTiGPWVZeSiXfKOVZNJniWoqrWrRkB1CJzBU3NEbiTsPcYy1lDsANA/THzS+9WBiy5nfQ==}
     engines: {node: '>= 10'}
     dependencies:
       '@polka/url': 1.0.0-next.24
-      mrmime: 1.0.1
+      mrmime: 2.0.0
       totalist: 3.0.1
     dev: true
 
@@ -5739,8 +5772,8 @@ packages:
       periscopic: 3.1.0
     dev: true
 
-  /tailwindcss@3.3.7:
-    resolution: {integrity: sha512-pjgQxDZPvyS/nG3ZYkyCvsbONJl7GdOejfm24iMt2ElYQQw8Jc4p0m8RdMp7mznPD0kUhfzwV3zAwa80qI0zmQ==}
+  /tailwindcss@3.4.0:
+    resolution: {integrity: sha512-VigzymniH77knD1dryXbyxR+ePHihHociZbXnLZHUyzf2MMs2ZVqlUrZ3FvpXP8pno9JzmILt1sZPD19M3IxtA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
@@ -6059,6 +6092,18 @@ packages:
       assert-plus: 1.0.0
       core-util-is: 1.0.2
       extsprintf: 1.3.0
+    dev: true
+
+  /vite-plugin-run@0.5.1:
+    resolution: {integrity: sha512-KSEWlsEDRHYHkGBwJRktqWjZ3xZ04i1B5vXO9pOPQufJnXPj7mFX7NicUa5WhOG98x/+yS+Koz4W/x0/CJwwWQ==}
+    dependencies:
+      '@antfu/utils': 0.7.7
+      debug: 4.3.4
+      execa: 5.1.1
+      minimatch: 9.0.3
+      picocolors: 1.0.0
+    transitivePeerDependencies:
+      - supports-color
     dev: true
 
   /vite-plugin-tailwind-purgecss@0.2.0(vite@5.0.10):

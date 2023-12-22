@@ -149,7 +149,11 @@
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label">
           <span>{m.Widgets_Common_Settings_ZIndex()}</span>
-          <NumberInput placeholder={m.Widgets_Common_Settings_ZIndex()} bind:value={$widgetSettings.zIndex} />
+          <NumberInput
+            placeholder={m.Widgets_Common_Settings_ZIndex()}
+            bind:value={$widgetSettings.zIndex}
+            min={-999}
+            max={999} />
         </label>
       {/if}
     </div>

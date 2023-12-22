@@ -52,51 +52,50 @@
 </script>
 
 <div
-  class="input-group grid-cols-[auto_1fr] w-full h-full rounded-[inherit]"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  use:fontsource={{
-    font: $fontSettings.id,
-    subsets: $userPosssibleLocaleCharSubset,
-    styles: ['normal'],
-    weights: [$fontSettings.weight],
-  }}>
-  <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
-    {#await searchProviderAdapter?.icon.getValue() then icon}
-      {@html icon}
-    {/await}
+  class="contents rounded-[inherit]"
+  style:--st-background-color={$settings.backgroundColor}
+  style:--st-text-color={$settings.textColor}
+  style:--st-font-weight={$fontSettings.weight}
+  style:--st-background-blur="{$settings.backgroundBlur}px">
+  <div
+    class="input-group grid-cols-[auto_1fr] w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
+    use:fontsource={{
+      font: $fontSettings.id,
+      subsets: $userPosssibleLocaleCharSubset,
+      styles: ['normal'],
+      weights: [$fontSettings.weight],
+    }}>
+    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
+      {#await searchProviderAdapter?.icon.getValue() then icon}
+        {@html icon}
+      {/await}
+    </div>
+    <form on:submit={doSearch}>
+      <input
+        type="search"
+        class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50"
+        placeholder={m.Widgets_Search_Placeholder()}
+        bind:value={searchTerm}
+        use:popup={popupSettings}
+        use:debounce={debounceOpts} />
+    </form>
   </div>
-  <form on:submit={doSearch}>
-    <input
-      type="search"
-      class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-1rem),10px)] w-full h-full"
-      placeholder={m.Widgets_Search_Placeholder()}
-      bind:value={searchTerm}
-      use:popup={popupSettings}
-      use:debounce={debounceOpts} />
-  </form>
-</div>
-<div
-  class="w-full ml-[-50cqh] rounded"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  data-popup={popupSettings.target}
-  style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
-  <nav class="list-nav text-[calc(70cqh-1rem)]">
-    <ul>
-      {#each searchSuggestions as suggestion}
-        <li>
-          <a
-            class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
-            href={searchProviderAdapter?.searchUrl(suggestion)}>
-            {suggestion}
-          </a>
-        </li>
-      {/each}
-    </ul>
-  </nav>
+  <div
+    class="w-full ml-[-50cqh] rounded !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
+    data-popup={popupSettings.target}
+    style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
+    <nav class="list-nav text-[calc(70cqh-1rem)]">
+      <ul>
+        {#each searchSuggestions as suggestion}
+          <li>
+            <a
+              class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
+              href={searchProviderAdapter?.searchUrl(suggestion)}>
+              {suggestion}
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </nav>
+  </div>
 </div>

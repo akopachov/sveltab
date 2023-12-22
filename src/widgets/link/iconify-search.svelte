@@ -66,7 +66,7 @@
   <ColorPicker bind:color class="!p-0 bg-transparent" />
 </div>
 
-<div class="grid gap-2 grid-cols-[repeat(auto-fit,minmax(50px,1fr))] p-2">
+<div class="grid gap-2 grid-cols-[repeat(auto-fit,minmax(50px,1fr))] mt-2">
   {#await iconsUpdatePromise}
     <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
   {:then}

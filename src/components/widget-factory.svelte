@@ -43,7 +43,9 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="absolute [container-type:size] relative-position {$$restProps.class || ''}"
+  class="absolute [container-type:size] relative-position {$$restProps.class ||
+    ''} focus-within:!z-[99999] focus:!z-[99999]"
+  tabindex="-1"
   on:mousedown
   style:z-index={$widgetSettings.zIndex}
   style:--relative-width="{$widgetPosition.width}{$widgetPosition.sizeType}"
@@ -55,7 +57,7 @@
   style:transform="rotate({widget.settings.rotation}deg)">
   <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
     {#await widget.components.widget.getValue()}
-      <div class="w-full !h-full placeholder animate-pulse" />
+      <div class="w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
     {:then component}
       <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
     {/await}

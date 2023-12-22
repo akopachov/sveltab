@@ -5,6 +5,6 @@ export const ImageTabId = 1;
 export const Tabs = [
   {
     id: ImageTabId,
-    title: m.Widgets_FlickrImage_Settings_Tabs_Image,
+    title: () => m.Widgets_FlickrImage_Settings_Tabs_Image(),
   },
 ];
