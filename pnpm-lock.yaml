@@ -23,9 +23,6 @@ devDependencies:
   '@inlang/paraglide-js-adapter-vite':
     specifier: ^1.0.3
     version: 1.0.3
-  '@inlang/valid-js-identifier':
-    specifier: ^0.0.2
-    version: 0.0.2
   '@skeletonlabs/skeleton':
     specifier: ^2.6.1
     version: 2.6.1(svelte@4.2.8)

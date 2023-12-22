@@ -24,7 +24,6 @@
 		"@iconify/utils": "^2.1.13",
 		"@inlang/paraglide-js": "1.0.0-prerelease.22",
 		"@inlang/paraglide-js-adapter-vite": "^1.0.3",
-		"@inlang/valid-js-identifier": "^0.0.2",
 		"@skeletonlabs/skeleton": "^2.6.1",
 		"@skeletonlabs/tw-plugin": "^0.3.0",
 		"@svelte-put/resize": "^3.0.0",
