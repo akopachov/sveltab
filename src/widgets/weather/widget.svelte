@@ -13,6 +13,7 @@
   import * as m from '$i18n/messages';
   import { imgSrcEx } from '$actions/img-src-ex';
   import { debounce } from '$stores/debounce-store';
+  import { getCorsFriendlyUrl } from '$lib/cors-bypass';
 
   let clockStore = getClockStore(60000);
   type LatestForecast = {
@@ -99,13 +100,13 @@
 
   async function ensureLocationPresent() {
     if (!$location.city) {
-      const response = await fetch('http://ip-api.com/json?fields=status,country,city,lat,lon').then(r => r.json());
-      if (response?.status === 'success') {
+      const response = await fetch('https://ipapi.co/json/').then(r => r.json());
+      if (response && response.error !== true) {
         Object.assign($location, {
           city: response.city,
-          country: response.country,
-          latitude: response.lat,
-          longitude: response.lon,
+          country: response.country_name,
+          latitude: response.latitude,
+          longitude: response.longitude,
         });
         $location = $location;
       }
@@ -307,6 +308,6 @@
       </div>
     </div>
   {:else}
-    <div class="w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
+    <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
   {/if}
 </div>
