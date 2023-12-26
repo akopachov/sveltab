@@ -1,28 +1,26 @@
+import { getMirrorFor } from '$lib/iconify-api';
 import type { Action } from 'svelte/action';
 
-export type InsistentImageLoaderParameters = { urls: string[] };
-
-export const insistentImageLoader: Action<HTMLImageElement, InsistentImageLoaderParameters> = function (
+export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   node: HTMLImageElement,
-  parameters: InsistentImageLoaderParameters,
+  src: string | undefined,
 ) {
-  let availableUrls = parameters.urls;
-  let urlIndex = 0;
   let timeout: any;
 
-  function updateSrc() {
+  function updateSrc(s: string | undefined) {
     clearTimeout(timeout);
-    if (urlIndex < availableUrls.length) {
-      if (node.src !== availableUrls[urlIndex]) {
-        node.src = availableUrls[urlIndex];
+    if (s) {
+      if (node.src !== s) {
+        node.src = s;
         timeout = setTimeout(rollSrc, 5000);
       }
+    } else {
+      node.src = '';
     }
   }
 
   function rollSrc() {
-    urlIndex++;
-    updateSrc();
+    updateSrc(getMirrorFor(node.src));
   }
 
   function loadStart() {
@@ -38,7 +36,7 @@ export const insistentImageLoader: Action<HTMLImageElement, InsistentImageLoader
   node.addEventListener('load', loadEnd);
   node.addEventListener('error', rollSrc);
 
-  updateSrc();
+  updateSrc(src);
 
   if (!node.complete) {
     loadStart();
@@ -52,13 +50,11 @@ export const insistentImageLoader: Action<HTMLImageElement, InsistentImageLoader
       node.src = '';
       clearTimeout(timeout);
     },
-    update(parameters: InsistentImageLoaderParameters) {
+    update(newSrc: string | undefined) {
       if (!node.complete) {
         loadStart();
       }
-      availableUrls = parameters.urls;
-      urlIndex = 0;
-      updateSrc();
+      updateSrc(newSrc);
     },
   };
 };

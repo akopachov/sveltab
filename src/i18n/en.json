@@ -148,8 +148,11 @@
   "Widgets_Weather_Forecast_Hourly": "Hourly",
   "Widgets_Weather_Forecast_Daily": "Daily",
   "Widgets_Weather_Forecast_Current_FeelsLike": "Feels like",
+  "Widgets_Weather_Forecast_Current_WeatherIcon_Alt": "Weather icon",
   "Widgets_Weather_Forecast_Hourly_PrecipitationProbability": "Precipitation probability: {percent}%",
+  "Widgets_Weather_Forecast_Hourly_WeatherIcon_Alt": "Weather icon",
   "Widgets_Weather_Forecast_Daily_PrecipitationProbability": "Precipitation probability: {percent}%",
+  "Widgets_Weather_Forecast_Daily_WeatherIcon_Alt": "Weather icon",
   "Widgets_Weather_Settings_Tabs_Text": "Text",
   "Widgets_Weather_Settings_Tabs_Background": "Background",
   "Widgets_Weather_Settings_Font": "Font",
@@ -161,5 +164,8 @@
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
   "Widgets_Weather_Settings_MeasurementUnits_Metric": "Metric",
   "Widgets_Weather_Settings_MeasurementUnits_Imperial": "Imperial",
-  "Widgets_Weather_AssetPack_Default_Name": "Default"
+  "Widgets_Weather_Settings_AssetPack": "Icons",
+  "Widgets_Weather_Settings_AssetPack_Color": "Icons color",
+  "Widgets_Weather_AssetPack_Default_Name": "Default",
+  "Widgets_Weather_AssetPack_Iconify_Name": "Iconify"
 }

@@ -32,7 +32,7 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundColor = initial.backgroundColor || '#fff';
     this.backgroundBlur = initial.backgroundBlur || 0;
     this.textColor = initial.textColor || '#000';
-    this.assetPack = 'default';
+    this.assetPack = initial.assetPack || 'default';
     this.measurementUnits = MeasurementUnits.Metric;
     this.location = new GeoLocation(initial.location || {});
     this.font = new FontSettings(initial.font || {});

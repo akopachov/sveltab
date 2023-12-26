@@ -8,13 +8,15 @@ export type WmoCodeMap = ReadonlyArray<string | [string, string] | undefined> & 
 export abstract class BaseAssetsPack {
   #baseUrl: string;
   #wmoCodeMap: ReadonlyArray<string | [string, string] | undefined>;
+  #canBeColored: boolean;
 
-  protected constructor(baseUrl: string, wmoCodeMap: WmoCodeMap) {
+  protected constructor(baseUrl: string, wmoCodeMap: WmoCodeMap, canBeColored: boolean) {
     this.#baseUrl = baseUrl;
     this.#wmoCodeMap = wmoCodeMap;
+    this.#canBeColored = canBeColored;
   }
 
-  getIconUrl(wmoCode: number, timeOfDay: TimeOfDay): string | undefined {
+  getIconUrl(wmoCode: number, timeOfDay: TimeOfDay, color: string): string | undefined {
     const entry = this.#wmoCodeMap[wmoCode];
     let icon: string | undefined;
     if (!Array.isArray(entry)) {
@@ -22,6 +24,15 @@ export abstract class BaseAssetsPack {
     } else {
       icon = timeOfDay === TimeOfDay.Day ? entry[0] : entry[1];
     }
-    return icon ? `${this.#baseUrl}/${icon}` : icon;
+
+    if (!icon) {
+      return undefined;
+    }
+
+    if (this.#canBeColored) {
+      icon = icon.replace('{color}', encodeURIComponent(color));
+    }
+
+    return `${this.#baseUrl}/${icon}`;
   }
 }

@@ -8,6 +8,7 @@
   import { GeneralTabId } from '$components/widget-settings.svelte';
   import ShadowSelector from '$components/shadow-selector.svelte';
   import LocationSelect from './location-select.svelte';
+  import { AssetsPacks } from './asset-packs';
 
   export let settings: Settings;
   export let tab: number;
@@ -22,6 +23,14 @@
     <select class="select" bind:value={$settings.measurementUnits}>
       <option value={MeasurementUnits.Metric}>{m.Widgets_Weather_Settings_MeasurementUnits_Metric()}</option>
       <option value={MeasurementUnits.Imperial}>{m.Widgets_Weather_Settings_MeasurementUnits_Imperial()}</option>
+    </select>
+  </label>
+  <label class="label">
+    <span>{m.Widgets_Weather_Settings_AssetPack()}</span>
+    <select class="select" bind:value={$settings.assetPack}>
+      {#each AssetsPacks as pack (pack[0])}
+        <option value={pack[0]}>{pack[1].name()}</option>
+      {/each}
     </select>
   </label>
 {:else if tab === TextTabId}

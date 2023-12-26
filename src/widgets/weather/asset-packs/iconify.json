@@ -1,0 +1,22 @@
+[
+  [[0], "wi/day-sunny.svg?color={color}", "wi/night-clear.svg?color={color}"],
+  [[[1, 2]], "wi/day-cloudy.svg?color={color}", "wi/night-alt-cloudy.svg?color={color}"],
+  [[3], "wi/cloud.svg?color={color}"],
+  [[4], "wi/smog.svg?color={color}"],
+  [[[5, 6], [10, 12]], "carbon/haze.svg?color={color}", "carbon/haze-night.svg?color={color}"],
+  [[29], "wi/thunderstorm.svg?color={color}"],
+  [[13, 17], "wi/day-lightning.svg?color={color}"],
+  [[18], "wi/cloudy-windy.svg?color={color}"],
+  [[[7, 8]], "wi/dust.svg?color={color}"],
+  [[9, [30, 39]], "wi/sandstorm.svg?color={color}"],
+  [[19], "wi/tornado.svg?color={color}"],
+  [[[14, 16], [50, 55], [58, 59], 80, 91, 20], "wi/day-lightning.svg?color={color}", "wi/night-alt-lightning.svg?color={color}"],
+  [[[56, 57], 83, 93, [23, 24]], "wi/day-sleet.svg?color={color}", "wi/night-sleet.svg?color={color}"],
+  [[[60, 65], [81, 82], 92, 21, 25], "wi/day-rain.svg?color={color}", "wi/night-alt-rain.svg?color={color}"],
+  [[[66, 69], 84, 94, 27], "wi/sleet.svg?color={color}"],
+  [[[40, 49], 28], "wi/fog.svg?color={color}", "wi/night-fog.svg?color={color}"],
+  [[[70, 73], [87, 90]], "wi/day-snow.svg?color={color}", "wi/night-alt-snow.svg?color={color}"],
+  [[[74, 79], [85, 86], 22, 26], "wi/snow.svg?color={color}"],
+  [[[95, 96]], "wi/day-thunderstorm.svg?color={color}", "wi:night-alt-thunderstorm.svg?color={color}"],
+  [[[97, 99]], "wi/day-snow-thunderstorm.svg?color={color}", "wi/night-alt-snow-thunderstorm.svg?color={color}"]
+]

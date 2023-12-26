@@ -35,7 +35,7 @@
 
   $: background = $workspace?.background;
   $: widgets = $workspace?.widgets || [];
-  $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `.widget_${m.id}`));
+  $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
 
   onMount(async () => {
     workspace = await getWorkspace(workspaceId);
@@ -298,15 +298,7 @@
       type="button"
       class="btn-icon bg-transparent text-white hover:bg-surface-500 fixed top-0 left-0"
       on:click={openWidgetsMenu}>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke-width="1.5"
-        stroke="currentColor"
-        class="w-6 h-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-      </svg>
+      <span class="w-6 h-6 icon-[material-symbols--menu]"></span>
     </button>
     {#each widgets as widget (widget.id)}
       <WidgetFactorty
@@ -315,8 +307,9 @@
         on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
         isSelected={!workspaceLocked && widget === selectedWidget}
-        {workspaceLocked}
-        class="widget_{widget.id}" />
+        id="widget_{widget.id}"
+        class="widget_{widget.settings.type}"
+        {workspaceLocked} />
     {/each}
     {#if !workspaceLocked}
       <Moveable

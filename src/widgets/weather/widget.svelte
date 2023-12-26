@@ -11,6 +11,8 @@
   import pDebounce from 'p-debounce';
   import { Tab, TabGroup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
+  import { imgSrcEx } from '$actions/img-src-ex';
+  import { debounce } from '$stores/debounce-store';
 
   let clockStore = getClockStore(60000);
   type LatestForecast = {
@@ -56,6 +58,8 @@
   }
 
   $: assetPack = (AssetsPacks.get($settings.assetPack) ?? DefaultAssetsPack).assetPack.getValue();
+
+  const debouncedSettings = debounce(settings, 300);
 
   $: intlTimeFormat = new Intl.DateTimeFormat(navigator.language, {
     hour: 'numeric',
@@ -196,8 +200,6 @@
     weights: [$fontSettings.weight],
   }}>
   {#if forecast?.lastUpdate > 0}
-    <!-- https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F14%2Fe4%2F15%2F14e4159de055c62b101844c1fe556e7b.jpg&f=1&nofb=1&ipt=dbd3824cb1e0780360de683156927cfbeef4bac863735cfca52bd46c8d0641f2&ipo=images -->
-    <!-- svelte-ignore a11y-missing-attribute -->
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">
         <h4 class="text-[max(0.4em,10px)] leading-none">{$location.city}, {$location.country}</h4>
@@ -205,14 +207,19 @@
           <img
             class="block object-contain object-left-top w-full h-full"
             draggable="false"
-            src={assetPack.getIconUrl(forecast.current.weatherCode, forecast.current.timeOfDay)} />
+            use:imgSrcEx={assetPack.getIconUrl(
+              forecast.current.weatherCode,
+              forecast.current.timeOfDay,
+              $debouncedSettings.textColor,
+            )}
+            alt={m.Widgets_Weather_Forecast_Current_WeatherIcon_Alt()} />
         </div>
       </div>
       <div class="row-start-1 col-start-2 row-end-2 col-end-3">
-        <div class="text-right text-[1.3em]">
+        <div class="text-right text-[1.3em] leading-none">
           {adaptTemperature(forecast.current.temperature2m, $settings.measurementUnits).toFixed(0)}&deg;
         </div>
-        <div class="text-[max(0.4em,7px)] mt-2">
+        <div class="text-[max(0.4em,7px)]">
           {m.Widgets_Weather_Forecast_Current_FeelsLike()}
           {adaptTemperature(forecast.current.apparentTemperature, $settings.measurementUnits).toFixed(0)}&deg;
         </div>
@@ -246,7 +253,12 @@
                       <img
                         class="object-contain w-full h-full"
                         draggable="false"
-                        src={assetPack.getIconUrl(forecast.hourly.weatherCode[item[1]], forecast.current.timeOfDay)} />
+                        use:imgSrcEx={assetPack.getIconUrl(
+                          forecast.hourly.weatherCode[item[1]],
+                          forecast.current.timeOfDay,
+                          $debouncedSettings.textColor,
+                        )}
+                        alt={m.Widgets_Weather_Forecast_Hourly_WeatherIcon_Alt()} />
                     </div>
                     <div class="text-center mt-auto leading-tight">
                       {adaptTemperature(forecast.hourly.temperature2m[item[1]], $settings.measurementUnits).toFixed(
@@ -271,7 +283,12 @@
                       <img
                         class="object-contain w-full h-full"
                         draggable="false"
-                        src={assetPack.getIconUrl(forecast.daily.weatherCode[item[1]], forecast.current.timeOfDay)} />
+                        use:imgSrcEx={assetPack.getIconUrl(
+                          forecast.daily.weatherCode[item[1]],
+                          forecast.current.timeOfDay,
+                          $debouncedSettings.textColor,
+                        )}
+                        alt={m.Widgets_Weather_Forecast_Daily_WeatherIcon_Alt()} />
                     </div>
                     <div class="text-center mt-auto leading-tight">
                       {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $settings.measurementUnits).toFixed(

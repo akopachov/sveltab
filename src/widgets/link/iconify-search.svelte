@@ -1,12 +1,13 @@
 <script lang="ts">
   import * as m from '$i18n/messages';
   import { Paginator, type PaginationSettings, ProgressRadial } from '@skeletonlabs/skeleton';
-  import { insistentImageLoader } from '$widgets/link/insistent-image-loader';
-  import { getSvgUrls } from './iconify-api';
+  import { imgSrcEx } from '$actions/img-src-ex';
+
   import pDebounce from 'p-debounce';
   import { createEventDispatcher } from 'svelte';
   import { AppliedColorScheme } from '$actions/color-scheme';
   import ColorPicker from '$components/color-picker.svelte';
+  import { getSvgUrl } from '../../lib/iconify-api';
 
   export let icon: string;
   export let color: string;
@@ -78,7 +79,7 @@
           on:click={() => selectIcon(iconStr)}>
           <img
             class="aspect-square w-full h-full"
-            use:insistentImageLoader={{ urls: getSvgUrls(iconStr, previewIconColor) }}
+            use:imgSrcEx={getSvgUrl(iconStr, previewIconColor)}
             alt={m.Widgets_Link_Settings_IconSource_Iconify_Search_IconAlt({ icon: iconStr })} />
         </button>
       {/each}

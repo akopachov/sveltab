@@ -1,13 +1,13 @@
 <script lang="ts">
   import debounce from 'debounce';
-  import { insistentImageLoader } from '$widgets/link/insistent-image-loader';
-  import { getSvgUrls } from './iconify-api';
+  import { imgSrcEx } from '$actions/img-src-ex';
   import { IconSource, type Settings } from './settings';
   import { onMount } from 'svelte';
+  import { getSvgUrl } from '../../lib/iconify-api';
 
   export let settings: Settings;
 
-  let iconUrls: string[] = [];
+  let iconUrl: string | undefined;
 
   $: {
     $settings && updateIconUrlDebounced();
@@ -24,14 +24,14 @@
     if ($settings.iconSource === IconSource.Favicon) {
       let urlToParse = ensureFqdnUrl($settings.url);
       if (URL.canParse(urlToParse)) {
-        iconUrls = [`https://favicon.twenty.com/${new URL(urlToParse).hostname}`];
+        iconUrl = `https://favicon.twenty.com/${new URL(urlToParse).hostname}`;
       } else {
-        iconUrls = [];
+        iconUrl = undefined;
       }
     } else if ($settings.iconSource === IconSource.Direct) {
-      iconUrls = $settings.icon ? [$settings.icon] : [];
+      iconUrl = $settings.icon;
     } else if ($settings.iconSource === IconSource.Iconify) {
-      iconUrls = getSvgUrls($settings.icon, $settings.iconColor);
+      iconUrl = getSvgUrl($settings.icon, $settings.iconColor);
     }
   }
 
@@ -48,11 +48,8 @@
   style:backdrop-filter="blur({$settings.backgroundBlur}px)"
   draggable="false"
   title={$settings.url}>
-  {#if iconUrls.length > 0}
-    <img
-      class="w-full h-full object-contain select-none !rounded-[inherit]"
-      draggable="false"
-      use:insistentImageLoader={{ urls: iconUrls }} />
+  {#if iconUrl}
+    <img class="w-full h-full object-contain select-none !rounded-[inherit]" draggable="false" use:imgSrcEx={iconUrl} />
   {:else}
     <span class="w-full h-full icon-[bx--image]"></span>
   {/if}

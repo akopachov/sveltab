@@ -25,14 +25,15 @@ function processFile(filePath) {
 
   const notMappedCodes = new Set(Array.from(new Array(100), (x, i) => i));
   const iconAliasMap = new Map();
+  let iconIndex = 1;
   const iconMap = new Array(100);
   for (const def of assetPackDef) {
     const criterias = def[0];
     if (!iconAliasMap.has(def[1])) {
-      iconAliasMap.set(def[1], `Icon_${def[1]}`);
+      iconAliasMap.set(def[1], `Icon_${iconIndex++}`);
     }
     if (def.length > 2 && !iconAliasMap.has(def[2])) {
-      iconAliasMap.set(def[2], `Icon_${def[2]}`);
+      iconAliasMap.set(def[2], `Icon_${iconIndex++}`);
     }
 
     const dayImage = iconAliasMap.get(def[1]);
@@ -69,8 +70,12 @@ function processFile(filePath) {
     assetPackGeneratedCodeFile,
     "import { BaseAssetsPack, type WmoCodeMap } from '../asset-pack-base';\n\n",
   );
+  let canBeColored = false;
   for (let [icon, alias] of iconAliasMap) {
     fs.writeFileSync(assetPackGeneratedCodeFile, `const ${alias} = '${icon}';\n`);
+    if (icon.includes('{color}')) {
+      canBeColored = true;
+    }
   }
 
   fs.writeFileSync(assetPackGeneratedCodeFile, `\nconst ${className}IconsMap: WmoCodeMap = [\n`);
@@ -81,7 +86,7 @@ function processFile(filePath) {
   fs.writeFileSync(assetPackGeneratedCodeFile, '];\n\n');
   fs.writeFileSync(assetPackGeneratedCodeFile, `export class ${className} extends BaseAssetsPack {\n`);
   fs.writeFileSync(assetPackGeneratedCodeFile, '  constructor(baseUrl: string) {\n');
-  fs.writeFileSync(assetPackGeneratedCodeFile, `    super(baseUrl, ${className}IconsMap);\n`);
+  fs.writeFileSync(assetPackGeneratedCodeFile, `    super(baseUrl, ${className}IconsMap, ${canBeColored});\n`);
   fs.writeFileSync(assetPackGeneratedCodeFile, '  }\n');
   fs.writeFileSync(assetPackGeneratedCodeFile, '}\n');
 
