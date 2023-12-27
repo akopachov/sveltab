@@ -90,6 +90,7 @@
           <li>
             <a
               class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
+              rel="noreferrer"
               href={searchProviderAdapter?.searchUrl(suggestion)}>
               {suggestion}
             </a>
