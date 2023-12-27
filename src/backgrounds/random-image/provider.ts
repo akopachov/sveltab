@@ -52,7 +52,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
         console.warn(this, '->', e);
       }
     }
-    this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur });
+    this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur, filter: settings.filter });
   }
 
   destroy() {

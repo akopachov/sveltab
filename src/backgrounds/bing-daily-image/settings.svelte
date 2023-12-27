@@ -2,6 +2,7 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
+  import FilterSelect from '$components/filter-select.svelte';
 
   export let settings: Settings;
 </script>
@@ -24,4 +25,9 @@
 <label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Blur()}</span>
   <RangeSlider name="range-slider" bind:value={$settings.blur} min={0} max={15} step={0.1}></RangeSlider>
+</label>
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<label class="label">
+  <span>{m.Backgrounds_BingDaily_Settings_Filter()}</span>
+  <FilterSelect bind:filter={$settings.filter} />
 </label>

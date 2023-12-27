@@ -8,10 +8,10 @@
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
   import { WidgetMeasurementUnits } from '$models/widget-settings';
+  import FilterSelect from './filter-select.svelte';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
-  let widgetSettingsComponent: any;
   let currentTabId: any = GeneralTabId;
 
   $: widgetSettings = widget.settings;
@@ -31,6 +31,7 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-label-has-associated-control -->
 <TabGroup>
   <Tab bind:group={currentTabId} name="tabCommon" value={0}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
   {#await tabs.getValue() then resolvedTabs}
@@ -43,11 +44,7 @@
       {#await widget.components.settings.component.getValue()}
         <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
       {:then component}
-        <svelte:component
-          this={component}
-          bind:this={widgetSettingsComponent}
-          settings={widget.settings.extra}
-          tab={currentTabId} />
+        <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} />
       {/await}
       {#if currentTabId === GeneralTabId}
         <div class="flex flex-row gap-4 content-center">
@@ -172,6 +169,10 @@
             max={999} />
         </label>
       {/if}
+      <label class="label">
+        <span>{m.Widgets_Common_Settings_Filter()}</span>
+        <FilterSelect bind:filter={$widgetSettings.filter} />
+      </label>
     </div>
   </svelte:fragment>
 </TabGroup>

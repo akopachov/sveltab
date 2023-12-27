@@ -1,5 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Subscribable, type OmitSubscribable } from './subscribable';
+import type { Filter } from '$components/active-filters.svelte';
 
 export type WidgetPositionInitial = Partial<OmitSubscribable<WidgetPosition>>;
 
@@ -165,6 +166,7 @@ export class WidgetSettings extends Subscribable implements WidgetSettingsInitia
     this.keepRatio = Boolean(initial.keepRatio);
     this.extra = new extraConstructor(initial.extra || {});
     this.position = new WidgetPosition(initial.position || {});
+    this.filter = initial.filter;
   }
 
   readonly id: string;
@@ -175,6 +177,7 @@ export class WidgetSettings extends Subscribable implements WidgetSettingsInitia
   borderRadius: number;
   readonly extra: WidgetSettingsExtra;
   keepRatio: boolean;
+  filter: Filter | undefined;
 }
 
 export type FontSettingsInitial = Partial<OmitSubscribable<FontSettings>>;

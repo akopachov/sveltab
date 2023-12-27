@@ -1,3 +1,4 @@
+import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
 import { Subscribable } from './subscribable';
@@ -16,6 +17,9 @@ export class WorkspaceInstance extends Subscribable {
     this.#widgets = new Set(widgets);
     this.#widgets.forEach(w => {
       this.#trackObjectChange(w.settings);
+      if (w.settings.filter) {
+        ActiveFilters.add(w.settings.filter);
+      }
     });
 
     this.#background = background;
@@ -92,6 +96,9 @@ export class WorkspaceInstance extends Subscribable {
     this.#hasChanges = true;
     this.#trackObjectChange(widget.settings);
     this.notifyPropertiesChanged();
+    if (widget.settings.filter) {
+      ActiveFilters.add(widget.settings.filter);
+    }
   }
 
   removeWidget(instance: WidgetInstance) {
@@ -99,6 +106,9 @@ export class WorkspaceInstance extends Subscribable {
     this.#hasChanges = true;
     this.#untrackObjectChange(instance.settings);
     this.notifyPropertiesChanged();
+    if (instance.settings.filter) {
+      ActiveFilters.remove(instance.settings.filter);
+    }
   }
 
   async commit(handler: (data: Required<WorkspaceSettingsInitial>) => Promise<void>) {

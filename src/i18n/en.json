@@ -40,6 +40,7 @@
   "Backgrounds_BingDaily_Settings_Country_UnitedKingdom": "United Kingdom",
   "Backgrounds_BingDaily_Settings_Country_UnitedStates": "United States",
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
+  "Backgrounds_BingDaily_Settings_Filter": "Filter",
   
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
@@ -63,6 +64,7 @@
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_RandomImage_Settings_UpdateInterval": "Update interval (minutes)",
   "Backgrounds_RandomImage_Settings_Blur": "Blur",
+  "Backgrounds_RandomImage_Settings_Filter": "Filter",
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
   
   "Backgrounds_StaticColor_Name": "Static color",
@@ -70,6 +72,7 @@
   "Backgrounds_StaticImage_Name": "Static image",
   "Backgrounds_StaticImage_Settings_Url": "URL",
   "Backgrounds_StaticImage_Settings_Blur": "Blur",
+  "Backgrounds_StaticImage_Settings_Filter": "Filter",
 
   "Widgets_Common_Settings_Tabs_General": "General",
   "Widgets_Common_Settings_Anchor": "Anchor",
@@ -81,6 +84,8 @@
   "Widgets_Common_Settings_SizeUnit_Fixed": "Fixed",
   "Widgets_Common_Settings_BorderRadius": "Border radius",
   "Widgets_Common_Settings_ZIndex": "Z-Index",
+  "Widgets_Common_Settings_Filter": "Filter",
+  "Widgets_Common_Settings_Filter_None": "None",
   "Widgets_Common_Menu_OpenSettings": "Settings",
   "Widgets_Common_Menu_Delete": "Delete",
   "Widgets_Common_Menu_Delete_Confirm_Title": "Please Confirm",

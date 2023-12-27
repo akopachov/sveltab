@@ -5,6 +5,7 @@
   import { forceUpdateBackground } from '$actions/dynamic-background';
   import NumberInput from '$components/number-input.svelte';
   import * as m from '$i18n/messages';
+  import FilterSelect from '$components/filter-select.svelte';
 
   export let settings: Settings;
   let searchTerms = settings.searchTerms;
@@ -37,6 +38,11 @@
 <label class="label">
   <span>{m.Backgrounds_RandomImage_Settings_Blur()}</span>
   <RangeSlider name="range-slider" bind:value={$settings.blur} min={0} max={15} step={0.1}></RangeSlider>
+</label>
+<!-- svelte-ignore a11y-label-has-associated-control -->
+<label class="label">
+  <span>{m.Backgrounds_RandomImage_Settings_Filter()}</span>
+  <FilterSelect bind:filter={$settings.filter} />
 </label>
 
 <button class="btn variant-soft" on:click={forceUpdateBackground}>

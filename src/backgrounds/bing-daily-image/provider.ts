@@ -44,6 +44,6 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         console.warn(this, '->', e);
       }
     }
-    this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur });
+    this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur, filter: settings.filter });
   }
 }

@@ -12,7 +12,6 @@
   import Moveable from 'svelte-moveable';
   import { resize } from '@svelte-put/resize';
   import WidgetFactorty from '$components/widget-factory.svelte';
-  import { writable } from 'svelte/store';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
   import WidgetCatalogItemPreview from '$components/widget-catalog-item-preview.svelte';
   import WidgetSettingsComponent from '$components/widget-settings.svelte';
@@ -27,6 +26,7 @@
   import pDebounce from 'p-debounce';
   import LanguageSelect from '$components/language-select.svelte';
   import Lightswitch from '$components/lightswitch.svelte';
+  import WidgetFilters from '$components/active-filters.svelte';
 
   const drawerStore = getDrawerStore();
 
@@ -34,7 +34,7 @@
   let workspace: WorkspaceInstance | undefined;
 
   $: background = $workspace?.background;
-  $: widgets = $workspace?.widgets || [];
+  $: widgets = <Iterable<WidgetInstance>>($workspace?.widgets || []);
   $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
 
   onMount(async () => {
@@ -364,4 +364,5 @@
       <WidgetSettingsComponent widget={selectedWidget} workspace={workspaceEl} />
     {/if}
   </div>
+  <WidgetFilters />
 </AppShell>

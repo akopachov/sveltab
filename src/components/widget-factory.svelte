@@ -62,7 +62,11 @@
     {#await widget.components.widget.getValue()}
       <div class="w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
     {:then component}
-      <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
+      <div
+        class="w-full h-full rounded-[inherit]"
+        style:filter={$widgetSettings.filter ? `url('#${$widgetSettings.filter}')` : ''}>
+        <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
+      </div>
     {/await}
   </div>
   <div
