@@ -8,7 +8,7 @@
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
   import { WidgetMeasurementUnits } from '$models/widget-settings';
-  import FilterSelect from './filter-select.svelte';
+  import FilterSelector from './filter-selector.svelte';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -170,7 +170,7 @@
         </label>
         <label class="label">
           <span>{m.Widgets_Common_Settings_Filter()}</span>
-          <FilterSelect bind:filter={$widgetSettings.filter} />
+          <FilterSelector bind:filter={$widgetSettings.filter} />
         </label>
       {/if}
     </div>

@@ -3,7 +3,7 @@
   import type { Settings } from './settings';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
-  import FilterSelect from '$shared-components/filter-select.svelte';
+  import FilterSelector from '$shared-components/filter-selector.svelte';
 
   export let settings: Settings;
   let url = settings.url;
@@ -25,5 +25,5 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_StaticImage_Settings_Filter()}</span>
-  <FilterSelect bind:filter={$settings.filter} />
+  <FilterSelector bind:filter={$settings.filter} />
 </label>

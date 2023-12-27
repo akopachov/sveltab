@@ -24,7 +24,7 @@
   import { getWorkspace, saveWorkspace } from '$stores/workspace-store';
   import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
-  import LanguageSelect from '$shared-components/language-select.svelte';
+  import LanguageSelector from '$shared-components/language-selector.svelte';
   import Lightswitch from '$shared-components/lightswitch.svelte';
   import WidgetFilters from '$shared-components/active-filters.svelte';
 
@@ -266,7 +266,7 @@
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label class="label">
             <span>{m.Core_Sidebar_Settings_Language()}</span>
-            <LanguageSelect />
+            <LanguageSelector />
           </label>
         </svelte:fragment>
       </AccordionItem>

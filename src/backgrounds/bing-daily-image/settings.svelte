@@ -2,7 +2,7 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
-  import FilterSelect from '$shared-components/filter-select.svelte';
+  import FilterSelector from '$shared-components/filter-selector.svelte';
 
   export let settings: Settings;
 </script>
@@ -29,5 +29,5 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Filter()}</span>
-  <FilterSelect bind:filter={$settings.filter} />
+  <FilterSelector bind:filter={$settings.filter} />
 </label>

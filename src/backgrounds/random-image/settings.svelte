@@ -5,7 +5,7 @@
   import { forceUpdateBackground } from '$actions/dynamic-background';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
-  import FilterSelect from '$shared-components/filter-select.svelte';
+  import FilterSelector from '$shared-components/filter-selector.svelte';
 
   export let settings: Settings;
   let searchTerms = settings.searchTerms;
@@ -42,7 +42,7 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_RandomImage_Settings_Filter()}</span>
-  <FilterSelect bind:filter={$settings.filter} />
+  <FilterSelector bind:filter={$settings.filter} />
 </label>
 
 <button class="btn variant-soft" on:click={forceUpdateBackground}>
