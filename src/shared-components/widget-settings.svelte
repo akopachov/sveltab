@@ -160,7 +160,7 @@
           ></RangeSlider>
         </label>
         <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="label">
+        <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_ZIndex()}</span>
           <NumberInput
             placeholder={m.Widgets_Common_Settings_ZIndex()}
@@ -168,11 +168,11 @@
             min={-999}
             max={999} />
         </label>
+        <label class="label">
+          <span>{m.Widgets_Common_Settings_Filter()}</span>
+          <FilterSelect bind:filter={$widgetSettings.filter} />
+        </label>
       {/if}
-      <label class="label">
-        <span>{m.Widgets_Common_Settings_Filter()}</span>
-        <FilterSelect bind:filter={$widgetSettings.filter} />
-      </label>
     </div>
   </svelte:fragment>
 </TabGroup>
