@@ -1,11 +1,11 @@
 <script lang="ts">
-  import ColorPicker from '$components/color-picker.svelte';
+  import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import FontSelector from '$components/font-selector.svelte';
+  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
-  import { GeneralTabId } from '$components/widget-settings.svelte';
+  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;

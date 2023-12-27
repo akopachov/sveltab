@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
-  import NumberInput from '$components/number-input.svelte';
+  import NumberInput from '$shared-components/number-input.svelte';
   import { ImageTabId } from './settings-tabs';
 
   export let settings: Settings;

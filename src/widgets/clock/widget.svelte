@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DynamicSizeText from '$components/dynamic-size-text.svelte';
+  import DynamicSizeText from '$shared-components/dynamic-size-text.svelte';
   import { ClockFormat, type Settings } from './settings';
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';

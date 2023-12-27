@@ -1,12 +1,12 @@
 <script lang="ts">
-  import ColorPicker from '$components/color-picker.svelte';
+  import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { MeasurementUnits, type Settings } from './settings';
   import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import FontSelector from '$components/font-selector.svelte';
+  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
-  import { GeneralTabId } from '$components/widget-settings.svelte';
-  import ShadowSelector from '$components/shadow-selector.svelte';
+  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
+  import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import LocationSelect from './location-select.svelte';
   import { AssetsPacks } from './asset-packs';
 

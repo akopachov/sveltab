@@ -2,7 +2,7 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
-  import FilterSelect from '$components/filter-select.svelte';
+  import FilterSelect from '$shared-components/filter-select.svelte';
 
   export let settings: Settings;
 </script>

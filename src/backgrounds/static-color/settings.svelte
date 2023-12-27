@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ColorPicker from '$components/color-picker.svelte';
+  import ColorPicker from '$shared-components/color-picker.svelte';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
 

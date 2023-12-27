@@ -3,9 +3,9 @@
   import type { Settings } from './settings';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { forceUpdateBackground } from '$actions/dynamic-background';
-  import NumberInput from '$components/number-input.svelte';
+  import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
-  import FilterSelect from '$components/filter-select.svelte';
+  import FilterSelect from '$shared-components/filter-select.svelte';
 
   export let settings: Settings;
   let searchTerms = settings.searchTerms;

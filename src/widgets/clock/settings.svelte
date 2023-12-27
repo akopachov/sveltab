@@ -1,12 +1,12 @@
 <script lang="ts">
-  import ColorPicker from '$components/color-picker.svelte';
-  import { GeneralTabId } from '$components/widget-settings.svelte';
+  import ColorPicker from '$shared-components/color-picker.svelte';
+  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
   import { ClockFormat, type Settings } from './settings';
   import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import FontSelector from '$components/font-selector.svelte';
+  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
-  import ShadowSelector from '$components/shadow-selector.svelte';
+  import ShadowSelector from '$shared-components/shadow-selector.svelte';
 
   export let settings: Settings;
   export let tab: number;

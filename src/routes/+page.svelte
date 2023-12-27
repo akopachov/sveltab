@@ -11,10 +11,10 @@
   } from '@skeletonlabs/skeleton';
   import Moveable from 'svelte-moveable';
   import { resize } from '@svelte-put/resize';
-  import WidgetFactorty from '$components/widget-factory.svelte';
+  import WidgetFactorty from '$shared-components/widget-factory.svelte';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
-  import WidgetCatalogItemPreview from '$components/widget-catalog-item-preview.svelte';
-  import WidgetSettingsComponent from '$components/widget-settings.svelte';
+  import WidgetCatalogItemPreview from '$shared-components/widget-catalog-item-preview.svelte';
+  import WidgetSettingsComponent from '$shared-components/widget-settings.svelte';
   import { onMount } from 'svelte';
   import { BackgroundCatalog } from '$stores/background-catalog';
   import { dynamicBackground } from '$actions/dynamic-background';
@@ -24,9 +24,9 @@
   import { getWorkspace, saveWorkspace } from '$stores/workspace-store';
   import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
-  import LanguageSelect from '$components/language-select.svelte';
-  import Lightswitch from '$components/lightswitch.svelte';
-  import WidgetFilters from '$components/active-filters.svelte';
+  import LanguageSelect from '$shared-components/language-select.svelte';
+  import Lightswitch from '$shared-components/lightswitch.svelte';
+  import WidgetFilters from '$shared-components/active-filters.svelte';
 
   const drawerStore = getDrawerStore();
 

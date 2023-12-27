@@ -2,8 +2,8 @@
   import { IconSource, type Settings } from './settings';
   import * as m from '$i18n/messages';
   import { BackgroundTabId, IconTabId } from './settings-tabs';
-  import { GeneralTabId } from '$components/widget-settings.svelte';
-  import ColorPicker from '$components/color-picker.svelte';
+  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
+  import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import IconifySearch from './iconify-search.svelte';
 

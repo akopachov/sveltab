@@ -14,7 +14,7 @@ const config = {
     adapter: adapter(),
     appDir: 'app',
     alias: {
-      $components: 'src/components',
+      '$shared-components': 'src/shared-components',
       $models: 'src/models',
       $stores: 'src/stores',
       $widgets: 'src/widgets',
