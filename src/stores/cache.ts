@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { storage } from './storage';
+import { minutesToMilliseconds } from 'date-fns';
 
 const CachesTtlStorageKey = 'caches_ttl';
 let CachesTtl: Map<string, number>;
@@ -61,7 +62,7 @@ export async function setupCacheHouseKeeping() {
   }
 
   await housekeep();
-  const intervalRef = setInterval(housekeep, 60000);
+  const intervalRef = setInterval(housekeep, minutesToMilliseconds(1));
 
   return () => clearInterval(intervalRef);
 }

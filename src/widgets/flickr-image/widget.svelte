@@ -6,8 +6,9 @@
   import { writable } from 'svelte/store';
   import pDebounce from 'p-debounce';
   import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
+  import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
 
-  let clockStore = getClockStore(60000);
+  let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestSearchResult = { searchTerm: string; page: number; totalPages: number; images: string[] };
   export let settings: Settings;
   export let id: string;
@@ -42,7 +43,7 @@
     if (
       $latestSearchResult &&
       (!activeImageUrl ||
-        (new Date().valueOf() - lastUpdate) / 1000 >= $settings.updateInterval ||
+        millisecondsToSeconds(new Date().valueOf() - lastUpdate) >= $settings.updateInterval ||
         $latestSearchResult.searchTerm !== $settings.searchTopic)
     ) {
       lastUpdate = new Date().valueOf();

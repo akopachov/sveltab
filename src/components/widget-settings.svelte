@@ -4,19 +4,10 @@
 
 <script lang="ts">
   import type { WidgetInstance } from '$models/widget-instance';
-  import {
-    ListBox,
-    ListBoxItem,
-    ProgressRadial,
-    RadioGroup,
-    RadioItem,
-    RangeSlider,
-    Tab,
-    TabGroup,
-  } from '@skeletonlabs/skeleton';
+  import { ListBox, ListBoxItem, ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
-  import { WidgetSizeType } from '$models/widget-settings';
+  import { WidgetMeasurementUnits } from '$models/widget-settings';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -31,8 +22,12 @@
     $widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
   }
 
-  function setSizeType(newType: WidgetSizeType) {
-    $widgetPosition.updateMeasurement(workspace, { sizeType: newType });
+  function setSizeUnits(newUnits: WidgetMeasurementUnits) {
+    $widgetPosition.updateMeasurement(workspace, { sizeUnits: newUnits });
+  }
+
+  function setPositionUnits(newUnits: WidgetMeasurementUnits) {
+    $widgetPosition.updateMeasurement(workspace, { positionUnits: newUnits });
   }
 </script>
 
@@ -119,22 +114,43 @@
             </div>
           </div>
           <div class="label mb-4 text-center">
-            <span>{m.Widgets_Common_Settings_SizeType()}</span>
+            <span>{m.Widgets_Common_Settings_PositionUnit()}</span>
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={$widgetPosition.sizeType}
-                  name="Widget_{widgetSettings.id}_SizeType"
-                  value={WidgetSizeType.Scale}
-                  on:change={() => setSizeType(WidgetSizeType.Scale)}>
-                  {m.Widgets_Common_Settings_SizeType_Scale()}
+                  group={$widgetPosition.positionUnits}
+                  name="Widget_{widgetSettings.id}_PositionUnits"
+                  value={WidgetMeasurementUnits.Scale}
+                  on:change={() => setPositionUnits(WidgetMeasurementUnits.Scale)}>
+                  {m.Widgets_Common_Settings_PositionUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={$widgetPosition.sizeType}
-                  name="Widget_{widgetSettings.id}_SizeType"
-                  value={WidgetSizeType.Fixed}
-                  on:change={() => setSizeType(WidgetSizeType.Fixed)}>
-                  {m.Widgets_Common_Settings_SizeType_Fixed()}
+                  group={$widgetPosition.positionUnits}
+                  name="Widget_{widgetSettings.id}_PositionUnits"
+                  value={WidgetMeasurementUnits.Fixed}
+                  on:change={() => setPositionUnits(WidgetMeasurementUnits.Fixed)}>
+                  {m.Widgets_Common_Settings_PositionUnit_Fixed()}
+                </ListBoxItem>
+              </ListBox>
+            </div>
+          </div>
+          <div class="label mb-4 text-center">
+            <span>{m.Widgets_Common_Settings_SizeUnit()}</span>
+            <div class="w-20">
+              <ListBox active="variant-filled-primary">
+                <ListBoxItem
+                  group={$widgetPosition.sizeUnits}
+                  name="Widget_{widgetSettings.id}_SizeUnits"
+                  value={WidgetMeasurementUnits.Scale}
+                  on:change={() => setSizeUnits(WidgetMeasurementUnits.Scale)}>
+                  {m.Widgets_Common_Settings_SizeUnit_Scale()}
+                </ListBoxItem>
+                <ListBoxItem
+                  group={$widgetPosition.sizeUnits}
+                  name="Widget_{widgetSettings.id}_SizeUnits"
+                  value={WidgetMeasurementUnits.Fixed}
+                  on:change={() => setSizeUnits(WidgetMeasurementUnits.Fixed)}>
+                  {m.Widgets_Common_Settings_SizeUnit_Fixed()}
                 </ListBoxItem>
               </ListBox>
             </div>

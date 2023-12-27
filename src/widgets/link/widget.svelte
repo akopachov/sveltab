@@ -4,6 +4,7 @@
   import { IconSource, type Settings } from './settings';
   import { onMount } from 'svelte';
   import { getSvgUrl } from '../../lib/iconify-api';
+  import { secondsToMilliseconds } from 'date-fns';
 
   export let settings: Settings;
 
@@ -19,7 +20,7 @@
     return `https://${url}`;
   }
 
-  const updateIconUrlDebounced = debounce(updateIconUrl, 1000);
+  const updateIconUrlDebounced = debounce(updateIconUrl, secondsToMilliseconds(1));
   function updateIconUrl() {
     if ($settings.iconSource === IconSource.Favicon) {
       let urlToParse = ensureFqdnUrl($settings.url);

@@ -19,7 +19,7 @@
 	},
 	"devDependencies": {
 		"@floating-ui/dom": "^1.5.3",
-		"@iconify/json": "^2.2.161",
+		"@iconify/json": "^2.2.162",
 		"@iconify/tailwind": "^0.1.4",
 		"@iconify/utils": "^2.1.13",
 		"@inlang/paraglide-js": "1.0.0-prerelease.22",
@@ -38,6 +38,7 @@
 		"@typescript-eslint/parser": "^6.16.0",
 		"autoprefixer": "^10.4.16",
 		"browser-storage-polyfill": "^1.0.8",
+		"date-fns": "^3.0.6",
 		"debounce": "^2.0.0",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",

@@ -49,12 +49,14 @@
   tabindex="-1"
   on:mousedown
   style:z-index={$widgetSettings.zIndex}
-  style:--relative-width="{$widgetPosition.width}{$widgetPosition.sizeType}"
-  style:--relative-height="{$widgetPosition.height}{$widgetPosition.sizeType}"
-  style:--relative-y="{$widgetPosition.y}{$widgetPosition.sizeType}"
-  style:--relative-x="{$widgetPosition.x}{$widgetPosition.sizeType}"
+  style:--relative-width="{$widgetPosition.width}{$widgetPosition.sizeUnits}"
+  style:--relative-height="{$widgetPosition.height}{$widgetPosition.sizeUnits}"
+  style:--relative-y="{$widgetPosition.y}{$widgetPosition.positionUnits}"
+  style:--relative-x="{$widgetPosition.x}{$widgetPosition.positionUnits}"
   style:--relative-offset-y="{$widgetPosition.offsetY}cqh"
   style:--relative-offset-x="{$widgetPosition.offsetX}cqw"
+  style:--relative-origin-y={$widgetPosition.offsetY / 100}
+  style:--relative-origin-x={$widgetPosition.offsetX / 100}
   style:transform="rotate({widget.settings.rotation}deg)">
   <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
     {#await widget.components.widget.getValue()}
@@ -87,8 +89,8 @@
 
 <style>
   .relative-position {
-    left: calc(var(--relative-offset-x) + var(--relative-x) - (var(--relative-width) / 2));
-    top: calc(var(--relative-offset-y) + var(--relative-y) - (var(--relative-height) / 2));
+    left: calc(var(--relative-offset-x) + var(--relative-x) - (var(--relative-width) * var(--relative-origin-x)));
+    top: calc(var(--relative-offset-y) + var(--relative-y) - (var(--relative-height) * var(--relative-origin-y)));
     width: var(--relative-width);
     height: var(--relative-height);
   }

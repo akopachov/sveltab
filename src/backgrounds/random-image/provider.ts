@@ -1,6 +1,8 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
+import { minutesToMilliseconds } from 'date-fns';
+import { millisecondsToSeconds } from 'date-fns';
 
 const LocalSettingsKey = 'RandomImageBackgroundProvider_LocalSettings';
 
@@ -20,7 +22,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
       if (this.#lastSettings) {
         this.update(this.#lastSettings);
       }
-    }, 60000);
+    }, minutesToMilliseconds(1));
   }
 
   async update(settings: Settings, forceUpdate?: boolean) {
@@ -31,7 +33,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase {
         lastUrl: '',
       };
     }
-    const timeSinceLastChange = (new Date().valueOf() - this.#localSettings!.lastChangedTime) / 1000;
+    const timeSinceLastChange = millisecondsToSeconds(new Date().valueOf() - this.#localSettings!.lastChangedTime);
     if (
       timeSinceLastChange >= settings.updateInterval ||
       this.#localSettings!.lastSearchTerm !== settings.searchTerms ||

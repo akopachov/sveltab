@@ -4,8 +4,9 @@
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
   import { locale, localeCharSubset } from '$stores/locale';
+  import { minutesToMilliseconds } from 'date-fns';
 
-  let clockStore = getClockStore(60000);
+  let clockStore = getClockStore(minutesToMilliseconds(1));
   let dateDisplay: DynamicSizeText | null;
   export let settings: Settings;
 

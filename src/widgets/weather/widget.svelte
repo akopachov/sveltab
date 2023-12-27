@@ -13,9 +13,9 @@
   import * as m from '$i18n/messages';
   import { imgSrcEx } from '$actions/img-src-ex';
   import { debounce } from '$stores/debounce-store';
-  import { getCorsFriendlyUrl } from '$lib/cors-bypass';
+  import { minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
 
-  let clockStore = getClockStore(60000);
+  let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestForecast = {
     lastUpdate: number;
     latitude: number;
@@ -118,7 +118,7 @@
   async function checkIfObsolete() {
     if (
       !forecast ||
-      new Date().valueOf() - forecast.lastUpdate > 900_000 || // Every 15 minutes
+      new Date().valueOf() - forecast.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes
       forecast.latitude !== $location.latitude || // Or location change
       forecast.longitude !== $location.longitude
     ) {
@@ -157,16 +157,16 @@
         timeOfDay: current.variables(3)!.value() > 0 ? TimeOfDay.Day : TimeOfDay.Night,
       },
       hourly: {
-        time: dateRange(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(
-          t => (t + utcOffsetSeconds) * 1000,
+        time: dateRange(Number(hourly.time()), Number(hourly.timeEnd()), hourly.interval()).map(t =>
+          secondsToMilliseconds(t + utcOffsetSeconds),
         ),
         temperature2m: Array.from(hourly.variables(0)!.valuesArray()!),
         precipitationProbability: Array.from(hourly.variables(1)!.valuesArray()!),
         weatherCode: Array.from(hourly.variables(2)!.valuesArray()!),
       },
       daily: {
-        time: dateRange(Number(daily.time()), Number(daily.timeEnd()), daily.interval()).map(
-          t => (t + utcOffsetSeconds) * 1000,
+        time: dateRange(Number(daily.time()), Number(daily.timeEnd()), daily.interval()).map(t =>
+          secondsToMilliseconds(t + utcOffsetSeconds),
         ),
         weatherCode: Array.from(daily.variables(0)!.valuesArray()!),
         temperature2mMax: Array.from(daily.variables(1)!.valuesArray()!),

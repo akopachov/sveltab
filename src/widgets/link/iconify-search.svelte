@@ -8,6 +8,7 @@
   import { AppliedColorScheme } from '$actions/color-scheme';
   import ColorPicker from '$components/color-picker.svelte';
   import { getSvgUrl } from '../../lib/iconify-api';
+  import { secondsToMilliseconds } from 'date-fns';
 
   export let icon: string;
   export let color: string;
@@ -31,7 +32,7 @@
 
   $: iconsUpdatePromise = searchQuery && updateIconsListDebounced();
 
-  const updateIconsListDebounced = pDebounce(updateIconsList, 1000);
+  const updateIconsListDebounced = pDebounce(updateIconsList, secondsToMilliseconds(1));
   async function updateIconsList() {
     if (searchQuery.length > 0) {
       const iconifyInfo = await fetch(

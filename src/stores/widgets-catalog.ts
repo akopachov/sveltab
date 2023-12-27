@@ -1,4 +1,5 @@
 import type {
+  WidgetMeasurementUnits,
   WidgetPositionInitial,
   WidgetSettingsExtra,
   WidgetSettingsExtraInitial,
@@ -16,7 +17,11 @@ import { Widget as LinkWidget } from '$widgets/link';
 import { Widget as WeatherWidget } from '$widgets/weather';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
-  position: Omit<WidgetPositionInitial, 'x' | 'y'>;
+  position: Omit<WidgetPositionInitial, 'x' | 'y' | 'positionUnits' | 'sizeUnits'> &
+    Required<Pick<WidgetPositionInitial, 'width' | 'height'>> & {
+      positionUnits?: WidgetMeasurementUnits.Scale;
+      sizeUnits?: WidgetMeasurementUnits.Scale;
+    };
 };
 
 export interface WidgetCatalogItem {

@@ -5,8 +5,10 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
+  import { minutesToMilliseconds } from 'date-fns';
+  import { millisecondsToSeconds } from 'date-fns';
 
-  let clockStore = getClockStore(60000);
+  let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
   export let settings: Settings;
   export let id: string;
@@ -33,7 +35,7 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && (new Date().valueOf() - quote.lastUpdate) / 1000 > $settings.updateInterval) {
+    if (quote && millisecondsToSeconds(new Date().valueOf() - quote.lastUpdate) > $settings.updateInterval) {
       await loadNewQuote();
     }
   }

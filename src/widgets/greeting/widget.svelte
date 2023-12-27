@@ -5,6 +5,7 @@
   import * as m from '$i18n/messages';
   import { derived, type Readable } from 'svelte/store';
   import { localeCharSubset } from '$stores/locale';
+  import { minutesToMilliseconds } from 'date-fns';
 
   export let settings: Settings;
 
@@ -17,7 +18,7 @@
   }
 
   let currentPartOfDay = derived<Readable<Date>, PartOfDay>(
-    getClockStore(60000),
+    getClockStore(minutesToMilliseconds(1)),
     (now, set) => {
       let newPartOfTheDay = PartOfDay.Day;
       const hours = now.getHours();

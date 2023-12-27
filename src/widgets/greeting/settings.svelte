@@ -15,7 +15,7 @@
 </script>
 
 {#if tab === GeneralTabId}
-  <label class="label">
+  <label class="label mb-2">
     <span>{m.Widgets_Greating_Settings_Name()}</span>
     <input type="text" class="input" bind:value={$settings.name} />
   </label>

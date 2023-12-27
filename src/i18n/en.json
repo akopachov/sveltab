@@ -6,6 +6,7 @@
   "Core_Sidebar_Settings_Language": "Language",
   "Core_Sidebar_Settings_ColorScheme": "Color scheme",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
+  
   "FontSelector_Search_Placeholder": "Search...",
   "FontSelector_Weight_Thin": "Thin",
   "FontSelector_Weight_ExtraLight": "Extra Light",
@@ -17,13 +18,16 @@
   "FontSelector_Weight_ExtraBold": "Extra Bold",
   "FontSelector_Weight_Heavy": "Heavy",
   "FontSelector_Size": "Size",
+  
   "Lightswitch_ColorScheme_Light": "Light",
   "Lightswitch_ColorScheme_Auto": "Auto",
   "Lightswitch_ColorScheme_Dark": "Dark",
+  
   "ShadowSelector_OffsetX": "Offset X",
   "ShadowSelector_OffsetY": "Offset Y",
   "ShadowSelector_Blur": "Blur",
   "ShadowSelector_Color": "Color",
+  
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
   "Backgrounds_BingDaily_Settings_Country_Any": "Any",
@@ -36,6 +40,7 @@
   "Backgrounds_BingDaily_Settings_Country_UnitedKingdom": "United Kingdom",
   "Backgrounds_BingDaily_Settings_Country_UnitedStates": "United States",
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
+  
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",
@@ -52,28 +57,35 @@
   "Backgrounds_RandomColor_Settings_Hue_Purple": "Purple",
   "Backgrounds_RandomColor_Settings_Hue_Pink": "Pink",
   "Backgrounds_RandomColor_Settings_Refresh": "Refresh",
+  
   "Backgrounds_RandomImage_Name": "Random image",
   "Backgrounds_RandomImage_Settings_SearchTerms": "Search terms",
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_RandomImage_Settings_UpdateInterval": "Update interval (minutes)",
   "Backgrounds_RandomImage_Settings_Blur": "Blur",
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
+  
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
   "Backgrounds_StaticImage_Name": "Static image",
   "Backgrounds_StaticImage_Settings_Url": "URL",
   "Backgrounds_StaticImage_Settings_Blur": "Blur",
+
   "Widgets_Common_Settings_Tabs_General": "General",
   "Widgets_Common_Settings_Anchor": "Anchor",
-  "Widgets_Common_Settings_SizeType": "Size type",
-  "Widgets_Common_Settings_SizeType_Scale": "Scale",
-  "Widgets_Common_Settings_SizeType_Fixed": "Fixed",
+  "Widgets_Common_Settings_PositionUnit": "Position",
+  "Widgets_Common_Settings_PositionUnit_Scale": "Scale",
+  "Widgets_Common_Settings_PositionUnit_Fixed": "Fixed",
+  "Widgets_Common_Settings_SizeUnit": "Size",
+  "Widgets_Common_Settings_SizeUnit_Scale": "Scale",
+  "Widgets_Common_Settings_SizeUnit_Fixed": "Fixed",
   "Widgets_Common_Settings_BorderRadius": "Border radius",
   "Widgets_Common_Settings_ZIndex": "Z-Index",
   "Widgets_Common_Menu_OpenSettings": "Settings",
   "Widgets_Common_Menu_Delete": "Delete",
   "Widgets_Common_Menu_Delete_Confirm_Title": "Please Confirm",
   "Widgets_Common_Menu_Delete_Confirm_Body": "Are you sure you wish to delete widget instance?",
+  
   "Widgets_Clock_Name": "Clock",
   "Widgets_Clock_Settings_Tabs_Text": "Text",
   "Widgets_Clock_Settings_Tabs_Background": "Background",
@@ -84,6 +96,7 @@
   "Widgets_Clock_Settings_Shadow": "Shadow",
   "Widgets_Clock_Settings_Color": "Color",
   "Widgets_Clock_Settings_Blur": "Blur",
+
   "Widgets_Date_Name": "Date",
   "Widgets_Date_Settings_Tabs_Text": "Text",
   "Widgets_Date_Settings_Tabs_Background": "Background",
@@ -91,6 +104,7 @@
   "Widgets_Date_Settings_Shadow": "Shadow",
   "Widgets_Date_Settings_Color": "Color",
   "Widgets_Date_Settings_Blur": "Blur",
+
   "Widgets_Quote_Name": "Quote",
   "Widgets_Quote_Settings_Tabs_Text": "Text",
   "Widgets_Quote_Settings_Tabs_Background": "Background",
@@ -99,6 +113,7 @@
   "Widgets_Quote_Settings_Shadow": "Shadow",
   "Widgets_Quote_Settings_Color": "Color",
   "Widgets_Quote_Settings_Blur": "Blur",
+
   "Widgets_Search_Name": "Search",
   "Widgets_Search_Placeholder": "Search...",
   "Widgets_Search_Settings_Tabs_Text": "Text",
@@ -107,6 +122,7 @@
   "Widgets_Search_Settings_Color": "Color",
   "Widgets_Search_Settings_Blur": "Blur",
   "Widgets_Search_Settings_SearchProvider": "Search provider",
+
   "Widgets_Greating_Name": "Greating",
   "Widgets_Greating_Messages_Morning": "Good morning;Wakey, wakey};Rise and shine;Morning;Top of the morning to you;Have a great day",
   "Widgets_Greating_Messages_Morning_Named": "Good morning, [name];Wakey, wakey, [name];Rise and shine, [name];Morning, [name];Top of the morning to you, [name];Have a great day, [name]",
@@ -123,10 +139,12 @@
   "Widgets_Greating_Settings_Shadow": "Shadow",
   "Widgets_Greating_Settings_Color": "Color",
   "Widgets_Greating_Settings_Blur": "Blur",
+
   "Widgets_FlickrImage_Name": "Flickr",
   "Widgets_FlickrImage_Settings_Tabs_Image": "Image",
   "Widgets_FlickrImage_Settings_Topic": "Image topic",
   "Widgets_FlickrImage_Settings_UpdateInterval": "Update interval (minutes)",
+
   "Widgets_Link_Name": "Link",
   "Widgets_Link_Settings_Tabs_Icon": "Icon",
   "Widgets_Link_Settings_Tabs_Background": "Background",
@@ -144,6 +162,7 @@
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
   "Widgets_Link_Settings_Background_Color": "Color",
   "Widgets_Link_Settings_Background_Blur": "Blur",
+
   "Widgets_Weather_Name": "Weather",
   "Widgets_Weather_Forecast_Hourly": "Hourly",
   "Widgets_Weather_Forecast_Daily": "Daily",

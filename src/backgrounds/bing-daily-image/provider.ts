@@ -1,6 +1,7 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
+import { hoursToMilliseconds } from 'date-fns';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 
@@ -27,7 +28,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         lastUrl: '',
       };
     }
-    const hoursSinceLastChange = (new Date().valueOf() - this.#localSettings!.lastChangedTime) / 3600000;
+    const hoursSinceLastChange = (new Date().valueOf() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (hoursSinceLastChange > 12 || settings.locale !== this.#localSettings!.lastLocale) {
       try {
         const response = await fetch(

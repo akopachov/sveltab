@@ -9,8 +9,8 @@ devDependencies:
     specifier: ^1.5.3
     version: 1.5.3
   '@iconify/json':
-    specifier: ^2.2.161
-    version: 2.2.161
+    specifier: ^2.2.162
+    version: 2.2.162
   '@iconify/tailwind':
     specifier: ^0.1.4
     version: 0.1.4
@@ -65,6 +65,9 @@ devDependencies:
   browser-storage-polyfill:
     specifier: ^1.0.8
     version: 1.0.8
+  date-fns:
+    specifier: ^3.0.6
+    version: 3.0.6
   debounce:
     specifier: ^2.0.0
     version: 2.0.0
@@ -571,8 +574,8 @@ packages:
     resolution: {integrity: sha512-dvuCeX5fC9dXgJn9t+X5atfmgQAzUOWqS1254Gh0m6i8wKd10ebXkfNKiRK+1GWi/yTvvLDHpoxLr0xxxeslWw==}
     dev: true
 
-  /@iconify/json@2.2.161:
-    resolution: {integrity: sha512-yxkCLeZdzHFjfhH1BRmyMU5DEUnbTsiuSpgcd/DxKM8eMzUab/CbfxAVSqiNIrSeXhe4RUsws767wfTKhblTSw==}
+  /@iconify/json@2.2.162:
+    resolution: {integrity: sha512-+3JGi38kZzXpXf/0kviQPjx2yBKLmd/V/kbL+1f4FdcfCd8HeYpcs07SU9HdGxS7jqiTltXws9IKciiahp2rig==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.1
@@ -1721,7 +1724,7 @@ packages:
     hasBin: true
     optionalDependencies:
       dtrace-provider: 0.8.8
-      moment: 2.29.4
+      moment: 2.30.0
       mv: 2.1.1
       safe-json-stringify: 1.2.0
     dev: true
@@ -2144,6 +2147,10 @@ packages:
   /data-uri-to-buffer@4.0.1:
     resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
     engines: {node: '>= 12'}
+    dev: true
+
+  /date-fns@3.0.6:
+    resolution: {integrity: sha512-W+G99rycpKMMF2/YD064b2lE7jJGUe+EjOES7Q8BIGY8sbNdbgcs9XFTZwvzc9Jx1f3k7LB7gZaZa7f8Agzljg==}
     dev: true
 
   /debounce@1.2.1:
@@ -4066,8 +4073,8 @@ packages:
     hasBin: true
     dev: true
 
-  /moment@2.29.4:
-    resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
+  /moment@2.30.0:
+    resolution: {integrity: sha512-8XSlYFhOSJvnEJOas6RpDCNU2PYeVC+oE33d3Z9tIsXpD8LIgBeqrHPjP8es4b3fcJpf07D1PJWGDUfdbqDLnQ==}
     requiresBuild: true
     dev: true
     optional: true

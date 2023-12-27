@@ -2,13 +2,13 @@ import { stringToIcon } from '@iconify/utils';
 
 export const IconifyMainUrl = 'https://api.iconify.design';
 export const IconifyMirror1Url = 'https://api.simplesvg.com';
-export const IconifyMirror2Url = 'https://api.unisvg.com/';
+export const IconifyMirror2Url = 'https://api.unisvg.com';
 
 export function getSvgUrl(icon: string, color: string) {
   const iconObj = stringToIcon(icon);
   if (!iconObj) return undefined;
   const encodedColor = encodeURIComponent(color);
-  return `https://api.iconify.design/${iconObj.prefix}/${iconObj.name}.svg?color=${encodedColor}`;
+  return `${IconifyMainUrl}/${iconObj.prefix}/${iconObj.name}.svg?color=${encodedColor}`;
 }
 
 export function getMirrorFor(url: string) {

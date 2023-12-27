@@ -147,8 +147,8 @@
       ...widgetSettings,
       position: {
         ...widgetSettings.position,
-        x: (workspaceEl.clientWidth / cqminBase) * 50,
-        y: (workspaceEl.clientHeight / cqminBase) * 50,
+        x: (workspaceEl.clientWidth / cqminBase) * 50 - widgetSettings.position.width / 2,
+        y: (workspaceEl.clientHeight / cqminBase) * 50 - widgetSettings.position.height / 2,
       },
     });
   }
@@ -173,8 +173,8 @@
         ...widgetSettings,
         position: {
           ...widgetSettings.position,
-          x: (e.x / cqminBase) * 100,
-          y: (e.y / cqminBase) * 100,
+          x: (e.x / cqminBase) * 100 - widgetSettings.position.width / 2,
+          y: (e.y / cqminBase) * 100 - widgetSettings.position.height / 2,
         },
       });
     }
