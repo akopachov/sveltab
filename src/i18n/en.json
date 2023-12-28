@@ -171,6 +171,7 @@
   "Widgets_Weather_Name": "Weather",
   "Widgets_Weather_Forecast_Hourly": "Hourly",
   "Widgets_Weather_Forecast_Daily": "Daily",
+  "Widgets_Weather_Forecast_Details": "Details",
   "Widgets_Weather_Forecast_Current_FeelsLike": "Feels like",
   "Widgets_Weather_Forecast_Current_WeatherIcon_Alt": "Weather icon",
   "Widgets_Weather_Forecast_Hourly_PrecipitationProbability": "Precipitation probability: {percent}%",

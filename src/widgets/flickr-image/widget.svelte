@@ -9,14 +9,15 @@
   import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
-  type LatestSearchResult = { searchTerm: string; page: number; totalPages: number; images: string[] };
+  type FlickrImageData = { id: string; secret: string; farm: number; server: string; owner: string };
+  type LatestSearchResult = { searchTerm: string; page: number; totalPages: number; images: FlickrImageData[] };
   export let settings: Settings;
   export let id: string;
 
   const storageKey = `Widget_FlickrImage_${id}_LatestSearchResult`;
 
   let latestSearchResult = writable<LatestSearchResult>();
-  let activeImageUrl: string;
+  let activeImage: FlickrImageData | undefined;
   let lastUpdate: number;
 
   $: {
@@ -42,7 +43,7 @@
   async function pickRandomPhoto() {
     if (
       $latestSearchResult &&
-      (!activeImageUrl ||
+      (!activeImage ||
         millisecondsToSeconds(new Date().valueOf() - lastUpdate) >= $settings.updateInterval ||
         $latestSearchResult.searchTerm !== $settings.searchTopic)
     ) {
@@ -64,13 +65,17 @@
           .then(t => JSON.parse(t.substring(14, t.length - 1)));
         $latestSearchResult.page = response.photos.page;
         $latestSearchResult.totalPages = response.photos.pages;
-        $latestSearchResult.images = response.photos.photo.map(
-          (m: any) => `http://farm${m.farm}.static.flickr.com/${m.server}/${m.id}_${m.secret}_z.jpg`,
-        );
+        $latestSearchResult.images = response.photos.photo.map((m: any) => ({
+          id: m.id,
+          farm: m.farm,
+          server: m.server,
+          secret: m.secret,
+          owner: m.owner,
+        }));
       }
 
       const randomIndex = Math.floor(Math.random() * $latestSearchResult.images.length);
-      activeImageUrl = $latestSearchResult.images.splice(randomIndex, 1)[0];
+      activeImage = $latestSearchResult.images.splice(randomIndex, 1)[0];
 
       await storage.local.set({ [storageKey]: $latestSearchResult });
     }
@@ -78,4 +83,17 @@
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-<img class="w-full h-full object-cover select-none bg-surface-200" draggable="false" src={activeImageUrl} />
+{#if activeImage}
+  <a
+    href="https://www.flickr.com/photos/{activeImage.owner}/{activeImage.id}"
+    rel="noreferrer"
+    referrerpolicy="no-referrer"
+    class="w-full h-full btn !p-0 rounded-[inherit]">
+    <img
+      class="w-full h-full object-cover select-none bg-surface-200"
+      draggable="false"
+      src="http://farm{activeImage.farm}.static.flickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}_z.jpg" />
+  </a>
+{:else}
+  <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
+{/if}

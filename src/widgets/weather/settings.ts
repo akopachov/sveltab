@@ -14,11 +14,15 @@ export class GeoLocation extends Subscribable {
     this.latitude = initial.latitude || 0;
     this.longitude = initial.longitude || 0;
     this.country = initial.country || '';
+    this.admin1 = initial.admin1 || '';
+    this.admin2 = initial.admin2 || '';
   }
   city: string;
   latitude: number;
   longitude: number;
   country: string;
+  admin1: string;
+  admin2: string;
 }
 
 export enum MeasurementUnits {

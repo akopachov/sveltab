@@ -28,6 +28,8 @@
             latitude: r.latitude,
             longitude: r.longitude,
             country: r.country,
+            admin1: r.admin1,
+            admin2: r.admin2,
           }));
         } else {
           locationSearchSuggestion = [];
@@ -44,6 +46,8 @@
     $location.latitude = newLocation.latitude;
     $location.longitude = newLocation.longitude;
     $location.country = newLocation.country;
+    $location.admin1 = newLocation.admin1;
+    $location.admin2 = newLocation.admin2;
     locationSearchSuggestion = [];
   }
 </script>
@@ -66,7 +70,7 @@
     {#each locationSearchSuggestion as suggestion}
       <li>
         <button class="btn variant-soft w-full mb-1 rounded-sm" on:click={() => selectLocation(suggestion)}>
-          <span class="flex-auto">{suggestion.city}, {suggestion.country}</span>
+          <span class="flex-auto">{suggestion.city}, {suggestion.admin1}, {suggestion.country}</span>
         </button>
       </li>
     {/each}

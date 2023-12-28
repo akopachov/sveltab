@@ -45,6 +45,7 @@
 <a
   href={ensureFqdnUrl($settings.url)}
   rel="noreferrer"
+  referrerpolicy="no-referrer"
   class="w-full h-full btn !p-[5cqmin] rounded-[inherit]"
   style:background-color={$settings.backgroundColor}
   style:backdrop-filter="blur({$settings.backgroundBlur}px)"
