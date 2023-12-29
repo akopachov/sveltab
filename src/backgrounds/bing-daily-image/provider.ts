@@ -1,9 +1,11 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
+import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 import { hoursToMilliseconds } from 'date-fns';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
+const log = logger.getSubLogger({ prefix: ['Backgropunds', 'Bing Daily Image', 'Provider'] });
 
 interface LocalSettings {
   lastUrl: string;
@@ -41,7 +43,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         this.#localSettings!.lastUrl = response.url;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
-        console.warn(this, '->', e);
+        log.warn(e);
       }
     }
     this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur, filter: settings.filter });

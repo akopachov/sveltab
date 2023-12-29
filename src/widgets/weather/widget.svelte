@@ -15,6 +15,9 @@
   import { debounce } from '$stores/debounce-store';
   import { isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
   import { PUBLIC_OWM_REDIRECT } from '$env/static/public';
+  import { logger } from '$lib/logger';
+
+  const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestForecast = {
@@ -108,7 +111,7 @@
       try {
         response = await fetch('https://ipapi.co/json/').then(r => r.json());
       } catch (e) {
-        console.error(e);
+        log.error('An error occurred during querying GeoIP info', { widgetId: id }, e);
       }
 
       if (response?.city && response.error !== true) {

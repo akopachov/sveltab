@@ -9,8 +9,10 @@ export class WorkspaceSettings extends Subscribable implements WorkspaceSettings
     super();
     this.widgets = initial.widgets || [];
     this.background = initial.background || { type: 'static-color' };
+    this.name = initial.name || '';
   }
 
+  name: string;
   widgets: WidgetSettingsInitial[];
   background: BackgroundSettingsInitial;
 }

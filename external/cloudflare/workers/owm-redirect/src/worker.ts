@@ -18,12 +18,18 @@ export default {
         return Response.redirect('https://openweathermap.org/', 308);
       }
 
-      const idList = owmResponse.list.map(item => ({
-        id: item.id,
-        diff: Math.abs(item.coord.lat - lat) + Math.abs(item.coord.lon - lon),
-      }));
-      idList.sort((a, b) => a.diff - b.diff);
-      return Response.redirect(`https://openweathermap.org/city/${idList[0].id}`, 308);
+      let cityId;
+      if (owmResponse.list.length === 1) {
+        cityId = owmResponse.list[0].id;
+      } else {
+        const idList = owmResponse.list.map(item => ({
+          id: item.id,
+          diff: Math.abs(item.coord.lat - lat) + Math.abs(item.coord.lon - lon),
+        }));
+        idList.sort((a, b) => a.diff - b.diff);
+        cityId = idList[0].id;
+      }
+      return Response.redirect(`https://openweathermap.org/city/${cityId}`, 308);
     }
     return Response.redirect('https://openweathermap.org/', 308);
   },

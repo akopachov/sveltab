@@ -1,4 +1,7 @@
+import { logger } from '$lib/logger';
 import type { Action } from 'svelte/action';
+
+const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
 
 const activeFonts = new Map<
   string,
@@ -100,7 +103,7 @@ export const fontsource: Action<
             } else {
               loadedFontSet = { fontSet: new Set(), usage: 1 };
               activeFontRef.fontSets.set(cacheKey, loadedFontSet);
-              console.info(`Loaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
+              log.debug(`Loaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
               const fontObj = ((activeFontRef.raw.variants[String(weight)] || {})[style] || {})[subset];
               if (!fontObj) continue;
               const url = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
@@ -152,7 +155,7 @@ export const fontsource: Action<
                 activeFontRef.fontSets.delete(cacheKey);
                 for (const fontFace of fontSet.fontSet) {
                   fontFacesToRemove.push(fontFace);
-                  console.info(`Unloaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
+                  log.debug(`Unloaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
                 }
               }
             }

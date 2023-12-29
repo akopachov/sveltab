@@ -12,7 +12,7 @@ export class WorkspaceInstance extends Subscribable {
   #hasChanges: boolean = false;
   #trackingObjects = new Map<Subscribable, () => void>();
 
-  private constructor(widgets: WidgetInstance[], background: BackgroundInstance) {
+  private constructor(name: string, widgets: WidgetInstance[], background: BackgroundInstance) {
     super();
     this.#widgets = new Set(widgets);
     this.#widgets.forEach(w => {
@@ -25,9 +25,11 @@ export class WorkspaceInstance extends Subscribable {
     this.#background = background;
     this.#trackObjectChange(this.#background.settings);
     this.isLocked = true;
+    this.name = name;
   }
 
   isLocked: boolean;
+  name: string;
 
   #trackObjectChange(instance: Subscribable) {
     if (!this.#trackingObjects.has(instance)) {
@@ -111,12 +113,16 @@ export class WorkspaceInstance extends Subscribable {
     }
   }
 
-  async commit(handler: (data: Required<WorkspaceSettingsInitial>) => Promise<void>) {
-    const data: Required<WorkspaceSettingsInitial> = {
+  export(): Required<WorkspaceSettingsInitial> {
+    return {
+      name: this.name,
       background: this.#background.settings,
       widgets: [...this.#widgets].map(m => m.settings),
     };
-    await handler(data);
+  }
+
+  async commit(handler: (data: Required<WorkspaceSettingsInitial>) => Promise<void>) {
+    await handler(this.export());
     this.#hasChanges = false;
     this.notifyPropertiesChanged();
   }
@@ -124,6 +130,6 @@ export class WorkspaceInstance extends Subscribable {
   static async create(settings: WorkspaceSettingsInitial) {
     const background = await BackgroundInstance.create(settings.background || { type: 'static-color' });
     const widgets = await Promise.all((settings.widgets || []).map(m => WidgetInstance.create(m)));
-    return new WorkspaceInstance(widgets, background);
+    return new WorkspaceInstance(settings.name || '', widgets, background);
   }
 }

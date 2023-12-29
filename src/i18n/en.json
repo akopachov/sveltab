@@ -5,6 +5,7 @@
   "Core_Sidebar_Settings": "Settings",
   "Core_Sidebar_Settings_Language": "Language",
   "Core_Sidebar_Settings_ColorScheme": "Color scheme",
+  "Core_Sidebar_Settings_Data": "Data",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
   
   "FontSelector_Search_Placeholder": "Search...",
@@ -27,6 +28,14 @@
   "ShadowSelector_OffsetY": "Offset Y",
   "ShadowSelector_Blur": "Blur",
   "ShadowSelector_Color": "Color",
+
+  "DataManage_Restore": "Restore",
+  "DataManage_Restore_Error": "An error occurred during restoring",
+  "DataManage_Restore_Error_VersionMistmatch": "Version mistmatch",
+  "DataManage_Restore_Error_MissingWorkspacesObject": "Missing workspaces object",
+  "DataManage_Restore_Error_NothingToImport": "There is no workspaces to be imported",
+  "DataManage_Restore_SuccessfullyDone": "{count} workspaces has been successfully imported",
+  "DataManage_Backup": "Backup",
   
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",

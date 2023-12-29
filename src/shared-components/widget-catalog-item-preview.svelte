@@ -7,7 +7,7 @@
 </script>
 
 <button
-  class="card card-hover overflow-hidden flex flex-col variant-filled-surface {exClass || ''}"
+  class="card card-hover overflow-hidden flex flex-col variant-ghost {exClass || ''}"
   on:click
   on:dragstart
   on:dragend

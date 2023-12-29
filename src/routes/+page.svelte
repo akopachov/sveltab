@@ -21,16 +21,18 @@
   import * as m from '$i18n/messages';
   import type { WorkspaceInstance } from '$models/workspace-instance';
   import type { WidgetInstance } from '$models/widget-instance';
-  import { getWorkspace, saveWorkspace } from '$stores/workspace-store';
   import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
   import LanguageSelector from '$shared-components/language-selector.svelte';
   import Lightswitch from '$shared-components/lightswitch.svelte';
   import WidgetFilters from '$shared-components/active-filters.svelte';
+  import DataManage from '$shared-components/data-manage.svelte';
+  import { secondsToMilliseconds } from 'date-fns';
+  import { Workspaces } from '$stores/workspace-index';
 
   const drawerStore = getDrawerStore();
 
-  const workspaceId = 'default';
+  let workspaceId: string;
   let workspace: WorkspaceInstance | undefined;
 
   $: background = $workspace?.background;
@@ -38,7 +40,7 @@
   $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
 
   onMount(async () => {
-    workspace = await getWorkspace(workspaceId);
+    ({ id: workspaceId, workspace: workspace } = await Workspaces.getDefault());
   });
 
   let workspaceEl: HTMLElement;
@@ -76,13 +78,13 @@
 
   const saveWorkspaceChangesDefer = pDebounce(async () => {
     if (workspace?.hasChanges === true) {
-      await saveWorkspace(workspaceId, workspace);
+      await Workspaces.save(workspaceId, workspace);
     }
-  }, 10_000);
+  }, secondsToMilliseconds(10));
 
   function onBeforeUnload(event: BeforeUnloadEvent) {
     if (workspace?.hasChanges === true) {
-      saveWorkspace(workspaceId, workspace);
+      Workspaces.save(workspaceId, workspace);
     }
 
     if (workspace?.hasChanges === true) {
@@ -268,6 +270,10 @@
             <span>{m.Core_Sidebar_Settings_Language()}</span>
             <LanguageSelector />
           </label>
+          <div class="label">
+            <span>{m.Core_Sidebar_Settings_Data()}</span>
+            <DataManage bind:activeWorkspaceId={workspaceId} bind:activeWorkspace={workspace} />
+          </div>
         </svelte:fragment>
       </AccordionItem>
     </Accordion>
