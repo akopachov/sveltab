@@ -44,10 +44,10 @@
     if (
       $latestSearchResult &&
       (!activeImage ||
-        millisecondsToSeconds(new Date().valueOf() - lastUpdate) >= $settings.updateInterval ||
+        millisecondsToSeconds(Date.now() - lastUpdate) >= $settings.updateInterval ||
         $latestSearchResult.searchTerm !== $settings.searchTopic)
     ) {
-      lastUpdate = new Date().valueOf();
+      lastUpdate = Date.now();
       if ($latestSearchResult.images.length <= 0 || $latestSearchResult.searchTerm !== $settings.searchTopic) {
         let page = 1;
         if ($latestSearchResult.searchTerm === $settings.searchTopic) {

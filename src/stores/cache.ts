@@ -14,7 +14,7 @@ export async function cache<T>(key: string, generator: () => Promise<T> | T, ttl
 
   let data: T | undefined;
   let needRefresh = false;
-  if ((CachesTtl.get(cacheKey) || 0) < new Date().valueOf()) {
+  if ((CachesTtl.get(cacheKey) || 0) < Date.now()) {
     needRefresh = true;
   } else {
     data = (await storage.local.get({ [cacheKey]: NotFoundObject }))[cacheKey];
@@ -26,7 +26,7 @@ export async function cache<T>(key: string, generator: () => Promise<T> | T, ttl
 
   if (needRefresh) {
     data = await generator();
-    CachesTtl.set(cacheKey, new Date().valueOf() + ttl);
+    CachesTtl.set(cacheKey, Date.now() + ttl);
     await storage.local.set({
       [CachesTtlStorageKey]: Array.from(CachesTtl.entries()),
       [cacheKey]: data,
@@ -45,7 +45,7 @@ export async function setupCacheHouseKeeping() {
   async function housekeep() {
     if (CachesTtl.size <= 0) return;
     const expiredCacheKeys: string[] = [];
-    const now = new Date().valueOf();
+    const now = Date.now();
     CachesTtl.forEach((expiresAt, key) => {
       if (expiresAt <= now) {
         expiredCacheKeys.push(key);

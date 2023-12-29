@@ -29,20 +29,20 @@
 
   onMount(async () => {
     quote = <LatestQuote>(await storage.local.get(storageKey))[storageKey] || { lastUpdate: 0 };
-    await checkIfObsoleteDebounced();
+    checkIfObsoleteDebounced();
   });
 
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && millisecondsToSeconds(new Date().valueOf() - quote.lastUpdate) > $settings.updateInterval) {
+    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $settings.updateInterval) {
       await loadNewQuote();
     }
   }
 
   async function loadNewQuote() {
-    const response = await fetch('https://api.quotable.io/random').then(r => r.json());
-    const q: LatestQuote = { quote: response.content, author: response.author, lastUpdate: new Date().valueOf() };
+    const response = await fetch('https://api.quotable.io/quotes/random').then(r => r.json());
+    const q: LatestQuote = { quote: response[0].content, author: response[0].author, lastUpdate: Date.now() };
     await storage.local.set({ [storageKey]: q });
     quote = q;
   }
@@ -64,7 +64,11 @@
     weights: [$fontSettings.weight],
   }}>
   {#if quote?.lastUpdate > 0}
-    <blockquote>"{quote.quote}"</blockquote>
-    <p class="text-right mt-2">{quote.author}</p>
+    <figure>
+      <blockquote>"{quote.quote}"</blockquote>
+      <figcaption class="text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
+    </figure>
+  {:else}
+    <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
   {/if}
 </div>

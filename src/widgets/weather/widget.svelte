@@ -144,7 +144,7 @@
   async function checkIfObsolete() {
     if (
       !forecast ||
-      new Date().valueOf() - forecast.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes
+      Date.now() - forecast.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes
       forecast.latitude !== $location.latitude || // Or location change
       forecast.longitude !== $location.longitude
     ) {
@@ -196,7 +196,7 @@
     );
 
     forecast = {
-      lastUpdate: new Date().valueOf(),
+      lastUpdate: Date.now(),
       latitude: $location.latitude,
       longitude: $location.longitude,
       current: {
@@ -242,7 +242,7 @@
 </script>
 
 <div
-  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] pb-[1cqmin] text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)]"
+  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] pb-[1cqmin] text-[var(--st--text-color)] text-[15cqmin] drop-shadow-[var(--st-shadow)]"
   style:background-color={$settings.backgroundColor}
   style:--st--text-color={$settings.textColor}
   style:font-weight={$fontSettings.weight}
@@ -298,7 +298,7 @@
           </TabAnchor>
           <svelte:fragment slot="panel">
             {#if currentTab === 0}
-              <div class="flex flex-row gap-1 overflow-y-auto scrollbar pb-[4cqmin]">
+              <div class="flex flex-row gap-1 overflow-x-hidden hover:overflow-x-auto pb-[4cqmin]">
                 {#each hourlyRange as item}
                   <div
                     title={m.Widgets_Weather_Forecast_Hourly_PrecipitationProbability({
@@ -326,7 +326,7 @@
                 {/each}
               </div>
             {:else if currentTab === 1}
-              <div class="flex flex-row gap-1 overflow-y-auto pb-[4cqmin]">
+              <div class="flex flex-row gap-1 overflow-x-auto pb-[4cqmin]">
                 {#each dailyRange as item}
                   <div
                     title={m.Widgets_Weather_Forecast_Daily_PrecipitationProbability({

@@ -30,7 +30,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         lastUrl: '',
       };
     }
-    const hoursSinceLastChange = (new Date().valueOf() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
+    const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (hoursSinceLastChange > 12 || settings.locale !== this.#localSettings!.lastLocale) {
       try {
         const response = await fetch(
@@ -39,7 +39,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
           }&image_format=jpg`,
         ).then(r => r.json());
         this.#localSettings!.lastLocale = settings.locale;
-        this.#localSettings!.lastChangedTime = new Date().valueOf();
+        this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastUrl = response.url;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
