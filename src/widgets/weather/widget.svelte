@@ -287,14 +287,15 @@
           border="border-b border-[var(--st--text-color)]"
           active="border-b-2 border-[var(--st--text-color)]"
           hover="hover:bg-[color-mix(in_srgb,currentColor_20%,transparent)]">
-          <Tab bind:group={currentTab} name="tab1" value={0}>
+          <Tab bind:group={currentTab} name="Widget_{id}_tab_hourly" value={0}>
             <span>{m.Widgets_Weather_Forecast_Hourly()}</span>
           </Tab>
-          <Tab bind:group={currentTab} name="tab1" value={1}>
+          <Tab bind:group={currentTab} name="Widget_{id}_tab_daily" value={1}>
             <span>{m.Widgets_Weather_Forecast_Daily()}</span>
           </Tab>
           <TabAnchor href={weatherDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
             {m.Widgets_Weather_Forecast_Details()}
+            <span class="icon-[heroicons-solid--external-link]"></span>
           </TabAnchor>
           <svelte:fragment slot="panel">
             {#if currentTab === 0}

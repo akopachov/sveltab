@@ -1,6 +1,8 @@
 import { getMirrorFor } from '$lib/iconify-api';
 import type { Action } from 'svelte/action';
 
+const placeholderClasses = ['placeholder', 'animate-pulse', '!rounded-[inherit]'];
+
 export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   node: HTMLImageElement,
   src: string | undefined,
@@ -24,12 +26,12 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   }
 
   function loadStart() {
-    node.classList.add('placeholder', 'animate-pulse');
+    node.classList.add(...placeholderClasses);
   }
 
   function loadEnd() {
     clearTimeout(timeout);
-    node.classList.remove('placeholder', 'animate-pulse');
+    node.classList.remove(...placeholderClasses);
   }
 
   node.addEventListener('loadstart', loadStart);

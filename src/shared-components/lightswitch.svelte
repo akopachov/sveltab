@@ -5,13 +5,13 @@
 </script>
 
 <RadioGroup display="flex" active="variant-filled-primary" hover="hover:variant-soft-primary">
-  <RadioItem bind:group={$PreferedColorScheme} name="justify" value="light">
+  <RadioItem bind:group={$PreferedColorScheme} name="color_scheme_light" value="light">
     {m.Lightswitch_ColorScheme_Light()}
   </RadioItem>
-  <RadioItem bind:group={$PreferedColorScheme} name="justify" value="auto">
+  <RadioItem bind:group={$PreferedColorScheme} name="color_scheme_auto" value="auto">
     {m.Lightswitch_ColorScheme_Auto()}
   </RadioItem>
-  <RadioItem bind:group={$PreferedColorScheme} name="justify" value="dark">
+  <RadioItem bind:group={$PreferedColorScheme} name="color_scheme_dark" value="dark">
     {m.Lightswitch_ColorScheme_Dark()}
   </RadioItem>
 </RadioGroup>

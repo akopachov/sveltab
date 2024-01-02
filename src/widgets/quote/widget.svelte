@@ -49,7 +49,7 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-y-auto"
+  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto"
   style:background-color={$settings.backgroundColor}
   style:color={$settings.textColor}
   style:font-weight={$fontSettings.weight}

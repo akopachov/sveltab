@@ -1,6 +1,6 @@
 import { PreferedColorScheme, type ColorScheme } from '$stores/color-scheme-store';
 import type { Action } from 'svelte/action';
-import { derived, get, readable, writable, type Readable } from 'svelte/store';
+import { get, writable, type Readable } from 'svelte/store';
 
 function setColorScheme(node: HTMLElement, osPreferDark: boolean, preferedColorScheme: ColorScheme) {
   const elemHtmlClasses = node.classList;

@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import { Subscribable, type OmitSubscribable } from './subscribable';
-import type { Filter } from '$shared-components/active-filters.svelte';
+import type { Filter } from '$stores/active-filters-store';
 
 export type WidgetPositionInitial = Partial<OmitSubscribable<WidgetPosition>>;
 
