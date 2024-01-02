@@ -6,6 +6,7 @@
   import ColorPicker from './color-picker.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
+  import type { FontSettings } from '$models/widget-settings';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
   enum FontWeight {
@@ -20,15 +21,15 @@
     Heavy = 900,
   }
 
-  export let font: string | null | undefined;
   export let color: string | null | undefined = null;
-  export let weight: FontWeight | null | undefined;
-  export let size: number | null | undefined = null;
+  export let font: FontSettings;
+
+  const { id: fontId, weight, size } = font;
 
   let selectedFontInfo: FontInfo;
   $: {
-    if (selectedFontInfo && (!weight || !selectedFontInfo.weights.includes(weight))) {
-      weight = selectedFontInfo.weights[0];
+    if (selectedFontInfo && (!weight || !selectedFontInfo.weights.includes($weight))) {
+      $weight = selectedFontInfo.weights[0];
     }
   }
 
@@ -94,16 +95,16 @@
   function onSelected(e: FontInfo) {
     selectedFontInfo = e;
     searchValue = e.label;
-    font = e.id;
-    if (weight && !e.weights.includes(weight)) {
-      weight = e.weights[0];
+    $fontId = e.id;
+    if (weight && !e.weights.includes($weight)) {
+      $weight = e.weights[0];
     }
   }
 
   onMount(async () => {
     if (font) {
       const loadedFonts = await fonts;
-      const index = loadedFonts.findIndex(f => f.id == font);
+      const index = loadedFonts.findIndex(f => f.id == $fontId);
       if (index >= 0) {
         selectedFontInfo = loadedFonts[index];
         searchValue = selectedFontInfo.label;
@@ -131,7 +132,7 @@
         use:popup={popupSettings}
         use:debounce={debounceOpts} />
       {#if selectedFontInfo}
-        <select bind:value={weight}>
+        <select bind:value={$weight}>
           {#each selectedFontInfo.weights as w}
             {@const optionTextFn = fontWeightsMap.get(w) || (() => String(w))}
             <option value={w}>{optionTextFn()}</option>
@@ -164,7 +165,7 @@
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label class="label mt-2">
       <span>{m.FontSelector_Size()}</span>
-      <RangeSlider name="range-slider" bind:value={size} min={5} max={20} step={0.1} />
+      <RangeSlider name="range-slider" bind:value={$size} min={5} max={20} step={0.1} />
     </label>
   {/if}
 {/await}

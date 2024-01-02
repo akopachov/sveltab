@@ -1,8 +1,8 @@
 import { nanoid } from 'nanoid';
-import { Subscribable, type OmitSubscribable } from './subscribable';
 import type { Filter } from '$stores/active-filters-store';
+import { useObservable, type Observable, type Unobserved, type Observed } from './observable';
 
-export type WidgetPositionInitial = Partial<OmitSubscribable<WidgetPosition>>;
+export type WidgetPositionInitial = Partial<Unobserved<WidgetPosition>>;
 
 export enum WidgetMeasurementUnits {
   Scale = 'cqmin',
@@ -11,27 +11,26 @@ export enum WidgetMeasurementUnits {
 
 export type RelativeContainer = { clientWidth: number; clientHeight: number };
 
-export class WidgetPosition extends Subscribable implements WidgetPositionInitial {
+export class WidgetPosition {
   constructor(initial: WidgetPositionInitial) {
-    super();
-    this.x = initial.x || 0;
-    this.y = initial.y || 0;
-    this.offsetX = initial.offsetX || 0;
-    this.offsetY = initial.offsetY || 0;
-    this.width = initial.width || 10;
-    this.height = initial.height || 10;
-    this.sizeUnits = initial.sizeUnits || WidgetMeasurementUnits.Scale;
-    this.positionUnits = initial.positionUnits || WidgetMeasurementUnits.Scale;
+    this.x = useObservable(initial.x || 0);
+    this.y = useObservable(initial.y || 0);
+    this.offsetX = useObservable(initial.offsetX || 0);
+    this.offsetY = useObservable(initial.offsetY || 0);
+    this.width = useObservable(initial.width || 10);
+    this.height = useObservable(initial.height || 10);
+    this.sizeUnits = useObservable(initial.sizeUnits || WidgetMeasurementUnits.Scale);
+    this.positionUnits = useObservable(initial.positionUnits || WidgetMeasurementUnits.Scale);
   }
 
-  x: number;
-  y: number;
-  offsetX: number;
-  offsetY: number;
-  width: number;
-  height: number;
-  sizeUnits: WidgetMeasurementUnits;
-  positionUnits: WidgetMeasurementUnits;
+  readonly x: Observable<number>;
+  readonly y: Observable<number>;
+  readonly offsetX: Observable<number>;
+  readonly offsetY: Observable<number>;
+  readonly width: Observable<number>;
+  readonly height: Observable<number>;
+  readonly sizeUnits: Observable<WidgetMeasurementUnits>;
+  readonly positionUnits: Observable<WidgetMeasurementUnits>;
 
   updateMeasurement(
     relativeContainer: RelativeContainer,
@@ -42,46 +41,47 @@ export class WidgetPosition extends Subscribable implements WidgetPositionInitia
       positionUnits?: WidgetMeasurementUnits;
     },
   ) {
-    const offsetX = options.offsetX ?? this.offsetX;
-    const offsetY = options.offsetY ?? this.offsetY;
-    const sizeUnits = options.sizeUnits || this.sizeUnits;
-    const positionUnits = options.positionUnits || this.positionUnits;
+    const offsetX = options.offsetX ?? this.offsetX.value;
+    const offsetY = options.offsetY ?? this.offsetY.value;
+    const sizeUnits = options.sizeUnits || this.sizeUnits.value;
+    const positionUnits = options.positionUnits || this.positionUnits.value;
 
     const cqminBase = Math.min(relativeContainer.clientWidth, relativeContainer.clientHeight);
-    let anythingChanged = false;
 
     const absPosition = this.getAbsolute(relativeContainer);
 
-    if (offsetX !== this.offsetX || positionUnits !== this.positionUnits || sizeUnits !== this.sizeUnits) {
+    if (
+      offsetX !== this.offsetX.value ||
+      positionUnits !== this.positionUnits.value ||
+      sizeUnits !== this.sizeUnits.value
+    ) {
       const absNewOffsetX = (relativeContainer.clientWidth * offsetX) / 100;
       const newAbsX = absPosition.x - absNewOffsetX + (absPosition.width * offsetX) / 100;
-      this.x = positionUnits === WidgetMeasurementUnits.Fixed ? newAbsX : (newAbsX / cqminBase) * 100;
-      this.offsetX = offsetX;
-      anythingChanged = true;
+      this.x.value = positionUnits === WidgetMeasurementUnits.Fixed ? newAbsX : (newAbsX / cqminBase) * 100;
+      this.offsetX.value = offsetX;
     }
 
-    if (offsetY !== this.offsetY || positionUnits !== this.positionUnits || sizeUnits !== this.sizeUnits) {
+    if (
+      offsetY !== this.offsetY.value ||
+      positionUnits !== this.positionUnits.value ||
+      sizeUnits !== this.sizeUnits.value
+    ) {
       const absNewOffsetY = (relativeContainer.clientHeight * offsetY) / 100;
 
       const newAbsY = absPosition.y - absNewOffsetY + (absPosition.height * offsetY) / 100;
-      this.y = positionUnits === WidgetMeasurementUnits.Fixed ? newAbsY : (newAbsY / cqminBase) * 100;
-      this.offsetY = offsetY;
-      anythingChanged = true;
+      this.y.value = positionUnits === WidgetMeasurementUnits.Fixed ? newAbsY : (newAbsY / cqminBase) * 100;
+      this.offsetY.value = offsetY;
     }
 
-    if (sizeUnits !== this.sizeUnits) {
-      this.width =
+    if (sizeUnits !== this.sizeUnits.value) {
+      this.width.value =
         sizeUnits === WidgetMeasurementUnits.Fixed ? absPosition.width : (absPosition.width / cqminBase) * 100;
-      this.height =
+      this.height.value =
         sizeUnits === WidgetMeasurementUnits.Fixed ? absPosition.height : (absPosition.height / cqminBase) * 100;
-      anythingChanged = true;
     }
 
-    this.sizeUnits = sizeUnits;
-    this.positionUnits = positionUnits;
-    if (anythingChanged) {
-      this.notifyPropertiesChanged();
-    }
+    this.sizeUnits.value = sizeUnits;
+    this.positionUnits.value = positionUnits;
   }
 
   setFromAbsolute(
@@ -89,123 +89,117 @@ export class WidgetPosition extends Subscribable implements WidgetPositionInitia
     absPosition: { x: number; y: number; width: number; height: number },
   ) {
     const cqminBase = Math.min(relativeContainer.clientWidth, relativeContainer.clientHeight);
-    let anythingChanged = false;
     const newWidth =
-      this.sizeUnits === WidgetMeasurementUnits.Fixed ? absPosition.width : (absPosition.width / cqminBase) * 100;
-    if (newWidth !== this.width) {
-      this.width = newWidth;
-      anythingChanged = true;
+      this.sizeUnits.value === WidgetMeasurementUnits.Fixed ? absPosition.width : (absPosition.width / cqminBase) * 100;
+    if (newWidth !== this.width.value) {
+      this.width.value = newWidth;
     }
 
     const newHeight =
-      this.sizeUnits === WidgetMeasurementUnits.Fixed ? absPosition.height : (absPosition.height / cqminBase) * 100;
-    if (newHeight !== this.height) {
-      this.height = newHeight;
-      anythingChanged = true;
+      this.sizeUnits.value === WidgetMeasurementUnits.Fixed
+        ? absPosition.height
+        : (absPosition.height / cqminBase) * 100;
+    if (newHeight !== this.height.value) {
+      this.height.value = newHeight;
     }
 
-    const absOffsetX = (relativeContainer.clientWidth * this.offsetX) / 100;
-    const absX = absPosition.x + (absPosition.width * this.offsetX) / 100 - absOffsetX;
-    const newX = this.positionUnits === WidgetMeasurementUnits.Fixed ? absX : (absX / cqminBase) * 100;
-    if (newX !== this.x) {
-      this.x = newX;
-      anythingChanged = true;
+    const absOffsetX = (relativeContainer.clientWidth * this.offsetX.value) / 100;
+    const absX = absPosition.x + (absPosition.width * this.offsetX.value) / 100 - absOffsetX;
+    const newX = this.positionUnits.value === WidgetMeasurementUnits.Fixed ? absX : (absX / cqminBase) * 100;
+    if (newX !== this.x.value) {
+      this.x.value = newX;
     }
 
-    const absOffsetY = (relativeContainer.clientHeight * this.offsetY) / 100;
-    const absY = absPosition.y + (absPosition.height * this.offsetY) / 100 - absOffsetY;
-    const newY = this.positionUnits === WidgetMeasurementUnits.Fixed ? absY : (absY / cqminBase) * 100;
-    if (newY !== this.y) {
-      this.y = newY;
-      anythingChanged = true;
-    }
-
-    if (anythingChanged) {
-      this.notifyPropertiesChanged();
+    const absOffsetY = (relativeContainer.clientHeight * this.offsetY.value) / 100;
+    const absY = absPosition.y + (absPosition.height * this.offsetY.value) / 100 - absOffsetY;
+    const newY = this.positionUnits.value === WidgetMeasurementUnits.Fixed ? absY : (absY / cqminBase) * 100;
+    if (newY !== this.y.value) {
+      this.y.value = newY;
     }
   }
 
   getAbsolute(relativeContainer: RelativeContainer) {
     const cqminBase = Math.min(relativeContainer.clientWidth, relativeContainer.clientHeight);
 
-    const absWidth = this.sizeUnits === WidgetMeasurementUnits.Fixed ? this.width : (this.width / 100) * cqminBase;
-    const absHeight = this.sizeUnits === WidgetMeasurementUnits.Fixed ? this.height : (this.height / 100) * cqminBase;
+    const absWidth =
+      this.sizeUnits.value === WidgetMeasurementUnits.Fixed ? this.width.value : (this.width.value / 100) * cqminBase;
+    const absHeight =
+      this.sizeUnits.value === WidgetMeasurementUnits.Fixed ? this.height.value : (this.height.value / 100) * cqminBase;
 
-    const absX = this.positionUnits === WidgetMeasurementUnits.Fixed ? this.x : (this.x / 100) * cqminBase;
-    const absY = this.positionUnits === WidgetMeasurementUnits.Fixed ? this.y : (this.y / 100) * cqminBase;
+    const absX =
+      this.positionUnits.value === WidgetMeasurementUnits.Fixed ? this.x.value : (this.x.value / 100) * cqminBase;
+    const absY =
+      this.positionUnits.value === WidgetMeasurementUnits.Fixed ? this.y.value : (this.y.value / 100) * cqminBase;
 
     return {
       width: absWidth,
       height: absHeight,
-      x: absX + (this.offsetX / 100) * relativeContainer.clientWidth - (absWidth * this.offsetX) / 100,
-      y: absY + (this.offsetY / 100) * relativeContainer.clientHeight - (absHeight * this.offsetY) / 100,
+      x: absX + (this.offsetX.value / 100) * relativeContainer.clientWidth - (absWidth * this.offsetX.value) / 100,
+      y: absY + (this.offsetY.value / 100) * relativeContainer.clientHeight - (absHeight * this.offsetY.value) / 100,
     };
   }
 }
 
-export class WidgetSettingsExtra extends Subscribable implements WidgetSettingsExtraInitial<any> {
+export class WidgetSettingsExtra {
   [key: string | number | symbol]: any;
 }
-export type WidgetSettingsExtraInitial<T extends WidgetSettingsExtra> = Partial<OmitSubscribable<T>>;
-export type WidgetSettingsInitial = Partial<Omit<OmitSubscribable<WidgetSettings>, 'extra' | 'position'>> &
+export type WidgetSettingsExtraInitial<T extends WidgetSettingsExtra> = Partial<Unobserved<T>>;
+export type WidgetSettingsInitial = Partial<Omit<Unobserved<WidgetSettings>, 'extra' | 'position'>> &
   Required<Pick<WidgetSettings, 'type'>> & { extra?: WidgetSettingsExtraInitial<WidgetSettingsExtra> } & {
     position?: WidgetPositionInitial;
   };
 
-export class WidgetSettings extends Subscribable implements WidgetSettingsInitial {
+export class WidgetSettings {
   constructor(
     initial: WidgetSettingsInitial,
     extraConstructor: new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra,
   ) {
-    super();
     this.id = initial.id || nanoid();
     this.type = initial.type;
-    this.rotation = initial.rotation || 0;
-    this.zIndex = initial.zIndex || 0;
-    this.borderRadius = initial.borderRadius || 0;
-    this.keepRatio = Boolean(initial.keepRatio);
+    this.rotation = useObservable(initial.rotation || 0);
+    this.zIndex = useObservable(initial.zIndex || 0);
+    this.borderRadius = useObservable(initial.borderRadius || 0);
+    this.keepRatio = useObservable(Boolean(initial.keepRatio));
     this.extra = new extraConstructor(initial.extra || {});
     this.position = new WidgetPosition(initial.position || {});
-    this.filter = initial.filter;
+    this.filter = useObservable(initial.filter);
   }
 
   readonly id: string;
   readonly type: string;
   readonly position: WidgetPosition;
-  rotation: number;
-  zIndex: number;
-  borderRadius: number;
+  readonly rotation: Observable<number>;
+  readonly zIndex: Observable<number>;
+  readonly borderRadius: Observable<number>;
   readonly extra: WidgetSettingsExtra;
-  keepRatio: boolean;
-  filter: Filter | undefined;
+  readonly keepRatio: Observable<boolean>;
+  readonly filter: Observable<Filter | undefined>;
 }
 
-export type FontSettingsInitial = Partial<OmitSubscribable<FontSettings>>;
-export class FontSettings extends Subscribable implements FontSettingsInitial {
+export type FontSettingsInitial = Partial<Unobserved<FontSettings>>;
+export class FontSettings {
   constructor(initial: FontSettingsInitial) {
-    super();
-    this.id = initial.id || 'noto-sans';
-    this.weight = initial.weight || 400;
-    this.size = initial.size;
+    this.id = useObservable(initial.id || 'noto-sans');
+    this.weight = useObservable(initial.weight || 400);
+    this.size = useObservable(initial.size);
   }
 
-  id: string;
-  weight: number;
-  size: number | undefined;
+  readonly id: Observable<string>;
+  readonly weight: Observable<number>;
+  readonly size: Observable<number | undefined>;
 }
 
-export type ShadowSettingsInitial = Partial<OmitSubscribable<ShadowSettings>>;
-export class ShadowSettings extends Subscribable implements ShadowSettingsInitial {
+export type ShadowSettingsInitial = Partial<Unobserved<ShadowSettings>>;
+export class ShadowSettings {
   constructor(initial: ShadowSettingsInitial) {
-    super();
-    this.offsetX = initial.offsetX || 0;
-    this.offsetY = initial.offsetY || 0;
-    this.blur = initial.blur || 0;
-    this.color = initial.color || '#000';
+    this.offsetX = useObservable(initial.offsetX || 0);
+    this.offsetY = useObservable(initial.offsetY || 0);
+    this.blur = useObservable(initial.blur || 0);
+    this.color = useObservable(initial.color || '#000');
   }
 
-  offsetX: number;
-  offsetY: number;
-  blur: number;
-  color: string;
+  readonly offsetX: Observable<number>;
+  readonly offsetY: Observable<number>;
+  readonly blur: Observable<number>;
+  readonly color: Observable<string>;
 }

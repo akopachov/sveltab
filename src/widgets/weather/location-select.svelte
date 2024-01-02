@@ -7,6 +7,8 @@
 
   export let location: GeoLocation;
 
+  const { city, admin1, admin2, country, latitude, longitude } = location;
+
   const locationPopupSettings: PopupSettings = {
     event: 'focus-click',
     target: 'Widget_Weather_Settings_Location',
@@ -42,12 +44,12 @@
   let locationSearchSuggestion: Required<GeoLocationInitial>[] = [];
 
   function selectLocation(newLocation: Required<GeoLocationInitial>) {
-    $location.city = newLocation.city;
-    $location.latitude = newLocation.latitude;
-    $location.longitude = newLocation.longitude;
-    $location.country = newLocation.country;
-    $location.admin1 = newLocation.admin1;
-    $location.admin2 = newLocation.admin2;
+    $city = newLocation.city;
+    $latitude = newLocation.latitude;
+    $longitude = newLocation.longitude;
+    $country = newLocation.country;
+    $admin1 = newLocation.admin1;
+    $admin2 = newLocation.admin2;
     locationSearchSuggestion = [];
   }
 </script>
@@ -57,7 +59,7 @@
   <input
     class="input"
     type="search"
-    value={$location.city ? `${$location.city}, ${$location.country}` : ''}
+    value={$city ? `${$city}, ${$country}` : ''}
     placeholder={m.Widgets_Weather_Settings_Location_Placeholder()}
     use:popup={locationPopupSettings}
     use:debounce={locationSearchDebounceOpts} />

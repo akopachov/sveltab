@@ -1,15 +1,12 @@
-import { Subscribable, type OmitSubscribable } from './subscribable';
+import type { Unobserved } from './observable';
 
-export type BackgroundSettingsInitial = Partial<OmitSubscribable<BackgroundSettings>> &
-  Required<Pick<BackgroundSettings, 'type'>>;
+export type BackgroundSettingsInitial = Partial<BackgroundSettings> & Required<Pick<BackgroundSettings, 'type'>>;
 
-export class BackgroundSettings extends Subscribable implements BackgroundSettingsInitial {
+export class BackgroundSettings implements BackgroundSettingsInitial {
   constructor(
     initial: BackgroundSettingsInitial,
     extraConstructor: new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra,
   ) {
-    super();
-
     this.type = initial.type || '';
     this.extra = new extraConstructor(initial.extra || {});
   }
@@ -18,7 +15,7 @@ export class BackgroundSettings extends Subscribable implements BackgroundSettin
   readonly extra: BackgroundSettingsExtra;
 }
 
-export class BackgroundSettingsExtra extends Subscribable {
+export class BackgroundSettingsExtra {
   [key: string | number | symbol]: any;
 }
-export type BackgroundSettingsExtraInitial<T extends BackgroundSettingsExtra> = Partial<OmitSubscribable<T>>;
+export type BackgroundSettingsExtraInitial<T extends BackgroundSettingsExtra> = Partial<Unobserved<T>>;

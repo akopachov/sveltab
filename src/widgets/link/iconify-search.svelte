@@ -15,6 +15,7 @@
 
   let searchQuery: string = '';
   let allIcons: string[] = [];
+  let iconsUpdatePromise: Promise<void> | undefined;
   const dispatch = createEventDispatcher();
   $: previewIconColor = $AppliedColorScheme === 'dark' ? '#fff' : '#000';
 
@@ -30,7 +31,10 @@
     paginationSettings.page * paginationSettings.limit + paginationSettings.limit,
   );
 
-  $: iconsUpdatePromise = searchQuery && updateIconsListDebounced();
+  $: {
+    searchQuery;
+    iconsUpdatePromise = updateIconsListDebounced();
+  }
 
   const updateIconsListDebounced = pDebounce(updateIconsList, secondsToMilliseconds(1));
   async function updateIconsList() {

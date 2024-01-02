@@ -13,21 +13,21 @@
   export let settings: Settings;
   export let tab: number;
 
-  $: fontSettings = settings.font;
+  const { measurementUnits, assetPack, font, textColor, backgroundBlur, backgroundColor } = settings;
 </script>
 
 {#if tab === GeneralTabId}
   <LocationSelect location={settings.location} />
   <label class="label my-2">
     <span>{m.Widgets_Weather_Settings_MeasurementUnits()}</span>
-    <select class="select" bind:value={$settings.measurementUnits}>
+    <select class="select" bind:value={$measurementUnits}>
       <option value={MeasurementUnits.Metric}>{m.Widgets_Weather_Settings_MeasurementUnits_Metric()}</option>
       <option value={MeasurementUnits.Imperial}>{m.Widgets_Weather_Settings_MeasurementUnits_Imperial()}</option>
     </select>
   </label>
   <label class="label">
     <span>{m.Widgets_Weather_Settings_AssetPack()}</span>
-    <select class="select" bind:value={$settings.assetPack}>
+    <select class="select" bind:value={$assetPack}>
       {#each AssetsPacks as pack (pack[0])}
         <option value={pack[0]}>{pack[1].name()}</option>
       {/each}
@@ -36,7 +36,7 @@
 {:else if tab === TextTabId}
   <div class="label mb-2">
     <span>{m.Widgets_Weather_Settings_Font()}</span>
-    <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+    <FontSelector {font} bind:color={$textColor} />
   </div>
   <div class="mt-2">
     <h4>{m.Widgets_Weather_Settings_Shadow()}</h4>
@@ -48,12 +48,12 @@
   <div class="label">
     <span>{m.Widgets_Weather_Settings_Color()}</span>
     <div>
-      <ColorPicker bind:color={$settings.backgroundColor} />
+      <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Weather_Settings_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
   </label>
 {/if}

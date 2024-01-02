@@ -10,6 +10,14 @@
   export let settings: Settings;
   export let id: string;
 
+  const {
+    searchProvider,
+    backgroundBlur,
+    backgroundColor,
+    textColor,
+    font: { id: fontId, weight: fontWeight },
+  } = settings;
+
   const popupSettings: PopupSettings = {
     event: 'focus-click',
     target: `Widget_Search_SuggestionPopup_${id}`,
@@ -32,8 +40,7 @@
   let searchTerm: string = '';
   let searchSuggestions: string[] = [];
 
-  $: fontSettings = settings.font;
-  $: searchProviderAdapter = SearchProviderAdapters.get($settings.searchProvider);
+  $: searchProviderAdapter = SearchProviderAdapters.get($searchProvider);
 
   $: {
     if (!searchTerm) {
@@ -53,17 +60,17 @@
 
 <div
   class="contents rounded-[inherit]"
-  style:--st-background-color={$settings.backgroundColor}
-  style:--st-text-color={$settings.textColor}
-  style:--st-font-weight={$fontSettings.weight}
-  style:--st-background-blur="{$settings.backgroundBlur}px">
+  style:--st-background-color={$backgroundColor}
+  style:--st-text-color={$textColor}
+  style:--st-font-weight={$fontWeight}
+  style:--st-background-blur="{$backgroundBlur}px">
   <div
     class="input-group grid-cols-[auto_1fr] w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     use:fontsource={{
-      font: $fontSettings.id,
+      font: $fontId,
       subsets: $userPosssibleLocaleCharSubset,
       styles: ['normal'],
-      weights: [$fontSettings.weight],
+      weights: [$fontWeight],
     }}>
     <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
       {#await searchProviderAdapter?.icon.getValue() then icon}

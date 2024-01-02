@@ -1,6 +1,7 @@
 import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
 import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
+import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { hoursToMilliseconds } from 'date-fns';
 
@@ -20,25 +21,38 @@ function getClosestResolution() {
   return 1366;
 }
 
-export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBase {
+export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
+  #unsubscribe!: () => void;
 
-  async update(settings: Settings) {
-    if (!this.#localSettings) {
-      this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
-        lastChangedTime: 0,
-        lastUrl: '',
-      };
-    }
+  async apply() {
+    super.apply();
+    this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
+      lastChangedTime: 0,
+      lastUrl: '',
+    };
+
+    const updateDeb = pDebounce.promise(() => this.#update());
+    const localeUnsubscribe = this.settings.locale.subscribe(() => updateDeb());
+    this.#unsubscribe = () => localeUnsubscribe();
+    updateDeb();
+  }
+
+  forceUpdate(): void {
+    this.#localSettings!.lastChangedTime = 0;
+    this.#update();
+  }
+
+  async #update() {
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
-    if (hoursSinceLastChange > 12 || settings.locale !== this.#localSettings!.lastLocale) {
+    if (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale) {
       try {
         const response = await fetch(
           `https://bing.biturl.top/?resolution=${getClosestResolution()}&format=json&index=0&mkt=${
-            settings.locale
+            this.settings.locale.value
           }&image_format=jpg`,
         ).then(r => r.json());
-        this.#localSettings!.lastLocale = settings.locale;
+        this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastUrl = response.url;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
@@ -46,6 +60,11 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         log.warn(e);
       }
     }
-    this.setImage({ url: this.#localSettings!.lastUrl, blur: settings.blur, filter: settings.filter });
+    this.setImage(this.#localSettings!.lastUrl);
+  }
+
+  destroy(): void {
+    super.destroy();
+    this.#unsubscribe();
   }
 }

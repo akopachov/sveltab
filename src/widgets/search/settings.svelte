@@ -10,13 +10,13 @@
   export let settings: Settings;
   export let tab: number;
 
-  $: fontSettings = settings.font;
+  const { searchProvider, font, textColor, backgroundBlur, backgroundColor } = settings;
 </script>
 
 {#if tab === GeneralTabId}
   <label class="label mb-2">
     <span>{m.Widgets_Search_Settings_SearchProvider()}</span>
-    <select class="select" bind:value={$settings.searchProvider}>
+    <select class="select" bind:value={$searchProvider}>
       <option value="duckduckgo">DuckDuckGo</option>
       <option value="google">Google</option>
       <option value="bing">Bing</option>
@@ -27,19 +27,19 @@
   <div>
     <div class="label">
       <span>{m.Widgets_Search_Settings_Font()}</span>
-      <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+      <FontSelector {font} bind:color={$textColor} />
     </div>
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Search_Settings_Color()}</span>
     <div>
-      <ColorPicker bind:color={$settings.backgroundColor} />
+      <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Search_Settings_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
   </label>
 {/if}

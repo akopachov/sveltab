@@ -12,12 +12,12 @@
   export let settings: Settings;
   export let tab: number;
 
-  let updateInterval = settings.updateInterval / 60;
-  $: {
-    settings.updateInterval = Math.max(updateInterval, 1) * 60;
-  }
+  const { updateInterval: updateIntervalObs, font, textColor, backgroundColor, backgroundBlur } = settings;
 
-  $: fontSettings = settings.font;
+  let updateInterval = $updateIntervalObs / 60;
+  $: {
+    $updateIntervalObs = Math.max(updateInterval, 1) * 60;
+  }
 </script>
 
 {#if tab === GeneralTabId}
@@ -29,11 +29,7 @@
   <div>
     <div class="label mb-2">
       <span>{m.Widgets_Quote_Settings_Font()}</span>
-      <FontSelector
-        bind:font={$fontSettings.id}
-        bind:weight={$fontSettings.weight}
-        bind:color={$settings.textColor}
-        bind:size={$fontSettings.size} />
+      <FontSelector {font} bind:color={$textColor} />
     </div>
     <div>
       <h4>{m.Widgets_Quote_Settings_Shadow()}</h4>
@@ -46,12 +42,12 @@
   <div class="label">
     <span>{m.Widgets_Quote_Settings_Color()}</span>
     <div>
-      <ColorPicker bind:color={$settings.backgroundColor} />
+      <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Quote_Settings_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
   </label>
 {/if}

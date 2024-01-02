@@ -1,4 +1,4 @@
-import { Subscribable, type OmitSubscribable } from '$models/subscribable';
+import { useObservable, type Observable, type Unobserved } from '$models/observable';
 import {
   FontSettings,
   ShadowSettings,
@@ -6,23 +6,23 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$models/widget-settings';
 
-export type GeoLocationInitial = Partial<OmitSubscribable<GeoLocation>>;
-export class GeoLocation extends Subscribable {
+export type GeoLocationInitial = Partial<Unobserved<GeoLocation>>;
+export class GeoLocation {
   constructor(initial: GeoLocationInitial) {
-    super();
-    this.city = initial.city || '';
-    this.latitude = initial.latitude || 0;
-    this.longitude = initial.longitude || 0;
-    this.country = initial.country || '';
-    this.admin1 = initial.admin1 || '';
-    this.admin2 = initial.admin2 || '';
+    this.city = useObservable(initial.city || '');
+    this.latitude = useObservable(initial.latitude || 0);
+    this.longitude = useObservable(initial.longitude || 0);
+    this.country = useObservable(initial.country || '');
+    this.admin1 = useObservable(initial.admin1 || '');
+    this.admin2 = useObservable(initial.admin2 || '');
   }
-  city: string;
-  latitude: number;
-  longitude: number;
-  country: string;
-  admin1: string;
-  admin2: string;
+
+  readonly city: Observable<string>;
+  readonly latitude: Observable<number>;
+  readonly longitude: Observable<number>;
+  readonly country: Observable<string>;
+  readonly admin1: Observable<string>;
+  readonly admin2: Observable<string>;
 }
 
 export enum MeasurementUnits {
@@ -33,21 +33,21 @@ export enum MeasurementUnits {
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
     super();
-    this.backgroundColor = initial.backgroundColor || '#fff';
-    this.backgroundBlur = initial.backgroundBlur || 0;
-    this.textColor = initial.textColor || '#000';
-    this.assetPack = initial.assetPack || 'default';
-    this.measurementUnits = MeasurementUnits.Metric;
+    this.backgroundColor = useObservable(initial.backgroundColor || '#fff');
+    this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
+    this.textColor = useObservable(initial.textColor || '#000');
+    this.assetPack = useObservable(initial.assetPack || 'default');
+    this.measurementUnits = useObservable(MeasurementUnits.Metric);
     this.location = new GeoLocation(initial.location || {});
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
   }
 
-  backgroundColor: string;
-  backgroundBlur: number;
-  textColor: string;
-  assetPack: string;
-  measurementUnits: MeasurementUnits;
+  readonly backgroundColor: Observable<string>;
+  readonly backgroundBlur: Observable<number>;
+  readonly textColor: Observable<string>;
+  readonly assetPack: Observable<string>;
+  readonly measurementUnits: Observable<MeasurementUnits>;
 
   readonly location: GeoLocation;
   readonly font: FontSettings;

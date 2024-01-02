@@ -6,7 +6,7 @@
   import { writable } from 'svelte/store';
   import pDebounce from 'p-debounce';
   import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
-  import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
+  import { minutesToMilliseconds, millisecondsToSeconds, set } from 'date-fns';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type FlickrImageData = { id: string; secret: string; farm: number; server: string; owner: string };
@@ -20,8 +20,10 @@
   let activeImage: FlickrImageData | undefined;
   let lastUpdate: number;
 
+  const { searchTopic, updateInterval } = settings;
+
   $: {
-    ($settings || $clockStore) && pickRandomPhotoDebounced();
+    ($searchTopic || $clockStore) && pickRandomPhotoDebounced();
   }
 
   onMount(async () => {
@@ -44,20 +46,20 @@
     if (
       $latestSearchResult &&
       (!activeImage ||
-        millisecondsToSeconds(Date.now() - lastUpdate) >= $settings.updateInterval ||
-        $latestSearchResult.searchTerm !== $settings.searchTopic)
+        millisecondsToSeconds(Date.now() - lastUpdate) >= $updateInterval ||
+        $latestSearchResult.searchTerm !== $searchTopic)
     ) {
       lastUpdate = Date.now();
-      if ($latestSearchResult.images.length <= 0 || $latestSearchResult.searchTerm !== $settings.searchTopic) {
+      if ($latestSearchResult.images.length <= 0 || $latestSearchResult.searchTerm !== $searchTopic) {
         let page = 1;
-        if ($latestSearchResult.searchTerm === $settings.searchTopic) {
+        if ($latestSearchResult.searchTerm === $searchTopic) {
           page = $latestSearchResult.page + 1;
           if (page > $latestSearchResult.totalPages) {
             page = 1;
           }
         }
 
-        $latestSearchResult.searchTerm = $settings.searchTopic || 'random';
+        $latestSearchResult.searchTerm = $searchTopic || 'random';
         const response = await fetch(
           `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${PUBLIC_FLICKR_API_KEY}&text=${$latestSearchResult.searchTerm}&safe_search=1&content_type=1&sort=interestingness-desc&per_page=20&format=json&page=${page}`,
         )

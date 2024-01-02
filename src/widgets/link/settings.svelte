@@ -10,51 +10,49 @@
   export let settings: Settings;
   export let tab: number;
 
+  const { icon, url, iconSource, iconColor, backgroundColor, backgroundBlur } = settings;
+
   function onIconSourceChange() {
-    $settings.icon = '';
+    $icon = '';
   }
 </script>
 
 {#if tab === GeneralTabId}
   <label class="label">
     <span>{m.Widgets_Link_Settings_Link_Label()}</span>
-    <input
-      type="url"
-      class="input"
-      bind:value={$settings.url}
-      placeholder={m.Widgets_Link_Settings_Link_Placeholder()} />
+    <input type="url" class="input" bind:value={$url} placeholder={m.Widgets_Link_Settings_Link_Placeholder()} />
   </label>
 {:else if tab === IconTabId}
   <label class="label mb-2">
     <span>{m.Widgets_Link_Settings_IconSource()}</span>
-    <select class="select" bind:value={$settings.iconSource} on:change={onIconSourceChange}>
+    <select class="select" bind:value={$iconSource} on:change={onIconSourceChange}>
       <option value={IconSource.Favicon}>{m.Widgets_Link_Settings_IconSource_Favicon()}</option>
       <option value={IconSource.Iconify}>{m.Widgets_Link_Settings_IconSource_Iconify()}</option>
       <option value={IconSource.Direct}>{m.Widgets_Link_Settings_IconSource_Direct()}</option>
     </select>
   </label>
-  {#if $settings.iconSource === IconSource.Direct}
+  {#if $iconSource === IconSource.Direct}
     <label class="label">
       <span>{m.Widgets_Link_Settings_IconSource_Direct_Label()}</span>
       <input
         type="url"
         class="input"
-        bind:value={$settings.icon}
+        bind:value={$icon}
         placeholder={m.Widgets_Link_Settings_IconSource_Direct_Placeholder()} />
     </label>
-  {:else if $settings.iconSource === IconSource.Iconify}
-    <IconifySearch bind:icon={$settings.icon} bind:color={$settings.iconColor} />
+  {:else if $iconSource === IconSource.Iconify}
+    <IconifySearch bind:icon={$icon} bind:color={$iconColor} />
   {/if}
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Link_Settings_Background_Color()}</span>
     <div>
-      <ColorPicker bind:color={$settings.backgroundColor} />
+      <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Link_Settings_Background_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

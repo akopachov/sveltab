@@ -5,11 +5,13 @@
   import FilterSelector from '$shared-components/filter-selector.svelte';
 
   export let settings: Settings;
+
+  const { locale, blur, filter } = settings;
 </script>
 
 <label class="label mb-2">
   <span>{m.Backgrounds_BingDaily_Settings_Country()}</span>
-  <select class="select" bind:value={$settings.locale}>
+  <select class="select" bind:value={$locale}>
     <option value="random">{m.Backgrounds_BingDaily_Settings_Country_Any()}</option>
     <option value="en-AU">{m.Backgrounds_BingDaily_Settings_Country_Australia()}</option>
     <option value="en-CA">{m.Backgrounds_BingDaily_Settings_Country_Canada()}</option>
@@ -24,10 +26,10 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Blur()}</span>
-  <RangeSlider name="range-slider" bind:value={$settings.blur} min={0} max={15} step={0.1}></RangeSlider>
+  <RangeSlider name="range-slider" bind:value={$blur} min={0} max={15} step={0.1}></RangeSlider>
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Filter()}</span>
-  <FilterSelector bind:filter={$settings.filter} />
+  <FilterSelector bind:filter={$filter} />
 </label>

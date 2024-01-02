@@ -5,8 +5,7 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
-  import { minutesToMilliseconds } from 'date-fns';
-  import { millisecondsToSeconds } from 'date-fns';
+  import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
@@ -15,16 +14,28 @@
 
   const storageKey = `Widget_Quote_${id}_LatestQuote`;
 
+  const {
+    updateInterval,
+    backgroundColor,
+    backgroundBlur,
+    textColor,
+    font: { id: fontId, weight: fontWeight, size: fontSize },
+    textShadow: {
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+      color: textShadowColor,
+    },
+  } = settings;
+
   export async function onDelete() {
     await storage.local.remove(storageKey);
   }
 
   let quote: LatestQuote;
 
-  $: fontSettings = settings.font;
-  $: textShadowSettings = settings.textShadow;
   $: {
-    $clockStore && checkIfObsoleteDebounced();
+    ($updateInterval || $clockStore) && checkIfObsoleteDebounced();
   }
 
   onMount(async () => {
@@ -35,7 +46,7 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $settings.updateInterval) {
+    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $updateInterval) {
       await loadNewQuote();
     }
   }
@@ -50,18 +61,18 @@
 
 <div
   class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:text-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color}"
-  style:font-size="{$fontSettings.size}cqmin"
+  style:background-color={$backgroundColor}
+  style:color={$textColor}
+  style:font-weight={$fontWeight}
+  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}"
+  style:font-size="{$fontSize}cqmin"
   use:fontsource={{
-    font: $fontSettings.id,
+    font: $fontId,
     subsets: ['latin'],
     styles: ['normal'],
-    weights: [$fontSettings.weight],
+    weights: [$fontWeight],
   }}>
   {#if quote?.lastUpdate > 0}
     <figure>

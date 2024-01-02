@@ -4,11 +4,13 @@
   import * as m from '$i18n/messages';
 
   export let settings: Settings;
+
+  const { luminosity, hue } = settings;
 </script>
 
 <label class="label">
   <span>{m.Backgrounds_RandomColor_Settings_Luminosity()}</span>
-  <select class="select" bind:value={$settings.luminosity}>
+  <select class="select" bind:value={$luminosity}>
     <option value="random">{m.Backgrounds_RandomColor_Settings_Luminosity_Any()}</option>
     <option value="bright">{m.Backgrounds_RandomColor_Settings_Luminosity_Bright()}</option>
     <option value="light">{m.Backgrounds_RandomColor_Settings_Luminosity_Light()}</option>
@@ -18,7 +20,7 @@
 
 <label class="label">
   <span>{m.Backgrounds_RandomColor_Settings_Hue()}</span>
-  <select class="select" bind:value={$settings.hue}>
+  <select class="select" bind:value={$hue}>
     <option value="random">{m.Backgrounds_RandomColor_Settings_Hue_Any()}</option>
     <option value="red">{m.Backgrounds_RandomColor_Settings_Hue_Red()}</option>
     <option value="orange">{m.Backgrounds_RandomColor_Settings_Hue_Orange()}</option>

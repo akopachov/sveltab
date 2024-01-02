@@ -1,10 +1,11 @@
 import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$models/background-settings';
+import { useObservable, type Observable } from '$models/observable';
 
 export class Settings extends BackgroundSettingsExtra {
   constructor(initial: BackgroundSettingsExtraInitial<Settings>) {
     super();
-    this.color = initial.color || '#eee';
+    this.color = useObservable(initial.color || '#eee');
   }
 
-  color: string;
+  color: Observable<string>;
 }

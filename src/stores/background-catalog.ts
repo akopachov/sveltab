@@ -1,9 +1,9 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Lazy } from '$lib/lazy';
-import type {
+import {
   BackgroundSettingsExtra,
-  BackgroundSettingsExtraInitial,
-  BackgroundSettingsInitial,
+  type BackgroundSettingsExtraInitial,
+  type BackgroundSettingsInitial,
 } from '$models/background-settings';
 import { Background as StaticColorBackground } from '../backgrounds/static-color';
 import { Background as RandomColorBackground } from '../backgrounds/random-color';
@@ -13,15 +13,18 @@ import { Background as BingDailyImageBackground } from '../backgrounds/bing-dail
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
-export abstract class BackgroundProvider extends EventTarget {
-  constructor(node: HTMLElement) {
+export abstract class BackgroundProvider<T extends BackgroundSettingsExtra> extends EventTarget {
+  constructor(node: HTMLElement, settings: T) {
     super();
     this.node = node;
+    this.settings = settings;
   }
 
   protected node: HTMLElement;
+  protected settings: T;
 
-  abstract update(settings: BackgroundSettingsExtra, forceUpdate?: boolean): void;
+  abstract apply(): void;
+  abstract forceUpdate(): void;
   abstract destroy(): void;
 }
 
@@ -32,7 +35,7 @@ export interface BackgroundCatalogItem {
 }
 
 export interface BackgroundCatalogItemComponents {
-  provider: Lazy<Promise<new (node: HTMLElement) => BackgroundProvider>>;
+  provider: Lazy<Promise<new (node: HTMLElement, settings: any) => BackgroundProvider<any>>>;
   readonly settings: {
     readonly component: Lazy<Promise<ComponentType<SvelteComponent>>>;
     readonly model: Lazy<Promise<new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra>>;

@@ -9,6 +9,20 @@
 
   export let settings: Settings;
 
+  const {
+    name,
+    font: { id: fontId, weight: fontWeight, size: fontSize },
+    textColor,
+    backgroundColor,
+    backgroundBlur,
+    textShadow: {
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+      color: textShadowColor,
+    },
+  } = settings;
+
   enum PartOfDay {
     Unknown,
     Morning,
@@ -37,8 +51,6 @@
     PartOfDay.Unknown,
   );
 
-  $: fontSettings = settings.font;
-  $: textShadowSettings = settings.textShadow;
   $: greetingTemplate = getGreetingTemplate($currentPartOfDay);
 
   function getGreetingTemplate(part: PartOfDay): { named: string; nameless: string } {
@@ -76,18 +88,18 @@
 
 <div
   class="w-full h-full p-2 select-none flex justify-center content-center items-center flex-col"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:text-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color}"
-  style:font-size="{$fontSettings.size}cqmin"
+  style:background-color={$backgroundColor}
+  style:color={$textColor}
+  style:font-weight={$fontWeight}
+  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}"
+  style:font-size="{$fontSize}cqmin"
   use:fontsource={{
-    font: $fontSettings.id,
+    font: $fontId,
     subsets: $localeCharSubset,
     styles: ['normal'],
-    weights: [$fontSettings.weight],
+    weights: [$fontWeight],
   }}>
-  <p class="text-[calc(85cqh-1rem)] text-center leading-tight">{getGreeting(greetingTemplate, $settings.name)}</p>
+  <p class="text-[calc(85cqh-1rem)] text-center leading-tight">{getGreeting(greetingTemplate, $name)}</p>
 </div>

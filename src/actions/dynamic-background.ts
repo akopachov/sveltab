@@ -29,19 +29,16 @@ export const dynamicBackground: Action<
   async function initializeNew(background: BackgroundInstance | undefined | null) {
     if (background) {
       backgroundProviderDestroyPromise = background.components.provider.getValue().then(providerClass => {
-        const provider = new providerClass(node);
+        const provider = new providerClass(node, background.settings.extra);
         provider.addEventListener('backgroundChanged', notifyBackgroundChanged);
-        const unsubscribe = background.settings.extra.subscribe(v => {
-          provider.update(background.settings.extra);
-        });
         function forceNew() {
           if (background) {
-            provider.update(background.settings.extra, true);
+            provider.forceUpdate();
           }
         }
         forceNewSubscribers.add(forceNew);
+        provider.apply();
         return () => {
-          unsubscribe();
           forceNewSubscribers.delete(forceNew);
           provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
           provider.destroy();

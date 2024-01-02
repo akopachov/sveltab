@@ -10,8 +10,10 @@
 
   let iconUrl: string | undefined;
 
+  const { icon, iconSource, url, iconColor, backgroundColor, backgroundBlur } = settings;
+
   $: {
-    $settings && updateIconUrlDebounced();
+    ($iconSource || $icon || $url) && updateIconUrlDebounced();
   }
 
   function ensureFqdnUrl(url: string | null | undefined) {
@@ -22,17 +24,17 @@
 
   const updateIconUrlDebounced = debounce(updateIconUrl, secondsToMilliseconds(1));
   function updateIconUrl() {
-    if ($settings.iconSource === IconSource.Favicon) {
-      let urlToParse = ensureFqdnUrl($settings.url);
+    if ($iconSource === IconSource.Favicon) {
+      let urlToParse = ensureFqdnUrl($url);
       if (URL.canParse(urlToParse)) {
         iconUrl = `https://favicon.twenty.com/${new URL(urlToParse).hostname}`;
       } else {
         iconUrl = undefined;
       }
-    } else if ($settings.iconSource === IconSource.Direct) {
-      iconUrl = $settings.icon;
-    } else if ($settings.iconSource === IconSource.Iconify) {
-      iconUrl = getSvgUrl($settings.icon, $settings.iconColor);
+    } else if ($iconSource === IconSource.Direct) {
+      iconUrl = $icon;
+    } else if ($iconSource === IconSource.Iconify) {
+      iconUrl = getSvgUrl($icon, $iconColor);
     }
   }
 
@@ -43,14 +45,14 @@
 
 <!-- svelte-ignore a11y-missing-attribute -->
 <a
-  href={ensureFqdnUrl($settings.url)}
+  href={ensureFqdnUrl($url)}
   rel="noreferrer"
   referrerpolicy="no-referrer"
   class="w-full h-full btn !p-[5cqmin] rounded-[inherit]"
-  style:background-color={$settings.backgroundColor}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
+  style:background-color={$backgroundColor}
+  style:backdrop-filter="blur({$backgroundBlur}px)"
   draggable="false"
-  title={$settings.url}>
+  title={$url}>
   {#if iconUrl}
     <img class="w-full h-full object-contain select-none !rounded-[inherit]" draggable="false" use:imgSrcEx={iconUrl} />
   {:else}

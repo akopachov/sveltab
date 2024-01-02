@@ -1,61 +1,62 @@
 import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
-import { Subscribable } from './subscribable';
+import { useObservable, type Observable, type Subscribable } from './observable';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import type { WorkspaceSettingsInitial } from './workspace-settings';
 
-export class WorkspaceInstance extends Subscribable {
-  #widgets: Set<WidgetInstance>;
-  #background: BackgroundInstance;
-  #hasChanges: boolean = false;
-  #trackingObjects = new Map<Subscribable, () => void>();
+export class WorkspaceInstance {
+  #widgets: Observable<Set<WidgetInstance>>;
+  #background: Observable<BackgroundInstance>;
+  #hasChanges: Observable<boolean> = useObservable(false);
+  #trackingObjects = new Map<Subscribable<any>, () => void>();
 
   private constructor(name: string, widgets: WidgetInstance[], background: BackgroundInstance) {
-    super();
-    this.#widgets = new Set(widgets);
-    this.#widgets.forEach(w => {
+    this.#widgets = useObservable(new Set(widgets));
+    this.#widgets.value.forEach(w => {
       this.#trackObjectChange(w.settings);
-      if (w.settings.filter) {
-        ActiveFilters.add(w.settings.filter);
+      if (w.settings.filter.value) {
+        ActiveFilters.add(w.settings.filter.value);
       }
     });
 
-    this.#background = background;
-    this.#trackObjectChange(this.#background.settings);
+    this.#background = useObservable(background);
+    this.#trackObjectChange(this.#background.value.settings);
     this.isLocked = true;
-    this.name = name;
+    this.name = useObservable(name);
   }
 
   isLocked: boolean;
-  name: string;
+  readonly name: Observable<string>;
 
-  #trackObjectChange(instance: Subscribable) {
+  #trackObjectChange(instance: any) {
+    if (!instance) return;
+
     if (!this.#trackingObjects.has(instance)) {
-      this.#trackingObjects.set(
-        instance,
-        instance.subscribe(
-          () => {
-            if (!this.#hasChanges) {
-              this.#hasChanges = true;
-              this.notifyPropertiesChanged();
+      if (typeof instance.subscribe === 'function') {
+        let subscribed = false;
+        this.#trackingObjects.set(
+          instance,
+          instance.subscribe(() => {
+            if (subscribed) {
+              this.#hasChanges.value = true;
             }
-          },
-          undefined,
-          true,
-        ),
-      );
+          }),
+        );
+        subscribed = true;
+      }
       for (const property of Object.getOwnPropertyNames(instance)) {
         const value = (<any>instance)[property];
-        if (value instanceof Subscribable) {
+        if (value && typeof value === 'object') {
           this.#trackObjectChange(value);
         }
       }
     }
   }
 
-  #untrackObjectChange(instance: Subscribable) {
+  #untrackObjectChange(instance: any) {
+    if (!instance) return;
     const unsubscribe = this.#trackingObjects.get(instance);
     if (unsubscribe) {
       unsubscribe();
@@ -64,7 +65,7 @@ export class WorkspaceInstance extends Subscribable {
 
     for (const property of Object.getOwnPropertyNames(instance)) {
       const value = (<any>instance)[property];
-      if (value instanceof Subscribable) {
+      if (value && typeof value === 'object') {
         this.#untrackObjectChange(value);
       }
     }
@@ -74,7 +75,7 @@ export class WorkspaceInstance extends Subscribable {
     return this.#hasChanges;
   }
 
-  get widgets(): ReadonlySet<WidgetInstance> {
+  get widgets() {
     return this.#widgets;
   }
 
@@ -83,48 +84,45 @@ export class WorkspaceInstance extends Subscribable {
   }
 
   async setBackground(settings: BackgroundSettingsInitial) {
-    if (this.#background) {
-      this.#untrackObjectChange(this.#background.settings);
+    if (this.#background.value) {
+      this.#untrackObjectChange(this.#background.value.settings);
     }
-    this.#background = await BackgroundInstance.create(settings);
-    this.#hasChanges = true;
-    this.#trackObjectChange(this.#background.settings);
-    this.notifyPropertiesChanged();
+    this.#background.value = await BackgroundInstance.create(settings);
+    this.#hasChanges.value = true;
+    this.#trackObjectChange(this.#background.value.settings);
   }
 
   async addWidget(settings: WidgetSettingsInitial) {
     const widget = await WidgetInstance.create(settings);
-    this.#widgets.add(widget);
-    this.#hasChanges = true;
+    this.#widgets.value = this.#widgets.value.add(widget);
+    this.#hasChanges.value = true;
     this.#trackObjectChange(widget.settings);
-    this.notifyPropertiesChanged();
-    if (widget.settings.filter) {
-      ActiveFilters.add(widget.settings.filter);
+    if (widget.settings.filter.value) {
+      ActiveFilters.add(widget.settings.filter.value);
     }
   }
 
   removeWidget(instance: WidgetInstance) {
-    this.#widgets.delete(instance);
-    this.#hasChanges = true;
+    this.#widgets.value.delete(instance);
+    this.#widgets.value = this.#widgets.value;
+    this.#hasChanges.value = true;
     this.#untrackObjectChange(instance.settings);
-    this.notifyPropertiesChanged();
-    if (instance.settings.filter) {
-      ActiveFilters.remove(instance.settings.filter);
+    if (instance.settings.filter.value) {
+      ActiveFilters.remove(instance.settings.filter.value);
     }
   }
 
-  export(): Required<WorkspaceSettingsInitial> {
+  export() {
     return {
       name: this.name,
-      background: this.#background.settings,
-      widgets: [...this.#widgets].map(m => m.settings),
+      background: this.#background.value.settings,
+      widgets: [...this.#widgets.value].map(m => m.settings),
     };
   }
 
-  async commit(handler: (data: Required<WorkspaceSettingsInitial>) => Promise<void>) {
+  async commit(handler: (data: any) => Promise<void>) {
     await handler(this.export());
-    this.#hasChanges = false;
-    this.notifyPropertiesChanged();
+    this.#hasChanges.value = false;
   }
 
   static async create(settings: WorkspaceSettingsInitial) {

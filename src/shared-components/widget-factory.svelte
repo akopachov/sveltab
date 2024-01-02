@@ -21,8 +21,13 @@
   let fakeEditButton: HTMLElement;
   let widgetComponent: WidgetComponent;
 
-  $: widgetSettings = widget.settings;
-  $: widgetPosition = widget.settings.position;
+  const {
+    zIndex,
+    borderRadius,
+    rotation,
+    filter,
+    position: { width, height, sizeUnits, positionUnits, x, y, offsetX, offsetY },
+  } = widget.settings;
 
   function onDeleteWidgetClick() {
     modalStore.trigger({
@@ -48,24 +53,26 @@
   id={$$restProps.id || ''}
   tabindex="-1"
   on:mousedown
-  style:z-index={$widgetSettings.zIndex}
-  style:--relative-width="{$widgetPosition.width}{$widgetPosition.sizeUnits}"
-  style:--relative-height="{$widgetPosition.height}{$widgetPosition.sizeUnits}"
-  style:--relative-y="{$widgetPosition.y}{$widgetPosition.positionUnits}"
-  style:--relative-x="{$widgetPosition.x}{$widgetPosition.positionUnits}"
-  style:--relative-offset-y="{$widgetPosition.offsetY}cqh"
-  style:--relative-offset-x="{$widgetPosition.offsetX}cqw"
-  style:--relative-origin-y={$widgetPosition.offsetY / 100}
-  style:--relative-origin-x={$widgetPosition.offsetX / 100}
-  style:transform="rotate({widget.settings.rotation}deg)">
-  <div style:border-radius="{$widgetSettings.borderRadius}cqmin" class="block w-full h-full overflow-hidden">
+  style:z-index={$zIndex}
+  style:--relative-width="{$width}{$sizeUnits}"
+  style:--relative-height="{$height}{$sizeUnits}"
+  style:--relative-y="{$y}{$positionUnits}"
+  style:--relative-x="{$x}{$positionUnits}"
+  style:--relative-offset-y="{$offsetY}cqh"
+  style:--relative-offset-x="{$offsetX}cqw"
+  style:--relative-origin-y={$offsetY / 100}
+  style:--relative-origin-x={$offsetX / 100}
+  style:transform="rotate({$rotation}deg)">
+  <div style:border-radius="{$borderRadius}cqmin" class="block w-full h-full overflow-hidden">
     {#await widget.components.widget.getValue()}
       <div class="w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
     {:then component}
-      <div
-        class="w-full h-full rounded-[inherit]"
-        style:filter={$widgetSettings.filter ? `url('#${$widgetSettings.filter}')` : ''}>
-        <svelte:component this={component} bind:this={widgetComponent} settings={widgetSettings.extra} id={widget.id} />
+      <div class="w-full h-full rounded-[inherit]" style:filter={$filter ? `url('#${$filter}')` : ''}>
+        <svelte:component
+          this={component}
+          bind:this={widgetComponent}
+          settings={widget.settings.extra}
+          id={widget.id} />
       </div>
     {/await}
   </div>

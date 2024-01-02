@@ -4,10 +4,12 @@
   import * as m from '$i18n/messages';
 
   export let settings: Settings;
+
+  const { color } = settings;
 </script>
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_StaticColor_Settings_Color()}</span>
-  <ColorPicker bind:color={$settings.color} inline={true} />
+  <ColorPicker bind:color={$color} inline={true} />
 </label>

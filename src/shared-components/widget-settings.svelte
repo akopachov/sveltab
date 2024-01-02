@@ -16,18 +16,25 @@
 
   $: widgetSettings = widget.settings;
   $: widgetPosition = widgetSettings.position;
+  $: widgetPositionOffsetX = widgetPosition.offsetX;
+  $: widgetPositionOffsetY = widgetPosition.offsetY;
+  $: widgetPositionPositionUnits = widgetPosition.positionUnits;
+  $: widgetPositionSizeUnits = widgetPosition.sizeUnits;
+  $: borderRadius = widgetSettings.borderRadius;
+  $: zIndex = widgetSettings.zIndex;
+  $: filter = widgetSettings.filter;
   $: tabs = widget.components.settings.tabs;
 
   function setAnchor(offsetX: number, offsetY: number) {
-    $widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
+    widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
   }
 
   function setSizeUnits(newUnits: WidgetMeasurementUnits) {
-    $widgetPosition.updateMeasurement(workspace, { sizeUnits: newUnits });
+    widgetPosition.updateMeasurement(workspace, { sizeUnits: newUnits });
   }
 
   function setPositionUnits(newUnits: WidgetMeasurementUnits) {
-    $widgetPosition.updateMeasurement(workspace, { positionUnits: newUnits });
+    widgetPosition.updateMeasurement(workspace, { positionUnits: newUnits });
   }
 </script>
 
@@ -55,57 +62,57 @@
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(0, 0)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 0}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(50, 0)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 0}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(100, 0)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 0}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top-right]"></span>
               </button>
 
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(0, 50)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 50}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 50}>
                 <span class="w-6 h-6 icon-[mdi--arrow-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(50, 50)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 50}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 50}>
                 <span class="w-6 h-6 icon-[material-symbols--align-flex-center]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(100, 50)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 50}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 50}>
                 <span class="w-6 h-6 icon-[mdi--arrow-right]"></span>
               </button>
 
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(0, 100)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 0 && $widgetPosition.offsetY === 100}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(50, 100)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 50 && $widgetPosition.offsetY === 100}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
                 on:click={() => setAnchor(100, 100)}
-                class:!variant-filled-primary={$widgetPosition.offsetX === 100 && $widgetPosition.offsetY === 100}>
+                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom-right]"></span>
               </button>
             </div>
@@ -115,14 +122,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={$widgetPosition.positionUnits}
+                  group={$widgetPositionPositionUnits}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_PositionUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={$widgetPosition.positionUnits}
+                  group={$widgetPositionPositionUnits}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Fixed)}>
@@ -136,14 +143,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={$widgetPosition.sizeUnits}
+                  group={$widgetPositionSizeUnits}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_SizeUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={$widgetPosition.sizeUnits}
+                  group={$widgetPositionSizeUnits}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Fixed)}>
@@ -156,21 +163,16 @@
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
-          <RangeSlider name="range-slider" bind:value={$widgetSettings.borderRadius} min={0} max={50} step={0.5}
-          ></RangeSlider>
+          <RangeSlider name="range-slider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
         </label>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_ZIndex()}</span>
-          <NumberInput
-            placeholder={m.Widgets_Common_Settings_ZIndex()}
-            bind:value={$widgetSettings.zIndex}
-            min={-999}
-            max={999} />
+          <NumberInput placeholder={m.Widgets_Common_Settings_ZIndex()} bind:value={$zIndex} min={-999} max={999} />
         </label>
         <label class="label">
           <span>{m.Widgets_Common_Settings_Filter()}</span>
-          <FilterSelector bind:filter={$widgetSettings.filter} />
+          <FilterSelector bind:filter={$filter} />
         </label>
       {/if}
     </div>

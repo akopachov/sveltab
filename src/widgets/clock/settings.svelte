@@ -11,7 +11,7 @@
   export let settings: Settings;
   export let tab: number;
 
-  $: fontSettings = settings.font;
+  const { clockFormat, textColor, backgroundColor, backgroundBlur, font: fontSettings } = settings;
 </script>
 
 {#if tab === GeneralTabId}
@@ -19,10 +19,10 @@
   <label class="label mb-2">
     <span class="block">{m.Widgets_Clock_Settings_Format()}</span>
     <RadioGroup active="variant-filled-primary" hover="hover:variant-soft-primary">
-      <RadioItem bind:group={$settings.clockFormat} name="justify" value={ClockFormat.TwelveHrs}>
+      <RadioItem bind:group={$clockFormat} name="justify" value={ClockFormat.TwelveHrs}>
         {m.Widgets_Clock_Settings_Format_12Hrs()}
       </RadioItem>
-      <RadioItem bind:group={$settings.clockFormat} name="justify" value={ClockFormat.TwentyFourHrs}>
+      <RadioItem bind:group={$clockFormat} name="justify" value={ClockFormat.TwentyFourHrs}>
         {m.Widgets_Clock_Settings_Format_24Hrs()}
       </RadioItem>
     </RadioGroup>
@@ -31,7 +31,7 @@
   <div>
     <div class="label">
       <span>{m.Widgets_Clock_Settings_Font()}</span>
-      <FontSelector bind:font={$fontSettings.id} bind:weight={$fontSettings.weight} bind:color={$settings.textColor} />
+      <FontSelector font={fontSettings} bind:color={$textColor} />
     </div>
     <div class="mt-2">
       <h4>{m.Widgets_Clock_Settings_Shadow()}</h4>
@@ -44,12 +44,12 @@
   <div class="label">
     <span>{m.Widgets_Clock_Settings_Color()}</span>
     <div>
-      <ColorPicker bind:color={$settings.backgroundColor} />
+      <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Clock_Settings_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$settings.backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

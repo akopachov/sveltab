@@ -1,12 +1,11 @@
 import type { BackgroundSettingsInitial } from './background-settings';
-import { Subscribable, type OmitSubscribable } from './subscribable';
+import { type Unobserved } from './observable';
 import type { WidgetSettingsInitial } from './widget-settings';
 
-export type WorkspaceSettingsInitial = Partial<OmitSubscribable<WorkspaceSettings>>;
+export type WorkspaceSettingsInitial = Partial<Unobserved<WorkspaceSettings>>;
 
-export class WorkspaceSettings extends Subscribable implements WorkspaceSettingsInitial {
+export class WorkspaceSettings {
   constructor(initial: WorkspaceSettingsInitial) {
-    super();
     this.widgets = initial.widgets || [];
     this.background = initial.background || { type: 'static-color' };
     this.name = initial.name || '';

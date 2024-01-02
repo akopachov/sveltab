@@ -1,36 +1,30 @@
+import type { BackgroundSettingsExtra } from '$models/background-settings';
+import type { Observable } from '$models/observable';
 import type { Filter } from '$stores/active-filters-store';
 import { BackgroundProvider } from '$stores/background-catalog';
-export abstract class ImageBackgroundProviderBase extends BackgroundProvider {
-  constructor(node: HTMLElement) {
-    super(node);
+import debounce from 'debounce';
+
+export abstract class ImageBackgroundProviderBase<
+  T extends BackgroundSettingsExtra & { blur: Observable<number>; filter: Observable<Filter | undefined> },
+> extends BackgroundProvider<T> {
+  #unsubscribeFilterChange!: () => void;
+  constructor(node: HTMLElement, settings: T) {
+    super(node, settings);
+  }
+
+  protected setImage(url: string): void {
+    this.node.style.backgroundImage = `url("${url}")`;
+  }
+
+  apply() {
     this.node.style.backgroundSize = 'cover';
     this.node.style.backgroundPosition = 'center';
     this.node.style.transition = 'background-image 0.3s ease-in-out';
+    this.#applyFilters();
   }
-  setImage(settings: { url: string; blur: number; filter: Filter | undefined }): void {
-    this.node.style.backgroundImage = `url("${settings.url}")`;
-    let filters = [];
-    if (settings.blur) {
-      filters.push(`blur(${settings.blur}px)`);
-    }
-    if (settings.filter) {
-      filters.push(`url("#${settings.filter}")`);
-    }
 
-    this.node.style.filter = filters.join(' ');
-    if (settings.blur > 0) {
-      this.node.style.position = 'absolute';
-      this.node.style.inset = `-${settings.blur}px ${settings.blur}px ${settings.blur}px -${settings.blur}px`;
-      this.node.style.width = `calc(100% + ${settings.blur * 2}px)`;
-      this.node.style.height = `calc(100% + ${settings.blur * 2}px)`;
-    } else {
-      this.node.style.inset = '';
-      this.node.style.width = '';
-      this.node.style.height = '';
-      this.node.style.position = '';
-    }
-  }
   destroy(): void {
+    this.#unsubscribeFilterChange!();
     this.node.style.backgroundImage = '';
     this.node.style.backgroundSize = '';
     this.node.style.backgroundPosition = '';
@@ -40,5 +34,42 @@ export abstract class ImageBackgroundProviderBase extends BackgroundProvider {
     this.node.style.width = '';
     this.node.style.height = '';
     this.node.style.position = '';
+  }
+
+  #applyFilters() {
+    const updateFiltersDeb = debounce(
+      () => this.#updateFilters(this.settings.blur.value, this.settings.filter.value),
+      10,
+    );
+
+    const blurUnsubscribe = this.settings.blur.subscribe(() => updateFiltersDeb());
+    const filterUnsubscribe = this.settings.filter.subscribe(() => updateFiltersDeb());
+    this.#unsubscribeFilterChange = () => {
+      blurUnsubscribe();
+      filterUnsubscribe();
+    };
+  }
+
+  #updateFilters(blur: number, filter: Filter | undefined) {
+    let filters = [];
+    if (blur) {
+      filters.push(`blur(${blur}px)`);
+    }
+    if (filter) {
+      filters.push(`url("#${filter}")`);
+    }
+
+    this.node.style.filter = filters.join(' ');
+    if (blur > 0) {
+      this.node.style.position = 'absolute';
+      this.node.style.inset = `-${blur}px ${blur}px ${blur}px -${blur}px`;
+      this.node.style.width = `calc(100% + ${blur * 2}px)`;
+      this.node.style.height = `calc(100% + ${blur * 2}px)`;
+    } else {
+      this.node.style.inset = '';
+      this.node.style.width = '';
+      this.node.style.height = '';
+      this.node.style.position = '';
+    }
   }
 }

@@ -1,11 +1,21 @@
-import { ImageBackgroundProviderBase } from "$backgrounds/common-image/provider-base";
-import type { Settings } from "./settings";
+import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-base';
+import debounce from 'debounce';
+import type { Settings } from './settings';
 
-export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase {
-  update(settings: Settings): void {
-    this.setImage(settings);
+export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
+  #unsubscribe!: () => void;
+
+  apply(): void {
+    super.apply();
+    const updateDeb = debounce(() => this.forceUpdate(), 500);
+    this.#unsubscribe = this.settings.url.subscribe(() => updateDeb());
+    this.forceUpdate();
+  }
+  forceUpdate(): void {
+    this.setImage(this.settings.url.value);
   }
   destroy(): void {
     super.destroy();
+    this.#unsubscribe();
   }
 }

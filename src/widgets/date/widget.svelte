@@ -10,8 +10,18 @@
   let dateDisplay: DynamicSizeText | null;
   export let settings: Settings;
 
-  $: fontSettings = settings.font;
-  $: textShadowSettings = settings.textShadow;
+  const {
+    font: { id: fontId, weight: fontWeight },
+    textShadow: {
+      blur: textShadowBlur,
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      color: textShadowColor,
+    },
+    backgroundBlur,
+    textColor,
+    backgroundColor,
+  } = settings;
 
   $: intlFormat = new Intl.DateTimeFormat($locale, {
     weekday: 'long',
@@ -28,17 +38,17 @@
 
 <div
   class="w-full h-full p-4 select-none flex justify-center content-center [&>*]:drop-shadow-[var(--st-shadow)]"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:--st-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color}"
+  style:background-color={$backgroundColor}
+  style:color={$textColor}
+  style:font-weight={$fontWeight}
+  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}"
   use:fontsource={{
-    font: $fontSettings.id,
+    font: $fontId,
     subsets: $localeCharSubset,
     styles: ['normal'],
-    weights: [$fontSettings.weight],
+    weights: [$fontWeight],
   }}
   on:fontChanged={redrawAll}>
   <DynamicSizeText bind:this={dateDisplay} text={date} class="max-h-[100cqh] max-w-[100cqw] cursor-default" />

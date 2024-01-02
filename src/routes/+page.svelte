@@ -29,15 +29,17 @@
   import DataManage from '$shared-components/data-manage.svelte';
   import { secondsToMilliseconds } from 'date-fns';
   import { Workspaces } from '$stores/workspace-index';
+  import { useObservable } from '$models/observable';
 
   const drawerStore = getDrawerStore();
 
   let workspaceId: string;
   let workspace: WorkspaceInstance | undefined;
 
-  $: background = $workspace?.background;
-  $: widgets = <Iterable<WidgetInstance>>($workspace?.widgets || []);
-  $: snappableList = Array.from(widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
+  $: background = workspace?.background;
+  $: widgets = workspace?.widgets || useObservable([]);
+  $: snappableList = Array.from($widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
+  $: hasChanges = workspace?.hasChanges || useObservable(false);
 
   onMount(async () => {
     ({ id: workspaceId, workspace: workspace } = await Workspaces.getDefault());
@@ -49,14 +51,14 @@
   $: selectedWidgetSettings = selectedWidget?.settings;
   let moveable: Moveable;
   let widgetSettingsVisible = false;
-  $: workspaceLocked = $workspace?.isLocked || false;
+  $: workspaceLocked = workspace?.isLocked || false;
   $: {
     if (workspaceLocked) {
       unselectWidget();
     }
   }
   $: {
-    if ($workspace?.hasChanges === true) {
+    if ($hasChanges === true) {
       saveWorkspaceChangesDefer();
     }
   }
@@ -77,17 +79,17 @@
   };
 
   const saveWorkspaceChangesDefer = pDebounce(async () => {
-    if (workspace?.hasChanges === true) {
+    if (workspace?.hasChanges.value === true) {
       await Workspaces.save(workspaceId, workspace);
     }
   }, secondsToMilliseconds(10));
 
   function onBeforeUnload(event: BeforeUnloadEvent) {
-    if (workspace?.hasChanges === true) {
+    if (workspace?.hasChanges.value === true) {
       Workspaces.save(workspaceId, workspace);
     }
 
-    if (workspace?.hasChanges === true) {
+    if (workspace?.hasChanges.value === true) {
       event.preventDefault();
       event.returnValue = true;
     }
@@ -242,15 +244,15 @@
         <svelte:fragment slot="content">
           <select class="select" on:change={onBackgroundTypeChanged}>
             {#each BackgroundCatalog as item, index (item.settings.type)}
-              <option value={index} selected={background?.settings?.type === item.settings.type}>{item.name()}</option>
+              <option value={index} selected={$background?.settings?.type === item.settings.type}>{item.name()}</option>
             {/each}
           </select>
           <hr />
-          {#if background}
-            {#await background.components.settings.component.getValue()}
+          {#if $background}
+            {#await $background.components.settings.component.getValue()}
               <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
             {:then component}
-              <svelte:component this={component} settings={background.settings.extra} />
+              <svelte:component this={component} settings={$background.settings.extra} />
             {/await}
           {/if}
         </svelte:fragment>
@@ -281,8 +283,8 @@
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="label flex justify-center items-center">
         <span>{m.Core_Sidebar_LockWorkspace()}</span>
-        {#if $workspace}
-          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspace.isLocked} size="sm" />
+        {#if workspace}
+          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={workspace.isLocked} size="sm" />
         {/if}
       </label>
     </div>
@@ -299,14 +301,15 @@
     bind:this={workspaceEl}
     use:resize
     on:resized={unselectWidget}>
-    <div class="w-full h-full -z-10" use:dynamicBackground={background}></div>
+    <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
     <button
       type="button"
       class="btn-icon bg-transparent text-white hover:bg-surface-500 fixed top-0 left-0"
       on:click={openWidgetsMenu}>
       <span class="w-6 h-6 icon-[material-symbols--menu]"></span>
     </button>
-    {#each widgets as widget (widget.id)}
+    <p class="absolute top-0 left-14">{$hasChanges}</p>
+    {#each $widgets as widget (widget.id)}
       <WidgetFactorty
         {widget}
         {widgetSettingsPopupSettings}
@@ -333,7 +336,7 @@
         throttleRotate={0}
         warpable={false}
         pinchable={false}
-        keepRatio={selectedWidgetSettings?.keepRatio}
+        keepRatio={selectedWidgetSettings?.keepRatio?.value}
         snappable={true}
         snapGap={true}
         snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
@@ -357,7 +360,7 @@
         }}
         on:rotateEnd={({ detail: e }) => {
           if (selectedWidgetSettings) {
-            selectedWidgetSettings.rotation = e.lastEvent.rotation;
+            selectedWidgetSettings.rotation.value = e.lastEvent.rotation;
           }
         }} />
     {/if}

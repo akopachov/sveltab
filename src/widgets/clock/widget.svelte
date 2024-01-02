@@ -11,13 +11,24 @@
 
   export let settings: Settings;
 
-  $: fontSettings = settings.font;
-  $: textShadowSettings = settings.textShadow;
+  const {
+    clockFormat,
+    backgroundColor,
+    backgroundBlur,
+    textColor,
+    font: { weight: fontWeight, id: fontId },
+    textShadow: {
+      color: textShadowColor,
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+    },
+  } = settings;
 
   $: intlFormat = new Intl.DateTimeFormat($locale, {
     hour: 'numeric',
     minute: '2-digit',
-    hour12: $settings.clockFormat == ClockFormat.TwelveHrs,
+    hour12: $clockFormat == ClockFormat.TwelveHrs,
   });
   $: time = intlFormat.format($clockStore);
 
@@ -28,17 +39,17 @@
 
 <div
   class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)]"
-  style:background-color={$settings.backgroundColor}
-  style:color={$settings.textColor}
-  style:font-weight={$fontSettings.weight}
-  style:backdrop-filter="blur({$settings.backgroundBlur}px)"
-  style:--st-shadow="{$textShadowSettings.offsetX}cqmin {$textShadowSettings.offsetY}cqmin {$textShadowSettings.blur}cqmin
-  {$textShadowSettings.color}"
+  style:background-color={$backgroundColor}
+  style:color={$textColor}
+  style:font-weight={$fontWeight}
+  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}"
   use:fontsource={{
-    font: $fontSettings.id,
+    font: $fontId,
     subsets: ['latin'],
     styles: ['normal'],
-    weights: [$fontSettings.weight],
+    weights: [$fontWeight],
   }}
   on:fontChanged={redrawAll}>
   <DynamicSizeText bind:this={timeDisplay} text={time} class="max-h-[100cqh] max-w-[100cqw] cursor-default" />

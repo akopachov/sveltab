@@ -1,10 +1,10 @@
-import { browser } from "$app/environment";
-import { logger } from "$lib/logger";
-import { WorkspaceInstance } from "$models/workspace-instance";
-import type { WorkspaceSettingsInitial } from "$models/workspace-settings";
-import { storage } from "./storage";
+import { browser } from '$app/environment';
+import { logger } from '$lib/logger';
+import { WorkspaceInstance } from '$models/workspace-instance';
+import type { WorkspaceSettingsInitial } from '$models/workspace-settings';
+import { storage } from './storage';
 
-const log = logger.getSubLogger({prefix: ['Stores', 'Workspace Index']});
+const log = logger.getSubLogger({ prefix: ['Stores', 'Workspace Index'] });
 
 const workspaceIndexStorageKey = 'workspaces';
 const defaultWorkspaceId = 'default';
@@ -35,11 +35,11 @@ export class WorkspaceIndex {
     } catch (e) {
       log.warn('An error occurred during loading workspace settings', { id }, e);
     }
-  
+
     if (!storageRecord) {
       storageRecord = {};
     }
-  
+
     return storageRecord;
   }
 
@@ -52,10 +52,12 @@ export class WorkspaceIndex {
     return { id: this.#defaultWorkspaceId, workspace: await this.get(this.#defaultWorkspaceId) };
   }
 
-  async #updateIndex(updater: ((index: WorkspaceInfo[]) => Promise< WorkspaceInfo[]> |  WorkspaceInfo[])) {
+  async #updateIndex(updater: (index: WorkspaceInfo[]) => Promise<WorkspaceInfo[]> | WorkspaceInfo[]) {
     this.#entries = await updater(this.#entries);
     if (browser) {
-      await storage.local.set({[workspaceIndexStorageKey]: { default: this.#defaultWorkspaceId, entries: this.#entries }});
+      await storage.local.set({
+        [workspaceIndexStorageKey]: { default: this.#defaultWorkspaceId, entries: this.#entries },
+      });
     }
   }
 
@@ -63,10 +65,11 @@ export class WorkspaceIndex {
     const storageKey = getStorageKey(id);
     await this.#updateIndex(index => {
       const item = index.find(wi => wi.id === id);
+      const workspaceName = (workspace instanceof WorkspaceInstance ? workspace.name.value : workspace.name) || '';
       if (!item) {
-        index.push({ id: id, name: workspace.name || '' });
+        index.push({ id: id, name: workspaceName });
       } else {
-        item.name = workspace.name || '';
+        item.name = workspaceName;
       }
 
       return index;
@@ -94,7 +97,7 @@ export class WorkspaceIndex {
   }
 
   static async create() {
-    let indexData: {default: string, entries: WorkspaceInfo[]} | undefined;
+    let indexData: { default: string; entries: WorkspaceInfo[] } | undefined;
     if (browser) {
       try {
         indexData = (await storage.local.get(workspaceIndexStorageKey))[workspaceIndexStorageKey];
@@ -102,10 +105,10 @@ export class WorkspaceIndex {
         log.warn('An error occurred during loading workspaces info list', e);
       }
     }
-    
+
     let index = new WorkspaceIndex(indexData?.default || defaultWorkspaceId, indexData?.entries || []);
     if (index.entries.length <= 0 && browser) {
-      await index.save(defaultWorkspaceId, await WorkspaceInstance.create({name: 'Default'}));
+      await index.save(defaultWorkspaceId, await WorkspaceInstance.create({ name: 'Default' }));
     }
 
     return index;

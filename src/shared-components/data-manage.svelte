@@ -19,7 +19,7 @@
   let importFiles: FileList;
 
   async function exportData() {
-    if (activeWorkspace?.hasChanges === true) {
+    if (activeWorkspace?.hasChanges.value === true) {
       await Workspaces.save(activeWorkspaceId, activeWorkspace);
     }
 
@@ -52,7 +52,7 @@
       return;
     }
 
-    if (activeWorkspace?.hasChanges === true) {
+    if (activeWorkspace?.hasChanges.value === true) {
       await Workspaces.save(activeWorkspaceId, activeWorkspace);
     }
 
@@ -80,7 +80,7 @@
 
       await Workspaces.setDefault(importData.defaultWorkspaceId || Workspaces.entries[0].id);
       ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
-      $activeWorkspace = $activeWorkspace;
+      activeWorkspace = activeWorkspace;
       toastFacade.show(
         m.DataManage_Restore_SuccessfullyDone({ count: importedWorkspaces.length }),
         CommonToastType.Success,
