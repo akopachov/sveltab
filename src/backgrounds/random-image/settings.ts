@@ -11,8 +11,8 @@ export class Settings extends BackgroundSettingsExtra {
     this.filter = useObservable(initial.filter);
   }
 
-  searchTerms: Observable<string>;
-  updateInterval: Observable<number>;
-  blur: Observable<number>;
-  filter: Observable<Filter | undefined>;
+  readonly searchTerms: Observable<string>;
+  readonly updateInterval: Observable<number>;
+  readonly blur: Observable<number>;
+  readonly filter: Observable<Filter | undefined>;
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onDestroy } from 'svelte';
   import type { Settings } from './settings';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { forceUpdateBackground } from '$actions/dynamic-background';
@@ -8,15 +7,11 @@
   import FilterSelector from '$shared-components/filter-selector.svelte';
 
   export let settings: Settings;
-  let searchTerms = settings.searchTerms;
-  let updateInterval = settings.updateInterval / 60;
+  const { searchTerms, blur, filter } = settings;
+  let updateInterval = settings.updateInterval.value / 60;
   $: {
-    settings.updateInterval = Math.max(updateInterval, 1) * 60;
+    settings.updateInterval.value = Math.max(updateInterval, 1) * 60;
   }
-
-  onDestroy(() => {
-    $settings.searchTerms = searchTerms;
-  });
 </script>
 
 <label class="label mb-2">
@@ -24,7 +19,7 @@
   <input
     type="search"
     class="input"
-    bind:value={searchTerms}
+    bind:value={$searchTerms}
     placeholder={m.Backgrounds_RandomImage_Settings_SearchTerms_Placeholder()} />
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
@@ -37,12 +32,12 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_RandomImage_Settings_Blur()}</span>
-  <RangeSlider name="range-slider" bind:value={$settings.blur} min={0} max={15} step={0.1}></RangeSlider>
+  <RangeSlider name="range-slider" bind:value={$blur} min={0} max={15} step={0.1}></RangeSlider>
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_RandomImage_Settings_Filter()}</span>
-  <FilterSelector bind:filter={$settings.filter} />
+  <FilterSelector bind:filter={$filter} />
 </label>
 
 <button class="btn variant-soft" on:click={forceUpdateBackground}>

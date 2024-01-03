@@ -89,7 +89,7 @@
         </button>
       {/each}
     {:else if searchQuery}
-      <p>{m.Widgets_Link_Settings_IconSource_Iconify_Search_NoIcons()}</p>
+      <p class="text-center py-2">{m.Widgets_Link_Settings_IconSource_Iconify_Search_NoIcons()}</p>
     {/if}
   {/await}
 </div>

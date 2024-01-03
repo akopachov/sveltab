@@ -37,10 +37,7 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   #applyFilters() {
-    const updateFiltersDeb = debounce(
-      () => this.#updateFilters(this.settings.blur.value, this.settings.filter.value),
-      10,
-    );
+    const updateFiltersDeb = debounce(() => this.#updateFilters(), 0);
 
     const blurUnsubscribe = this.settings.blur.subscribe(() => updateFiltersDeb());
     const filterUnsubscribe = this.settings.filter.subscribe(() => updateFiltersDeb());
@@ -50,7 +47,12 @@ export abstract class ImageBackgroundProviderBase<
     };
   }
 
-  #updateFilters(blur: number, filter: Filter | undefined) {
+  #updateFilters() {
+    const {
+      blur: { value: blur },
+      filter: { value: filter },
+    } = this.settings;
+
     const filters = [];
     if (blur) {
       filters.push(`blur(${blur}px)`);

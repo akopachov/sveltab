@@ -3,8 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
-import { minutesToMilliseconds } from 'date-fns';
-import { millisecondsToSeconds } from 'date-fns';
+import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
 
 const LocalSettingsKey = 'RandomImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgropunds', 'Random Image', 'Provider'] });
@@ -32,14 +31,13 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
       this.#update();
     }, minutesToMilliseconds(1));
 
-    const updateDeb = pDebounce(() => this.#update(), 500);
+    const updateDeb = pDebounce(() => this.#update(), secondsToMilliseconds(1));
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(() => updateDeb());
 
     this.#unsubscribe = () => {
       clearInterval(interval);
       searchTermUnsubsribe();
     };
-
     this.#update();
   }
 
