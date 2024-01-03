@@ -1,6 +1,6 @@
 <script lang="ts">
-  import type { WorkspaceInstance } from '$models/workspace-instance';
-  import type { WorkspaceSettingsInitial } from '$models/workspace-settings';
+  import type { WorkspaceInstance } from '$lib/workspace-instance';
+  import type { WorkspaceSettingsInitial } from '$lib/workspace-settings';
   import { FileButton } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { logger } from '$lib/logger';

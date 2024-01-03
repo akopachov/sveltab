@@ -1,4 +1,4 @@
-import type { BackgroundInstance } from '$models/background-instance';
+import type { BackgroundInstance } from '$lib/background-instance';
 import type { Action } from 'svelte/action';
 
 const forceNewSubscribers = new Set<() => void>();

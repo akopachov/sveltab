@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 import { logger } from '$lib/logger';
-import { WorkspaceInstance } from '$models/workspace-instance';
-import type { WorkspaceSettingsInitial } from '$models/workspace-settings';
+import { WorkspaceInstance } from '$lib/workspace-instance';
+import type { WorkspaceSettingsInitial } from '$lib/workspace-settings';
 import { storage } from './storage';
 
 const log = logger.getSubLogger({ prefix: ['Stores', 'Workspace Index'] });

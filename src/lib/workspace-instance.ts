@@ -23,11 +23,11 @@ export class WorkspaceInstance {
 
     this.#background = useObservable(background);
     this.#trackObjectChange(this.#background.value.settings);
-    this.isLocked = true;
+    this.isLocked = useObservable(true);
     this.name = useObservable(name);
   }
 
-  isLocked: boolean;
+  readonly isLocked: Observable<boolean>;
   readonly name: Observable<string>;
 
   #trackObjectChange(instance: any) {
@@ -39,7 +39,7 @@ export class WorkspaceInstance {
         this.#trackingObjects.set(
           instance,
           instance.subscribe(() => {
-            if (subscribed) {
+            if (subscribed && !this.#hasChanges.value) {
               this.#hasChanges.value = true;
             }
           }),

@@ -4,7 +4,7 @@ import {
   BackgroundSettingsExtra,
   type BackgroundSettingsExtraInitial,
   type BackgroundSettingsInitial,
-} from '$models/background-settings';
+} from '$lib/background-settings';
 import { Background as StaticColorBackground } from '../backgrounds/static-color';
 import { Background as RandomColorBackground } from '../backgrounds/random-color';
 import { Background as StaticImageBackground } from '../backgrounds/static-image';

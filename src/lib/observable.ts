@@ -4,10 +4,6 @@ export type Unobserved<T> = {
   [K in keyof T]: T[K] extends Observable<infer U> ? U : Unobserved<T[K]>;
 };
 
-export type Observed<T> = {
-  [K in keyof T]: Observable<T[K]>;
-};
-
 export type Subscribable<T> = Pick<Writable<T>, 'subscribe'>;
 
 export type ReadOnlyObservable<T> = Subscribable<T> & {

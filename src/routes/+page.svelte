@@ -19,8 +19,8 @@
   import { BackgroundCatalog } from '$stores/background-catalog';
   import { dynamicBackground } from '$actions/dynamic-background';
   import * as m from '$i18n/messages';
-  import type { WorkspaceInstance } from '$models/workspace-instance';
-  import type { WidgetInstance } from '$models/widget-instance';
+  import type { WorkspaceInstance } from '$lib/workspace-instance';
+  import type { WidgetInstance } from '$lib/widget-instance';
   import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
   import LanguageSelector from '$shared-components/language-selector.svelte';
@@ -29,7 +29,7 @@
   import DataManage from '$shared-components/data-manage.svelte';
   import { secondsToMilliseconds } from 'date-fns';
   import { Workspaces } from '$stores/workspace-index';
-  import { useObservable } from '$models/observable';
+  import { useObservable } from '$lib/observable';
 
   const drawerStore = getDrawerStore();
 
@@ -51,9 +51,9 @@
   $: selectedWidgetSettings = selectedWidget?.settings;
   let moveable: Moveable;
   let widgetSettingsVisible = false;
-  $: workspaceLocked = workspace?.isLocked || false;
+  $: workspaceLocked = workspace?.isLocked || useObservable(true);
   $: {
-    if (workspaceLocked) {
+    if ($workspaceLocked) {
       unselectWidget();
     }
   }
@@ -146,7 +146,7 @@
   async function onWidgetCatalogItemClick(widgetSettings: CatalogWidgetSettingsInitial) {
     if (!workspace) return;
     const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-    workspace.isLocked = false;
+    $workspaceLocked = false;
     await workspace.addWidget({
       ...widgetSettings,
       position: {
@@ -172,7 +172,7 @@
       if (!plainData) return;
       const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(plainData);
       const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-      workspace.isLocked = false;
+      $workspaceLocked = false;
       await workspace.addWidget({
         ...widgetSettings,
         position: {
@@ -284,7 +284,7 @@
       <label class="label flex justify-center items-center">
         <span>{m.Core_Sidebar_LockWorkspace()}</span>
         {#if workspace}
-          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={workspace.isLocked} size="sm" />
+          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspaceLocked} size="sm" />
         {/if}
       </label>
     </div>
@@ -301,25 +301,38 @@
     use:resize
     on:resized={unselectWidget}>
     <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
-    <button
-      type="button"
-      class="btn-icon bg-transparent text-white hover:bg-surface-500 fixed top-0 left-0"
-      on:click={openWidgetsMenu}>
-      <span class="w-6 h-6 icon-[material-symbols--menu]"></span>
-    </button>
-    <p class="absolute top-0 left-14">{$hasChanges}</p>
+    <div class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hover:w-[86px]">
+      <div class="w-max flex flex-row">
+        <button
+          type="button"
+          class="btn-icon bg-transparent text-white hover:bg-surface-500"
+          title={m.Core_MainMenu_Menu_Title()}
+          on:click={openWidgetsMenu}>
+          <span class="w-6 h-6 icon-[material-symbols--menu]"></span>
+        </button>
+        <button
+          type="button"
+          class="btn-icon bg-transparent text-white hover:bg-surface-500"
+          on:click={() => ($workspaceLocked = !$workspaceLocked)}
+          title={$workspaceLocked
+            ? m.Core_MainMenu_LockWorkspaceToggle_Title_Unlock()
+            : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
+          <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
+        </button>
+      </div>
+    </div>
     {#each $widgets as widget (widget.id)}
       <WidgetFactorty
         {widget}
         {widgetSettingsPopupSettings}
-        on:mousedown={e => !workspaceLocked && selectExistingWidget(e, widget)}
+        on:mousedown={e => !$workspaceLocked && selectExistingWidget(e, widget)}
         on:delete={onWidgetDelete}
-        isSelected={!workspaceLocked && widget === selectedWidget}
+        isSelected={!$workspaceLocked && widget === selectedWidget}
         id="widget_{widget.id}"
         class="widget_{widget.settings.type}"
-        {workspaceLocked} />
+        workspaceLocked={$workspaceLocked} />
     {/each}
-    {#if !workspaceLocked}
+    {#if !$workspaceLocked}
       <Moveable
         bind:this={moveable}
         target={selectedWidgetEl}
@@ -367,7 +380,7 @@
   <div
     class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
     data-popup={widgetSettingsPopupSettings.target}
-    style:visibility={!workspaceLocked && selectedWidget ? 'visible' : 'hidden'}>
+    style:visibility={!$workspaceLocked && selectedWidget ? 'visible' : 'hidden'}>
     {#if widgetSettingsVisible && selectedWidget}
       <WidgetSettingsComponent widget={selectedWidget} workspace={workspaceEl} />
     {/if}

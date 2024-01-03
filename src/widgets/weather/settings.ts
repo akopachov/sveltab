@@ -1,10 +1,10 @@
-import { useObservable, type Observable, type Unobserved } from '$models/observable';
+import { useObservable, type Observable, type Unobserved } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
-} from '$models/widget-settings';
+} from '$lib/widget-settings';
 
 export type GeoLocationInitial = Partial<Unobserved<GeoLocation>>;
 export class GeoLocation {

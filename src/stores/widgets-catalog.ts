@@ -4,7 +4,7 @@ import type {
   WidgetSettingsExtra,
   WidgetSettingsExtraInitial,
   WidgetSettingsInitial,
-} from '$models/widget-settings';
+} from '$lib/widget-settings';
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Lazy } from '$lib/lazy';
 import { Widget as ClockWidget } from '$widgets/clock';

@@ -22,7 +22,10 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   }
 
   function rollSrc() {
-    updateSrc(getMirrorFor(node.src));
+    const mirror = getMirrorFor(node.src);
+    if (mirror) {
+      updateSrc(mirror);
+    }
   }
 
   function loadStart() {

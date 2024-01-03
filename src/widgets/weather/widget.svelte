@@ -356,7 +356,7 @@
                         alt={m.Widgets_Weather_Forecast_Daily_WeatherIcon_Alt()} />
                     </div>
                     <div class="text-center mt-auto leading-tight">
-                      {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $measurementUnits)}-{adaptTemperature(
+                      {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $measurementUnits)}&deg; / {adaptTemperature(
                         forecast.daily.temperature2mMax[item[1]],
                         $measurementUnits,
                       )}&deg;

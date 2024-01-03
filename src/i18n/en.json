@@ -1,5 +1,6 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
+  "Core_Page_Title": "New Tab",
   "Core_Sidebar_NewWidget": "New Widget",
   "Core_Sidebar_Background": "Background",
   "Core_Sidebar_Settings": "Settings",
@@ -7,6 +8,9 @@
   "Core_Sidebar_Settings_ColorScheme": "Color scheme",
   "Core_Sidebar_Settings_Data": "Data",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
+  "Core_MainMenu_Menu_Title": "Open main menu",
+  "Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Lock workspace",
+  "Core_MainMenu_LockWorkspaceToggle_Title_Unlock": "Unlock workspace",
 
   "FontSelector_Search_Placeholder": "Search...",
   "FontSelector_Weight_Thin": "Thin",
@@ -50,6 +54,7 @@
   "Backgrounds_BingDaily_Settings_Country_UnitedStates": "United States",
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
   "Backgrounds_BingDaily_Settings_Filter": "Filter",
+  "Backgrounds_BingDaily_Settings_Disclaimer": "Content provided by",
 
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
@@ -75,6 +80,7 @@
   "Backgrounds_RandomImage_Settings_Blur": "Blur",
   "Backgrounds_RandomImage_Settings_Filter": "Filter",
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
+  "Backgrounds_RandomImage_Settings_Disclaimer": "Content provided by",
 
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
@@ -158,6 +164,7 @@
   "Widgets_FlickrImage_Settings_Tabs_Image": "Image",
   "Widgets_FlickrImage_Settings_Topic": "Image topic",
   "Widgets_FlickrImage_Settings_UpdateInterval": "Update interval (minutes)",
+  "Widgets_FlickrImage_Settings_Disclaimer": "Content provided by",
 
   "Widgets_Link_Name": "Link",
   "Widgets_Link_Settings_Tabs_Icon": "Icon",
@@ -171,6 +178,7 @@
   "Widgets_Link_Settings_IconSource_Iconify_Search_IconAlt": "Icon {icon}",
   "Widgets_Link_Settings_IconSource_Iconify_Search_NoIcons": "No icons found",
   "Widgets_Link_Settings_IconSource_Iconify_Search_IconColor_Title": "Icon color",
+  "Widgets_Link_Settings_IconSource_Iconify_Search_Disclaimer": "Content provided by",
   "Widgets_Link_Settings_IconSource_Direct": "Manual",
   "Widgets_Link_Settings_IconSource_Direct_Label": "Icon url",
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",

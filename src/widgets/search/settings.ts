@@ -1,5 +1,5 @@
-import { useObservable, type Observable } from '$models/observable';
-import { FontSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$models/widget-settings';
+import { useObservable, type Observable } from '$lib/observable';
+import { FontSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
 
 export type SearchProvider = 'google' | 'duckduckgo' | 'bing' | 'youtube';
 

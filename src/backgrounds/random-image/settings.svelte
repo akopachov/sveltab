@@ -39,6 +39,12 @@
   <span>{m.Backgrounds_RandomImage_Settings_Filter()}</span>
   <FilterSelector bind:filter={$filter} />
 </label>
+<div>
+  <span class="text-xs opacity-50">
+    {m.Backgrounds_RandomImage_Settings_Disclaimer()}
+    <a href="https://unsplash.com/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Unsplash</a>
+  </span>
+</div>
 
 <button class="btn variant-soft" on:click={forceUpdateBackground}>
   {m.Backgrounds_RandomImage_Settings_Refresh()}

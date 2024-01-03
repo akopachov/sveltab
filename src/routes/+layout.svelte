@@ -5,6 +5,7 @@
   import '../app.pcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { Modal, Toast, initializeStores, storePopup } from '@skeletonlabs/skeleton';
+  import * as m from '$i18n/messages';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
   initializeStores();
@@ -13,6 +14,7 @@
 </script>
 
 <svelte:head>
+  <title>{m.Core_Page_Title()}</title>
   <script>
     (function () {
       const preferedColorScheme = localStorage.getItem('preferedColorScheme') || 'auto';

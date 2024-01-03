@@ -71,6 +71,12 @@
   title={m.Widgets_Link_Settings_IconSource_Iconify_Search_IconColor_Title()}>
   <ColorPicker bind:color class="!p-0 bg-transparent" />
 </div>
+<div>
+  <span class="text-xs opacity-50">
+    {m.Widgets_Link_Settings_IconSource_Iconify_Search_Disclaimer()}
+    <a href="https://iconify.design/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Iconify</a>
+  </span>
+</div>
 
 <div class="grid gap-2 grid-cols-[repeat(auto-fit,minmax(50px,1fr))] mt-2">
   {#await iconsUpdatePromise}

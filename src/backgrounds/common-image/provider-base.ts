@@ -1,5 +1,5 @@
-import type { BackgroundSettingsExtra } from '$models/background-settings';
-import type { Observable } from '$models/observable';
+import type { BackgroundSettingsExtra } from '$lib/background-settings';
+import type { Observable } from '$lib/observable';
 import type { Filter } from '$stores/active-filters-store';
 import { BackgroundProvider } from '$stores/background-catalog';
 import debounce from 'debounce';

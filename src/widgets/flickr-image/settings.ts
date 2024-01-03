@@ -1,5 +1,5 @@
-import { useObservable, type Observable } from '$models/observable';
-import { WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$models/widget-settings';
+import { useObservable, type Observable } from '$lib/observable';
+import { WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {

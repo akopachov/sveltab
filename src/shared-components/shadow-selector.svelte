@@ -1,7 +1,7 @@
 <script lang="ts">
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import ColorPicker from './color-picker.svelte';
-  import type { ShadowSettings } from '$models/widget-settings';
+  import type { ShadowSettings } from '$lib/widget-settings';
   import * as m from '$i18n/messages';
 
   export let shadowSettings: ShadowSettings;

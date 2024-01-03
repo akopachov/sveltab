@@ -1,9 +1,9 @@
 <script lang="ts">
-  import type { WidgetInstance } from '$models/widget-instance';
+  import type { WidgetInstance } from '$lib/widget-instance';
   import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { SvelteComponent, createEventDispatcher } from 'svelte';
   import * as m from '$i18n/messages';
-  import type { WidgetSettingsExtra } from '$models/widget-settings';
+  import type { WidgetSettingsExtra } from '$lib/widget-settings';
 
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;

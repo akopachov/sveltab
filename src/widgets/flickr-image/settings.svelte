@@ -25,4 +25,10 @@
     <span>{m.Widgets_FlickrImage_Settings_UpdateInterval()}</span>
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
+  <div>
+    <span class="text-xs opacity-50">
+      {m.Widgets_FlickrImage_Settings_Disclaimer()}
+      <a href="https://www.flickr.com/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Flickr</a>
+    </span>
+  </div>
 {/if}

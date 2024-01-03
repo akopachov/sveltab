@@ -3,11 +3,11 @@
 </script>
 
 <script lang="ts">
-  import type { WidgetInstance } from '$models/widget-instance';
+  import type { WidgetInstance } from '$lib/widget-instance';
   import { ListBox, ListBoxItem, ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
-  import { WidgetMeasurementUnits } from '$models/widget-settings';
+  import { WidgetMeasurementUnits } from '$lib/widget-settings';
   import FilterSelector from './filter-selector.svelte';
 
   export let widget: WidgetInstance;

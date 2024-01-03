@@ -33,3 +33,9 @@
   <span>{m.Backgrounds_BingDaily_Settings_Filter()}</span>
   <FilterSelector bind:filter={$filter} />
 </label>
+<div>
+  <span class="text-xs opacity-50">
+    {m.Backgrounds_BingDaily_Settings_Disclaimer()}
+    <a href="https://bing.com" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Bing</a>
+  </span>
+</div>

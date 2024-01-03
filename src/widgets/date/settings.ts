@@ -1,10 +1,10 @@
-import { useObservable, type Observable } from '$models/observable';
+import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
-} from '$models/widget-settings';
+} from '$lib/widget-settings';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {

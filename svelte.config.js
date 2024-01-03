@@ -15,7 +15,6 @@ const config = {
     appDir: 'app',
     alias: {
       '$shared-components': 'src/shared-components',
-      $models: 'src/models',
       $stores: 'src/stores',
       $widgets: 'src/widgets',
       $backgrounds: 'src/backgrounds',

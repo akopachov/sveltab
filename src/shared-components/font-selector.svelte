@@ -6,7 +6,7 @@
   import ColorPicker from './color-picker.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
-  import type { FontSettings } from '$models/widget-settings';
+  import type { FontSettings } from '$lib/widget-settings';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
   enum FontWeight {

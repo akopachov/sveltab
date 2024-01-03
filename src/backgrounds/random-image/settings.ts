@@ -1,5 +1,5 @@
-import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$models/background-settings';
-import { useObservable, type Observable } from '$models/observable';
+import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$lib/background-settings';
+import { useObservable, type Observable } from '$lib/observable';
 import type { Filter } from '$stores/active-filters-store';
 
 export class Settings extends BackgroundSettingsExtra {
