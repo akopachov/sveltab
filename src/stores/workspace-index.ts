@@ -52,8 +52,8 @@ export class WorkspaceIndex {
     return { id: this.#defaultWorkspaceId, workspace: await this.get(this.#defaultWorkspaceId) };
   }
 
-  async #updateIndex(updater: (index: WorkspaceInfo[]) => Promise<WorkspaceInfo[]> | WorkspaceInfo[]) {
-    this.#entries = await updater(this.#entries);
+  async #updateIndex(updater: (index: WorkspaceInfo[]) => WorkspaceInfo[]) {
+    this.#entries = updater(this.#entries);
     if (browser) {
       await storage.local.set({
         [workspaceIndexStorageKey]: { default: this.#defaultWorkspaceId, entries: this.#entries },
@@ -74,10 +74,12 @@ export class WorkspaceIndex {
 
       return index;
     });
-    if (workspace instanceof WorkspaceInstance) {
-      await workspace.commit(data => storage.local.set({ [storageKey]: data }));
-    } else {
-      await storage.local.set({ [storageKey]: workspace });
+    if (browser) {
+      if (workspace instanceof WorkspaceInstance) {
+        await workspace.commit(data => storage.local.set({ [storageKey]: data }));
+      } else {
+        await storage.local.set({ [storageKey]: workspace });
+      }
     }
   }
 
@@ -106,12 +108,10 @@ export class WorkspaceIndex {
       }
     }
 
-    const index = new WorkspaceIndex(indexData?.default || defaultWorkspaceId, indexData?.entries || []);
-    if (index.entries.length <= 0 && browser) {
-      await index.save(defaultWorkspaceId, await WorkspaceInstance.create({ name: 'Default' }));
-    }
-
-    return index;
+    return new WorkspaceIndex(
+      indexData?.default || defaultWorkspaceId,
+      indexData?.entries || [{ id: defaultWorkspaceId, name: 'Default' }],
+    );
   }
 }
 

@@ -7,6 +7,7 @@
   import pDebounce from 'p-debounce';
   import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
   import { minutesToMilliseconds, millisecondsToSeconds, secondsToMilliseconds } from 'date-fns';
+  import { loadingPlaceholder } from '$actions/loading-placeholder';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type FlickrImageData = { id: string; secret: string; farm: number; server: string; owner: string };
@@ -85,17 +86,17 @@
 </script>
 
 <!-- svelte-ignore a11y-missing-attribute -->
-{#if activeImage}
-  <a
-    href="https://www.flickr.com/photos/{activeImage.owner}/{activeImage.id}"
-    rel="noreferrer"
-    referrerpolicy="no-referrer"
-    class="w-full h-full btn !p-0 rounded-[inherit]">
+
+<a
+  href={activeImage ? `https://www.flickr.com/photos/${activeImage.owner}/${activeImage.id}` : ''}
+  rel="noreferrer"
+  referrerpolicy="no-referrer"
+  class="w-full h-full btn !p-0 rounded-[inherit]"
+  use:loadingPlaceholder={!!activeImage}>
+  {#if activeImage}
     <img
       class="w-full h-full object-cover select-none bg-surface-200"
       draggable="false"
       src="http://farm{activeImage.farm}.static.flickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}_z.jpg" />
-  </a>
-{:else}
-  <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
-{/if}
+  {/if}
+</a>

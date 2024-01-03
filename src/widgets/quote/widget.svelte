@@ -6,6 +6,7 @@
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
   import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
+  import { loadingPlaceholder } from '$actions/loading-placeholder';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
@@ -60,7 +61,7 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto"
+  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
@@ -68,18 +69,15 @@
   style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
   style:font-size="{$fontSize}cqmin"
+  use:loadingPlaceholder={quote?.lastUpdate > 0}
   use:fontsource={{
     font: $fontId,
     subsets: ['latin'],
     styles: ['normal'],
     weights: [$fontWeight],
   }}>
-  {#if quote?.lastUpdate > 0}
-    <figure>
-      <blockquote>"{quote.quote}"</blockquote>
-      <figcaption class="text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
-    </figure>
-  {:else}
-    <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
-  {/if}
+  <figure>
+    <blockquote>"{quote?.quote || ''}"</blockquote>
+    <figcaption class="text-right mt-2">&mdash;&nbsp;{quote?.author || ''}</figcaption>
+  </figure>
 </div>

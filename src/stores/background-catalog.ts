@@ -35,7 +35,7 @@ export interface BackgroundCatalogItem {
 }
 
 export interface BackgroundCatalogItemComponents {
-  provider: Lazy<Promise<new (node: HTMLElement, settings: any) => BackgroundProvider<any>>>;
+  readonly provider: Lazy<Promise<new (node: HTMLElement, settings: any) => BackgroundProvider<any>>>;
   readonly settings: {
     readonly component: Lazy<Promise<ComponentType<SvelteComponent>>>;
     readonly model: Lazy<Promise<new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra>>;

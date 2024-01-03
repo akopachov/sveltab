@@ -7,5 +7,5 @@ export class Settings extends BackgroundSettingsExtra {
     this.color = useObservable(initial.color || '#eee');
   }
 
-  color: Observable<string>;
+  readonly color: Observable<string>;
 }

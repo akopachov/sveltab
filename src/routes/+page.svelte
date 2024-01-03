@@ -21,7 +21,6 @@
   import * as m from '$i18n/messages';
   import type { WorkspaceInstance } from '$lib/workspace-instance';
   import type { WidgetInstance } from '$lib/widget-instance';
-  import { fade } from 'svelte/transition';
   import pDebounce from 'p-debounce';
   import LanguageSelector from '$shared-components/language-selector.svelte';
   import Lightswitch from '$shared-components/lightswitch.svelte';
@@ -208,13 +207,6 @@
 
 <svelte:window on:beforeunload={onBeforeUnload} on:resize={() => unselectWidget()} />
 
-{#if !workspace}
-  <div
-    out:fade={{ duration: 300 }}
-    class="fixed top-0 left-0 w-screen h-screen z-50 flex items-center justify-center flex-col backdrop-blur-md bg-surface-50 dark:bg-surface-600 !bg-opacity-50">
-    <ProgressRadial meter="stroke-primary-500" track="stroke-primary-500/30" />
-  </div>
-{/if}
 <Drawer>
   <div class="flex flex-col h-full w-full">
     <Accordion autocollapse>

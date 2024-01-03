@@ -16,6 +16,7 @@
   import { isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
   import { PUBLIC_OWM_REDIRECT } from '$env/static/public';
   import { logger } from '$lib/logger';
+  import { loadingPlaceholder } from '$actions/loading-placeholder';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
 
@@ -249,13 +250,14 @@
 </script>
 
 <div
-  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] pb-[1cqmin] text-[var(--st--text-color)] text-[15cqmin] drop-shadow-[var(--st-shadow)]"
+  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] pb-[1cqmin] text-[var(--st--text-color)] text-[15cqmin] drop-shadow-[var(--st-shadow)] rounded-[inherit]"
   style:background-color={$backgroundColor}
   style:--st--text-color={$textColor}
   style:font-weight={$fontWeight}
   style:backdrop-filter="blur({$backgroundBlur}px)"
   style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
+  use:loadingPlaceholder={forecast?.lastUpdate > 0}
   use:fontsource={{
     font: $fontId,
     subsets: $localeCharSubset,
@@ -369,7 +371,5 @@
         </TabGroup>
       </div>
     </div>
-  {:else}
-    <div class="absolute left-0 top-0 w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
   {/if}
 </div>

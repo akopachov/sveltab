@@ -10,7 +10,7 @@ export class Settings extends BackgroundSettingsExtra {
     this.filter = useObservable(initial.filter);
   }
 
-  url: Observable<string>;
-  blur: Observable<number>;
-  filter: Observable<Filter | undefined>;
+  readonly url: Observable<string>;
+  readonly blur: Observable<number>;
+  readonly filter: Observable<Filter | undefined>;
 }

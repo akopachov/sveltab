@@ -29,7 +29,7 @@ async function removeInlineScript(directory) {
       let f = fs.readFileSync(file, { encoding: 'utf-8' });
 
       const scriptRegx = /<script[^>]*>([\s\S]+?)<\/script>/gi;
-      newHtml = f.replace(scriptRegx, (m, script) => {
+      const newHtml = f.replace(scriptRegx, (m, script) => {
         if (script) {
           const inlineContent = script
             .replace('__sveltekit', 'const __sveltekit')

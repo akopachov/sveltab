@@ -64,9 +64,7 @@
   style:--relative-origin-x={$offsetX / 100}
   style:transform="rotate({$rotation}deg)">
   <div style:border-radius="{$borderRadius}cqmin" class="block w-full h-full overflow-hidden">
-    {#await widget.components.widget.getValue()}
-      <div class="w-full !h-full placeholder animate-pulse !rounded-[inherit]" />
-    {:then component}
+    {#await widget.components.widget.getValue() then component}
       <div class="w-full h-full rounded-[inherit]" style:filter={$filter ? `url('#${$filter}')` : ''}>
         <svelte:component
           this={component}

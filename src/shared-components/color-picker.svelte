@@ -1,5 +1,6 @@
 <script lang="ts">
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
+  import { nanoid } from 'nanoid/non-secure';
   import ColorPicker from 'svelte-awesome-color-picker';
 
   export let color: string;
@@ -9,7 +10,7 @@
 
   let popupSettings: PopupSettings = {
     event: 'click',
-    target: `popupColorPicker_${Math.floor(Math.random() * Date.now())}`,
+    target: `popupColorPicker_${nanoid()}`,
     closeQuery: '',
     placement: 'bottom',
     middleware: {
@@ -27,7 +28,7 @@
   </div>
 {:else}
   <button
-    class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('./transparent-sm.png')] {$$restProps.class || ''}"
+    class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')] {$$restProps.class || ''}"
     tabindex="-1"
     use:popup={popupSettings}
     style:box-shadow="inset 0 0 0 1.5rem {color}">
