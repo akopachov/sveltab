@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { globSync } from 'glob';
+import glob from 'tiny-glob';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 
@@ -101,7 +101,7 @@ function processFile(filePath) {
 }
 
 console.info('Started generating asset packs');
-const jsonFiles = globSync('*.json', { cwd: scriptDir, absolute: true });
+const jsonFiles = await glob('*.json', { cwd: scriptDir, absolute: true, dot: true, filesOnly: true });
 for (const jsonFile of jsonFiles) {
   processFile(jsonFile);
 }
