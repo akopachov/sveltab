@@ -7,7 +7,7 @@
   "Core_Sidebar_Settings_ColorScheme": "Color scheme",
   "Core_Sidebar_Settings_Data": "Data",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
-  
+
   "FontSelector_Search_Placeholder": "Search...",
   "FontSelector_Weight_Thin": "Thin",
   "FontSelector_Weight_ExtraLight": "Extra Light",
@@ -19,11 +19,11 @@
   "FontSelector_Weight_ExtraBold": "Extra Bold",
   "FontSelector_Weight_Heavy": "Heavy",
   "FontSelector_Size": "Size",
-  
+
   "Lightswitch_ColorScheme_Light": "Light",
   "Lightswitch_ColorScheme_Auto": "Auto",
   "Lightswitch_ColorScheme_Dark": "Dark",
-  
+
   "ShadowSelector_OffsetX": "Offset X",
   "ShadowSelector_OffsetY": "Offset Y",
   "ShadowSelector_Blur": "Blur",
@@ -36,7 +36,7 @@
   "DataManage_Restore_Error_NothingToImport": "There is no workspaces to be imported",
   "DataManage_Restore_SuccessfullyDone": "{count} workspaces has been successfully imported",
   "DataManage_Backup": "Backup",
-  
+
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
   "Backgrounds_BingDaily_Settings_Country_Any": "Any",
@@ -50,7 +50,7 @@
   "Backgrounds_BingDaily_Settings_Country_UnitedStates": "United States",
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
   "Backgrounds_BingDaily_Settings_Filter": "Filter",
-  
+
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",
@@ -67,7 +67,7 @@
   "Backgrounds_RandomColor_Settings_Hue_Purple": "Purple",
   "Backgrounds_RandomColor_Settings_Hue_Pink": "Pink",
   "Backgrounds_RandomColor_Settings_Refresh": "Refresh",
-  
+
   "Backgrounds_RandomImage_Name": "Random image",
   "Backgrounds_RandomImage_Settings_SearchTerms": "Search terms",
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
@@ -75,7 +75,7 @@
   "Backgrounds_RandomImage_Settings_Blur": "Blur",
   "Backgrounds_RandomImage_Settings_Filter": "Filter",
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
-  
+
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
   "Backgrounds_StaticImage_Name": "Static image",
@@ -99,7 +99,7 @@
   "Widgets_Common_Menu_Delete": "Delete",
   "Widgets_Common_Menu_Delete_Confirm_Title": "Please Confirm",
   "Widgets_Common_Menu_Delete_Confirm_Body": "Are you sure you wish to delete widget instance?",
-  
+
   "Widgets_Clock_Name": "Clock",
   "Widgets_Clock_Settings_Tabs_Text": "Text",
   "Widgets_Clock_Settings_Tabs_Background": "Background",

@@ -1,13 +1,23 @@
-import { BackgroundCatalog, type BackgroundCatalogItem, type BackgroundCatalogItemComponents } from "$stores/background-catalog";
-import { BackgroundSettings, type BackgroundSettingsExtra, type BackgroundSettingsExtraInitial, type BackgroundSettingsInitial } from "./background-settings";
+import {
+  BackgroundCatalog,
+  type BackgroundCatalogItem,
+  type BackgroundCatalogItemComponents,
+} from '$stores/background-catalog';
+import {
+  BackgroundSettings,
+  type BackgroundSettingsExtra,
+  type BackgroundSettingsExtraInitial,
+  type BackgroundSettingsInitial,
+} from './background-settings';
 
-
-const BackgroundCatalogIndex = new Map<string, BackgroundCatalogItem>(
-  BackgroundCatalog.map(c => [c.settings.type, c])  
-);
+const BackgroundCatalogIndex = new Map<string, BackgroundCatalogItem>(BackgroundCatalog.map(c => [c.settings.type, c]));
 
 export class BackgroundInstance {
-  private constructor(catalogItem: BackgroundCatalogItem, settings: BackgroundSettingsInitial, extraConstructor: (new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra)) { 
+  private constructor(
+    catalogItem: BackgroundCatalogItem,
+    settings: BackgroundSettingsInitial,
+    extraConstructor: new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra,
+  ) {
     this.settings = new BackgroundSettings(settings, extraConstructor);
     this.components = catalogItem.components;
   }

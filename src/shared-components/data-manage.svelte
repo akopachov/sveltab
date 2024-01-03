@@ -38,7 +38,7 @@
     try {
       const link = document.createElement('a');
       link.href = downloadUrl;
-      link.download = `SvelTab_Export_${new Date().toISOString().replace(/[:\.]/g, '-')}.json`;
+      link.download = `SvelTab_Export_${new Date().toISOString().replace(/[:.]/g, '-')}.json`;
       document.body.insertAdjacentElement('beforeend', link);
       link.click();
       link.remove();

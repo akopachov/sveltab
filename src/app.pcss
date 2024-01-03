@@ -4,21 +4,21 @@
 @tailwind utilities;
 
 body {
-    @apply overflow-hidden;
+  @apply overflow-hidden;
 }
 
 .color-picker .wrapper {
-    @apply m-0 bg-surface-100 dark:bg-surface-800 border-none;
+  @apply m-0 border-none bg-surface-100 dark:bg-surface-800;
 }
 
 .color-picker .wrapper .text-input input {
-    @apply input !w-1 !outline-none;
+  @apply input !w-1 !outline-none;
 }
 
-.color-picker .wrapper .text-input input[type="number"] {
-    @apply hidden;
+.color-picker .wrapper .text-input input[type='number'] {
+  @apply hidden;
 }
 
 .color-picker .wrapper .text-input button {
-    @apply btn variant-filled-surface;
+  @apply variant-filled-surface btn;
 }

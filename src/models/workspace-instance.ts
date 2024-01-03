@@ -1,7 +1,7 @@
 import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
-import { useObservable, type Observable, type Subscribable } from './observable';
+import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable } from './observable';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import type { WorkspaceSettingsInitial } from './workspace-settings';
@@ -71,15 +71,15 @@ export class WorkspaceInstance {
     }
   }
 
-  get hasChanges() {
+  get hasChanges(): ReadOnlyObservable<boolean> {
     return this.#hasChanges;
   }
 
-  get widgets() {
+  get widgets(): ReadOnlyObservable<ReadonlySet<WidgetInstance>> {
     return this.#widgets;
   }
 
-  get background() {
+  get background(): ReadOnlyObservable<BackgroundInstance> {
     return this.#background;
   }
 
@@ -104,7 +104,7 @@ export class WorkspaceInstance {
 
   removeWidget(instance: WidgetInstance) {
     this.#widgets.value.delete(instance);
-    this.#widgets.value = this.#widgets.value;
+    this.#widgets.set(this.#widgets.value);
     this.#hasChanges.value = true;
     this.#untrackObjectChange(instance.settings);
     if (instance.settings.filter.value) {

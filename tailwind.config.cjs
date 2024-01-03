@@ -4,23 +4,23 @@ const { addDynamicIconSelectors } = require('@iconify/tailwind');
 
 /** @type {import('tailwindcss').Config}*/
 const config = {
-	content: [
-		'./src/**/*.{html,js,svelte,ts}',
-		require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}')
-	],
-	darkMode: 'class',
+  content: [
+    './src/**/*.{html,js,svelte,ts}',
+    require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
+  ],
+  darkMode: 'class',
 
-	theme: {
-		extend: {}
-	},
+  theme: {
+    extend: {},
+  },
 
-	plugins: [
-		require('@tailwindcss/forms'),
-		require('@tailwindcss/typography'),
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
     require('@tailwindcss/container-queries'),
     addDynamicIconSelectors(),
-		skeleton({ themes: { preset: ['skeleton'] } }),
-	]
+    skeleton({ themes: { preset: ['skeleton'] } }),
+  ],
 };
 
 module.exports = config;

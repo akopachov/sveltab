@@ -25,9 +25,9 @@ export const fontsource: Action<
   { 'on:fontChanged': (e: CustomEvent<string>) => void }
 > = function (node: HTMLElement, settings: FontSourceActionSettings) {
   let currentFont: string | null = '';
-  let currentSubsets: Set<string> = new Set<string>();
-  let currentWeights: Set<number> = new Set<number>();
-  let currentStyles: Set<string> = new Set<string>();
+  const currentSubsets: Set<string> = new Set<string>();
+  const currentWeights: Set<number> = new Set<number>();
+  const currentStyles: Set<string> = new Set<string>();
 
   async function updateFont(s: FontSourceActionSettings) {
     if (
@@ -38,7 +38,7 @@ export const fontsource: Action<
     )
       return;
 
-    let fontId = s.font;
+    const fontId = s.font;
 
     const fontFacesToRemove = await removeCurrentFont();
     if (fontId) {

@@ -106,7 +106,7 @@ export class WorkspaceIndex {
       }
     }
 
-    let index = new WorkspaceIndex(indexData?.default || defaultWorkspaceId, indexData?.entries || []);
+    const index = new WorkspaceIndex(indexData?.default || defaultWorkspaceId, indexData?.entries || []);
     if (index.entries.length <= 0 && browser) {
       await index.save(defaultWorkspaceId, await WorkspaceInstance.create({ name: 'Default' }));
     }

@@ -51,7 +51,7 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   #updateFilters(blur: number, filter: Filter | undefined) {
-    let filters = [];
+    const filters = [];
     if (blur) {
       filters.push(`blur(${blur}px)`);
     }

@@ -74,6 +74,7 @@
     }}>
     <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
       {#await searchProviderAdapter?.icon.getValue() then icon}
+        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
         {@html icon}
       {/await}
     </div>

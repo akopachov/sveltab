@@ -6,7 +6,7 @@
   import { writable } from 'svelte/store';
   import pDebounce from 'p-debounce';
   import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
-  import { minutesToMilliseconds, millisecondsToSeconds, set } from 'date-fns';
+  import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type FlickrImageData = { id: string; secret: string; farm: number; server: string; owner: string };

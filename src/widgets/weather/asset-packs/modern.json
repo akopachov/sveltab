@@ -3,7 +3,13 @@
   [[[1, 2]], "day_partial_cloud", "night_half_moon_partial_cloud"],
   [[3], "cloudy"],
   [[4], "angry_clouds"],
-  [[[5, 6], [10, 12]], "mist"],
+  [
+    [
+      [5, 6],
+      [10, 12]
+    ],
+    "mist"
+  ],
   [[13, 17, 29], "thunder"],
   [[18, [30, 39], [7, 9]], "wind"],
   [[19], "tornado"],
@@ -12,7 +18,14 @@
   [[[60, 65], [81, 82], 92, 21, 25], "rain"],
   [[[66, 69], 84, 94, 27], "sleet"],
   [[[40, 49], 28], "fog"],
-  [[[70, 73], [87, 90]], "day_snow", "night_half_moon_snow"],
+  [
+    [
+      [70, 73],
+      [87, 90]
+    ],
+    "day_snow",
+    "night_half_moon_snow"
+  ],
   [[[74, 79], [85, 86], 22, 26], "snow"],
   [[[95, 96]], "day_rain_thunder", "night_half_moon_rain_thunder"],
   [[[97, 99]], "snow_thunder"]

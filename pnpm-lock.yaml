@@ -24,11 +24,11 @@ devDependencies:
     specifier: ^1.0.3
     version: 1.0.3
   '@skeletonlabs/skeleton':
-    specifier: ^2.6.1
-    version: 2.6.1(svelte@4.2.8)
+    specifier: ^2.7.0
+    version: 2.7.0(svelte@4.2.8)
   '@skeletonlabs/tw-plugin':
-    specifier: ^0.3.0
-    version: 0.3.0(tailwindcss@3.4.0)
+    specifier: ^0.3.1
+    version: 0.3.1(tailwindcss@3.4.0)
   '@svelte-put/resize':
     specifier: ^3.0.0
     version: 3.0.0
@@ -1026,8 +1026,8 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /@skeletonlabs/skeleton@2.6.1(svelte@4.2.8):
-    resolution: {integrity: sha512-LDdgsnCgD+ZsI/82F7tHXmBXwd0Kx0WnQSSvgd94qgf2zZVeDMaKh2C6lEvgF0z31tvi83dyGnL7vM3IJlmWhg==}
+  /@skeletonlabs/skeleton@2.7.0(svelte@4.2.8):
+    resolution: {integrity: sha512-XD6aCvEQYp2LtEKM9OelK2HoJZFraM3fvpQpXsnNY82t/QeaZ9WkORCsrVz91puq786FTOktt8beZEe045YLWA==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
@@ -1035,8 +1035,8 @@ packages:
       svelte: 4.2.8
     dev: true
 
-  /@skeletonlabs/tw-plugin@0.3.0(tailwindcss@3.4.0):
-    resolution: {integrity: sha512-0tBlZSHk791jvDTC41FlIafa8ZmaODjvOwmghcbla96Fbv9dI1u9+OJ2ScSxzy7xI6qjuQ80Uhw9kn53MMYi4Q==}
+  /@skeletonlabs/tw-plugin@0.3.1(tailwindcss@3.4.0):
+    resolution: {integrity: sha512-DjjeOHN3HhFQf6gYPT2MUZMkIdw1jeB9mbuKC8etQxUlOR4XitfC7hssRWFJ8RJsvrrN0myCBbdWkVG1JVA96g==}
     peerDependencies:
       tailwindcss: '>=3.0.0'
     dependencies:
@@ -1697,7 +1697,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001572
-      electron-to-chromium: 1.4.616
+      electron-to-chromium: 1.4.617
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -2373,8 +2373,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /electron-to-chromium@1.4.616:
-    resolution: {integrity: sha512-1n7zWYh8eS0L9Uy+GskE0lkBUNK83cXTVJI0pU3mGprFsbfSdAc15VTFbo+A+Bq4pwstmL30AVcEU3Fo463lNg==}
+  /electron-to-chromium@1.4.617:
+    resolution: {integrity: sha512-sYNE3QxcDS4ANW1k4S/wWYMXjCVcFSOX3Bg8jpuMFaXt/x8JCmp0R1Xe1ZXDX4WXnSRBf+GJ/3eGWicUuQq5cg==}
     dev: true
 
   /emoji-regex@8.0.0:

@@ -50,7 +50,7 @@ export function initLocaleStore() {
   }
 
   if (browser) {
-    let localeTag: string | null = localStorage.getItem(LocalStorageLocaleKey);
+    const localeTag: string | null = localStorage.getItem(LocalStorageLocaleKey);
     if (isAvailableLanguageTag(localeTag)) {
       initLocale(localeTag);
       return;

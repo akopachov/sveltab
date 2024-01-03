@@ -1,6 +1,6 @@
 import { nanoid } from 'nanoid';
 import type { Filter } from '$stores/active-filters-store';
-import { useObservable, type Observable, type Unobserved, type Observed } from './observable';
+import { useObservable, type Observable, type Unobserved } from './observable';
 
 export type WidgetPositionInitial = Partial<Unobserved<WidgetPosition>>;
 

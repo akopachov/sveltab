@@ -12,7 +12,7 @@ export default {
     if (city && country) {
       const q = encodeURIComponent(`${city}, ${country}`);
       const owmResponse = await fetch(`https://openweathermap.org/data/2.5/find?q=${q}&appid=${env.OWM_API_KEY}`).then(
-        r => <any>r.json(),
+        r => r.json(),
       );
       if (!owmResponse || !owmResponse.list || owmResponse.list.length <= 0) {
         return Response.redirect('https://openweathermap.org/', 308);

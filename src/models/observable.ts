@@ -10,11 +10,16 @@ export type Observed<T> = {
 
 export type Subscribable<T> = Pick<Writable<T>, 'subscribe'>;
 
-export type Observable<T> = {
-  value: T;
+export type ReadOnlyObservable<T> = Subscribable<T> & {
   get: () => T;
   toJSON: () => T;
+  readonly value: T;
+};
+
+export type Observable<T> = {
+  value: T;
 } & Subscribable<T> &
+  Omit<ReadOnlyObservable<T>, 'value'> &
   Pick<Writable<T>, 'set'>;
 
 export function useObservable<T>(initial: T): Observable<T> {

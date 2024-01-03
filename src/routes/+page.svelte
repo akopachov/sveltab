@@ -292,7 +292,6 @@
 </Drawer>
 <AppShell>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
   <div
     class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
     on:drop={onWidgetCatalogItemDragDrop}

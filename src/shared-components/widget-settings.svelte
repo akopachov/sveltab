@@ -55,7 +55,6 @@
       {/await}
       {#if currentTabId === GeneralTabId}
         <div class="flex flex-row gap-4 content-center">
-          <!-- svelte-ignore a11y-label-has-associated-control -->
           <div class="label mb-2 text-center">
             <span>{m.Widgets_Common_Settings_Anchor()}</span>
             <div class="grid gap-1 grid-cols-3 grid-rows-3 w-fit h-fit">
