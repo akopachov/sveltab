@@ -9,7 +9,6 @@
     type PopupSettings,
     ProgressRadial,
   } from '@skeletonlabs/skeleton';
-  import Moveable from 'svelte-moveable';
   import { resize } from '@svelte-put/resize';
   import WidgetFactorty from '$shared-components/widget-factory.svelte';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
@@ -31,6 +30,7 @@
   import { useObservable } from '$lib/observable';
   import CustomStyles from '$shared-components/custom-styles.svelte';
   import { customStyles as customCss } from '$actions/custom-styles';
+  import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
 
   const drawerStore = getDrawerStore();
 
@@ -39,8 +39,7 @@
 
   $: background = workspace?.background;
   $: customStyles = workspace?.customStyles || useObservable('');
-  $: widgets = workspace?.widgets || useObservable([]);
-  $: snappableList = Array.from($widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
+  $: widgets = workspace?.widgets || useObservable(new Set<WidgetInstance>());
   $: hasChanges = workspace?.hasChanges || useObservable(false);
 
   onMount(async () => {
@@ -48,15 +47,13 @@
   });
 
   let workspaceEl: HTMLElement;
-  let selectedWidgetEl: HTMLElement | undefined | null;
-  let selectedWidget: WidgetInstance | null | undefined;
-  $: selectedWidgetSettings = selectedWidget?.settings;
-  let moveable: Moveable;
+  let selectedWidgets = new Set<WidgetInstance>();
+  let moveable: WidgetMoveController;
   let widgetSettingsVisible = false;
   $: workspaceLocked = workspace?.isLocked || useObservable(true);
   $: {
     if ($workspaceLocked) {
-      unselectWidget();
+      moveable?.unselectAll();
     }
   }
   $: {
@@ -101,48 +98,6 @@
     drawerStore.open({
       width: 'w-[280px]',
     });
-  }
-
-  function selectExistingWidget(e: MouseEvent, widget: WidgetInstance) {
-    if (e.button === 0 && moveable) {
-      e.stopPropagation();
-      unselectWidget();
-      selectedWidgetEl = e.currentTarget as HTMLElement;
-      selectedWidget = widget;
-
-      const absolutePos = widget.settings.position.getAbsolute(workspaceEl);
-
-      selectedWidgetEl.style.width = `${absolutePos.width}px`;
-      selectedWidgetEl.style.height = `${absolutePos.height}px`;
-      selectedWidgetEl.style.left = `${absolutePos.x}px`;
-      selectedWidgetEl.style.top = `${absolutePos.y}px`;
-
-      selectedWidgetEl.classList.add('selected');
-
-      setTimeout(() => {
-        moveable.dragStart(e);
-      });
-    }
-  }
-
-  function unselectWidget() {
-    if (selectedWidgetEl && selectedWidgetSettings) {
-      selectedWidgetSettings.position.setFromAbsolute(workspaceEl, {
-        x: parseFloat(selectedWidgetEl.style.left),
-        y: parseFloat(selectedWidgetEl.style.top),
-        width: parseFloat(selectedWidgetEl.style.width),
-        height: parseFloat(selectedWidgetEl.style.height),
-      });
-
-      selectedWidgetEl.style.width = '';
-      selectedWidgetEl.style.height = '';
-      selectedWidgetEl.style.left = '';
-      selectedWidgetEl.style.top = '';
-
-      selectedWidgetEl.classList.remove('selected');
-    }
-    selectedWidgetEl = null;
-    selectedWidget = null;
   }
 
   async function onWidgetCatalogItemClick(widgetSettings: CatalogWidgetSettingsInitial) {
@@ -195,7 +150,7 @@
 
   function onWidgetDelete(e: CustomEvent<WidgetInstance>) {
     if (!workspace) return;
-    unselectWidget();
+    moveable?.unselect(e.detail);
     workspace.removeWidget(e.detail);
   }
 
@@ -208,7 +163,7 @@
   }
 </script>
 
-<svelte:window on:beforeunload={onBeforeUnload} on:resize={() => unselectWidget()} />
+<svelte:window on:beforeunload={onBeforeUnload} />
 <svelte:document use:customCss={$customStyles} />
 
 <Drawer>
@@ -304,10 +259,9 @@
     class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
-    on:mousedown={unselectWidget}
     bind:this={workspaceEl}
     use:resize
-    on:resized={unselectWidget}>
+    on:resized={() => moveable?.unselectAll()}>
     <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
     <div class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hover:w-[86px]">
       <div class="w-max flex flex-row">
@@ -333,64 +287,27 @@
       <WidgetFactorty
         {widget}
         {widgetSettingsPopupSettings}
-        on:mousedown={e => !$workspaceLocked && selectExistingWidget(e, widget)}
+        on:mousedown={e => !$workspaceLocked && moveable?.select(widget, e)}
         on:delete={onWidgetDelete}
-        isSelected={!$workspaceLocked && widget === selectedWidget}
+        isSelected={!$workspaceLocked && selectedWidgets.has(widget)}
         id="widget_{widget.id}"
         class="widget_{widget.settings.type}"
         workspaceLocked={$workspaceLocked} />
     {/each}
     {#if !$workspaceLocked}
-      <Moveable
+      <WidgetMoveController
         bind:this={moveable}
-        target={selectedWidgetEl}
-        origin={false}
-        edge={false}
-        draggable={true}
-        throttleDrag={0}
-        renderDirections={['nw', 'ne', 'sw', 'se', 'n', 'w', 's', 'e']}
-        resizable={true}
-        throttleResize={0}
-        scalable={false}
-        rotatable={true}
-        throttleRotate={0}
-        warpable={false}
-        pinchable={false}
-        keepRatio={selectedWidgetSettings?.keepRatio?.value}
-        snappable={true}
-        snapGap={true}
-        snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
-        elementSnapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
-        elementGuidelines={[...snappableList, '.workspace']}
-        snapContainer={'.workspace'}
-        bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}
-        isDisplaySnapDigit={true}
-        on:drag={({ detail: e }) => {
-          e.target.style.left = `${e.left}px`;
-          e.target.style.top = `${e.top}px`;
-        }}
-        on:resize={({ detail: e }) => {
-          e.target.style.width = `${e.width}px`;
-          e.target.style.height = `${e.height}px`;
-          e.target.style.left = `${e.drag.left}px`;
-          e.target.style.top = `${e.drag.top}px`;
-        }}
-        on:rotate={({ detail: e }) => {
-          e.target.style.transform = e.drag.transform;
-        }}
-        on:rotateEnd={({ detail: e }) => {
-          if (selectedWidgetSettings) {
-            selectedWidgetSettings.rotation.value = e.lastEvent.rotation;
-          }
-        }} />
+        bind:selected={selectedWidgets}
+        widgets={$widgets}
+        workspace={workspaceEl} />
     {/if}
   </div>
   <div
     class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
     data-popup={widgetSettingsPopupSettings.target}
-    style:visibility={!$workspaceLocked && selectedWidget ? 'visible' : 'hidden'}>
-    {#if widgetSettingsVisible && selectedWidget}
-      <WidgetSettingsComponent widget={selectedWidget} workspace={workspaceEl} />
+    style:visibility={!$workspaceLocked && selectedWidgets.size === 1 ? 'visible' : 'hidden'}>
+    {#if widgetSettingsVisible && selectedWidgets.size === 1}
+      <WidgetSettingsComponent widget={selectedWidgets.values().next().value} workspace={workspaceEl} />
     {/if}
   </div>
   <WidgetFilters />
