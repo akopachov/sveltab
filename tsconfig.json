@@ -9,7 +9,8 @@
     "skipLibCheck": true,
     "strict": true,
     "moduleResolution": "bundler",
-    "inlineSourceMap": true
+    "inlineSourceMap": true,
+    "module": "ESNext"
   }
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //
