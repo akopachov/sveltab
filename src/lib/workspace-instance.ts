@@ -1,7 +1,7 @@
 import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
-import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable } from './observable';
+import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable, unobserve } from './observable';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import type { WorkspaceSettingsInitial } from './workspace-settings';
@@ -51,10 +51,12 @@ export class WorkspaceInstance {
         );
         subscribed = true;
       }
-      for (const property of Object.getOwnPropertyNames(instance)) {
-        const value = (<any>instance)[property];
-        if (value && typeof value === 'object') {
-          this.#trackObjectChange(value);
+      if (typeof instance === 'object') {
+        for (const property of Object.getOwnPropertyNames(instance)) {
+          const value = (<any>instance)[property];
+          if (value && typeof value === 'object') {
+            this.#trackObjectChange(value);
+          }
         }
       }
     }
@@ -68,10 +70,12 @@ export class WorkspaceInstance {
       this.#trackingObjects.delete(instance);
     }
 
-    for (const property of Object.getOwnPropertyNames(instance)) {
-      const value = (<any>instance)[property];
-      if (value && typeof value === 'object') {
-        this.#untrackObjectChange(value);
+    if (typeof instance === 'object') {
+      for (const property of Object.getOwnPropertyNames(instance)) {
+        const value = (<any>instance)[property];
+        if (value && typeof value === 'object') {
+          this.#untrackObjectChange(value);
+        }
       }
     }
   }
@@ -119,10 +123,10 @@ export class WorkspaceInstance {
 
   export() {
     return {
-      name: this.name,
-      background: this.#background.value.settings,
-      widgets: [...this.#widgets.value].map(m => m.settings),
-      customStyles: this.customStyles,
+      name: this.name.value,
+      background: unobserve(this.#background.value.settings),
+      widgets: [...this.#widgets.value].map(m => unobserve(m.settings)),
+      customStyles: this.customStyles.value,
     };
   }
 

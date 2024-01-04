@@ -35,3 +35,7 @@ export function useObservable<T>(initial: T): Observable<T> {
     toJSON: getter,
   };
 }
+
+export function unobserve<T>(instance: T): Unobserved<T> {
+  return JSON.parse(JSON.stringify(instance));
+}

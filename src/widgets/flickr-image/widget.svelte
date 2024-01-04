@@ -104,7 +104,7 @@
     <img
       class="w-full h-full object-cover select-none bg-surface-200"
       draggable="false"
-      src="http://farm{activeImage.farm}.static.flickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}_z.jpg"
+      src="https://farm{activeImage.farm}.static.flickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}_z.jpg"
       alt={m.Widgets_FlickrImage_Image_Alt()} />
   {/if}
 </a>
