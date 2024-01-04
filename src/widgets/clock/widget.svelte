@@ -38,11 +38,11 @@
 </script>
 
 <div
-  class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)]"
+  class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
-  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-blur="{$backgroundBlur}px"
   style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
   use:fontsource={{

@@ -87,11 +87,11 @@
 </script>
 
 <div
-  class="w-full h-full p-2 select-none flex justify-center content-center items-center flex-col"
+  class="w-full h-full p-2 select-none flex justify-center content-center items-center flex-col backdrop-blur-[var(--st-blur)]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
-  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-blur="{$backgroundBlur}px"
   style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
   style:font-size="{$fontSize}cqmin"

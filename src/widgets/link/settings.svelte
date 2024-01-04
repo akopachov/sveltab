@@ -1,16 +1,19 @@
 <script lang="ts">
   import { IconSource, type Settings } from './settings';
   import * as m from '$i18n/messages';
-  import { BackgroundTabId, IconTabId } from './settings-tabs';
+  import { BackgroundTabId, IconTabId, TextTabId } from './settings-tabs';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import IconifySearch from './iconify-search.svelte';
+  import FontSelector from '$shared-components/font-selector.svelte';
+  import ShadowSelector from '$shared-components/shadow-selector.svelte';
 
   export let settings: Settings;
   export let tab: number;
 
-  const { icon, url, iconSource, iconColor, backgroundColor, backgroundBlur } = settings;
+  const { icon, url, iconSource, iconColor, backgroundColor, backgroundBlur, textColor, font, textShadow, title } =
+    settings;
 
   function onIconSourceChange() {
     $icon = '';
@@ -21,6 +24,10 @@
   <label class="label">
     <span>{m.Widgets_Link_Settings_Link_Label()}</span>
     <input type="url" class="input" bind:value={$url} placeholder={m.Widgets_Link_Settings_Link_Placeholder()} />
+  </label>
+  <label class="label">
+    <span>{m.Widgets_Link_Settings_Title_Label()}</span>
+    <input type="text" class="input" bind:value={$title} />
   </label>
 {:else if tab === IconTabId}
   <label class="label mb-2">
@@ -43,6 +50,19 @@
   {:else if $iconSource === IconSource.Iconify}
     <IconifySearch bind:icon={$icon} bind:color={$iconColor} />
   {/if}
+{:else if tab === TextTabId}
+  <div>
+    <div class="label mb-2">
+      <span>{m.Widgets_Link_Settings_Font()}</span>
+      <FontSelector {font} bind:color={$textColor} />
+    </div>
+    <div>
+      <h4>{m.Widgets_Link_Settings_Shadow()}</h4>
+      <div class="px-4">
+        <ShadowSelector shadowSettings={textShadow} />
+      </div>
+    </div>
+  </div>
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Link_Settings_Background_Color()}</span>

@@ -61,11 +61,11 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit]"
+  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
-  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-blur="{$backgroundBlur}px"
   style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
   style:font-size="{$fontSize}cqmin"

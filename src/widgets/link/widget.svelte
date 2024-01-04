@@ -5,12 +5,30 @@
   import { onMount } from 'svelte';
   import { getSvgUrl } from '../../lib/iconify-api';
   import { secondsToMilliseconds } from 'date-fns';
+  import { fontsource } from '$actions/fontsource';
+  import { userPosssibleLocaleCharSubset } from '$stores/locale';
 
   export let settings: Settings;
 
   let iconUrl: string | undefined;
 
-  const { icon, iconSource, url, iconColor, backgroundColor, backgroundBlur } = settings;
+  const {
+    icon,
+    iconSource,
+    url,
+    iconColor,
+    backgroundColor,
+    backgroundBlur,
+    title,
+    font: { id: fontId, weight: fontWeight, size: fontSize },
+    textColor,
+    textShadow: {
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+      color: textShadowColor,
+    },
+  } = settings;
 
   $: {
     ($iconSource || $icon || $url) && updateIconUrlDebounced();
@@ -48,14 +66,31 @@
   href={ensureFqdnUrl($url)}
   rel="noreferrer"
   referrerpolicy="no-referrer"
-  class="w-full h-full btn !p-[5cqmin] rounded-[inherit]"
+  class="w-full h-full btn !p-[5cqmin] rounded-[inherit] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
   style:background-color={$backgroundColor}
-  style:backdrop-filter="blur({$backgroundBlur}px)"
+  style:--st-blur="{$backgroundBlur}px"
+  style:font-size="{$fontSize}cqmin"
   draggable="false"
-  title={$url}>
+  title={$url}
+  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}">
   {#if iconUrl}
     <img class="w-full h-full object-contain select-none !rounded-[inherit]" draggable="false" use:imgSrcEx={iconUrl} />
   {:else}
     <span class="w-full h-full icon-[bx--image]"></span>
+  {/if}
+  {#if $title}
+    <div
+      class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal"
+      style:color={$textColor}
+      style:font-weight={$fontWeight}
+      use:fontsource={{
+        font: $fontId,
+        subsets: $userPosssibleLocaleCharSubset,
+        styles: ['normal'],
+        weights: [$fontWeight],
+      }}>
+      {$title}
+    </div>
   {/if}
 </a>

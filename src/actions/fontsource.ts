@@ -103,28 +103,27 @@ export const fontsource: Action<
             } else {
               loadedFontSet = { fontSet: new Set(), usage: 1 };
               activeFontRef.fontSets.set(cacheKey, loadedFontSet);
-              log.debug(`Loaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
               const fontObj = ((activeFontRef.raw.variants[String(weight)] || {})[style] || {})[subset];
               if (!fontObj) continue;
-              const url = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
-              const fontFace = new FontFace(activeFontRef.fontFamily, `url(${url})`, {
+              const source = Object.entries(fontObj.url)
+                .map(([format, url]) => `url(${url}) format(${format})`)
+                .join(', ');
+              const fontFace = new FontFace(activeFontRef.fontFamily, source, {
                 weight: String(weight),
                 style: style,
                 unicodeRange: unicodeRange,
               });
-              promisesToWait.push(
-                fontFace.load().then(ff => {
-                  document.fonts.add(ff);
-                  loadedFontSet!.fontSet.add(ff);
-                }),
-              );
+              document.fonts.add(fontFace);
+              loadedFontSet!.fontSet.add(fontFace);
+              promisesToWait.push(fontFace.load());
+              log.debug('Loaded font', activeFontRef.fontFamily, weight, style, subset);
             }
           }
         }
       }
 
       Promise.allSettled(promisesToWait).then(() => {
-        node.style.fontFamily = `"${activeFontRef!.fontFamily}", sans-serif`;
+        node.style.fontFamily = `"${activeFontRef!.fontFamily}", ${activeFontRef.raw.category}`;
         node.dispatchEvent(new CustomEvent('fontChanged', { detail: activeFontRef!.fontFamily }));
         fontFacesToRemove.forEach(f => document.fonts.delete(f));
       });
@@ -155,7 +154,7 @@ export const fontsource: Action<
                 activeFontRef.fontSets.delete(cacheKey);
                 for (const fontFace of fontSet.fontSet) {
                   fontFacesToRemove.push(fontFace);
-                  log.debug(`Unloaded font "${activeFontRef.fontFamily}" ${weight} ${style} ${subset}`);
+                  log.debug('Unloaded font', activeFontRef.fontFamily, weight, style, subset);
                 }
               }
             }
