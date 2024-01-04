@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "SvelTab",
-  "version": "1.0",
-  "description": "A simple new tab extension",
+  "version": "1.0.0",
+  "description": "A beautiful New Tab page with many customizable backgrounds and widgets that does not require any permissions",
   "permissions": ["storage", "unlimitedStorage"],
   "chrome_url_overrides": {
     "newtab": "index.html"
