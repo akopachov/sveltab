@@ -29,6 +29,8 @@
   import { secondsToMilliseconds } from 'date-fns';
   import { Workspaces } from '$stores/workspace-index';
   import { useObservable } from '$lib/observable';
+  import CustomStyles from '$shared-components/custom-styles.svelte';
+  import { customStyles as customCss } from '$actions/custom-styles';
 
   const drawerStore = getDrawerStore();
 
@@ -36,6 +38,7 @@
   let workspace: WorkspaceInstance | undefined;
 
   $: background = workspace?.background;
+  $: customStyles = workspace?.customStyles || useObservable('');
   $: widgets = workspace?.widgets || useObservable([]);
   $: snappableList = Array.from($widgets, m => (selectedWidget?.id === m.id ? null : `#widget_${m.id}`));
   $: hasChanges = workspace?.hasChanges || useObservable(false);
@@ -206,6 +209,7 @@
 </script>
 
 <svelte:window on:beforeunload={onBeforeUnload} on:resize={() => unselectWidget()} />
+<svelte:document use:customCss={$customStyles} />
 
 <Drawer>
   <div class="flex flex-col h-full w-full">
@@ -267,6 +271,18 @@
           <div class="label">
             <span>{m.Core_Sidebar_Settings_Data()}</span>
             <DataManage bind:activeWorkspaceId={workspaceId} bind:activeWorkspace={workspace} />
+          </div>
+        </svelte:fragment>
+      </AccordionItem>
+      <AccordionItem>
+        <svelte:fragment slot="lead">
+          <span class="w-6 h-6 icon-[game-icons--gear-hammer]"></span>
+        </svelte:fragment>
+        <svelte:fragment slot="summary">{m.Core_Sidebar_Advanced()}</svelte:fragment>
+        <svelte:fragment slot="content">
+          <div class="label">
+            <span>{m.Core_Sidebar_Advanced_CustomStyles()}</span>
+            <CustomStyles bind:styles={$customStyles} />
           </div>
         </svelte:fragment>
       </AccordionItem>

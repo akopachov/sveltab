@@ -7,6 +7,9 @@
   "Core_Sidebar_Settings_Language": "Language",
   "Core_Sidebar_Settings_ColorScheme": "Color scheme",
   "Core_Sidebar_Settings_Data": "Data",
+
+  "Core_Sidebar_Advanced": "Advanced",
+  "Core_Sidebar_Advanced_CustomStyles": "Custom Styles (CSS)",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
   "Core_MainMenu_Menu_Title": "Open main menu",
   "Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Lock workspace",

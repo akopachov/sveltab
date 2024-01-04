@@ -9,9 +9,11 @@ export class WorkspaceSettings {
     this.widgets = initial.widgets || [];
     this.background = initial.background || { type: 'static-color' };
     this.name = initial.name || '';
+    this.customStyles = initial.customStyles || '';
   }
 
   name: string;
   widgets: WidgetSettingsInitial[];
   background: BackgroundSettingsInitial;
+  customStyles: string;
 }

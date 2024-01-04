@@ -12,7 +12,7 @@ export class WorkspaceInstance {
   #hasChanges: Observable<boolean> = useObservable(false);
   #trackingObjects = new Map<Subscribable<any>, () => void>();
 
-  private constructor(name: string, widgets: WidgetInstance[], background: BackgroundInstance) {
+  private constructor(name: string, widgets: WidgetInstance[], background: BackgroundInstance, customStyles: string) {
     this.#widgets = useObservable(new Set(widgets));
     this.#widgets.value.forEach(w => {
       this.#trackObjectChange(w.settings);
@@ -25,10 +25,15 @@ export class WorkspaceInstance {
     this.#trackObjectChange(this.#background.value.settings);
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
+    this.customStyles = useObservable(customStyles);
+
+    this.#trackObjectChange(this.name);
+    this.#trackObjectChange(this.customStyles);
   }
 
   readonly isLocked: Observable<boolean>;
   readonly name: Observable<string>;
+  readonly customStyles: Observable<string>;
 
   #trackObjectChange(instance: any) {
     if (!instance) return;
@@ -117,6 +122,7 @@ export class WorkspaceInstance {
       name: this.name,
       background: this.#background.value.settings,
       widgets: [...this.#widgets.value].map(m => m.settings),
+      customStyles: this.customStyles,
     };
   }
 
@@ -128,6 +134,6 @@ export class WorkspaceInstance {
   static async create(settings: WorkspaceSettingsInitial) {
     const background = await BackgroundInstance.create(settings.background || { type: 'static-color' });
     const widgets = await Promise.all((settings.widgets || []).map(m => WidgetInstance.create(m)));
-    return new WorkspaceInstance(settings.name || '', widgets, background);
+    return new WorkspaceInstance(settings.name || '', widgets, background, settings.customStyles || '');
   }
 }
