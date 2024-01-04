@@ -39,6 +39,7 @@
 
   let searchTerm: string = '';
   let searchSuggestions: string[] = [];
+  let searchSuggestionContainerEl: HTMLElement;
 
   $: searchProviderAdapter = SearchProviderAdapters.get($searchProvider);
 
@@ -54,6 +55,25 @@
         location.assign(searchProviderAdapter.searchUrl(searchTerm));
       }
       searchTerm = '';
+    }
+  }
+
+  function onSuggestionKeyDown(e: KeyboardEvent) {
+    if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+    if (!(document.activeElement instanceof HTMLElement)) return;
+    let index = document.activeElement.tabIndex;
+
+    if (e.key === 'ArrowDown') {
+      index++;
+    } else if (e.key === 'ArrowUp') {
+      index--;
+    }
+
+    if (index >= 0 && index < searchSuggestions.length) {
+      const nextElement = searchSuggestionContainerEl.querySelector(`a[tabindex="${index}"]`);
+      if (nextElement instanceof HTMLElement) {
+        nextElement.focus();
+      }
     }
   }
 </script>
@@ -92,13 +112,18 @@
     class="w-full ml-[-50cqh] rounded !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     data-popup={popupSettings.target}
     style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
-    <nav class="list-nav text-[calc(70cqh-1rem)]">
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <nav
+      class="list-nav text-[calc(70cqh-1rem)]"
+      on:keydown={onSuggestionKeyDown}
+      bind:this={searchSuggestionContainerEl}>
       <ul>
-        {#each searchSuggestions as suggestion}
+        {#each searchSuggestions as suggestion, index}
           <li>
             <a
               class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
               rel="noreferrer"
+              tabindex={index}
               href={searchProviderAdapter?.searchUrl(suggestion)}>
               {suggestion}
             </a>
