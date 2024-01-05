@@ -1,6 +1,7 @@
 [build]
+  base = "webextension"
   command = "pnpm run build"
   publish = "build"
 
 [functions]
-  directory = "external/netlify/functions"
+  directory = "resources/netlify/functions"
