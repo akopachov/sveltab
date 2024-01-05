@@ -33,6 +33,7 @@ export default async (request: Request) => {
       idList.sort((a, b) => a.diff - b.diff);
       cityId = idList[0].id;
     }
+    return new Response(null, { status: 308, headers: { location: `https://openweathermap.org/city/${cityId}` } });
     return Response.redirect(`https://openweathermap.org/city/${cityId}`, 308);
   }
   return Response.redirect('https://openweathermap.org/', 308);
