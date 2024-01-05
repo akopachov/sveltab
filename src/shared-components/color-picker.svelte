@@ -1,6 +1,6 @@
 <script lang="ts">
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
-  import { nanoid } from 'nanoid/non-secure';
+  import { nanoid } from 'nanoid';
   import ColorPicker from 'svelte-awesome-color-picker';
 
   export let color: string;

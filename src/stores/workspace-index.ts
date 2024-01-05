@@ -37,10 +37,10 @@ export class WorkspaceIndex {
     }
 
     if (!storageRecord) {
-      storageRecord = {};
+      storageRecord = await fetch('default_workspace.json').then(r => r.json());
     }
 
-    return storageRecord;
+    return storageRecord!;
   }
 
   async get(id: string) {

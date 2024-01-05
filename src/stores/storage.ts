@@ -20,4 +20,4 @@ if (import.meta.env.DEV || import.meta.env.SSR) {
   }
 }
 
-export const storage = $$storage;
+export const storage = $$storage!;
