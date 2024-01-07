@@ -1,6 +1,6 @@
 [build]
-  command = "cd preview/web && pnpm run build"
-  publish = "preview/web/build"
+  command = "cd wb && pnpm run build"
+  publish = "web/build"
 
 [functions]
-  directory = "preview/functions"
+  directory = "functions"
