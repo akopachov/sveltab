@@ -1,5 +1,5 @@
 [build]
-  command = "cd web pnpm install && && pnpm run build"
+  command = "cd web && pnpm install && && pnpm run build"
   publish = "web/build"
 
 [functions]
