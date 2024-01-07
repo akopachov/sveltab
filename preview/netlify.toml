@@ -1,7 +1,6 @@
 [build]
-  base = "../webextension"
-  command = "pnpm run build"
-  publish = "build"
+  command = "cd webextension && pnpm run build"
+  publish = "webextension/build"
 
 [functions]
-  directory = "functions"
+  directory = "preview/functions"
