@@ -4,4 +4,4 @@
   publish = "build"
 
 [functions]
-  directory = "preview/functions"
+  directory = "functions"
