@@ -8,7 +8,7 @@ We care about your privacy and your experience. SvelTab is private, fast, and fr
 
 Key concepts and decisions behind SvelTab:
 
-1. No ads, no trackers, no analytics, no data-mining or simillar things
+1. No ads, no trackers, no analytics, no data-mining or similar things
 2. Preference to open-sourced privacy-oriented 3rd party services
 3. Load time should be low, overall performance should be high
 4. No polyfills to support obsolete browsers, targeting latest & greatest browsers only
