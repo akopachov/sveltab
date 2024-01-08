@@ -154,7 +154,7 @@
     <div class="flex p-4 max-h-[inherit]">
       <VirtualScroll bind:this={fontList} data={fontsResult} let:data>
         <button
-          class="btn {font === data.id ? 'variant-filled' : 'variant-soft'} w-full mb-1 rounded-sm"
+          class="btn {$fontId === data.id ? 'variant-filled' : 'variant-soft'} w-full mb-1 rounded-sm"
           on:click={() => onSelected(data)}>
           {data.label}
         </button>
