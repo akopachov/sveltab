@@ -14,6 +14,10 @@ Key concepts and decisions behind SvelTab:
 4. No polyfills to support obsolete browsers, targeting latest & greatest browsers only
 5. [Firefox](https://www.mozilla.org/en-US/firefox/new/) as a primary browser for development and testing
 
+## Install
+
+Links to the stores are comming soon...
+
 ## Want to say thank you?
 
 * Buy me a coffee [here](https://ko-fi.com/akopachov) (No account needed, one-time)
