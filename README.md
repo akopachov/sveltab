@@ -14,6 +14,18 @@ Key concepts and decisions behind SvelTab:
 4. No polyfills to support obsolete browsers, targeting latest & greatest browsers only
 5. [Firefox](https://www.mozilla.org/en-US/firefox/new/) as a primary browser for development and testing
 
+## Screenshots
+
+<a href="docs/screenshots/1.png">
+  <img src="docs/screenshots/1.png" width="200px" />
+</a>
+<a href="docs/screenshots/2.png">
+  <img src="docs/screenshots/2.png" width="200px" />
+</a>
+<a href="docs/screenshots/3.png">
+  <img src="docs/screenshots/3.png" width="200px" />
+</a>
+
 ## Install
 
 Links to the stores are comming soon...
