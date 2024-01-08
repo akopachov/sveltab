@@ -17,13 +17,13 @@ Key concepts and decisions behind SvelTab:
 ## Screenshots
 
 <a href="docs/screenshots/1.png">
-  <img src="docs/screenshots/1.png" width="200px" />
+  <img src="docs/screenshots/1_preview.png" width="200px" />
 </a>
 <a href="docs/screenshots/2.png">
-  <img src="docs/screenshots/2.png" width="200px" />
+  <img src="docs/screenshots/2_preview.png" width="200px" />
 </a>
 <a href="docs/screenshots/3.png">
-  <img src="docs/screenshots/3.png" width="200px" />
+  <img src="docs/screenshots/3_preview.png" width="200px" />
 </a>
 
 ## Install
