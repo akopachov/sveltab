@@ -98,7 +98,7 @@
         {@html icon}
       {/await}
     </div>
-    <form on:submit={doSearch}>
+    <form on:submit|preventDefault={doSearch}>
       <input
         type="search"
         name="searchQuery"
