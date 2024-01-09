@@ -273,14 +273,14 @@
       <div class="w-max flex flex-row">
         <button
           type="button"
-          class="btn-icon bg-transparent text-white hover:bg-surface-500"
+          class="btn-icon bg-transparent hover:bg-surface-500 main-menu-icon"
           title={m.Core_MainMenu_Menu_Title()}
           on:click={openWidgetsMenu}>
           <span class="w-6 h-6 icon-[material-symbols--menu]"></span>
         </button>
         <button
           type="button"
-          class="btn-icon bg-transparent text-white hover:bg-surface-500"
+          class="btn-icon bg-transparent hover:bg-surface-500 main-menu-icon"
           on:click={() => ($workspaceLocked = !$workspaceLocked)}
           title={$workspaceLocked
             ? m.Core_MainMenu_LockWorkspaceToggle_Title_Unlock()
@@ -318,3 +318,19 @@
   </div>
   <WidgetFilters />
 </AppShell>
+
+<style>
+  .main-menu-icon {
+    filter: drop-shadow(-1px -1px 4px rgb(255 255 255 / 0.3)) drop-shadow(1px -1px 4px rgb(255 255 255 / 0.3))
+      drop-shadow(1px 1px 4px rgb(255 255 255 / 0.3)) drop-shadow(-1px 1px 4px rgb(255 255 255 / 0.3));
+  }
+
+  .main-menu-icon:hover {
+    filter: none;
+  }
+
+  :global(.dark .main-menu-icon) {
+    filter: drop-shadow(-1px -1px 4px rgb(0 0 0 / 0.3)) drop-shadow(1px -1px 4px rgb(0 0 0 / 0.3))
+      drop-shadow(1px 1px 4px rgb(0 0 0 / 0.3)) drop-shadow(-1px 1px 4px rgb(0 0 0 / 0.3));
+  }
+</style>
