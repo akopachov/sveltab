@@ -47,7 +47,7 @@
     {/each}
   {/await}
   <svelte:fragment slot="panel">
-    <div class="overflow-scroll max-h-[calc(100cqh-92px)]">
+    <div class="overflow-auto max-h-[calc(100cqh-92px)]">
       {#await widget.components.settings.component.getValue()}
         <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
       {:then component}

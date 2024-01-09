@@ -12,7 +12,7 @@
   on:dragstart
   on:dragend
   {...otherProps}>
-  <header class="overflow-hidden h-full">
+  <header class="overflow-hidden h-full w-full">
     <div class="h-full w-full p-2 [&>*]:h-full [&>*]:w-full">
       {#await widgetCatalogItem.previewImage.getValue() then image}
         <!-- eslint-disable-next-line svelte/no-at-html-tags -->
@@ -20,5 +20,5 @@
       {/await}
     </div>
   </header>
-  <h4 class="text-center">{widgetCatalogItem.name()}</h4>
+  <h4 class="w-full text-center">{widgetCatalogItem.name()}</h4>
 </button>
