@@ -14,7 +14,7 @@
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
   import WidgetCatalogItemPreview from '$shared-components/widget-catalog-item-preview.svelte';
   import WidgetSettingsComponent from '$shared-components/widget-settings.svelte';
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
   import { BackgroundCatalog } from '$stores/background-catalog';
   import { dynamicBackground } from '$actions/dynamic-background';
   import * as m from '$i18n/messages';
@@ -44,6 +44,12 @@
 
   onMount(async () => {
     ({ id: workspaceId, workspace: workspace } = await Workspaces.getDefault());
+  });
+
+  onDestroy(() => {
+    if (workspace?.hasChanges.value === true) {
+      Workspaces.save(workspaceId, workspace);
+    }
   });
 
   let workspaceEl: HTMLElement;

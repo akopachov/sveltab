@@ -114,7 +114,6 @@
   let currentTab = 0;
 
   onMount(async () => {
-    forecast = <LatestForecast>(await storage.local.get(storageKey))[storageKey];
     await ensureLocationPresent();
     checkIfObsoleteDebounced();
   });
@@ -150,6 +149,10 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
+    if (!forecast) {
+      forecast = <LatestForecast>(await storage.local.get(storageKey))[storageKey];
+    }
+
     if (
       !forecast ||
       Date.now() - forecast.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { colorScheme } from '$actions/color-scheme';
   import { setupCacheHouseKeeping } from '$stores/cache';
-  import { initLocaleStore } from '$stores/locale';
+  import { initLocaleStore, locale } from '$stores/locale';
   import '../app.pcss';
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { Modal, Toast, initializeStores, storePopup } from '@skeletonlabs/skeleton';
@@ -37,7 +37,8 @@
 </svelte:head>
 
 <svelte:document use:colorScheme />
-
-<slot />
+{#key $locale}
+  <slot />
+{/key}
 <Modal />
 <Toast />

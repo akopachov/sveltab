@@ -4,7 +4,7 @@
   import { getClockStore } from '$stores/clock-store';
   import * as m from '$i18n/messages';
   import { derived, type Readable } from 'svelte/store';
-  import { localeCharSubset } from '$stores/locale';
+  import { locale, localeCharSubset } from '$stores/locale';
   import { minutesToMilliseconds } from 'date-fns';
 
   export let settings: Settings;
@@ -51,7 +51,7 @@
     PartOfDay.Unknown,
   );
 
-  $: greetingTemplate = getGreetingTemplate($currentPartOfDay);
+  $: greetingTemplate = getGreetingTemplate($currentPartOfDay) || $locale;
 
   function getGreetingTemplate(part: PartOfDay): { named: string; nameless: string } {
     let namedGreetingsPlain: string;

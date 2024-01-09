@@ -27,13 +27,13 @@ export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position
 
 export interface WidgetCatalogItem {
   readonly name: () => string;
-  readonly previewImage: Lazy<Promise<string>>;
   readonly settings: CatalogWidgetSettingsInitial;
   readonly components: WidgetCatalogItemComponents;
 }
 
 export interface WidgetCatalogItemComponents {
   readonly widget: Lazy<Promise<ComponentType<SvelteComponent>>>;
+  readonly preview: Lazy<Promise<ComponentType<SvelteComponent>>>;
   readonly settings: {
     readonly tabs: Lazy<Promise<{ id: number | string; title: () => string }[]>>;
     readonly component: Lazy<Promise<ComponentType<SvelteComponent>>>;

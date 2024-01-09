@@ -14,9 +14,8 @@
   {...otherProps}>
   <header class="overflow-hidden h-full w-full">
     <div class="h-full w-full p-2 [&>*]:h-full [&>*]:w-full">
-      {#await widgetCatalogItem.previewImage.getValue() then image}
-        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-        {@html image}
+      {#await widgetCatalogItem.components.preview.getValue() then preview}
+        <svelte:component this={preview} />
       {/await}
     </div>
   </header>

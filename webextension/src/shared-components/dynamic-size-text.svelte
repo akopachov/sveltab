@@ -14,7 +14,6 @@
 
   function cropSVG() {
     if (svgEl) {
-      svgEl.removeAttribute('viewBox');
       const bbox = svgEl.getBBox({ fill: false, clipped: true });
       svgEl.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
     }
