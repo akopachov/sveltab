@@ -32,7 +32,7 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_RandomImage_Settings_Blur()}</span>
-  <RangeSlider name="range-slider" bind:value={$blur} min={0} max={15} step={0.1}></RangeSlider>
+  <RangeSlider name="blurSlider" bind:value={$blur} min={0} max={15} step={0.1}></RangeSlider>
 </label>
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">

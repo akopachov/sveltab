@@ -48,6 +48,6 @@
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Quote_Settings_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
+    <RangeSlider name="blurSlider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
   </label>
 {/if}

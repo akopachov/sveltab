@@ -161,11 +161,11 @@
       </VirtualScroll>
     </div>
   </div>
-  {#if size}
+  {#if $size}
     <!-- svelte-ignore a11y-label-has-associated-control -->
     <label class="label mt-2">
       <span>{m.FontSelector_Size()}</span>
-      <RangeSlider name="range-slider" bind:value={$size} min={5} max={20} step={0.1} />
+      <RangeSlider name="fontSizeSlider" bind:value={$size} min={5} max={20} step={0.1} />
     </label>
   {/if}
 {/await}

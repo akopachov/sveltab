@@ -73,6 +73,6 @@
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
     <span>{m.Widgets_Link_Settings_Background_Blur()}</span>
-    <RangeSlider name="range-slider" bind:value={$backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
+    <RangeSlider name="blurSlider" bind:value={$backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

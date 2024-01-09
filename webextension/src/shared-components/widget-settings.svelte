@@ -162,7 +162,7 @@
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
-          <RangeSlider name="range-slider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
+          <RangeSlider name="borderRadiusSlider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
         </label>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
