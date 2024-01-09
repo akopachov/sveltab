@@ -28,7 +28,9 @@ Key concepts and decisions behind SvelTab:
 
 ## Install
 
-Links to the stores are comming soon...
+[![Download for Firefox](docs/icons/amo-button.png)](https://addons.mozilla.org/en-US/firefox/addon/sveltab/)
+
+Links to other stores are comming soon...
 
 ## Want to say thank you?
 
