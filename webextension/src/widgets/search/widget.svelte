@@ -16,6 +16,7 @@
     backgroundColor,
     textColor,
     font: { id: fontId, weight: fontWeight },
+    searchSuggestionEnabled,
   } = settings;
 
   const popupSettings: PopupSettings = {
@@ -27,7 +28,7 @@
   const debounceOpts: DebounceOptions = {
     ms: 500,
     callback: async str => {
-      if (str?.length > 2 && searchProviderAdapter) {
+      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter) {
         const suggestionUrl = searchProviderAdapter.suggestionUrl(str);
         const response = await fetch(suggestionUrl).then(r => r.json());
         searchSuggestions = searchProviderAdapter.adaptSuggestions(response);

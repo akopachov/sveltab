@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/github/license/akopachov/sveltab)](/LICENSE)
 
-A beautiful, customizable New Tab page for Firefox and Chrome.
+A beautiful, customizable New Tab page for Firefox, Chrome, Edge and other Chromium-based browsers.
 
 We care about your privacy and your experience. SvelTab is private, fast, and free.
 

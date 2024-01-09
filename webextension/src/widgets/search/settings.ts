@@ -10,6 +10,7 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.textColor = useObservable(initial.textColor || '#000');
     this.searchProvider = useObservable(initial.searchProvider || 'duckduckgo');
+    this.searchSuggestionEnabled = useObservable(initial.searchSuggestionEnabled ?? true);
     this.font = new FontSettings(initial.font || {});
   }
 
@@ -17,5 +18,6 @@ export class Settings extends WidgetSettingsExtra {
   readonly backgroundBlur: Observable<number>;
   readonly textColor: Observable<string>;
   readonly searchProvider: Observable<SearchProvider>;
+  readonly searchSuggestionEnabled: Observable<boolean>;
   readonly font: FontSettings;
 }
