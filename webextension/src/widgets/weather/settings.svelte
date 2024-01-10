@@ -13,12 +13,20 @@
   export let settings: Settings;
   export let tab: number;
 
-  const { measurementUnits, assetPack, font, textColor, backgroundBlur, backgroundColor } = settings;
+  const { measurementUnits, assetPack, font, textColor, backgroundBlur, backgroundColor, queryUserLocation } = settings;
 </script>
 
 {#if tab === GeneralTabId}
-  <LocationSelect location={settings.location} />
-  <label class="label my-2">
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$queryUserLocation} />
+    <p>{m.Widgets_Weather_Settings_Location_QueryBrowser()}</p>
+  </label>
+  {#if $queryUserLocation != true}
+    <div class="mb-2">
+      <LocationSelect location={settings.location} />
+    </div>
+  {/if}
+  <label class="label mb-2">
     <span>{m.Widgets_Weather_Settings_MeasurementUnits()}</span>
     <select class="select" bind:value={$measurementUnits}>
       <option value={MeasurementUnits.Metric}>{m.Widgets_Weather_Settings_MeasurementUnits_Metric()}</option>

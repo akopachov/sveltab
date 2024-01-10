@@ -58,6 +58,7 @@
     backgroundBlur,
     backgroundColor,
     measurementUnits,
+    queryUserLocation,
     font: { id: fontId, weight: fontWeight },
     textShadow: {
       offsetX: textShadowOffsetX,
@@ -77,6 +78,10 @@
 
   $: {
     ($clockStore || $latitude || $longitude) && checkIfObsoleteDebounced();
+  }
+
+  $: {
+    $queryUserLocation && queryUserGeolocation();
   }
 
   $: weatherDetailsLink = PUBLIC_OWM_REDIRECT.replace('{country}', encodeURIComponent($country))
@@ -160,6 +165,28 @@
       forecast.longitude !== $longitude
     ) {
       await loadNewForecast();
+    }
+  }
+
+  async function queryUserGeolocation() {
+    try {
+      const position = await new Promise<InstanceType<typeof window.GeolocationCoordinates>>((resolve, reject) =>
+        navigator.geolocation.getCurrentPosition(p => resolve(p.coords), reject),
+      );
+      if ($latitude != position.latitude || $longitude != position.longitude) {
+        type NominatimReverseGeocoderResult = { address: { country: string; state: string; city: string } };
+        const { address } = await fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.latitude}&lon=${position.longitude}&zoom=10`,
+        ).then<NominatimReverseGeocoderResult>(t => t.json());
+        $admin1 = address.state;
+        $admin2 = '';
+        $city = address.city;
+        $country = address.country;
+        $latitude = position.latitude;
+        $longitude = position.longitude;
+      }
+    } catch (e) {
+      log.warn("An error ocurred during querying user's geolocation", e);
     }
   }
 

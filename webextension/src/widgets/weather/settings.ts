@@ -37,7 +37,8 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.textColor = useObservable(initial.textColor || '#000');
     this.assetPack = useObservable(initial.assetPack || 'default');
-    this.measurementUnits = useObservable(MeasurementUnits.Metric);
+    this.measurementUnits = useObservable(initial.measurementUnits || MeasurementUnits.Metric);
+    this.queryUserLocation = useObservable(initial.queryUserLocation ?? false);
     this.location = new GeoLocation(initial.location || {});
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
@@ -48,6 +49,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly textColor: Observable<string>;
   readonly assetPack: Observable<string>;
   readonly measurementUnits: Observable<MeasurementUnits>;
+  readonly queryUserLocation: Observable<boolean>;
 
   readonly location: GeoLocation;
   readonly font: FontSettings;

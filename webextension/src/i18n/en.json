@@ -210,6 +210,7 @@
   "Widgets_Weather_Settings_Color": "Color",
   "Widgets_Weather_Settings_Blur": "Blur",
   "Widgets_Weather_Settings_Shadow": "Shadow",
+  "Widgets_Weather_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_Weather_Settings_Location_Placeholder": "Search",
   "Widgets_Weather_Settings_Location_Label": "Location",
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
