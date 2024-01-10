@@ -29,6 +29,7 @@ Key concepts and decisions behind SvelTab:
 ## Install
 
 [![Download for Firefox](docs/icons/amo-button.png)](https://addons.mozilla.org/en-US/firefox/addon/sveltab/)
+[![Download for Chrome](docs/icons/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chromewebstore.google.com/u/1/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld?hl=en)
 
 Links to other stores are comming soon...
 
