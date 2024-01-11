@@ -8,9 +8,11 @@
   import { minutesToMilliseconds, millisecondsToSeconds, secondsToMilliseconds } from 'date-fns';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import * as m from '$i18n/messages';
+  import { getFlickrImageSuffix } from './flickr-utils';
+  import { debouncedWritable } from '$stores/debounce-store';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
-  type FlickrImageData = { id: string; secret: string; farm: number; server: string; owner: string };
+  type FlickrImageData = { id: string; secret: string; server: string; owner: string };
   type CachedData = {
     searchTerm: string;
     page: number;
@@ -22,13 +24,21 @@
   export let settings: Settings;
   export let id: string;
 
+  let rootEl: HTMLElement;
+  let clientWidth = debouncedWritable<number>(undefined, 500);
+  let clientHeight = debouncedWritable<number>(undefined, 500);
+  let imageSuffix: string | undefined = undefined;
+
   const storageKey = `Widget_FlickrImage_${id}_CachedData`;
+
+  const { searchTopic, updateInterval } = settings;
 
   let latestSearchResult: CachedData | undefined;
 
   $: activeImage = latestSearchResult?.activeImage;
-
-  const { searchTopic, updateInterval } = settings;
+  $: {
+    $clientWidth && $clientHeight && updateImageSuffix($clientWidth, $clientHeight);
+  }
 
   $: {
     ($searchTopic || $updateInterval || $clockStore) && pickRandomPhotoDebounced();
@@ -43,6 +53,7 @@
       activeImage: undefined,
       lastUpdate: 0,
     };
+    updateImageSuffix(rootEl.clientWidth, rootEl.clientHeight);
     await pickRandomPhoto();
   });
 
@@ -79,7 +90,6 @@
         latestSearchResult.totalPages = response.photos.pages;
         latestSearchResult.images = response.photos.photo.map((m: any) => ({
           id: m.id,
-          farm: m.farm,
           server: m.server,
           secret: m.secret,
           owner: m.owner,
@@ -92,19 +102,26 @@
       await storage.local.set({ [storageKey]: latestSearchResult });
     }
   }
+
+  function updateImageSuffix(width: number, height: number) {
+    imageSuffix = width && height ? getFlickrImageSuffix(width, height) : undefined;
+  }
 </script>
 
 <a
+  bind:this={rootEl}
+  bind:clientWidth={$clientWidth}
+  bind:clientHeight={$clientHeight}
   href={activeImage ? `https://www.flickr.com/photos/${activeImage.owner}/${activeImage.id}` : ''}
   rel="noreferrer"
   referrerpolicy="no-referrer"
   class="w-full h-full btn !p-0 rounded-[inherit]"
   use:loadingPlaceholder={!!activeImage}>
-  {#if activeImage}
+  {#if activeImage && imageSuffix !== undefined}
     <img
       class="w-full h-full object-cover select-none bg-surface-200"
       draggable="false"
-      src="https://farm{activeImage.farm}.static.flickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}_z.jpg"
+      src="https://live.staticflickr.com/{activeImage.server}/{activeImage.id}_{activeImage.secret}{imageSuffix}.jpg"
       alt={m.Widgets_FlickrImage_Image_Alt()} />
   {/if}
 </a>

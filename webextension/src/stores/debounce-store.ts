@@ -1,6 +1,6 @@
-import { derived, get, type Readable } from 'svelte/store';
+import { derived, get, writable, type Readable, type Writable } from 'svelte/store';
 
-export function debounce<T>(value: Readable<T>, delayMs = 300) {
+export function debouncedDerived<T>(value: Readable<T>, delayMs: number = 300) {
   let timer: ReturnType<typeof setTimeout> | null = null;
   return derived(
     value,
@@ -13,4 +13,14 @@ export function debounce<T>(value: Readable<T>, delayMs = 300) {
     },
     get(value),
   );
+}
+
+export function debouncedWritable<T>(value?: T | undefined, delayMs: number = 300): Writable<T> {
+  const w = writable(value);
+
+  return {
+    ...debouncedDerived(w, delayMs),
+    set: w.set,
+    update: w.update,
+  };
 }

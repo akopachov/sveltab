@@ -12,7 +12,7 @@
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { imgSrcEx } from '$actions/img-src-ex';
-  import { debounce } from '$stores/debounce-store';
+  import { debouncedDerived } from '$stores/debounce-store';
   import { isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
   import { PUBLIC_OWM_REDIRECT } from '$env/static/public';
   import { logger } from '$lib/logger';
@@ -91,7 +91,7 @@
 
   $: assetPack = (AssetsPacks.get($assetPackId) ?? DefaultAssetsPack).assetPack.getValue();
 
-  const debouncedTextColor = debounce(textColor, 300);
+  const debouncedTextColor = debouncedDerived(textColor, 300);
 
   $: intlTimeFormat = new Intl.DateTimeFormat(navigator.language, {
     hour: 'numeric',

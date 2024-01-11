@@ -117,6 +117,9 @@ devDependencies:
   svelte-check:
     specifier: ^3.6.2
     version: 3.6.2(postcss@8.4.33)(svelte@4.2.8)
+  svelte-fast-dimension:
+    specifier: ^1.1.0
+    version: 1.1.0(svelte@4.2.8)
   svelte-moveable:
     specifier: ^0.45.0
     version: 0.45.0(svelte@4.2.8)
@@ -5469,6 +5472,16 @@ packages:
       svelte: 4.2.8
     dev: true
 
+  /svelte-fast-dimension@1.1.0(svelte@4.2.8):
+    resolution: {integrity: sha512-TsuRGa2B6iLXns8Jp2XORyZG1LlWVV9d4NeQgjpPvgosmOElDpDSf6rE/GS6NCEp4K31q8K2MltoePCcY7kMqg==}
+    peerDependencies:
+      svelte: ^3.44.1 || ^4.0.0
+    dependencies:
+      magic-string: 0.30.5
+      svelte: 4.2.8
+      svelte-parse-markup: 0.1.2(svelte@4.2.8)
+    dev: true
+
   /svelte-hmr@0.15.3(svelte@4.2.8):
     resolution: {integrity: sha512-41snaPswvSf8TJUhlkoJBekRrABDXDMdpNpT2tfHIv4JuhgvHqLMhEPGtaQn0BmbNSTkuz2Ed20DF2eHw0SmBQ==}
     engines: {node: ^12.20 || ^14.13.1 || >= 16}
@@ -5485,6 +5498,14 @@ packages:
     dependencies:
       framework-utils: 1.1.0
       moveable: 0.53.0
+      svelte: 4.2.8
+    dev: true
+
+  /svelte-parse-markup@0.1.2(svelte@4.2.8):
+    resolution: {integrity: sha512-DycY7DJr7VqofiJ63ut1/NEG92HrWWL56VWITn/cJCu+LlZhMoBkBXT4opUitPEEwbq1nMQbv4vTKUfbOqIW1g==}
+    peerDependencies:
+      svelte: ^3.0.0 || ^4.0.0
+    dependencies:
       svelte: 4.2.8
     dev: true
 
