@@ -169,11 +169,24 @@
   }
 
   async function queryUserGeolocation() {
+    function getPrecision(accuracy: number) {
+      if (accuracy <= 0) return 0.001;
+      return 1 / Math.pow(10, (111_111 / accuracy).toFixed(0).length); // https://gis.stackexchange.com/a/8674
+    }
+
+    function coordsEqual(c1: number, c2: number, precision: number) {
+      return Math.abs(c1 - c2) <= precision;
+    }
+
     try {
       const position = await new Promise<InstanceType<typeof window.GeolocationCoordinates>>((resolve, reject) =>
         navigator.geolocation.getCurrentPosition(p => resolve(p.coords), reject),
       );
-      if ($latitude != position.latitude || $longitude != position.longitude) {
+      const precision = getPrecision(position.accuracy);
+      if (
+        !coordsEqual($latitude, position.latitude, precision) ||
+        !coordsEqual($longitude, position.longitude, precision)
+      ) {
         type NominatimReverseGeocoderResult = { address: { country: string; state: string; city: string } };
         const { address } = await fetch(
           `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.latitude}&lon=${position.longitude}&zoom=10`,
