@@ -118,9 +118,8 @@
 
   let currentTab = 0;
 
-  onMount(async () => {
-    await ensureLocationPresent();
-    checkIfObsoleteDebounced();
+  onMount(() => {
+    ensureLocationPresent();
   });
 
   async function ensureLocationPresent() {
@@ -139,7 +138,7 @@
         $longitude = response.longitude;
         $admin1 = response.region;
         $admin2 = '';
-      } else {
+      } else if (!$queryUserLocation) {
         // If unabled to geolocate by some reason - default to my home town
         $city = 'Poznan';
         $country = 'Poland';
@@ -310,7 +309,7 @@
   {#if forecast?.lastUpdate > 0}
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">
-        <h4 class="text-[max(0.4em,10px)] leading-none">{$city}, {$admin1}, {$country}</h4>
+        <h4 class="text-[max(0.4em,10px)] leading-none">{$city}, {$admin1 ? `${$admin1}, ` : ''}{$country}</h4>
         <div class="min-h-0 p-[1cqmin]">
           <img
             class="block object-contain object-left-top w-full h-full"

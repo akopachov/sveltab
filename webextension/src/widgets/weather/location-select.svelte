@@ -30,8 +30,8 @@
             latitude: r.latitude,
             longitude: r.longitude,
             country: r.country,
-            admin1: r.admin1,
-            admin2: r.admin2,
+            admin1: r.admin1 || '',
+            admin2: r.admin2 || '',
           }));
         } else {
           locationSearchSuggestion = [];
@@ -72,7 +72,9 @@
     {#each locationSearchSuggestion as suggestion}
       <li>
         <button class="btn variant-soft w-full mb-1 rounded-sm" on:click={() => selectLocation(suggestion)}>
-          <span class="flex-auto">{suggestion.city}, {suggestion.admin1}, {suggestion.country}</span>
+          <span class="flex-auto">
+            {suggestion.city}, {suggestion.admin1 ? `${suggestion.admin1}, ` : ''}{suggestion.country}
+          </span>
         </button>
       </li>
     {/each}
