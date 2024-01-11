@@ -15,8 +15,11 @@
   export let widgets: ReadonlySet<WidgetInstance>;
   export let workspace: HTMLElement;
 
+  const resizeObserver = new ResizeObserver(() => unselectAll());
+
   $: {
     workspace.addEventListener('mousedown', onWorkspaceClick);
+    resizeObserver.observe(workspace);
   }
 
   $: snappableList = Array.from(widgets, m => (selectedWidgets.has(m) ? null : `#widget_${m.id}`));
@@ -147,8 +150,6 @@
     setTimeout(() => moveable.updateRect());
   }
 </script>
-
-<svelte:window on:resize={() => unselectAll()} />
 
 <Moveable
   bind:this={moveable}

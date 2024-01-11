@@ -9,7 +9,6 @@
     type PopupSettings,
     ProgressRadial,
   } from '@skeletonlabs/skeleton';
-  import { resize } from '@svelte-put/resize';
   import WidgetFactorty from '$shared-components/widget-factory.svelte';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
   import WidgetCatalogItemPreview from '$shared-components/widget-catalog-item-preview.svelte';
@@ -265,9 +264,7 @@
     class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
-    bind:this={workspaceEl}
-    use:resize
-    on:resized={() => moveable?.unselectAll()}>
+    bind:this={workspaceEl}>
     <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
     <div class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hover:w-[86px]">
       <div class="w-max flex flex-row">

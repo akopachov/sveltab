@@ -22,20 +22,17 @@ devDependencies:
     specifier: ^2.1.14
     version: 2.1.14
   '@inlang/paraglide-js':
-    specifier: 1.1.0
-    version: 1.1.0(@sinclair/typebox@0.31.28)
+    specifier: 1.1.1
+    version: 1.1.1(@sinclair/typebox@0.31.28)
   '@inlang/paraglide-js-adapter-vite':
-    specifier: ^1.2.0
-    version: 1.2.0(@sinclair/typebox@0.31.28)
+    specifier: ^1.2.1
+    version: 1.2.1(@sinclair/typebox@0.31.28)
   '@skeletonlabs/skeleton':
     specifier: ^2.7.0
     version: 2.7.0(svelte@4.2.8)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.3.1
     version: 0.3.1(tailwindcss@3.4.1)
-  '@svelte-put/resize':
-    specifier: ^3.0.0
-    version: 3.0.0
   '@sveltejs/adapter-static':
     specifier: ^3.0.1
     version: 3.0.1(@sveltejs/kit@2.3.0)
@@ -671,10 +668,10 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/paraglide-js-adapter-unplugin@1.2.0(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-IZo3gam+V66+rqQ/YElfAoN9q04qhc1kiVlRTd6UcVR6bufQHm0099rLq+jX9qOvFg8k/+g+6XWrTbgdBFe7gw==}
+  /@inlang/paraglide-js-adapter-unplugin@1.2.1(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-ZFpAtgi+eNUazJDdF8eYejAcgGOuK95mjiigZGhP0ISSyuIR/UEv52vwQzh2wFm0eHJtBPefk8b83Ihp8K5sMA==}
     dependencies:
-      '@inlang/paraglide-js': 1.1.0(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js': 1.1.1(@sinclair/typebox@0.31.28)
       '@inlang/sdk': 0.22.0
       unplugin: 1.5.1
     transitivePeerDependencies:
@@ -683,18 +680,18 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-vite@1.2.0(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-h4i/jtQtNXyewu1dWoQmZJ7XU8SCwnzlP0klEEJrW9vmAYRBJgrAlNRTVvTWZ0RM6+xBK+hGqdKC8RIcjpBCIA==}
+  /@inlang/paraglide-js-adapter-vite@1.2.1(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-lpdIULkejhS5kYWNb+HcXwcRrEBM9GTsnaHXCphomGWI8i42FZEawDxXKtLxN/UXorJF4W61sCqwnwtpV5lF3A==}
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.2.0(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js-adapter-unplugin': 1.2.1(@sinclair/typebox@0.31.28)
     transitivePeerDependencies:
       - '@sinclair/typebox'
       - babel-plugin-macros
       - debug
     dev: true
 
-  /@inlang/paraglide-js@1.1.0(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-a6HeVYRCynltrZu7Q39pMFMcgiOunfyABfhEsblnuZqRlhopXvm/eqYjvRfQgkbCwMwUAeZOScyO9u+XxvImlg==}
+  /@inlang/paraglide-js@1.1.1(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-1M9aeEmh2kfgz3UG9IDg71uXHDpPnyFqYTx1Wid66nJz+38DRD63FwIryzls1JUuAC6AK46i/xw5Pez530wAig==}
     hasBin: true
     dependencies:
       '@inlang/detect-json-formatting': 1.0.0
@@ -1277,10 +1274,6 @@ packages:
       tailwindcss: 3.4.1
     dev: true
 
-  /@svelte-put/resize@3.0.0:
-    resolution: {integrity: sha512-DHz3fk5BQgEtckQfqk9VfJJwDO3QRqlRFsVJE8HSHwxDjRB09J2oiY7rATFMVOE4F5Q83JQlvJsAfmHqouUgow==}
-    dev: true
-
   /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.3.0):
     resolution: {integrity: sha512-6lMvf7xYEJ+oGeR5L8DFJJrowkefTK6ZgA4JiMqoClMkKq0s6yvsd3FZfCFvX1fQ0tpCD7fkuRVHsnUVgsHyNg==}
     peerDependencies:
@@ -1415,7 +1408,7 @@ packages:
   /@types/jsonwebtoken@9.0.5:
     resolution: {integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==}
     dependencies:
-      '@types/node': 20.10.8
+      '@types/node': 20.11.0
     dev: true
 
   /@types/minimatch@3.0.5:
@@ -1424,6 +1417,12 @@ packages:
 
   /@types/node@20.10.8:
     resolution: {integrity: sha512-f8nQs3cLxbAFc00vEU59yf9UyGUftkPaLGfvbVOIDdx2i1b8epBqj2aNGyP19fiyXWvlmZ7qC1XLjAzw/OKIeA==}
+    dependencies:
+      undici-types: 5.26.5
+    dev: true
+
+  /@types/node@20.11.0:
+    resolution: {integrity: sha512-o9bjXmDNcF7GbM4CNQpmi+TutCgap/K3w1JyKgxAjqx41zp9qlIAVFi0IhCNsJcXolEqLWhbFbEeL0PvYm4pcQ==}
     dependencies:
       undici-types: 5.26.5
     dev: true
