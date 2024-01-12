@@ -83,7 +83,6 @@ jobs:
         with:
           version: latest
           run_install: false
-          standalone: true
 
       - name: Install dependencies
         working-directory: ./webextension
