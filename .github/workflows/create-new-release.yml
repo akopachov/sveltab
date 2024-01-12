@@ -62,6 +62,7 @@ jobs:
   
   build:
     runs-on: ubuntu-latest
+    environment: webextension
     needs: [set-new-version, create-release]
 
     env:
