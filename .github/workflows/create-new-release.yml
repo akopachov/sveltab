@@ -1,0 +1,130 @@
+name: Create new release
+
+on:
+  workflow_dispatch:
+    inputs:
+      new_version:
+        description: 'New version'
+        required: true
+        type: string
+
+jobs:
+  set-new-version:
+    runs-on: ubuntu-latest
+    outputs:
+      commit_hash: ${{steps.commit_new_version.outputs.commit_hash}}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set new version format
+        run: |
+          if [[ "${{ inputs.new_version }}" =~ ^([0-9]+)\.([0-9]+)\.([0-9]+)$ ]]; 
+          then 
+            echo "New version looks okay";
+            MAJOR="${BASH_REMATCH[1]}"
+            MINOR="${BASH_REMATCH[2]}"
+            PATCH="${BASH_REMATCH[3]}"
+            sed -r -i "s/\"version\": *\"[0-9]+\\.[0-9]+\\.[0-9]+\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/g" webextension/package.json
+            sed -r -i "s/\"version\": *\"[0-9]+\\.[0-9]+\\.[0-9]+\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/g" webextension/static/manifest.json
+          else 
+            echo "Invalid version format";
+            exit 1
+          fi
+
+      - id: commit_new_version
+        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        with:
+          commit_message: Updated version
+          push_options: '--force'
+
+  create-release:
+    runs-on: ubuntu-latest
+    needs: set-new-version
+    outputs:
+      upload_url: ${{steps.create-release.outputs.upload_url}}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: "${{needs.set-new-version.outputs.commit_hash}}"
+          fetch-depth: 0
+
+      - id: create-release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          bodyFile: ".github/release-body.md"
+          artifactErrorsFailBuild: true
+          updateOnlyUnreleased: true
+          allowUpdates: true
+          removeArtifacts: true
+          draft: true
+          tag: "v${{ inputs.new_version }}"
+          commit: "${{needs.set-new-version.outputs.commit_hash}}"
+  
+  build:
+    runs-on: ubuntu-latest
+    needs: [set-new-version, create-release]
+
+    env:
+      GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: "${{needs.set-new-version.outputs.commit_hash}}"
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ./webextension/.nvmrc
+    
+      - uses: pnpm/action-setup@v2.4.0
+        name: Install pnpm
+        with:
+          version: latest
+          run_install: false
+          standalone: true
+
+      - name: Install dependencies
+        working-directory: ./webextension
+        run: |
+          pnpm install
+
+      - name: Build
+        working-directory: ./webextension
+        run: |
+          pnpm build
+          pnpm build:web-ext
+      
+      - uses: actions/upload-artifact@v3
+        with:
+          name: release
+          path: |
+            webextension/build-web-ext/*.zip
+      
+      - name: Upload Release Asset
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: webextension/build-web-ext/*.zip
+
+  checksum:
+    runs-on: ubuntu-latest
+    needs: ['create-release', 'build']
+    steps:
+      - name: Download release artifacts
+        uses: actions/download-artifact@v3.0.2
+        with:
+          name: release
+          path: release
+      
+      - name: Generate checksum
+        run: |
+          cd release
+          find . -type f -maxdepth 1 -exec sha256sum {} \; > checksum.txt
+
+      - name: Upload Release Asset
+        uses: shogo82148/actions-upload-release-asset@v1
+        with:
+          upload_url: ${{ needs.create-release.outputs.upload_url }}
+          asset_path: checksum.txt
