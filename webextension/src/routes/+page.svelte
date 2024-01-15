@@ -256,7 +256,7 @@
           <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspaceLocked} size="sm" />
         {/if}
       </label>
-      <span class="text-[10px] p-2">{m.Core_Version({ version })}</span>
+      <span class="block text-[10px] p-2 leading-none">{m.Core_Version({ version })}</span>
     </div>
   </div>
 </Drawer>
