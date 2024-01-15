@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { version } from '$app/environment';
   import {
     Accordion,
     AccordionItem,
@@ -247,14 +248,15 @@
         </svelte:fragment>
       </AccordionItem>
     </Accordion>
-    <div class="block mt-auto mb-4">
+    <div class="block mt-auto">
       <!-- svelte-ignore a11y-label-has-associated-control -->
-      <label class="label flex justify-center items-center">
+      <label class="label flex justify-center items-center mb-3">
         <span>{m.Core_Sidebar_LockWorkspace()}</span>
         {#if workspace}
           <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspaceLocked} size="sm" />
         {/if}
       </label>
+      <span class="text-[10px] p-2">{m.Core_Version({ version })}</span>
     </div>
   </div>
 </Drawer>

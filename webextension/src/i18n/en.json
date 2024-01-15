@@ -1,6 +1,7 @@
 {
   "$schema": "https://inlang.com/schema/inlang-message-format",
   "Core_Page_Title": "New Tab",
+  "Core_Version": "Version: {version}",
   "Core_Sidebar_NewWidget": "New Widget",
   "Core_Sidebar_Background": "Background",
   "Core_Sidebar_Settings": "Settings",

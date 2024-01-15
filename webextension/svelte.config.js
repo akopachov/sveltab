@@ -1,6 +1,13 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { fastDimension } from 'svelte-fast-dimension';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
+import * as child_process from 'node:child_process';
+
+const file = fileURLToPath(new URL('package.json', import.meta.url));
+const json = readFileSync(file, 'utf8');
+const pkg = JSON.parse(json);
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -24,6 +31,9 @@ const config = {
     },
     paths: {
       relative: false,
+    },
+    version: {
+      name: `${pkg.version}+${child_process.execSync('git rev-parse --short HEAD').toString().trim()}`,
     },
   },
 };
