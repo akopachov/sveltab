@@ -29,7 +29,6 @@ export async function getBrowserGeolocation() {
       ),
     );
     cachedLocation = { expiresAt: Date.now() + minutesToMilliseconds(10), coordinates: coordinates };
-    console.log(cachedLocation);
     await storage.local.set({ [browserGeolocationCacheKey]: cachedLocation });
   }
 
