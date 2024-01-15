@@ -1,7 +1,7 @@
 import { storage } from '$stores/storage';
 import { minutesToMilliseconds } from 'date-fns';
 
-export type GeolocationCoordinates = InstanceType<typeof window.GeolocationCoordinates>;
+export type GeolocationCoordinates = { latitude: number; longitude: number; accuracy: number };
 export type Geolocation = { city: string; country: string; admin1: string; admin2: string };
 export type Coordinates = Pick<GeolocationCoordinates, 'latitude' | 'longitude'>;
 type CachedGeolocationCoordinates = { expiresAt: number; coordinates: GeolocationCoordinates };
@@ -21,11 +21,15 @@ export async function getBrowserGeolocation() {
   let cachedLocation = <CachedGeolocationCoordinates | undefined>(
     (await storage.local.get(browserGeolocationCacheKey))[browserGeolocationCacheKey]
   );
-  if (!cachedLocation || cachedLocation.expiresAt >= Date.now()) {
+  if (!cachedLocation || cachedLocation.expiresAt <= Date.now()) {
     const coordinates = await new Promise<GeolocationCoordinates>((resolve, reject) =>
-      navigator.geolocation.getCurrentPosition(p => resolve(p.coords), reject),
+      navigator.geolocation.getCurrentPosition(
+        p => resolve({ latitude: p.coords.latitude, longitude: p.coords.longitude, accuracy: p.coords.accuracy }),
+        reject,
+      ),
     );
-    cachedLocation = { expiresAt: Date.now() + minutesToMilliseconds(10), coordinates };
+    cachedLocation = { expiresAt: Date.now() + minutesToMilliseconds(10), coordinates: coordinates };
+    console.log(cachedLocation);
     await storage.local.set({ [browserGeolocationCacheKey]: cachedLocation });
   }
 
