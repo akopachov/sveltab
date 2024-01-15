@@ -17,6 +17,14 @@
   import { PUBLIC_OWM_REDIRECT } from '$env/static/public';
   import { logger } from '$lib/logger';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
+  import {
+    getDefaultFallbackGeolocation,
+    getIpGeolocation,
+    getBrowserGeolocation,
+    getPrecision,
+    compareCoordinates,
+    reverseGeocode,
+  } from '$lib/geolocation';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
 
@@ -124,28 +132,29 @@
 
   async function ensureLocationPresent() {
     if (!$city) {
-      let response: any;
       try {
-        response = await fetch('https://ipapi.co/json/').then(r => r.json());
+        ({
+          city: $city,
+          country: $country,
+          latitude: $latitude,
+          longitude: $longitude,
+          admin1: $admin1,
+          admin2: $admin2,
+        } = await getIpGeolocation());
       } catch (e) {
         log.error('An error occurred during querying GeoIP info', { widgetId: id }, e);
       }
 
-      if (response?.city && response.error !== true) {
-        $city = response.city;
-        $country = response.country_name;
-        $latitude = response.latitude;
-        $longitude = response.longitude;
-        $admin1 = response.region;
-        $admin2 = '';
-      } else if (!$queryUserLocation) {
+      if (!$city && !$queryUserLocation) {
         // If unabled to geolocate by some reason - default to my home town
-        $city = 'Poznan';
-        $country = 'Poland';
-        $latitude = 52.406376;
-        $longitude = 16.925167;
-        $admin1 = 'Greater Poland';
-        $admin2 = '';
+        ({
+          city: $city,
+          country: $country,
+          latitude: $latitude,
+          longitude: $longitude,
+          admin1: $admin1,
+          admin2: $admin2,
+        } = getDefaultFallbackGeolocation());
       }
     }
   }
@@ -168,32 +177,12 @@
   }
 
   async function queryUserGeolocation() {
-    function getPrecision(accuracy: number) {
-      if (accuracy <= 0) return 0.001;
-      return 1 / Math.pow(10, (111_111 / accuracy).toFixed(0).length); // https://gis.stackexchange.com/a/8674
-    }
-
-    function coordsEqual(c1: number, c2: number, precision: number) {
-      return Math.abs(c1 - c2) <= precision;
-    }
-
     try {
-      const position = await new Promise<InstanceType<typeof window.GeolocationCoordinates>>((resolve, reject) =>
-        navigator.geolocation.getCurrentPosition(p => resolve(p.coords), reject),
-      );
+      const position = await getBrowserGeolocation();
       const precision = getPrecision(position.accuracy);
-      if (
-        !coordsEqual($latitude, position.latitude, precision) ||
-        !coordsEqual($longitude, position.longitude, precision)
-      ) {
-        type NominatimReverseGeocoderResult = { address: { country: string; state: string; city: string } };
-        const { address } = await fetch(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${position.latitude}&lon=${position.longitude}&zoom=10`,
-        ).then<NominatimReverseGeocoderResult>(t => t.json());
-        $admin1 = address.state;
-        $admin2 = '';
-        $city = address.city;
-        $country = address.country;
+      if (!compareCoordinates(position, { latitude: $latitude, longitude: $longitude }, precision)) {
+        ({ admin1: $admin1, admin2: $admin2, city: $city, country: $country } = await reverseGeocode(position));
+
         $latitude = position.latitude;
         $longitude = position.longitude;
       }
