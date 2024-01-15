@@ -32,6 +32,8 @@ Key concepts and decisions behind SvelTab:
 [![Download for Chrome](docs/icons/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chromewebstore.google.com/u/1/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld?hl=en)
 [![Download for Edge](docs/icons/edge-button.svg)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 
+or [try web version first](https://bespoke-kitten-980bd0.netlify.app/)
+
 ## Want to say thank you?
 
 * Buy me a coffee [here](https://ko-fi.com/akopachov) (No account needed, one-time)
