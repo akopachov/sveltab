@@ -30,8 +30,7 @@ Key concepts and decisions behind SvelTab:
 
 [![Download for Firefox](docs/icons/amo-button.png)](https://addons.mozilla.org/en-US/firefox/addon/sveltab/)
 [![Download for Chrome](docs/icons/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chromewebstore.google.com/u/1/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld?hl=en)
-
-Links to other stores are comming soon...
+[![Download for Edge](docs/icons/edge-button.svg)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 
 ## Want to say thank you?
 
