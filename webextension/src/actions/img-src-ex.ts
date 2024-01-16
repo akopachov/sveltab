@@ -24,7 +24,13 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   function rollSrc() {
     const mirror = getMirrorFor(node.src);
     if (mirror) {
+      node.style.backgroundColor = '';
       updateSrc(mirror);
+    } else if (Boolean(node.dataset['fallback']) === true) {
+      updateSrc('./image-fallback.svg');
+      node.style.backgroundColor = '#fff';
+    } else {
+      loadEnd();
     }
   }
 

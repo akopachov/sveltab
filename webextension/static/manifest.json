@@ -3,7 +3,7 @@
   "name": "SvelTab",
   "version": "1.0.7",
   "description": "A beautiful New Tab page with many customizable backgrounds and widgets that does not require any permissions",
-  "permissions": ["storage", "unlimitedStorage"],
+  "permissions": ["storage", "unlimitedStorage", "topSites"],
   "chrome_url_overrides": {
     "newtab": "index.html"
   },

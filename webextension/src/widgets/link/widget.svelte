@@ -7,6 +7,7 @@
   import { secondsToMilliseconds } from 'date-fns';
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
+  import { getFavIconUrl } from '$lib/favicon-provider';
 
   export let settings: Settings;
 
@@ -45,7 +46,7 @@
     if ($iconSource === IconSource.Favicon) {
       let urlToParse = ensureFqdnUrl($url);
       if (URL.canParse(urlToParse)) {
-        iconUrl = `https://favicon.twenty.com/${new URL(urlToParse).hostname}`;
+        iconUrl = getFavIconUrl(urlToParse);
       } else {
         iconUrl = undefined;
       }
@@ -75,13 +76,17 @@
   style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}">
   {#if iconUrl}
-    <img class="w-full h-full object-contain select-none !rounded-[inherit]" draggable="false" use:imgSrcEx={iconUrl} />
+    <img
+      class="w-full h-full object-contain select-none !rounded-[inherit]"
+      draggable="false"
+      use:imgSrcEx={iconUrl}
+      data-fallback="true" />
   {:else}
     <span class="w-full h-full icon-[bx--image]"></span>
   {/if}
   {#if $title}
     <div
-      class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal"
+      class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal !m-0"
       style:color={$textColor}
       style:font-weight={$fontWeight}
       use:fontsource={{
