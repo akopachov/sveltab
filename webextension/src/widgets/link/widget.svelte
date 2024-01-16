@@ -3,7 +3,7 @@
   import { imgSrcEx } from '$actions/img-src-ex';
   import { IconSource, type Settings } from './settings';
   import { onMount } from 'svelte';
-  import { getSvgUrl } from '../../lib/iconify-api';
+  import { getSvgUrl } from '../../lib/service-mirrors';
   import { secondsToMilliseconds } from 'date-fns';
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';

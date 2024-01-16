@@ -4,7 +4,7 @@ import type { BaseAssetsPack } from './asset-pack-base';
 import * as m from '$i18n/messages';
 import { ModernAssetsPack } from './generated/modern';
 import { IconifyAssetsPack } from './generated/iconify';
-import { IconifyMainUrl } from '$lib/iconify-api';
+import { IconifyMainUrl } from '$lib/service-mirrors';
 
 // https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
 

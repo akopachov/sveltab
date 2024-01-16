@@ -7,7 +7,7 @@
   import { createEventDispatcher } from 'svelte';
   import { AppliedColorScheme } from '$actions/color-scheme';
   import ColorPicker from '$shared-components/color-picker.svelte';
-  import { getSvgUrl } from '../../lib/iconify-api';
+  import { getSvgUrl } from '../../lib/service-mirrors';
   import { secondsToMilliseconds } from 'date-fns';
 
   export let icon: string;

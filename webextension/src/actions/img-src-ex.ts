@@ -1,4 +1,4 @@
-import { getMirrorFor } from '$lib/iconify-api';
+import { getMirrorFor } from '$lib/service-mirrors';
 import type { Action } from 'svelte/action';
 
 const placeholderClasses = ['placeholder', 'animate-pulse', '!rounded-[inherit]'];
