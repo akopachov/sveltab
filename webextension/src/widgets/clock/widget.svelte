@@ -5,7 +5,7 @@
   import { fontsource } from '$actions/fontsource';
   import { locale } from '$stores/locale';
   import { secondsToMilliseconds } from 'date-fns';
-  import { isChrome } from '$lib/is-chrome';
+  import { isChrome } from '$lib/browsers-check';
 
   let clockStore = getClockStore(secondsToMilliseconds(1));
   let timeDisplay: DynamicSizeText | null;

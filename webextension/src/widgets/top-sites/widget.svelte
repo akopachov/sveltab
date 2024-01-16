@@ -6,10 +6,19 @@
   import { getFavIconUrl } from '$lib/favicon-provider';
   import { imgSrcEx } from '$actions/img-src-ex';
   import * as m from '$i18n/messages';
+  import { isFirefox } from '$lib/browsers-check';
 
   export let settings: Settings;
 
-  $: listPromise = topSites.get({ limit: $rowsCount * $itemsPerRow }).then(r => r.slice(0, $rowsCount * $itemsPerRow));
+  function getTopSites(limit: number) {
+    if (isFirefox) {
+      return topSites.get({ limit: Math.min(limit, 100) });
+    }
+
+    return topSites.get().then(r => r.slice(0, limit));
+  }
+
+  $: listPromise = getTopSites($rowsCount * $itemsPerRow);
 
   const {
     itemsPerRow,
