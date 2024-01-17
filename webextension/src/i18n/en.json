@@ -16,6 +16,8 @@
   "Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Lock workspace",
   "Core_MainMenu_LockWorkspaceToggle_Title_Unlock": "Unlock workspace",
 
+  "Core_Toasts_ErrorDetail": "Error details:",
+
   "FontSelector_Search_Placeholder": "Search...",
   "FontSelector_Weight_Thin": "Thin",
   "FontSelector_Weight_ExtraLight": "Extra Light",
