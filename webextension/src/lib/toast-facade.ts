@@ -1,4 +1,5 @@
 import { getToastStore } from '@skeletonlabs/skeleton';
+import * as m from '$i18n/messages';
 
 export enum CommonToastType {
   Info = 'info',
@@ -29,7 +30,7 @@ class ToastFacade {
         errorText = options.errorObj.message;
       }
 
-      toastMessage = `<p class="block">${text}</p><p class="text-sm block mt-2">Error details:</p><pre class="pre text-xs mt-2 bg-opacity-30 bg-neutral-950">${errorText}</pre>`;
+      toastMessage = `<p class="block">${text}</p><p class="text-sm block mt-2">${m.Core_Toasts_ErrorDetail()}</p><pre class="pre text-xs mt-2 bg-opacity-30 bg-neutral-950">${errorText}</pre>`;
     }
 
     this.#toastStore.trigger({
