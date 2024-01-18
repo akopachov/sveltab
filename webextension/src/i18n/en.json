@@ -243,6 +243,9 @@
   "Widgets_FreeText_Settings_Color": "Color",
   "Widgets_FreeText_Settings_Blur": "Blur",
 
+  "Widgets_Html_Name": "HTML",
+  "Widgets_Html_Settings_Html": "HTML",
+
   "Widgets_TopSites_Name": "Top sites",
   "Widgets_TopSites_NoMostVisitedSites": "No most visited sites available",
   "Widgets_TopSites_Settings_Tabs_Text": "Text",

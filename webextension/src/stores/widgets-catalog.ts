@@ -17,6 +17,7 @@ import { Widget as LinkWidget } from '$widgets/link';
 import { Widget as WeatherWidget } from '$widgets/weather';
 import { Widget as FreeTextWidget } from '$widgets/free-text';
 import { Widget as TopSitesWidget } from '$widgets/top-sites';
+import { Widget as HtmlWidget } from '$widgets/html';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
   position: Omit<WidgetPositionInitial, 'x' | 'y' | 'positionUnits' | 'sizeUnits'> &
@@ -53,4 +54,5 @@ export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   FlickrWidget,
   FreeTextWidget,
   TopSitesWidget,
+  HtmlWidget,
 ];
