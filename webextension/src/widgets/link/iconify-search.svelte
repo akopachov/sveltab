@@ -62,7 +62,6 @@
   <div class="input-group-shim !p-[0_20px]"></div>
   <input
     type="search"
-    class="input"
     bind:value={searchQuery}
     placeholder={m.Widgets_Link_Settings_IconSource_Iconify_Search_Placeholder()} />
 </div>
