@@ -1,13 +1,22 @@
-import type { SearchProvider } from '../settings';
-import { BingSearchProviderAdapter } from './bing';
-import { DuckDuckGoSearchProviderAdapter } from './duckduckgo';
-import { GoogleSearchProviderAdapter } from './google';
-import type { SearchProviderAdapter } from './search-provider-adapter';
-import { YouTubeSearchProviderAdapter } from './youtube';
+import type { SearchProviderName } from '../settings';
+import { BingSearchProvider } from './bing';
+import { DuckDuckGoSearchProvider } from './duckduckgo';
+import { GenericSuggestionlessProvider } from './generic-suggestionless';
+import { GoogleSearchProvider } from './google';
+import type { SearchProvider } from './search-provider';
+import { YouTubeSearchProvider } from './youtube';
 
-export const SearchProviderAdapters = new Map<SearchProvider, SearchProviderAdapter>([
-  ['duckduckgo', new DuckDuckGoSearchProviderAdapter()],
-  ['google', new GoogleSearchProviderAdapter()],
-  ['bing', new BingSearchProviderAdapter()],
-  ['youtube', new YouTubeSearchProviderAdapter()],
+export const SearchProviders = new Map<SearchProviderName, SearchProvider>([
+  ['duckduckgo', new DuckDuckGoSearchProvider()],
+  ['google', new GoogleSearchProvider()],
+  ['bing', new BingSearchProvider()],
+  ['youtube', new YouTubeSearchProvider()],
+  [
+    'brave',
+    new GenericSuggestionlessProvider(
+      'Brave',
+      'https://search.brave.com/search?q={searchTerms}',
+      'icon-[logos--brave]',
+    ),
+  ],
 ]);

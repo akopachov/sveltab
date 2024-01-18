@@ -1,8 +1,7 @@
 import { getCorsFriendlyUrl } from '$lib/cors-bypass';
-import { Lazy } from '$lib/lazy';
-import type { SearchProviderAdapter } from '../search-provider-adapter';
+import type { SearchProvider, SearchSuggestionProvider } from './search-provider';
 
-export class GoogleSearchProviderAdapter implements SearchProviderAdapter {
+export class GoogleSearchProvider implements SearchProvider, SearchSuggestionProvider {
   searchUrl(searchTerm: string) {
     return `https://www.google.com/search?q=${encodeURIComponent(searchTerm)}`;
   }
@@ -14,5 +13,6 @@ export class GoogleSearchProviderAdapter implements SearchProviderAdapter {
       `https://suggestqueries.google.com/complete/search?client=chrome&q=${encodeURIComponent(searchTerm)}`,
     );
   }
-  readonly icon: Lazy<Promise<string>> = new Lazy(() => import('./icon.svg?raw').then(r => r.default));
+  readonly iconClass = 'icon-[logos--google-icon]';
+  readonly name = 'Google';
 }

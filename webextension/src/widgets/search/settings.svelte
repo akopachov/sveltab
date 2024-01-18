@@ -6,6 +6,7 @@
   import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
+  import { SearchProviders } from './providers';
 
   export let settings: Settings;
   export let tab: number;
@@ -17,10 +18,9 @@
   <label class="label mb-2">
     <span>{m.Widgets_Search_Settings_SearchProvider()}</span>
     <select class="select" bind:value={$searchProvider}>
-      <option value="duckduckgo">DuckDuckGo</option>
-      <option value="google">Google</option>
-      <option value="bing">Bing</option>
-      <option value="youtube">YouTube</option>
+      {#each SearchProviders as [key, provider]}
+        <option value={key}>{provider.name}</option>
+      {/each}
     </select>
   </label>
   <div class="label mb-2">

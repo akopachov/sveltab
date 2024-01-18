@@ -1,8 +1,7 @@
 import { getCorsFriendlyUrl } from '$lib/cors-bypass';
-import { Lazy } from '$lib/lazy';
-import type { SearchProviderAdapter } from '../search-provider-adapter';
+import type { SearchProvider, SearchSuggestionProvider } from './search-provider';
 
-export class DuckDuckGoSearchProviderAdapter implements SearchProviderAdapter {
+export class DuckDuckGoSearchProvider implements SearchProvider, SearchSuggestionProvider {
   searchUrl(searchTerm: string) {
     return `https://duckduckgo.com/?q=${encodeURIComponent(searchTerm)}`;
   }
@@ -12,5 +11,6 @@ export class DuckDuckGoSearchProviderAdapter implements SearchProviderAdapter {
   suggestionUrl(searchTerm: string) {
     return getCorsFriendlyUrl(`https://ac.duckduckgo.com/ac/?q=${encodeURIComponent(searchTerm)}&kl=wt-wt&type=list`);
   }
-  readonly icon: Lazy<Promise<string>> = new Lazy(() => import('./icon.svg?raw').then(r => r.default));
+  readonly iconClass = 'icon-[logos--duckduckgo]';
+  readonly name = 'DuckDuckGo';
 }

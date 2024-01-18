@@ -1,7 +1,7 @@
 import { useObservable, type Observable } from '$lib/observable';
 import { FontSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
 
-export type SearchProvider = 'google' | 'duckduckgo' | 'bing' | 'youtube';
+export type SearchProviderName = 'google' | 'duckduckgo' | 'bing' | 'youtube' | 'brave';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
@@ -17,7 +17,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly backgroundColor: Observable<string>;
   readonly backgroundBlur: Observable<number>;
   readonly textColor: Observable<string>;
-  readonly searchProvider: Observable<SearchProvider>;
+  readonly searchProvider: Observable<SearchProviderName>;
   readonly searchSuggestionEnabled: Observable<boolean>;
   readonly font: FontSettings;
 }

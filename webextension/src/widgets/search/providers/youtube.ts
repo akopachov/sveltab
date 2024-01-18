@@ -1,8 +1,7 @@
 import { getCorsFriendlyUrl } from '$lib/cors-bypass';
-import { Lazy } from '$lib/lazy';
-import type { SearchProviderAdapter } from '../search-provider-adapter';
+import type { SearchProvider, SearchSuggestionProvider } from './search-provider';
 
-export class YouTubeSearchProviderAdapter implements SearchProviderAdapter {
+export class YouTubeSearchProvider implements SearchProvider, SearchSuggestionProvider {
   searchUrl(searchTerm: string) {
     return `https://www.youtube.com/results?search_query=${encodeURIComponent(searchTerm)}`;
   }
@@ -16,5 +15,6 @@ export class YouTubeSearchProviderAdapter implements SearchProviderAdapter {
       )}`,
     );
   }
-  readonly icon: Lazy<Promise<string>> = new Lazy(() => import('./icon.svg?raw').then(r => r.default));
+  readonly iconClass = 'icon-[logos--youtube-icon]';
+  readonly name = 'YouTube';
 }

@@ -1,7 +1,6 @@
-import { Lazy } from '$lib/lazy';
-import type { SearchProviderAdapter } from '../search-provider-adapter';
+import type { SearchProvider, SearchSuggestionProvider } from './search-provider';
 
-export class BingSearchProviderAdapter implements SearchProviderAdapter {
+export class BingSearchProvider implements SearchProvider, SearchSuggestionProvider {
   searchUrl(searchTerm: string) {
     return `https://www.bing.com/search?q=${encodeURIComponent(searchTerm)}`;
   }
@@ -13,5 +12,6 @@ export class BingSearchProviderAdapter implements SearchProviderAdapter {
       searchTerm,
     )}`;
   }
-  readonly icon: Lazy<Promise<string>> = new Lazy(() => import('./icon.svg?raw').then(r => r.default));
+  readonly iconClass = 'icon-[logos--bing]';
+  readonly name = 'Bing';
 }

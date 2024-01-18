@@ -5,7 +5,8 @@
   import * as m from '$i18n/messages';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
-  import { SearchProviderAdapters } from './providers';
+  import { SearchProviders } from './providers';
+  import { canSuggest } from './providers/search-provider';
 
   export let settings: Settings;
   export let id: string;
@@ -28,7 +29,7 @@
   const debounceOpts: DebounceOptions = {
     ms: 500,
     callback: async str => {
-      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter) {
+      if ($searchSuggestionEnabled && str?.length > 2 && canSuggest(searchProviderAdapter)) {
         const suggestionUrl = searchProviderAdapter.suggestionUrl(str);
         const response = await fetch(suggestionUrl).then(r => r.json());
         searchSuggestions = searchProviderAdapter.adaptSuggestions(response);
@@ -42,7 +43,7 @@
   let searchSuggestions: string[] = [];
   let searchSuggestionContainerEl: HTMLElement;
 
-  $: searchProviderAdapter = SearchProviderAdapters.get($searchProvider);
+  $: searchProviderAdapter = SearchProviders.get($searchProvider);
 
   $: {
     if (!searchTerm) {
@@ -93,11 +94,8 @@
       styles: ['normal'],
       weights: [$fontWeight],
     }}>
-    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square [&>*]:w-full [&>*]:h-full">
-      {#await searchProviderAdapter?.icon.getValue() then icon}
-        <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-        {@html icon}
-      {/await}
+    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square">
+      <span class="w-full h-full {searchProviderAdapter?.iconClass || ''}"></span>
     </div>
     <form on:submit|preventDefault={doSearch}>
       <input

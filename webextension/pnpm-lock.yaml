@@ -25,8 +25,8 @@ devDependencies:
     specifier: 1.2.1
     version: 1.2.1(@sinclair/typebox@0.31.28)
   '@inlang/paraglide-js-adapter-vite':
-    specifier: ^1.2.4
-    version: 1.2.4(@sinclair/typebox@0.31.28)
+    specifier: ^1.2.5
+    version: 1.2.5(@sinclair/typebox@0.31.28)
   '@skeletonlabs/skeleton':
     specifier: ^2.7.1
     version: 2.7.1(svelte@4.2.9)
@@ -35,10 +35,10 @@ devDependencies:
     version: 0.3.1(tailwindcss@3.4.1)
   '@sveltejs/adapter-static':
     specifier: ^3.0.1
-    version: 3.0.1(@sveltejs/kit@2.3.3)
+    version: 3.0.1(@sveltejs/kit@2.3.5)
   '@sveltejs/kit':
-    specifier: ^2.3.3
-    version: 2.3.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11)
+    specifier: ^2.3.5
+    version: 2.3.5(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11)
   '@sveltejs/vite-plugin-svelte':
     specifier: ^3.0.1
     version: 3.0.1(svelte@4.2.9)(vite@5.0.11)
@@ -61,8 +61,8 @@ devDependencies:
     specifier: ^6.19.0
     version: 6.19.0(eslint@8.56.0)(typescript@5.3.3)
   autoprefixer:
-    specifier: ^10.4.16
-    version: 10.4.16(postcss@8.4.33)
+    specifier: ^10.4.17
+    version: 10.4.17(postcss@8.4.33)
   browser-storage-polyfill:
     specifier: ^1.0.8
     version: 1.0.8
@@ -667,21 +667,21 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/module@1.2.2(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-inn99Exm0QbfZfop46iOxLisL9YEwUijYY5tqa2xozkUd2OGIt0AOmslNvxTRrZcTI4v/ypa9py9Z02UitR3iw==}
+  /@inlang/module@1.2.3(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-LoUfIKXi6FUpvZR1DYAoEZ+uhS6Q60EtiBE/RBuoK1dKXX0QRn39HdoBt2idhdmVisgwELsuf/1IBp+Rwc3qSw==}
     peerDependencies:
       '@sinclair/typebox': ^0.31.17
     dependencies:
       '@inlang/message-lint-rule': 1.4.1(@sinclair/typebox@0.31.28)
-      '@inlang/plugin': 2.4.2(@sinclair/typebox@0.31.28)
+      '@inlang/plugin': 2.4.3(@sinclair/typebox@0.31.28)
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/paraglide-js-adapter-unplugin@1.2.4(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-d4O5qFCjufblUaHLu3k2BN5mvm/QSMpl2mr37jcoJHddiXASpBebXAcyQ71cijprTl5VYgorEwyrseUtdeKzOw==}
+  /@inlang/paraglide-js-adapter-unplugin@1.2.5(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-80PrNXuSjfLwaDGOXNEZSfTJl1r+ptV7IGi2ADys17enRVM8oG15cvLp0rtf1YOsdjGKuOtmPCeKuVx/Nf6n0Q==}
     dependencies:
       '@inlang/paraglide-js': 1.2.1(@sinclair/typebox@0.31.28)
-      '@inlang/sdk': 0.23.0
+      '@inlang/sdk': 0.24.0
       unplugin: 1.5.1
     transitivePeerDependencies:
       - '@sinclair/typebox'
@@ -689,10 +689,10 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-vite@1.2.4(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-rnQZWlqNMcM2m+DCUBUSck/RNGM8GPG92f66wjc5SaIOmwgRvQYN1sliGtnOgo6OrrUq15aWaJ4qA/2f31kjiw==}
+  /@inlang/paraglide-js-adapter-vite@1.2.5(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-rXFNia76q7KR13ds/vSt/rqalx/SjTjT/4qzyXr+d0LzyRvMTfsT8kW4pOXtdyXS/6Cn5G5aqPIOoEXH0XH2IQ==}
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.2.4(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js-adapter-unplugin': 1.2.5(@sinclair/typebox@0.31.28)
     transitivePeerDependencies:
       - '@sinclair/typebox'
       - babel-plugin-macros
@@ -717,8 +717,8 @@ packages:
       - debug
     dev: true
 
-  /@inlang/plugin@2.4.2(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-SyIBK0D5BL+yJB88GVzGTKZirDQ4L/5A0eqXA+z2YhKmBpjephPoP39td5D7bumMtn8TH14++JmhDM0AMiotuA==}
+  /@inlang/plugin@2.4.3(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-KN+V91vaoZ350b2PyU+O3Gb1SQs+osMcEbhkoluV/2HfNwgWdgj0QPmSEwq4DjlrIgutE2aY8h3RCwrhEKmbGg==}
     peerDependencies:
       '@sinclair/typebox': ^0.31.17
     dependencies:
@@ -727,7 +727,7 @@ packages:
       '@inlang/message': 2.0.1(@sinclair/typebox@0.31.28)
       '@inlang/project-settings': 2.2.1(@sinclair/typebox@0.31.28)
       '@inlang/translatable': 1.2.1(@sinclair/typebox@0.31.28)
-      '@lix-js/fs': 0.5.0
+      '@lix-js/fs': 0.6.0
       '@sinclair/typebox': 0.31.28
     dev: true
 
@@ -745,21 +745,21 @@ packages:
     resolution: {integrity: sha512-zLGroi9EUiHuOjUOaglUVTFO7EWdo2OARMJLBO1Q5Ga/xJmSQb6XS1lhqEXBFAjgFarfEMX5YEJWWALogYV3wA==}
     dev: true
 
-  /@inlang/sdk@0.23.0:
-    resolution: {integrity: sha512-FAZGxppqX1bh+7n9ZfxnYyVOFxIpfcp1ZyGfHl3ypat4/YdXEMoxaQkQgKCJucH1KgitpqKc+dT4wo+StiiagQ==}
+  /@inlang/sdk@0.24.0:
+    resolution: {integrity: sha512-Y7kp4e5iYLTxkv7KPB9sYLQw+7+MG2IUAcFHcrLQMjTJxEenoxIoKSTpprmyRtnbPMdw6NIRoL0lvpWyucrpew==}
     engines: {node: '>=18.0.0'}
     dependencies:
       '@inlang/json-types': 1.1.0(@sinclair/typebox@0.31.28)
       '@inlang/language-tag': 1.4.0(@sinclair/typebox@0.31.28)
       '@inlang/message': 2.0.1(@sinclair/typebox@0.31.28)
       '@inlang/message-lint-rule': 1.4.1(@sinclair/typebox@0.31.28)
-      '@inlang/module': 1.2.2(@sinclair/typebox@0.31.28)
-      '@inlang/plugin': 2.4.2(@sinclair/typebox@0.31.28)
+      '@inlang/module': 1.2.3(@sinclair/typebox@0.31.28)
+      '@inlang/plugin': 2.4.3(@sinclair/typebox@0.31.28)
       '@inlang/project-settings': 2.2.1(@sinclair/typebox@0.31.28)
       '@inlang/result': 1.1.0
       '@inlang/translatable': 1.2.1(@sinclair/typebox@0.31.28)
-      '@lix-js/client': 0.5.0
-      '@lix-js/fs': 0.5.0
+      '@lix-js/client': 0.6.0
+      '@lix-js/fs': 0.6.0
       '@sinclair/typebox': 0.31.28
       dedent: 1.5.1
       deepmerge-ts: 5.1.0
@@ -820,18 +820,18 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.15
     dev: true
 
-  /@lix-js/client@0.5.0:
-    resolution: {integrity: sha512-6PMoDRNqz/GU7fBg6CrhautYqfK2CaLS2y9+Ta2gx5xU7MfooN8nZzGIEu7N973dVtcK5i1AGaRwgm8zmeSk7w==}
+  /@lix-js/client@0.6.0:
+    resolution: {integrity: sha512-zhD4F7OHcR/4NjrpqqSv6SSko7ebbO93pcvFRHo81jPAbxPXYqEuy3dGUlRrj5SLdH/Legk/4fY0eUNMqm3VQQ==}
     dependencies:
-      '@lix-js/fs': 0.5.0
+      '@lix-js/fs': 0.6.0
       '@octokit/types': 12.4.0
       isomorphic-git: 1.24.5
       octokit: 3.1.2
       solid-js: 1.7.11
     dev: true
 
-  /@lix-js/fs@0.5.0:
-    resolution: {integrity: sha512-9bgqGbXn4/PFxBrMKthFLN+3J8yCfFmFs1fE5BeLwUnZy2pPvz/eidFpEstVU2vvPpg/rSFCLqCHLXe9i6rMPA==}
+  /@lix-js/fs@0.6.0:
+    resolution: {integrity: sha512-sSd1ZOcWOMvekFo0dFn/wP7SgEf9s6xjUBQBfl1NGDnFhcsGxLdqw7KPQhx662icQoz9GKfM4Xp3Xfa+y6TXAQ==}
     dev: true
 
   /@mdn/browser-compat-data@5.5.4:
@@ -1095,8 +1095,8 @@ packages:
       aggregate-error: 3.1.0
     dev: true
 
-  /@openmeteo/sdk@1.7.1:
-    resolution: {integrity: sha512-4eSZAQSaPiQOaJ6SBNmL7/9DJ2QMFNAQjy9C0Y1tqj8Y6ug2t/mmu9Fsi2zw7PNDlawfRtfgVVAixQ/I1WPgNw==}
+  /@openmeteo/sdk@1.7.2:
+    resolution: {integrity: sha512-obFC5dWkfq+yI/on1PJ8BIveFj914ootM+O4NfMr3LAmngXGXONOk/DZYIYom+R8QZqbjmRYOd/UPH15cTQ4Hg==}
     engines: {node: '>=12.0'}
     dependencies:
       flatbuffers: 23.5.26
@@ -1283,16 +1283,16 @@ packages:
       tailwindcss: 3.4.1
     dev: true
 
-  /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.3.3):
+  /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.3.5):
     resolution: {integrity: sha512-6lMvf7xYEJ+oGeR5L8DFJJrowkefTK6ZgA4JiMqoClMkKq0s6yvsd3FZfCFvX1fQ0tpCD7fkuRVHsnUVgsHyNg==}
     peerDependencies:
       '@sveltejs/kit': ^2.0.0
     dependencies:
-      '@sveltejs/kit': 2.3.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11)
+      '@sveltejs/kit': 2.3.5(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11)
     dev: true
 
-  /@sveltejs/kit@2.3.3(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11):
-    resolution: {integrity: sha512-RYsOjZ7pFvZqPfL+4kNdL428kyJSy12Wk7BT+1XoUkwNe5F47z81n8kvm/2SfkD2NNXVKE9QBfhtiNJsssNWvQ==}
+  /@sveltejs/kit@2.3.5(@sveltejs/vite-plugin-svelte@3.0.1)(svelte@4.2.9)(vite@5.0.11):
+    resolution: {integrity: sha512-Vu+ckGQu/t+pcuueryaHYacgoYsYq6KB1k1p4w1xDp1eQ2aYz3POcx3GSuqxWjJfOwMMM83xiuAnDWBKyOn1Tg==}
     engines: {node: '>=18.13'}
     hasBin: true
     requiresBuild: true
@@ -1825,15 +1825,15 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: true
 
-  /autoprefixer@10.4.16(postcss@8.4.33):
-    resolution: {integrity: sha512-7vd3UC6xKp0HLfua5IjZlcXvGAGy7cBAXTg2lyQ/8WpNhd6SiZ8Be+xm3FyBSYJx5GKcpRCzBh7RH4/0dnY+uQ==}
+  /autoprefixer@10.4.17(postcss@8.4.33):
+    resolution: {integrity: sha512-/cpVNRLSfhOtcGflT13P2794gVSgmPgTR+erw5ifnMLZb0UnSlkK4tquLmkd3BhA+nLo5tX8Cu0upUsGKvKbmg==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.22.2
-      caniuse-lite: 1.0.30001578
+      caniuse-lite: 1.0.30001579
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1943,8 +1943,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001578
-      electron-to-chromium: 1.4.635
+      caniuse-lite: 1.0.30001579
+      electron-to-chromium: 1.4.637
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.2)
     dev: true
@@ -2028,13 +2028,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.22.2
-      caniuse-lite: 1.0.30001578
+      caniuse-lite: 1.0.30001579
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite@1.0.30001578:
-    resolution: {integrity: sha512-J/jkFgsQ3NEl4w2lCoM9ZPxrD+FoBNJ7uJUpGVjIg/j0OwJosWM36EPDv+Yyi0V4twBk9pPmlFS+PLykgEvUmg==}
+  /caniuse-lite@1.0.30001579:
+    resolution: {integrity: sha512-u5AUVkixruKHJjw/pj9wISlcMpgFWzSrczLZbrqBSxukQixmg0SJ5sZTpvaFvxU0HoQKd4yoyAogyrAz9pzJnA==}
     dev: true
 
   /caseless@0.12.0:
@@ -2722,8 +2722,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /electron-to-chromium@1.4.635:
-    resolution: {integrity: sha512-iu/2D0zolKU3iDGXXxdOzNf72Jnokn+K1IN6Kk4iV6l1Tr2g/qy+mvmtfAiBwZe5S3aB5r92vp+zSZ69scYRrg==}
+  /electron-to-chromium@1.4.637:
+    resolution: {integrity: sha512-G7j3UCOukFtxVO1vWrPQUoDk3kL70mtvjc/DC/k2o7lE0wAdq+Vwp1ipagOow+BH0uVztFysLWbkM/RTIrbK3w==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -4408,7 +4408,7 @@ packages:
     resolution: {integrity: sha512-f4ycmEA9rnhH4mPkDSLAuZ9dCu33nZ2bP7pLUJmZp2YYAuIDrGDIWU/VXQPmG48l5s+vw0VcnH9+CMqL57oADQ==}
     engines: {node: '>=12.0'}
     dependencies:
-      '@openmeteo/sdk': 1.7.1
+      '@openmeteo/sdk': 1.7.2
       flatbuffers: 23.5.26
     dev: true
 
