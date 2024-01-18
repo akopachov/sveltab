@@ -6,7 +6,7 @@ import type { Settings } from './settings';
 import { hoursToMilliseconds } from 'date-fns';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
-const log = logger.getSubLogger({ prefix: ['Backgropunds', 'Bing Daily Image', 'Provider'] });
+const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
 
 interface LocalSettings {
   lastUrl: string;

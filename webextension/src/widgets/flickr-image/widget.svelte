@@ -111,7 +111,7 @@
   class="w-full h-full btn !p-0 rounded-[inherit]"
   use:loadingPlaceholder={!!activeImage}>
   <img
-    class="w-full h-full object-cover select-none bg-surface-200"
+    class="w-full h-full object-cover select-none bg-surface-100-800-token"
     draggable="false"
     use:flickrSrc={activeImage}
     alt={m.Widgets_FlickrImage_Image_Alt()} />

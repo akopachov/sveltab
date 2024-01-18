@@ -88,6 +88,15 @@
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
   "Backgrounds_RandomImage_Settings_Disclaimer": "Content provided by",
 
+  "Backgrounds_AnimeImage_Name": "Anime image",
+  "Backgrounds_AnimeImage_Settings_Topic": "Topic",
+  "Backgrounds_AnimeImage_Settings_Topic_Any": "Any",
+  "Backgrounds_AnimeImage_Settings_UpdateInterval": "Update interval (minutes)",
+  "Backgrounds_AnimeImage_Settings_Blur": "Blur",
+  "Backgrounds_AnimeImage_Settings_Filter": "Filter",
+  "Backgrounds_AnimeImage_Settings_Refresh": "Refresh",
+  "Backgrounds_AnimeImage_Settings_Disclaimer": "Content provided by",
+
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
   "Backgrounds_StaticImage_Name": "Static image",
