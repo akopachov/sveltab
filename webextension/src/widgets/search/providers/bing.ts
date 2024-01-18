@@ -1,3 +1,4 @@
+import { getCorsFriendlyUrl } from '$lib/cors-bypass';
 import type { SearchProvider, SearchSuggestionProvider } from './search-provider';
 
 export class BingSearchProvider implements SearchProvider, SearchSuggestionProvider {
@@ -5,12 +6,10 @@ export class BingSearchProvider implements SearchProvider, SearchSuggestionProvi
     return `https://www.bing.com/search?q=${encodeURIComponent(searchTerm)}`;
   }
   adaptSuggestions(response: any) {
-    return response.suggestionGroups[0].searchSuggestions.map((x: any) => x.displayText);
+    return response[1];
   }
   suggestionUrl(searchTerm: string) {
-    return `https://www.bingapis.com/api/v7/suggestions?appid=6D0A9B8C5100E9ECC7E11A104ADD76C10219804B&q=${encodeURIComponent(
-      searchTerm,
-    )}`;
+    return getCorsFriendlyUrl(`https://api.bing.com/osjson.aspx?query=${encodeURIComponent(searchTerm)}`);
   }
   readonly iconClass = 'icon-[logos--bing]';
   readonly name = 'Bing';
