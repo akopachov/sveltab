@@ -6,7 +6,6 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import { SearchProviders } from './providers';
-  import { canSuggest } from './providers/search-provider';
 
   export let settings: Settings;
   export let id: string;
@@ -29,10 +28,8 @@
   const debounceOpts: DebounceOptions = {
     ms: 500,
     callback: async str => {
-      if ($searchSuggestionEnabled && str?.length > 2 && canSuggest(searchProviderAdapter)) {
-        const suggestionUrl = searchProviderAdapter.suggestionUrl(str);
-        const response = await fetch(suggestionUrl).then(r => r.json());
-        searchSuggestions = searchProviderAdapter.adaptSuggestions(response);
+      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter) {
+        searchSuggestions = await searchProviderAdapter.getSuggestion(str);
       } else {
         searchSuggestions = [];
       }
