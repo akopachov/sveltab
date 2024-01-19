@@ -4,6 +4,8 @@
 
 A beautiful, customizable New Tab page for Firefox, Chrome, Edge and other Chromium-based browsers.
 
+Transform your new tab page to something beautiful and yours. SvelTab offers hundreds of customization options to create a new tab page that unique to you. Choose from many background providers, and be rewarded with stunning, new pictures every time you open a new tab. Add your favorite widgets to stay productive throughout your day. Create your own new tab experience.
+
 We care about your privacy and your experience. SvelTab is private, fast, and free.
 
 Key concepts and decisions behind SvelTab:
@@ -31,6 +33,7 @@ Key concepts and decisions behind SvelTab:
 [![Download for Firefox](docs/icons/amo-button.png)](https://addons.mozilla.org/en-US/firefox/addon/sveltab/)
 [![Download for Chrome](docs/icons/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chromewebstore.google.com/u/1/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld?hl=en)
 [![Download for Edge](docs/icons/edge-button.svg)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
+<!-- [![Download for Opera](docs/icons/opera_addons_206x58_en.png)](TBD) -->
 
 or [try web version first](https://bespoke-kitten-980bd0.netlify.app/)
 

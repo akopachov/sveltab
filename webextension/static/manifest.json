@@ -2,16 +2,20 @@
   "manifest_version": 3,
   "name": "SvelTab",
   "version": "1.1.0",
-  "description": "A beautiful New Tab page with many customizable backgrounds and widgets that does not require any permissions",
+  "description": "A beautiful New Tab page with many customizable backgrounds and widgets",
   "permissions": ["storage", "unlimitedStorage", "topSites"],
   "chrome_url_overrides": {
     "newtab": "index.html"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "index.html"
   },
   "icons": {
     "16": "favicon/favicon-16x16.png",
     "32": "favicon/favicon-32x32.png",
     "48": "favicon/favicon-48x48.png",
-    "96": "favicon/favicon-96x96.png"
+    "96": "favicon/favicon-96x96.png",
+    "128": "favicon/favicon-128x128.png"
   },  
   "browser_specific_settings": {
     "gecko": {
