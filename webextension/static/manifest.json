@@ -7,9 +7,6 @@
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
-  "chrome_settings_overrides": {
-    "homepage": "index.html"
-  },
   "icons": {
     "16": "favicon/favicon-16x16.png",
     "32": "favicon/favicon-32x32.png",
