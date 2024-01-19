@@ -4,6 +4,7 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import { AnimeTopics, type Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
+import { getImageCdnUrl } from '$lib/cdn';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
@@ -67,7 +68,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         log.warn(e);
       }
     }
-    this.setImage(this.#localSettings!.lastUrl);
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl));
   }
 
   destroy() {
