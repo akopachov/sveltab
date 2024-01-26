@@ -181,7 +181,7 @@
         </svelte:fragment>
         <svelte:fragment slot="summary">{m.Core_Sidebar_NewWidget()}</svelte:fragment>
         <svelte:fragment slot="content">
-          <div class="grid gap-2 grid-cols-[repeat(auto-fit,minmax(100px,1fr))] p-2">
+          <div class="flex flex-col gap-1 p-2 list">
             {#each WidgetsCatalog as item (item.settings.type)}
               <WidgetCatalogItemPreview
                 widgetCatalogItem={item}

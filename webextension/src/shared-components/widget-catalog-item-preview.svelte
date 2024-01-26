@@ -7,17 +7,15 @@
 </script>
 
 <button
-  class="card card-hover overflow-hidden flex flex-col variant-ghost {exClass || ''}"
+  class="btn overflow-hidden grid grid-cols-[auto_1fr] w-full h-12 variant-ghost rounded-sm p-2 {exClass || ''}"
   on:click
   on:dragstart
   on:dragend
   {...otherProps}>
-  <header class="overflow-hidden h-full w-full">
-    <div class="h-full w-full p-2 [&>*]:h-full [&>*]:w-full">
-      {#await widgetCatalogItem.components.preview.getValue() then preview}
-        <svelte:component this={preview} />
-      {/await}
-    </div>
-  </header>
-  <h4 class="w-full text-center">{widgetCatalogItem.name()}</h4>
+  <div class="h-full object-contain [&>*]:h-full [&>*]:w-full">
+    {#await widgetCatalogItem.components.preview.getValue() then preview}
+      <svelte:component this={preview} />
+    {/await}
+  </div>
+  <h4 class="w-full text-center place-self-center">{widgetCatalogItem.name()}</h4>
 </button>
