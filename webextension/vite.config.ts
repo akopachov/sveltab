@@ -5,6 +5,11 @@ import { paraglide } from '@inlang/paraglide-js-adapter-vite';
 import { weatherWidgetVitePlugin } from './src/widgets/weather/vite-plugin';
 
 export default defineConfig({
+  esbuild: {
+    supported: {
+      'top-level-await': true,
+    },
+  },
   plugins: [
     sveltekit(),
     weatherWidgetVitePlugin(),
