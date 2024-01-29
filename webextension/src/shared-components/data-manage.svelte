@@ -92,10 +92,10 @@
   }
 </script>
 
-<div class="btn-group variant-ghost flex flex-row">
-  <button class="flex-auto" on:click={exportData}>{m.DataManage_Backup()}</button>
+<div class="flex flex-col gap-1">
+  <button class="btn btn-md variant-soft" on:click={exportData}>{m.DataManage_Backup()}</button>
   <FileButton
-    class="flex-auto"
+    class="btn btn-md variant-soft"
     name="files"
     button=""
     width="w-full"

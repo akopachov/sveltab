@@ -102,7 +102,7 @@
 
   function openWidgetsMenu() {
     drawerStore.open({
-      width: 'w-[280px]',
+      width: 'w-[300px]',
     });
   }
 

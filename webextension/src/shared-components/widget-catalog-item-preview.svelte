@@ -7,7 +7,7 @@
 </script>
 
 <button
-  class="btn overflow-hidden grid grid-cols-[auto_1fr] w-full h-12 variant-ghost rounded-sm p-2 {exClass || ''}"
+  class="btn overflow-hidden grid grid-cols-[auto_1fr] w-full h-12 variant-soft rounded-sm p-2 {exClass || ''}"
   on:click
   on:dragstart
   on:dragend
