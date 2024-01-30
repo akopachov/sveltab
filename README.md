@@ -37,6 +37,10 @@ Key concepts and decisions behind SvelTab:
 
 or [try web version first](https://bespoke-kitten-980bd0.netlify.app/)
 
+## Translations
+
+Checkout the guide for [adding translations](TRANSLATING.md).
+
 ## Want to say thank you?
 
 * Buy me a coffee [here](https://ko-fi.com/akopachov) (No account needed, one-time)
