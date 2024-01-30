@@ -3,7 +3,7 @@ import { Lazy } from '$lib/lazy';
 import * as m from '$i18n/messages';
 
 export const Widget: WidgetCatalogItem = {
-  name: () => m.Widgets_Greating_Name(),
+  name: () => m.Widgets_Greeting_Name(),
   components: {
     preview: new Lazy(() => import('./preview.svelte').then(r => r.default)),
     widget: new Lazy(() => import('./widget.svelte').then(r => r.default)),

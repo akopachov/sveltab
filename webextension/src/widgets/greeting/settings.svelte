@@ -16,17 +16,17 @@
 
 {#if tab === GeneralTabId}
   <label class="label mb-2">
-    <span>{m.Widgets_Greating_Settings_Name()}</span>
+    <span>{m.Widgets_Greeting_Settings_Name()}</span>
     <input type="text" class="input" bind:value={$name} />
   </label>
 {:else if tab === TextTabId}
   <div>
     <div class="label">
-      <span>{m.Widgets_Greating_Settings_Font()}</span>
+      <span>{m.Widgets_Greeting_Settings_Font()}</span>
       <FontSelector {font} bind:color={$textColor} />
     </div>
     <div class="mt-2">
-      <h4>{m.Widgets_Greating_Settings_Shadow()}</h4>
+      <h4>{m.Widgets_Greeting_Settings_Shadow()}</h4>
       <div class="pl-4 pr-4">
         <ShadowSelector shadowSettings={settings.textShadow} />
       </div>
@@ -34,14 +34,14 @@
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">
-    <span>{m.Widgets_Greating_Settings_Color()}</span>
+    <span>{m.Widgets_Greeting_Settings_Color()}</span>
     <div>
       <ColorPicker bind:color={$backgroundColor} />
     </div>
   </div>
   <!-- svelte-ignore a11y-label-has-associated-control -->
   <label class="label mb-2">
-    <span>{m.Widgets_Greating_Settings_Blur()}</span>
+    <span>{m.Widgets_Greeting_Settings_Blur()}</span>
     <RangeSlider name="blurSlider" bind:value={$backgroundBlur} min={0} max={15} step={0.1}></RangeSlider>
   </label>
 {/if}

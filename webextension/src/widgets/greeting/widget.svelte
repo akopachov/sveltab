@@ -58,17 +58,17 @@
     let namelessGreetingsPlain: string;
 
     if (part === PartOfDay.Morning) {
-      namedGreetingsPlain = m.Widgets_Greating_Messages_Morning_Named();
-      namelessGreetingsPlain = m.Widgets_Greating_Messages_Morning();
+      namedGreetingsPlain = m.Widgets_Greeting_Messages_Morning_Named();
+      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Morning();
     } else if (part === PartOfDay.Day) {
-      namedGreetingsPlain = m.Widgets_Greating_Messages_Day_Named();
-      namelessGreetingsPlain = m.Widgets_Greating_Messages_Day();
+      namedGreetingsPlain = m.Widgets_Greeting_Messages_Day_Named();
+      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Day();
     } else if (part === PartOfDay.Evening) {
-      namedGreetingsPlain = m.Widgets_Greating_Messages_Evening_Named();
-      namelessGreetingsPlain = m.Widgets_Greating_Messages_Evening();
+      namedGreetingsPlain = m.Widgets_Greeting_Messages_Evening_Named();
+      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Evening();
     } else if (part === PartOfDay.Night) {
-      namedGreetingsPlain = m.Widgets_Greating_Messages_Night_Named();
-      namelessGreetingsPlain = m.Widgets_Greating_Messages_Night();
+      namedGreetingsPlain = m.Widgets_Greeting_Messages_Night_Named();
+      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Night();
     } else {
       namedGreetingsPlain = namelessGreetingsPlain = '';
     }
