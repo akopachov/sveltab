@@ -1,0 +1,19 @@
+[
+  {
+    "op": "add",
+    "path": "/browser_specific_settings",
+    "value": {
+      "gecko": {
+        "id": "{e426bdad-957f-486b-ac88-8c39c7afa591}",
+        "strict_min_version": "109.0"
+      }
+    }
+  },
+  {
+    "op": "add",
+    "path": "/chrome_settings_overrides",
+    "value": {
+      "homepage": "index.html"
+    }
+  }
+]

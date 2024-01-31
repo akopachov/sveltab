@@ -13,11 +13,5 @@
     "48": "favicon/favicon-48x48.png",
     "96": "favicon/favicon-96x96.png",
     "128": "favicon/favicon-128x128.png"
-  },  
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{e426bdad-957f-486b-ac88-8c39c7afa591}",
-      "strict_min_version": "109.0"
-    }
   }
 }
