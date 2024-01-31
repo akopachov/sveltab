@@ -103,6 +103,7 @@ jobs:
           pnpm build:web-ext:firefox
           rename 's/sveltab-/sveltab-chromium-/' build-web-ext/chromium/sveltab-*.zip
           rename 's/sveltab-/sveltab-firefox-/' build-web-ext/firefox/sveltab-*.zip
+          find ./build-web-ext -type f -mindepth 2 -exec mv {} ./build-web-ext \;
       
       - uses: actions/upload-artifact@v3
         with:
