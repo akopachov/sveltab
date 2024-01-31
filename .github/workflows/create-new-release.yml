@@ -25,7 +25,6 @@ jobs:
             MINOR="${BASH_REMATCH[2]}"
             PATCH="${BASH_REMATCH[3]}"
             sed -r -i "s/\"version\": *\"[0-9]+\\.[0-9]+\\.[0-9]+\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/g" webextension/package.json
-            sed -r -i "s/\"version\": *\"[0-9]+\\.[0-9]+\\.[0-9]+\"/\"version\": \"$MAJOR.$MINOR.$PATCH\"/g" webextension/static/manifest.json
           else 
             echo "Invalid version format";
             exit 1
