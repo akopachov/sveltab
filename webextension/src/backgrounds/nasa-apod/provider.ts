@@ -4,6 +4,7 @@ import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 import { hoursToMilliseconds } from 'date-fns';
 import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
+import { getImageCdnUrl } from '$lib/cdn';
 
 const LocalSettingsKey = 'NasaApodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'NASA APOD', 'Provider'] });
@@ -45,6 +46,6 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
         log.warn(e);
       }
     }
-    this.setImage(this.#localSettings!.lastUrl);
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl));
   }
 }
