@@ -13,8 +13,8 @@ devDependencies:
     specifier: ^1.6.1
     version: 1.6.1
   '@iconify/json':
-    specifier: ^2.2.176
-    version: 2.2.176
+    specifier: ^2.2.177
+    version: 2.2.177
   '@iconify/tailwind':
     specifier: ^0.1.4
     version: 0.1.4
@@ -25,11 +25,11 @@ devDependencies:
     specifier: 1.2.2
     version: 1.2.2(@sinclair/typebox@0.31.28)
   '@inlang/paraglide-js-adapter-vite':
-    specifier: ^1.2.10
-    version: 1.2.10(@sinclair/typebox@0.31.28)
+    specifier: ^1.2.11
+    version: 1.2.11(@sinclair/typebox@0.31.28)
   '@skeletonlabs/skeleton':
-    specifier: ^2.7.1
-    version: 2.7.1(svelte@4.2.9)
+    specifier: ^2.8.0
+    version: 2.8.0(svelte@4.2.9)
   '@skeletonlabs/tw-plugin':
     specifier: ^0.3.1
     version: 0.3.1(tailwindcss@3.4.1)
@@ -596,8 +596,8 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
-  /@iconify/json@2.2.176:
-    resolution: {integrity: sha512-Pw1MA57OZdzyrJgGHzZXVnoht8vndv4aM6I3xj4SeimF14HA3e101Ignnlw2h/+Yjujf43jH7doPIVAhgCTFMw==}
+  /@iconify/json@2.2.177:
+    resolution: {integrity: sha512-BKWZMvJklkkuDcmBqOYLXUSBCFDoYn5oaUU6j6eVQHE6KEfVYawSsTvfu4aCTx6Pzd47HR5zhTL4LJzhuKZOxg==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -680,11 +680,12 @@ packages:
       '@sinclair/typebox': 0.31.28
     dev: true
 
-  /@inlang/paraglide-js-adapter-unplugin@1.3.3(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-azaCOpBGOQg+zMGFFhJkeMx2i33pJTjPL/mykiBc1BGzHeLObc45V/P1kAQwRbK5gtoqNSAYDGUSTepKecmmFA==}
+  /@inlang/paraglide-js-adapter-unplugin@1.4.0(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-ZpSo4y9qYkoLS5RmNFwOnt+tlkkt5T8mvtrOli2M5DjZuQqc9xvy5FydRms7xmXVqDUi/qcAVJswhX7EHu4Idg==}
     dependencies:
       '@inlang/paraglide-js': 1.2.2(@sinclair/typebox@0.31.28)
       '@inlang/sdk': 0.26.1
+      '@lix-js/client': 0.8.0
       unplugin: 1.5.1
     transitivePeerDependencies:
       - '@sinclair/typebox'
@@ -692,10 +693,10 @@ packages:
       - debug
     dev: true
 
-  /@inlang/paraglide-js-adapter-vite@1.2.10(@sinclair/typebox@0.31.28):
-    resolution: {integrity: sha512-ZCr53ME1M8EEWE631rNM4EgEJIUyJ5ad/oNLUkFl2DvLGj00tFHak1sn+szyM+Ag7Gz17AicEeuYaGaLOcyoig==}
+  /@inlang/paraglide-js-adapter-vite@1.2.11(@sinclair/typebox@0.31.28):
+    resolution: {integrity: sha512-LMZo2CLPl/YyWka81pbKBFKy27wVNPQGk5lnhFLCdYOPdth/pWHC1BNDA91ey7JHgPtrfepJUcAQlXAN1+fh6w==}
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.3.3(@sinclair/typebox@0.31.28)
+      '@inlang/paraglide-js-adapter-unplugin': 1.4.0(@sinclair/typebox@0.31.28)
     transitivePeerDependencies:
       - '@sinclair/typebox'
       - babel-plugin-macros
@@ -1269,8 +1270,8 @@ packages:
     engines: {node: '>=14.16'}
     dev: true
 
-  /@skeletonlabs/skeleton@2.7.1(svelte@4.2.9):
-    resolution: {integrity: sha512-zlHehSp8jXePmldLiNthYtFEomcitfcAIuLyvN1/lbHgsx5notUUO50CG0AEUF1BKcrl97watLv4jDmv1ShHJQ==}
+  /@skeletonlabs/skeleton@2.8.0(svelte@4.2.9):
+    resolution: {integrity: sha512-R6spSJSyW9MA6cnVQ8IV7uoYSXxHmP/oWJ9IHdGDU9epPZaZMmOXUHJSzA1gngccB2jFaA/6jXfS1O1CsIlGMg==}
     peerDependencies:
       svelte: ^3.56.0 || ^4.0.0
     dependencies:
@@ -1425,15 +1426,15 @@ packages:
   /@types/jsonwebtoken@9.0.5:
     resolution: {integrity: sha512-VRLSGzik+Unrup6BsouBeHsf4d1hOEgYWTm/7Nmw1sXoN1+tRly/Gy/po3yeahnP4jfnQWWAhQAqcNfH7ngOkA==}
     dependencies:
-      '@types/node': 20.11.10
+      '@types/node': 20.11.13
     dev: true
 
   /@types/minimatch@3.0.5:
     resolution: {integrity: sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ==}
     dev: true
 
-  /@types/node@20.11.10:
-    resolution: {integrity: sha512-rZEfe/hJSGYmdfX9tvcPMYeYPW2sNl50nsw4jZmRcaG0HIAb0WYEpsB05GOb53vjqpyE9GUhlDQ4jLSoB5q9kg==}
+  /@types/node@20.11.13:
+    resolution: {integrity: sha512-5G4zQwdiQBSWYTDAH1ctw2eidqdhMJaNsiIDKHFr55ihz5Trl2qqR8fdrT732yPBho5gkNxXm67OxWFBqX9aPg==}
     dependencies:
       undici-types: 5.26.5
     dev: true
@@ -1453,7 +1454,7 @@ packages:
   /@types/yauzl@2.10.3:
     resolution: {integrity: sha512-oJoftv0LSuaDZE3Le4DbKX+KS9G36NzOeSap90UIK0yMA/NhKJhqlSGtNDORNRaIbQfzjXDrQa0ytJ6mNRGz/Q==}
     dependencies:
-      '@types/node': 20.11.10
+      '@types/node': 20.11.13
     dev: true
 
   /@typescript-eslint/eslint-plugin@6.20.0(@typescript-eslint/parser@6.20.0)(eslint@8.56.0)(typescript@5.3.3):
@@ -1949,7 +1950,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001581
-      electron-to-chromium: 1.4.650
+      electron-to-chromium: 1.4.651
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.22.3)
     dev: true
@@ -2112,7 +2113,7 @@ packages:
     engines: {node: '>=12.13.0'}
     hasBin: true
     dependencies:
-      '@types/node': 20.11.10
+      '@types/node': 20.11.13
       escape-string-regexp: 4.0.0
       is-wsl: 2.2.0
       lighthouse-logger: 1.4.2
@@ -2727,8 +2728,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /electron-to-chromium@1.4.650:
-    resolution: {integrity: sha512-sYSQhJCJa4aGA1wYol5cMQgekDBlbVfTRavlGZVr3WZpDdOPcp6a6xUnFfrt8TqZhsBYYbDxJZCjGfHuGupCRQ==}
+  /electron-to-chromium@1.4.651:
+    resolution: {integrity: sha512-jjks7Xx+4I7dslwsbaFocSwqBbGHQmuXBJUK9QBZTIrzPq3pzn6Uf2szFSP728FtLYE3ldiccmlkOM/zhGKCpA==}
     dev: true
 
   /emoji-regex@8.0.0:
