@@ -54,6 +54,12 @@
 	"Backgrounds_BingDaily_Settings_Blur": "Размыццё",
 	"Backgrounds_BingDaily_Settings_Filter": "Фільтр",
 	"Backgrounds_BingDaily_Settings_Disclaimer": "Змест прадастаўлены",
+
+  "Backgrounds_NasaApod_Name": "Астранамічная карціна дня NASA",
+	"Backgrounds_NasaApod_Settings_Blur": "Размыццё",
+	"Backgrounds_NasaApod_Settings_Filter": "Фільтр",
+	"Backgrounds_NasaApod_Settings_Disclaimer": "Змест прадастаўлены",
+
 	"Backgrounds_RandomColor_Name": "Выпадковы колер",
 	"Backgrounds_RandomColor_Settings_Luminosity": "Свяцільнасць",
 	"Backgrounds_RandomColor_Settings_Luminosity_Any": "Любая",

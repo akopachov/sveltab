@@ -23,6 +23,9 @@ export class WorkspaceInstance {
 
     this.#background = useObservable(background);
     this.#trackObjectChange(this.#background.value.settings);
+    if (this.#background.value.settings.extra?.filter?.value) {
+      ActiveFilters.add(this.#background.value.settings.extra.filter.value);
+    }
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
     this.customStyles = useObservable(customStyles);
@@ -95,10 +98,16 @@ export class WorkspaceInstance {
   async setBackground(settings: BackgroundSettingsInitial) {
     if (this.#background.value) {
       this.#untrackObjectChange(this.#background.value.settings);
+      if (this.#background.value.settings.extra?.filter?.value) {
+        ActiveFilters.remove(this.#background.value.settings.extra.filter.value);
+      }
     }
     this.#background.value = await BackgroundInstance.create(settings);
     this.#hasChanges.value = true;
     this.#trackObjectChange(this.#background.value.settings);
+    if (this.#background.value.settings.extra?.filter?.value) {
+      ActiveFilters.add(this.#background.value.settings.extra.filter.value);
+    }
   }
 
   async addWidget(settings: WidgetSettingsInitial) {

@@ -37,6 +37,7 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   #applyFilters() {
+    this.#updateFilters();
     const updateFiltersDeb = debounce(() => this.#updateFilters(), 0);
 
     const blurUnsubscribe = this.settings.blur.subscribe(() => updateFiltersDeb());

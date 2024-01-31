@@ -54,6 +54,12 @@
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
   "Backgrounds_BingDaily_Settings_Filter": "Filter",
   "Backgrounds_BingDaily_Settings_Disclaimer": "Content provided by",
+
+  "Backgrounds_NasaApod_Name": "NASA Astronomy Picture of the Day",
+  "Backgrounds_NasaApod_Settings_Blur": "Blur",
+  "Backgrounds_NasaApod_Settings_Filter": "Filter",
+  "Backgrounds_NasaApod_Settings_Disclaimer": "Content provided by",
+
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",

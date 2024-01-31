@@ -11,6 +11,7 @@ import { Background as StaticImageBackground } from '../backgrounds/static-image
 import { Background as RandomImageBackground } from '../backgrounds/random-image';
 import { Background as BingDailyImageBackground } from '../backgrounds/bing-daily-image';
 import { Background as AnimeImageBackground } from '../backgrounds/anime-image';
+import { Background as NasaApodBackground } from '../backgrounds/nasa-apod';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
@@ -50,4 +51,5 @@ export const BackgroundCatalog: Readonly<BackgroundCatalogItem[]> = [
   RandomImageBackground,
   BingDailyImageBackground,
   AnimeImageBackground,
+  NasaApodBackground,
 ];
