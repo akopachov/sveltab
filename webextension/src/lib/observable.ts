@@ -1,7 +1,7 @@
 import { get, writable, type Writable } from 'svelte/store';
 
 export type Unobserved<T> = {
-  [K in keyof T]: T[K] extends Observable<infer U> ? U : Unobserved<T[K]>;
+  -readonly [K in keyof T]: T[K] extends Observable<infer U> ? U : Unobserved<T[K]>;
 };
 
 export type Subscribable<T> = Pick<Writable<T>, 'subscribe'>;

@@ -1,5 +1,6 @@
 import { browser } from '$app/environment';
 import { logger } from '$lib/logger';
+import { WidgetMeasurementUnits } from '$lib/widget-settings';
 import { WorkspaceInstance } from '$lib/workspace-instance';
 import type { WorkspaceSettingsInitial } from '$lib/workspace-settings';
 import { storage } from './storage';
@@ -37,7 +38,19 @@ export class WorkspaceIndex {
     }
 
     if (!storageRecord) {
-      storageRecord = await fetch('default_workspace.json').then(r => r.json());
+      const defaultWorkspace: WorkspaceSettingsInitial = await fetch('default_workspace.json').then(r => r.json());
+      for (const widget of defaultWorkspace.widgets!) {
+        if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
+          if (widget.position!.width! > document.documentElement.offsetWidth - 10) {
+            widget.position!.width = document.documentElement.offsetWidth - 10;
+          }
+
+          if (widget.position!.height! > document.documentElement.offsetHeight - 10) {
+            widget.position!.height = document.documentElement.offsetHeight - 10;
+          }
+        }
+      }
+      storageRecord = defaultWorkspace;
     }
 
     return storageRecord!;
