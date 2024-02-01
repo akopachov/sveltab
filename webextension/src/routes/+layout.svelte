@@ -6,15 +6,24 @@
   import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
   import { Modal, Toast, initializeStores, storePopup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
+  import { browser } from '$app/environment';
 
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
   initializeStores();
   initLocaleStore();
   setupCacheHouseKeeping();
+
+  $: {
+    if (browser) {
+      document.documentElement.lang = $locale;
+    }
+  }
 </script>
 
 <svelte:head>
-  <title>{m.Core_Page_Title()}</title>
+  {#key $locale}
+    <title>{m.Core_Page_Title()}</title>
+  {/key}
   <script>
     (function () {
       const preferedColorScheme = localStorage.getItem('preferedColorScheme') || 'auto';
