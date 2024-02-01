@@ -54,7 +54,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
     ) {
       try {
         const response = await fetch(
-          `https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${this.settings.searchTerms.value}`,
+          `https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${encodeURIComponent(this.settings.searchTerms.value)}`,
           { method: 'head' },
         );
         this.#localSettings!.lastUrl = response.url;
