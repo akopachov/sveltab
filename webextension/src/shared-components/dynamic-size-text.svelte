@@ -1,34 +1,48 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onDestroy, onMount } from 'svelte';
 
   export let text: string;
   export function refresh() {
-    cropSVG();
+    updateFontSize();
   }
 
   $: {
-    text && setTimeout(() => cropSVG(), 0);
+    text && updateFontSize();
   }
 
-  let svgEl: SVGGraphicsElement;
+  const canvas = new OffscreenCanvas(100, 100);
+  const canvasCtx = canvas.getContext('2d')!;
+  let container: HTMLElement;
+  let fontSize: number;
+  const resizeObserver = new ResizeObserver(() => {
+    updateFontSize();
+  });
+  const { class: exClass, ...otherProps } = $$restProps;
 
-  function cropSVG() {
-    if (svgEl) {
-      const bbox = svgEl.getBBox({ fill: false, clipped: true });
-      svgEl.setAttribute('viewBox', `${bbox.x} ${bbox.y} ${bbox.width} ${bbox.height}`);
+  function updateFontSize() {
+    if (!container || !text) return;
+    const containerHeight = container.clientHeight;
+    const containerWidth = container.clientWidth;
+    const { fontFamily, fontWeight } = getComputedStyle(container);
+    canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
+    const { width: actualWidth } = canvasCtx.measureText(text);
+    if (actualWidth > containerWidth) {
+      const whRatio = actualWidth / containerHeight;
+      fontSize = containerWidth / whRatio;
+    } else {
+      fontSize = containerHeight;
     }
   }
 
-  onMount(() => cropSVG());
+  onMount(() => {
+    resizeObserver.observe(container);
+  });
+
+  onDestroy(() => resizeObserver.unobserve(container));
 </script>
 
-<svg
-  bind:this={svgEl}
-  preserveAspectRatio="xMinYMid meet"
-  xmlns="http://www.w3.org/2000/svg"
-  xmlns:xlink="http://www.w3.org/1999/xlink"
-  {...$$restProps}>
-  <text x="0" y="100" font-size="100" fill="currentColor" text-rendering="optimizeLegibility">
+<div bind:this={container} class="w-full h-full flex justify-center items-center {exClass || ''}" {...otherProps}>
+  <span style:font-size="{fontSize}px" class="leading-none whitespace-nowrap">
     {text}
-  </text>
-</svg>
+  </span>
+</div>
