@@ -16,7 +16,7 @@
   }
 
   const canvas = new OffscreenCanvas(100, 100);
-  const canvasCtx = canvas.getContext('2d')!;
+  const canvasCtx = canvas.getContext('2d', { alpha: false })!;
   let container: HTMLElement;
   const fontSize = writable(0);
   let whRatio: number;
