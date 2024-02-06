@@ -3,38 +3,47 @@
 
   export let text: string;
   export function refresh() {
+    updateWHRatio();
     updateFontSize();
   }
 
   $: {
-    text && updateFontSize();
+    if (text) {
+      updateWHRatio();
+      updateFontSize();
+    }
   }
 
   const canvas = new OffscreenCanvas(100, 100);
   const canvasCtx = canvas.getContext('2d')!;
   let container: HTMLElement;
   let fontSize: number;
+  let whRatio: number;
   const resizeObserver = new ResizeObserver(() => {
     updateFontSize();
   });
   const { class: exClass, ...otherProps } = $$restProps;
 
+  function updateWHRatio() {
+    if (!container || !text) return;
+    const containerHeight = container.clientHeight;
+    const { fontFamily, fontWeight } = getComputedStyle(container);
+    canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
+    const { width: actualWidth } = canvasCtx.measureText(text);
+    whRatio = actualWidth / containerHeight;
+  }
+
   function updateFontSize() {
     if (!container || !text) return;
     const containerHeight = container.clientHeight;
     const containerWidth = container.clientWidth;
-    const { fontFamily, fontWeight } = getComputedStyle(container);
-    canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
-    const { width: actualWidth } = canvasCtx.measureText(text);
-    if (actualWidth > containerWidth) {
-      const whRatio = actualWidth / containerHeight;
-      fontSize = containerWidth / whRatio;
-    } else {
-      fontSize = containerHeight;
+    if (whRatio > 0) {
+      fontSize = Math.min(containerHeight, containerWidth / whRatio);
     }
   }
 
   onMount(() => {
+    updateWHRatio();
     resizeObserver.observe(container);
   });
 
