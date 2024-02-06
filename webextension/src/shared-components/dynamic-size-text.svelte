@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onDestroy, onMount } from 'svelte';
+  import { writable } from 'svelte/store';
 
   export let text: string;
   export function refresh() {
@@ -17,7 +18,7 @@
   const canvas = new OffscreenCanvas(100, 100);
   const canvasCtx = canvas.getContext('2d')!;
   let container: HTMLElement;
-  let fontSize: number;
+  const fontSize = writable(0);
   let whRatio: number;
   const resizeObserver = new ResizeObserver(() => {
     updateFontSize();
@@ -34,12 +35,10 @@
   }
 
   function updateFontSize() {
-    if (!container || !text) return;
+    if (!container || !text || whRatio <= 0) return;
     const containerHeight = container.clientHeight;
     const containerWidth = container.clientWidth;
-    if (whRatio > 0) {
-      fontSize = Math.min(containerHeight, containerWidth / whRatio);
-    }
+    $fontSize = Math.min(containerHeight, containerWidth / whRatio);
   }
 
   onMount(() => {
@@ -51,7 +50,7 @@
 </script>
 
 <div bind:this={container} class="w-full h-full flex justify-center items-center {exClass || ''}" {...otherProps}>
-  <span style:font-size="{fontSize}px" class="leading-none whitespace-nowrap">
+  <span style:font-size="{$fontSize}px" class="leading-none whitespace-nowrap">
     {text}
   </span>
 </div>
