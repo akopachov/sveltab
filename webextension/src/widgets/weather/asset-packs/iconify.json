@@ -35,6 +35,6 @@
     "wi/night-alt-snow.svg?color={color}"
   ],
   [[[74, 79], [85, 86], 22, 26], "wi/snow.svg?color={color}"],
-  [[[95, 96]], "wi/day-thunderstorm.svg?color={color}", "wi:night-alt-thunderstorm.svg?color={color}"],
+  [[[95, 96]], "wi/day-thunderstorm.svg?color={color}", "wi/night-alt-thunderstorm.svg?color={color}"],
   [[[97, 99]], "wi/day-snow-thunderstorm.svg?color={color}", "wi/night-alt-snow-thunderstorm.svg?color={color}"]
 ]
