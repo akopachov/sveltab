@@ -7,7 +7,7 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   node: HTMLImageElement,
   src: string | undefined,
 ) {
-  let timeout: any;
+  let timeout: ReturnType<typeof setTimeout>;
 
   function updateSrc(s: string | undefined) {
     clearTimeout(timeout);

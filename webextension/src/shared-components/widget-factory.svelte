@@ -75,12 +75,14 @@
       </div>
     {/await}
   </div>
-  <div
-    class="absolute top-0 left-0 w-full h-full invisible pointer-events-none"
-    bind:this={fakeEditButton}
-    use:popup={widgetSettingsPopupSettings}>
-  </div>
-  <div class="absolute top-0 left-0 w-full h-full cursor-move" class:hidden={workspaceLocked}></div>
+  {#if !workspaceLocked}
+    <div
+      class="absolute top-0 left-0 w-full h-full invisible pointer-events-none"
+      bind:this={fakeEditButton}
+      use:popup={widgetSettingsPopupSettings}>
+    </div>
+    <div class="absolute top-0 left-0 w-full h-full cursor-move"></div>
+  {/if}
   {#if isSelected}
     <button
       class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
