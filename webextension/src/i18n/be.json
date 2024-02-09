@@ -249,5 +249,24 @@
 	"Widgets_TopSites_Settings_Shadow": "Цень",
 	"Widgets_TopSites_Settings_ItemsPerRow": "Элементаў у радку",
 	"Widgets_TopSites_Settings_RowCount": "Колькасць радкоў",
-	"Widgets_TopSites_Settings_ShowTitle": "Паказаць назвы"
+	"Widgets_TopSites_Settings_ShowTitle": "Паказаць назвы",
+
+  "Widgets_AnalogueClock_Name": "Аналагавы гадзіннік",
+  "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Цыферблат",
+  "Widgets_AnalogueClock_Settings_Tabs_Background": "Фон",
+  "Widgets_AnalogueClock_Settings_Shadow": "Цень",
+  "Widgets_AnalogueClock_Settings_Background_Color": "Колер",
+  "Widgets_AnalogueClock_Settings_Watchface": "Цыферблат",
+	"Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Па змаўчанні",
+	"Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Варыянт 1",
+	"Widgets_AnalogueClock_Settings_Watchface_Variant2_Name": "Варыянт 2",
+	"Widgets_AnalogueClock_Settings_Watchface_Variant3_Name": "Варыянт 3",
+	"Widgets_AnalogueClock_Settings_Watchface_Color": "Колер цыферблата",
+	"Widgets_AnalogueClock_Settings_Watchface_BackgroundColor": "Колер фону цыферблата",
+	"Widgets_AnalogueClock_Settings_Blur": "Размыццё",
+	"Widgets_AnalogueClock_Settings_SecondsArm_Visible": "Паказваць секунды",
+	"Widgets_AnalogueClock_Settings_SecondsArm_Color": "Колер секунд",
+	"Widgets_AnalogueClock_Settings_MinutesArm_Color": "Колер хвілін",
+	"Widgets_AnalogueClock_Settings_HoursArm_Color": "Колер гадзін",
+	"Widgets_AnalogueClock_Settings_HourMarks_Color": "Колер пазнак"
 }

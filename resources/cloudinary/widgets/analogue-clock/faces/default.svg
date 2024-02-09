@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="clock" xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+    <style type="text/css">
+        .circle {
+            fill: var(--watchface-background-color);
+            stroke: var(--watchface-color);
+            stroke-width: 9;
+            stroke-miterlimit: 10;
+        }
+
+        .mid-circle {
+            fill: var(--watchface-color);
+        }
+
+        .hour-marks {
+            fill: none;
+            stroke: var(--hour-marks-color);
+            stroke-width: 9;
+            stroke-miterlimit: 10;
+        }
+
+        .hour-arm {
+            fill: none;
+            stroke: var(--hour-arm-color);
+            stroke-width: 17;
+            stroke-miterlimit: 10;
+        }
+
+        .minute-arm {
+            fill: none;
+            stroke: var(--minute-arm-color);
+            stroke-width: 11;
+            stroke-miterlimit: 10;
+        }
+
+        .second-arm {
+            fill: none;
+            stroke: var(--second-arm-color);
+            stroke-width: 4;
+            stroke-miterlimit: 10;
+        }
+
+        .sizing-box {
+            fill: none;
+        }
+
+        #hour,
+        #minute,
+        #second {
+            transform-origin: 300px 300px;
+            /* transition: transform .5s ease-in-out; */
+        }
+
+        #hour {
+            transform: rotate(calc(var(--time-total-hours) * 30deg + var(--time-minutes) * 0.5deg))
+        }
+
+        #minute {
+            transform: rotate(calc(var(--time-total-minutes) * 6deg + var(--time-seconds) * 0.1deg))
+        }
+
+        #second {
+            visibility: var(--second-arm-visibility);
+            transform: rotate(calc(var(--time-total-seconds) * 6deg))
+        }
+    </style>
+    <g id="face">
+        <circle class="circle" cx="300" cy="300" r="253.9" />
+        <path class="hour-marks"
+            d="M300.5 94V61M506 300.5h32M300.5 506v33M94 300.5H60M411.3 107.8l7.9-13.8M493 190.2l13-7.4M492.1 411.4l16.5 9.5M411 492.3l8.9 15.3M189 492.3l-9.2 15.9M107.7 411L93 419.5M107.5 189.3l-17.1-9.9M188.1 108.2l-9-15.6" />
+        <circle class="mid-circle" cx="300" cy="300" r="16.2" />
+    </g>
+    <g id="hour">
+        <path class="hour-arm" d="M300.5 298V142" />
+        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+    </g>
+    <g id="minute">
+        <path class="minute-arm" d="M300.5 298V67" />
+        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+    </g>
+    <g id="second">
+        <path class="second-arm" d="M300.5 350V55" />
+        <circle class="sizing-box" cx="300" cy="300" r="253.9" />
+    </g>
+</svg>

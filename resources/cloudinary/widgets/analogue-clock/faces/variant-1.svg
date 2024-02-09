@@ -1,0 +1,131 @@
+<svg class="clock" viewBox="0 0 100 100">
+    <style type="text/css">
+        #hour {
+            transform: rotate(calc(var(--time-total-hours) * 30deg + var(--time-minutes) * 0.5deg))
+        }
+
+        #minute {
+            transform: rotate(calc(var(--time-total-minutes) * 6deg + var(--time-seconds) * 0.1deg))
+        }
+
+        #second {
+            visibility: var(--second-arm-visibility);
+            transform: rotate(calc(var(--time-total-seconds) * 6deg))
+        }
+
+        * {
+            transform-origin: inherit;
+        }
+
+        .clock {
+            color: var(--watchface-color);
+            fill: currentColor;
+            transform-origin: 50px 50px;
+        }
+
+        .clock line {
+            stroke: currentColor;
+            stroke-linecap: round;
+        }
+
+        .lines {
+            opacity: 0.5;
+            stroke-width: 0.5px;
+        }
+
+        .lines line {
+            stroke: var(--hour-marks-color);
+        }
+
+        .line-1 {
+            transform: rotate(30deg);
+        }
+
+        .line-2 {
+            transform: rotate(60deg);
+        }
+
+        .line-3 {
+            transform: rotate(90deg);
+        }
+
+        .line-4 {
+            transform: rotate(120deg);
+        }
+
+        .line-5 {
+            transform: rotate(150deg);
+        }
+
+        .line-6 {
+            transform: rotate(180deg);
+        }
+
+        .line-7 {
+            transform: rotate(210deg);
+        }
+
+        .line-8 {
+            transform: rotate(240deg);
+        }
+
+        .line-9 {
+            transform: rotate(270deg);
+        }
+
+        .line-10 {
+            transform: rotate(300deg);
+        }
+
+        .line-11 {
+            transform: rotate(330deg);
+        }
+
+        .line-12 {
+            transform: rotate(360deg);
+        }
+
+        .line {
+            stroke-width: 1.5px;
+            transition: -webkit-transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275), -webkit-transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .line-second {
+            color: var(--second-arm-color);
+            stroke-width: 1px;
+        }
+
+        .line-minute {
+            color: var(--minute-arm-color);
+        }
+
+        .line-hour {
+            color: var(--hour-arm-color);
+        }
+    </style>
+    <g class="lines">
+        <line class="line line-1" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-2" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-3" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-4" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-5" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-6" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-7" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-8" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-9" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-10" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-11" x1="50" y1="5" x2="50" y2="10"></line>
+        <line class="line line-12" x1="50" y1="5" x2="50" y2="10"></line>
+    </g>
+
+    <line id="hour" class="line line-hour" x1="50" y1="25" x2="50" y2="50"></line>
+    <line id="minute" class="line line-minute" x1="50" y1="10" x2="50" y2="50"></line>
+    <circle cx="50" cy="50" r="3"></circle>
+
+    <g id="second" class="line line-second">
+        <line x1="50" y1="10" x2="50" y2="60"></line>
+        <circle cx="50" cy="50" r="1.5"></circle>
+    </g>
+</svg>

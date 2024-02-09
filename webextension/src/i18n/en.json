@@ -54,12 +54,10 @@
   "Backgrounds_BingDaily_Settings_Blur": "Blur",
   "Backgrounds_BingDaily_Settings_Filter": "Filter",
   "Backgrounds_BingDaily_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_NasaApod_Name": "NASA Astronomy Picture of the Day",
   "Backgrounds_NasaApod_Settings_Blur": "Blur",
   "Backgrounds_NasaApod_Settings_Filter": "Filter",
   "Backgrounds_NasaApod_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",
@@ -84,7 +82,6 @@
   "Backgrounds_RandomImage_Settings_Filter": "Filter",
   "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
   "Backgrounds_RandomImage_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_Pexels_Name": "Pexels photo",
   "Backgrounds_Pexels_Settings_SearchTerms": "Search terms",
   "Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
@@ -93,7 +90,6 @@
   "Backgrounds_Pexels_Settings_Filter": "Filter",
   "Backgrounds_Pexels_Settings_Refresh": "Refresh",
   "Backgrounds_Pexels_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_AnimeImage_Name": "Anime image",
   "Backgrounds_AnimeImage_Settings_Topic": "Topic",
   "Backgrounds_AnimeImage_Settings_Topic_Any": "Any",
@@ -249,5 +245,23 @@
   "Widgets_TopSites_Settings_Shadow": "Shadow",
   "Widgets_TopSites_Settings_ItemsPerRow": "Items per row",
   "Widgets_TopSites_Settings_RowCount": "Row count",
-  "Widgets_TopSites_Settings_ShowTitle": "Show titles"
+  "Widgets_TopSites_Settings_ShowTitle": "Show titles",
+  "Widgets_AnalogueClock_Name": "Analogue clock",
+  "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Watchface",
+  "Widgets_AnalogueClock_Settings_Tabs_Background": "Background",
+  "Widgets_AnalogueClock_Settings_Shadow": "Shadow",
+  "Widgets_AnalogueClock_Settings_Background_Color": "Color",
+  "Widgets_AnalogueClock_Settings_Watchface": "Watchface",
+  "Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Default",
+  "Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Variant 1",
+  "Widgets_AnalogueClock_Settings_Watchface_Variant2_Name": "Variant 2",
+  "Widgets_AnalogueClock_Settings_Watchface_Variant3_Name": "Variant 3",
+  "Widgets_AnalogueClock_Settings_Watchface_Color": "Watchface color",
+  "Widgets_AnalogueClock_Settings_Watchface_BackgroundColor": "Watchface background color",
+  "Widgets_AnalogueClock_Settings_Blur": "Blur",
+  "Widgets_AnalogueClock_Settings_SecondsArm_Visible": "Display seconds",
+  "Widgets_AnalogueClock_Settings_SecondsArm_Color": "Seconds color",
+  "Widgets_AnalogueClock_Settings_MinutesArm_Color": "Minutes color",
+  "Widgets_AnalogueClock_Settings_HoursArm_Color": "Hours color",
+  "Widgets_AnalogueClock_Settings_HourMarks_Color": "Hour marks color"
 }

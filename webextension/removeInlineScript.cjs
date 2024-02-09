@@ -1,7 +1,7 @@
 // removeInlineScript.cjs
 const glob = require('tiny-glob');
-const path = require('path');
-const fs = require('fs');
+const path = require('node:path');
+const fs = require('node:fs');
 
 function hash(value) {
   let hash = 5381;

@@ -1,0 +1,90 @@
+<svg width="300" height="300" viewBox="0 0 180 180">
+    <style type="text/css">
+        #hour {
+            transform-origin: 50% 50%;
+            transform: rotate(calc(var(--time-total-hours) * 30deg + var(--time-minutes) * 0.5deg))
+        }
+
+        #minute {
+            transform-origin: 50% 50%;
+            transform: rotate(calc(var(--time-total-minutes) * 6deg + var(--time-seconds) * 0.1deg))
+        }
+
+        #second {
+            visibility: var(--second-arm-visibility);
+            transform-origin: 50% 50%;
+            transform: rotate(calc(var(--time-total-seconds) * 6deg));
+        }
+
+        #clock-face {
+            stroke: var(--watchface-color);
+            stroke-width: .1rem;
+            fill: var(--watchface-background-color);
+        }
+
+        #centre {
+            stroke: var(--second-arm-color);
+            stroke-width: 1.5;
+            fill: var(--second-arm-color);
+        }
+
+        #minute-marker {
+            stroke: var(--hour-marks-color);
+            stroke-width: 5;
+            stroke-dasharray: 0.2, 0.8;
+            stroke-dashoffset: 0.1;
+            fill: none;
+        }
+
+        #hour-marker {
+            stroke: var(--hour-marks-color);
+            stroke-width: 10;
+            stroke-dasharray: 0.2, 4.8;
+            stroke-dashoffset: 0.1;
+            fill: none;
+        }
+
+        .hand {
+            stroke-width: 1;
+            stroke-linecap: round;
+        }
+
+        .hand-thick {
+            stroke-width: 4;
+        }
+
+        #hour .hand {
+            stroke: var(--hour-arm-color);
+        }
+
+        #minute .hand {
+            stroke: var(--minute-arm-color);
+        }
+
+        #second .hand {
+            stroke: var(--second-arm-color);
+        }
+    </style>
+    <g>
+        <circle id="clock-face" cx="90" cy="90" r="85" />
+
+        <g id="hour">
+            <line class="hand" x1="90" y1="90" x2="90" y2="45" />
+            <line class="hand hand-thick" x1="90" y1="80" x2="90" y2="40" />
+        </g>
+
+        <g id="minute">
+            <line class="hand" x1="90" y1="90" x2="90" y2="25" />
+            <line class="hand hand-thick" x1="90" y1="80" x2="90" y2="20" />
+        </g>
+
+        <g id="second">
+            <line class="hand hand-second" x1="90" y1="90" x2="90" y2="18" />
+        </g>
+
+        <circle id="centre" cx="90" cy="90" r="3" />
+
+        <circle id="minute-marker" cx="90" cy="90" r="80" pathLength="60" />
+        <circle id="hour-marker" cx="90" cy="90" r="77" pathLength="60" />
+    </g>
+</svg>

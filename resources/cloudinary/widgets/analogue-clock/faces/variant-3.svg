@@ -1,0 +1,213 @@
+<svg class="clock" viewBox="0 0 100 100">
+    <style type="text/css">
+        #hour {
+            transform-origin: 50% 50%;
+            transform: rotate(calc((var(--time-total-hours) * 30deg + var(--time-minutes) * 0.5deg) * -1));
+        }
+
+        #minute {
+            transform-origin: 50% 50%;
+            transform: rotate(calc((var(--time-total-minutes) * 6deg + var(--time-seconds) * 0.1deg) * -1));
+        }
+
+        #second {
+            visibility: var(--second-arm-visibility);
+            transform-origin: 50% 50%;
+            transform: rotate(calc((var(--time-total-seconds) * 6deg) * -1));
+        }
+
+        .clock .hand.hours {
+            stroke-width: 2;
+            stroke: var(--hour-arm-color);
+        }
+
+        .clock .hand.minutes {
+            stroke-width: 1;
+            stroke: var(--minute-arm-color);
+        }
+
+        .clock .hand.seconds {
+            stroke-width: 0.5;
+            stroke: var(--second-arm-color);
+            visibility: var(--second-arm-visibility);
+        }
+
+        .clock .hour-marks {
+            fill: var(--hour-marks-color);
+        }
+
+        .clock .minute-marks .mark {
+            stroke: var(--hour-marks-color);
+            stroke-width: 0.5;
+        }
+
+        .clock .second-marks {
+            transition: -webkit-transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275), -webkit-transform 200ms cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .clock .second-marks .mark {
+            stroke: var(--hour-marks-color);
+            stroke-width: 0.3;
+        }
+
+        .clock .minute-marks .numbered-mark {
+            fill: var(--hour-marks-color);
+            font-size: 3px;
+            font-family: sans-serif;
+            text-anchor: middle;
+        }
+
+        .clock .second-marks .numbered-mark {
+            fill: var(--hour-marks-color);
+            font-size: 2px;
+            font-family: sans-serif;
+            text-anchor: middle;
+        }
+    </style>
+    <defs>
+        <path id="path" d="M50,12a38,38 0 1,1 0,76a38,38 0 1,1 0,-76"></path>
+    </defs>
+    <path class="hand hours" d="M50 25 V50"></path>
+    <path class="hand minutes" d="M50 14 V50"></path>
+    <path class="hand seconds" d="M50 3 V50"></path>
+    <text id="hour" class="hour-marks" font-size="5" font-family="sans-serif" letter-spacing="-0.4"
+        text-anchor="middle">
+        <textPath href="#path" startOffset="0%">XII</textPath>
+        <textPath href="#path" startOffset="8.333333333333332%">I</textPath>
+        <textPath href="#path" startOffset="16.666666666666664%">II</textPath>
+        <textPath href="#path" startOffset="25%">III</textPath>
+        <textPath href="#path" startOffset="33.33333333333333%">IIII</textPath>
+        <textPath href="#path" startOffset="41.66666666666667%">V</textPath>
+        <textPath href="#path" startOffset="50%">VI</textPath>
+        <textPath href="#path" startOffset="58.333333333333336%">VII</textPath>
+        <textPath href="#path" startOffset="66.66666666666666%">VIII</textPath>
+        <textPath href="#path" startOffset="75%">IX</textPath>
+        <textPath href="#path" startOffset="83.33333333333334%">X</textPath>
+        <textPath href="#path" startOffset="91.66666666666666%">XI</textPath>
+        <textPath href="#path" startOffset="100%">XII</textPath>
+    </text>
+    <g id="second" class="second-marks"><text class="numbered-mark" transform="rotate(0 50 50)" x="50" y="2">0</text>
+        <path class="mark" transform="rotate(6 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(12 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(18 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(24 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(30 50 50)" x="50" y="2">5</text>
+        <path class="mark" transform="rotate(36 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(42 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(48 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(54 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(60 50 50)" x="50" y="2">10</text>
+        <path class="mark" transform="rotate(66 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(72 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(78 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(84 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(90 50 50)" x="50" y="2">15</text>
+        <path class="mark" transform="rotate(96 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(102 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(108 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(114 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(120 50 50)" x="50" y="2">20</text>
+        <path class="mark" transform="rotate(126 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(132 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(138 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(144 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(150 50 50)" x="50" y="2">25</text>
+        <path class="mark" transform="rotate(156 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(162 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(168 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(174 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(180 50 50)" x="50" y="2">30</text>
+        <path class="mark" transform="rotate(186 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(192 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(198 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(204 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(210 50 50)" x="50" y="2">35</text>
+        <path class="mark" transform="rotate(216 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(222 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(228 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(234 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(240 50 50)" x="50" y="2">40</text>
+        <path class="mark" transform="rotate(246 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(252 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(258 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(264 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(270 50 50)" x="50" y="2">45</text>
+        <path class="mark" transform="rotate(276 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(282 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(288 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(294 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(300 50 50)" x="50" y="2">50</text>
+        <path class="mark" transform="rotate(306 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(312 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(318 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(324 50 50)" d="M 50 2 V 1"></path><text class="numbered-mark"
+            transform="rotate(330 50 50)" x="50" y="2">55</text>
+        <path class="mark" transform="rotate(336 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(342 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(348 50 50)" d="M 50 2 V 1"></path>
+        <path class="mark" transform="rotate(354 50 50)" d="M 50 2 V 1"></path>
+    </g>
+    <g id="minute" class="minute-marks"><text class="numbered-mark" transform="rotate(0 50 50)" x="50" y="5">0</text>
+        <path class="mark" transform="rotate(6 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(12 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(18 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(24 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(30 50 50)" x="50" y="5">5</text>
+        <path class="mark" transform="rotate(36 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(42 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(48 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(54 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(60 50 50)" x="50" y="5">10</text>
+        <path class="mark" transform="rotate(66 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(72 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(78 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(84 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(90 50 50)" x="50" y="5">15</text>
+        <path class="mark" transform="rotate(96 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(102 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(108 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(114 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(120 50 50)" x="50" y="5">20</text>
+        <path class="mark" transform="rotate(126 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(132 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(138 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(144 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(150 50 50)" x="50" y="5">25</text>
+        <path class="mark" transform="rotate(156 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(162 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(168 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(174 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(180 50 50)" x="50" y="5">30</text>
+        <path class="mark" transform="rotate(186 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(192 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(198 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(204 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(210 50 50)" x="50" y="5">35</text>
+        <path class="mark" transform="rotate(216 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(222 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(228 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(234 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(240 50 50)" x="50" y="5">40</text>
+        <path class="mark" transform="rotate(246 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(252 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(258 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(264 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(270 50 50)" x="50" y="5">45</text>
+        <path class="mark" transform="rotate(276 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(282 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(288 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(294 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(300 50 50)" x="50" y="5">50</text>
+        <path class="mark" transform="rotate(306 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(312 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(318 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(324 50 50)" d="M 50 3 V 4"></path><text class="numbered-mark"
+            transform="rotate(330 50 50)" x="50" y="5">55</text>
+        <path class="mark" transform="rotate(336 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(342 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(348 50 50)" d="M 50 3 V 4"></path>
+        <path class="mark" transform="rotate(354 50 50)" d="M 50 3 V 4"></path>
+    </g>
+</svg>

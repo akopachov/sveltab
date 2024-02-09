@@ -6,7 +6,7 @@ const { addDynamicIconSelectors } = require('@iconify/tailwind');
 const config = {
   content: [
     './src/**/*.{html,js,svelte,ts}',
-    require('path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
+    require('node:path').join(require.resolve('@skeletonlabs/skeleton'), '../**/*.{html,js,svelte,ts}'),
   ],
   darkMode: 'class',
 
