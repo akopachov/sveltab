@@ -1,6 +1,9 @@
 # SvelTab
 
 [![License](https://img.shields.io/github/license/akopachov/sveltab)](/LICENSE)
+[![Mozilla Add-on Version](https://img.shields.io/amo/v/sveltab)](https://addons.mozilla.org/firefox/addon/sveltab/)
+[![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/kjfmkbajdehhjlfmldcghgcgmffnohld)](https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld)
+[![Microsoft Edge Addons](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fgjmmknaifmjpakigdnodcdmpfkkccegj)](https://microsoftedge.microsoft.com/addons/detail/sveltab/gjmmknaifmjpakigdnodcdmpfkkccegj)
 
 A beautiful, customizable New Tab page for Firefox, Chrome, Edge and other Chromium-based browsers.
 
