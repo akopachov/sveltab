@@ -16,7 +16,8 @@ export abstract class ImageBackgroundProviderBase<
     this.node.style.backgroundImage = `url("${url}")`;
   }
 
-  apply() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  apply(abortSignal: AbortSignal) {
     this.node.style.backgroundSize = 'cover';
     this.node.style.backgroundPosition = 'center';
     this.node.style.transition = 'background-image 0.3s ease-in-out';

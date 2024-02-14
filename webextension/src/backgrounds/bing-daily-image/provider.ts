@@ -25,8 +25,8 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
-  async apply() {
-    super.apply();
+  async apply(abortSignal: AbortSignal) {
+    super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
       lastUrl: '',
@@ -52,6 +52,9 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
             this.settings.locale.value
           }&image_format=jpg`,
         ).then(r => r.json());
+        if (!response?.url) {
+          throw new Error('Unexpected response');
+        }
         this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastUrl = response.url;

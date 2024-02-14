@@ -13,6 +13,7 @@ import { Background as BingDailyImageBackground } from '../backgrounds/bing-dail
 import { Background as AnimeImageBackground } from '../backgrounds/anime-image';
 import { Background as NasaApodBackground } from '../backgrounds/nasa-apod';
 import { Background as PexelsBackground } from '../backgrounds/pexels';
+import { Background as WikimediaCommonsPodBackground } from '../backgrounds/wikimedia-commons-pod';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
@@ -26,8 +27,8 @@ export abstract class BackgroundProvider<T extends BackgroundSettingsExtra> exte
   protected node: HTMLElement;
   protected settings: T;
 
-  abstract apply(): void;
-  abstract forceUpdate(): void;
+  abstract apply(abortSignal: AbortSignal): void;
+  abstract forceUpdate(abortSignal: AbortSignal): void;
   abstract destroy(): void;
 }
 
@@ -54,4 +55,5 @@ export const BackgroundCatalog: Readonly<BackgroundCatalogItem[]> = [
   AnimeImageBackground,
   NasaApodBackground,
   PexelsBackground,
+  WikimediaCommonsPodBackground,
 ];

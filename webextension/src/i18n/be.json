@@ -60,6 +60,11 @@
 	"Backgrounds_NasaApod_Settings_Filter": "Фільтр",
 	"Backgrounds_NasaApod_Settings_Disclaimer": "Змест прадастаўлены",
 
+  "Backgrounds_WikimediaCommonsPod_Name": "Карціна дня Wikimedia Commons",
+	"Backgrounds_WikimediaCommonsPod_Settings_Blur": "Размыццё",
+	"Backgrounds_WikimediaCommonsPod_Settings_Filter": "Фільтр",
+	"Backgrounds_WikimediaCommonsPod_Settings_Disclaimer": "Змест прадастаўлены",
+
 	"Backgrounds_RandomColor_Name": "Выпадковы колер",
 	"Backgrounds_RandomColor_Settings_Luminosity": "Свяцільнасць",
 	"Backgrounds_RandomColor_Settings_Luminosity_Any": "Любая",

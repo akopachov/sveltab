@@ -30,8 +30,8 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
-  async apply() {
-    super.apply();
+  async apply(abortSignal: AbortSignal) {
+    super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
@@ -40,11 +40,11 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     }
 
     const interval = setInterval(() => {
-      this.#update();
+      this.#update(abortSignal);
     }, minutesToMilliseconds(1));
 
     const updateDeb = pDebounce(() => {
-      this.#update();
+      this.#update(abortSignal);
     }, secondsToMilliseconds(1));
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(() => updateDeb());
 
@@ -56,15 +56,18 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       searchTermUnsubsribe();
       resizeObserver.unobserve(this.node);
     };
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  forceUpdate(): void {
+  forceUpdate(abortSignal: AbortSignal): void {
     this.#localSettings!.lastChangedTime = 0;
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  async #update() {
+  async #update(abortSignal: AbortSignal) {
+    if (abortSignal.aborted) {
+      return;
+    }
     let timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (this.#localSettings!.lastSearchTerm !== this.settings.searchTerms.value) {
       this.#localSettings!.pool = [];
@@ -90,7 +93,11 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
             headers: {
               Authorization: PUBLIC_PEXELS_API_KEY,
             },
+            signal: abortSignal,
           }).then(r => r.json());
+          if (!Array.isArray(response?.photos)) {
+            throw new Error('Unexpected response');
+          }
 
           this.#localSettings!.pool = response.photos.map((m: any) => m.src.original);
           this.#localSettings!.totalPages = Math.ceil(response.total_results / response.per_page);
@@ -104,6 +111,9 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       } catch (e) {
         log.warn(e);
       }
+    }
+    if (abortSignal.aborted) {
+      return;
     }
     this.setImage(pickBetterUrl(this.#localSettings!.lastSrc));
   }

@@ -6,8 +6,8 @@ import { secondsToMilliseconds } from 'date-fns';
 export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #unsubscribe!: () => void;
 
-  apply(): void {
-    super.apply();
+  apply(abortSignal: AbortSignal): void {
+    super.apply(abortSignal);
     const updateDeb = debounce(() => this.forceUpdate(), secondsToMilliseconds(1));
     this.#unsubscribe = this.settings.url.subscribe(() => updateDeb());
     this.forceUpdate();

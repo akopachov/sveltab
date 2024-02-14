@@ -18,8 +18,8 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
-  async apply() {
-    super.apply();
+  async apply(abortSignal: AbortSignal) {
+    super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
@@ -28,25 +28,29 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
     }
 
     const interval = setInterval(() => {
-      this.#update();
+      this.#update(abortSignal);
     }, minutesToMilliseconds(1));
 
-    const updateDeb = pDebounce(() => this.#update(), secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(() => updateDeb());
 
     this.#unsubscribe = () => {
       clearInterval(interval);
       searchTermUnsubsribe();
     };
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  forceUpdate(): void {
+  forceUpdate(abortSignal: AbortSignal): void {
     this.#localSettings!.lastChangedTime = 0;
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  async #update() {
+  async #update(abortSignal: AbortSignal) {
+    if (abortSignal.aborted) {
+      return;
+    }
+
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (
       timeSinceLastChange >= this.settings.updateInterval.value ||
@@ -55,7 +59,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
       try {
         const response = await fetch(
           `https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${encodeURIComponent(this.settings.searchTerms.value)}`,
-          { method: 'head' },
+          { method: 'head', signal: abortSignal },
         );
         this.#localSettings!.lastUrl = response.url;
         this.#localSettings!.lastChangedTime = Date.now();
@@ -65,6 +69,10 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
         log.warn(e);
       }
     }
+    if (abortSignal.aborted) {
+      return;
+    }
+
     this.setImage(this.#localSettings!.lastUrl);
   }
 

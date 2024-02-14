@@ -58,6 +58,12 @@
   "Backgrounds_NasaApod_Settings_Blur": "Blur",
   "Backgrounds_NasaApod_Settings_Filter": "Filter",
   "Backgrounds_NasaApod_Settings_Disclaimer": "Content provided by",
+
+  "Backgrounds_WikimediaCommonsPod_Name": "Wikimedia Commons Picture of the Day",
+  "Backgrounds_WikimediaCommonsPod_Settings_Blur": "Blur",
+  "Backgrounds_WikimediaCommonsPod_Settings_Filter": "Filter",
+  "Backgrounds_WikimediaCommonsPod_Settings_Disclaimer": "Content provided by",
+
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",

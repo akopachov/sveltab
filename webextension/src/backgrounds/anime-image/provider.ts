@@ -20,8 +20,8 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
-  async apply() {
-    super.apply();
+  async apply(abortSignal: AbortSignal) {
+    super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
@@ -30,25 +30,32 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     }
 
     const interval = setInterval(() => {
-      this.#update();
+      this.#update(abortSignal);
     }, minutesToMilliseconds(1));
 
-    const updateDeb = pDebounce(() => this.#update(), secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const topicUnsubsribe = this.settings.topic.subscribe(() => updateDeb());
+
+    const resizeObserver = new ResizeObserver(() => updateDeb());
+    resizeObserver.observe(this.node);
 
     this.#unsubscribe = () => {
       clearInterval(interval);
       topicUnsubsribe();
+      resizeObserver.unobserve(this.node);
     };
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  forceUpdate(): void {
+  forceUpdate(abortSignal: AbortSignal): void {
     this.#localSettings!.lastChangedTime = 0;
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  async #update() {
+  async #update(abortSignal: AbortSignal) {
+    if (abortSignal.aborted) {
+      return;
+    }
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (
       timeSinceLastChange >= this.settings.updateInterval.value ||
@@ -59,7 +66,10 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
           this.settings.topic.value === AnimeTopics.Any
             ? availableTopics[Math.floor(Math.random() * availableTopics.length)]
             : this.settings.topic.value;
-        const response = await fetch(`https://t.mwm.moe/${topic}/?json`).then(r => r.json());
+        const response = await fetch(`https://t.mwm.moe/${topic}/?json`, { signal: abortSignal }).then(r => r.json());
+        if (!response?.url) {
+          throw new Error('Unexpected response');
+        }
         this.#localSettings!.lastUrl = response.url;
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
@@ -68,7 +78,10 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         log.warn(e);
       }
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl));
+    if (abortSignal.aborted) {
+      return;
+    }
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

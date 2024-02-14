@@ -30,17 +30,19 @@ export const dynamicBackground: Action<
     if (background) {
       backgroundProviderDestroyPromise = background.components.provider.getValue().then(providerClass => {
         const provider = new providerClass(node, background.settings.extra);
+        const abortController = new AbortController();
         provider.addEventListener('backgroundChanged', notifyBackgroundChanged);
         function forceNew() {
           if (background) {
-            provider.forceUpdate();
+            provider.forceUpdate(abortController.signal);
           }
         }
         forceNewSubscribers.add(forceNew);
-        provider.apply();
+        provider.apply(abortController.signal);
         return () => {
           forceNewSubscribers.delete(forceNew);
           provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
+          abortController.abort('User has changed background provider');
           provider.destroy();
         };
       });
