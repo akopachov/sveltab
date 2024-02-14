@@ -14,7 +14,7 @@ jobs:
     outputs:
       commit_hash: ${{steps.commit_new_version.outputs.commit_hash}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Set new version format
         run: |
@@ -31,7 +31,7 @@ jobs:
           fi
 
       - id: commit_new_version
-        uses: stefanzweifel/git-auto-commit-action@v4.16.0
+        uses: stefanzweifel/git-auto-commit-action@v5.0.0
         with:
           commit_message: Updated version
           push_options: '--force'
@@ -42,13 +42,13 @@ jobs:
     outputs:
       upload_url: ${{steps.create-release.outputs.upload_url}}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: "${{needs.set-new-version.outputs.commit_hash}}"
           fetch-depth: 0
 
       - id: create-release
-        uses: ncipollo/release-action@v1.12.0
+        uses: ncipollo/release-action@v1.14.0
         with:
           bodyFile: ".github/release-body.md"
           artifactErrorsFailBuild: true
@@ -75,17 +75,17 @@ jobs:
       PUBLIC_PEXELS_API_KEY: ${{secrets.PUBLIC_PEXELS_API_KEY}}
     
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           ref: "${{needs.set-new-version.outputs.commit_hash}}"
           fetch-depth: 0
 
       - name: Install Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version-file: ./webextension/.nvmrc
     
-      - uses: pnpm/action-setup@v2.4.0
+      - uses: pnpm/action-setup@v3.0.0
         name: Install pnpm
         with:
           version: latest
@@ -107,7 +107,7 @@ jobs:
           rename 's/sveltab-/sveltab-firefox-/' build-web-ext/firefox/sveltab-*.zip
           find ./build-web-ext -type f -mindepth 2 -exec mv {} ./build-web-ext \;
       
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: release
           path: |
@@ -124,7 +124,7 @@ jobs:
     needs: ['create-release', 'build']
     steps:
       - name: Download release artifacts
-        uses: actions/download-artifact@v3.0.2
+        uses: actions/download-artifact@v4
         with:
           name: release
           path: release
