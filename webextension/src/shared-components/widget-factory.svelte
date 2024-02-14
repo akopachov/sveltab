@@ -71,7 +71,8 @@
           this={component}
           bind:this={widgetComponent}
           settings={widget.settings.extra}
-          id={widget.id} />
+          id={widget.id}
+          on:autosettingsupdate />
       </div>
     {/await}
   </div>

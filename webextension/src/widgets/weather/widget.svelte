@@ -2,7 +2,7 @@
   import { MeasurementUnits, type Settings } from './settings';
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
-  import { onMount } from 'svelte';
+  import { createEventDispatcher, onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { fetchWeatherApi } from 'openmeteo';
   import { localeCharSubset } from '$stores/locale';
@@ -27,6 +27,7 @@
   } from '$lib/geolocation';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
+  const dispatch = createEventDispatcher();
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestForecast = {
@@ -185,6 +186,7 @@
 
         $latitude = position.latitude;
         $longitude = position.longitude;
+        dispatch('autosettingsupdate', { id, settings });
       }
     } catch (e) {
       log.warn("An error ocurred during querying user's geolocation", e);

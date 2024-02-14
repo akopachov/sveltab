@@ -83,11 +83,13 @@
     },
   };
 
-  const saveWorkspaceChangesDefer = pDebounce(async () => {
+  async function saveWorkspaceChanges() {
     if (workspace?.hasChanges.value === true) {
       await Workspaces.save(workspaceId, workspace);
     }
-  }, secondsToMilliseconds(10));
+  }
+
+  const saveWorkspaceChangesDefer = pDebounce(saveWorkspaceChanges, secondsToMilliseconds(10));
 
   function onBeforeUnload(event: BeforeUnloadEvent) {
     if (workspace?.hasChanges.value === true) {
@@ -297,7 +299,8 @@
         isSelected={!$workspaceLocked && selectedWidgets.has(widget)}
         id="widget_{widget.id}"
         class="widget_{widget.settings.type}"
-        workspaceLocked={$workspaceLocked} />
+        workspaceLocked={$workspaceLocked}
+        on:autosettingsupdate={saveWorkspaceChanges} />
     {/each}
     {#if !$workspaceLocked}
       <WidgetMoveController
