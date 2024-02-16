@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
-import { hoursToMilliseconds } from 'date-fns';
+import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl } from '$lib/cdn';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
@@ -33,18 +33,28 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
       lastUrl: '',
     };
 
-    const updateDeb = pDebounce.promise(() => this.#update());
+    const updateDeb = pDebounce.promise(() => this.#update(abortSignal));
+    const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const localeUnsubscribe = this.settings.locale.subscribe(() => updateDeb());
-    this.#unsubscribe = () => localeUnsubscribe();
+    const resizeObserver = new ResizeObserver(() => update1SecDeb());
+    resizeObserver.observe(this.node);
+
+    this.#unsubscribe = () => {
+      localeUnsubscribe();
+      resizeObserver.unobserve(this.node);
+    };
     updateDeb();
   }
 
-  forceUpdate(): void {
+  forceUpdate(abortSignal: AbortSignal): void {
     this.#localSettings!.lastChangedTime = 0;
-    this.#update();
+    this.#update(abortSignal);
   }
 
-  async #update() {
+  async #update(abortSignal: AbortSignal) {
+    if (abortSignal.aborted) {
+      return;
+    }
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale) {
       try {
@@ -52,6 +62,9 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
           `https://bing.biturl.top/?resolution=${getClosestResolution()}&format=json&index=0&mkt=${
             this.settings.locale.value
           }&image_format=jpg`,
+          {
+            signal: abortSignal,
+          },
         ).then(r => r.json());
         if (!response?.url) {
           throw new Error('Unexpected response');
@@ -63,6 +76,9 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
       } catch (e) {
         log.warn(e);
       }
+    }
+    if (abortSignal.aborted) {
+      return;
     }
     this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
