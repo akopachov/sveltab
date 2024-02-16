@@ -4,6 +4,7 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { hoursToMilliseconds } from 'date-fns';
+import { getImageCdnUrl } from '$lib/cdn';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
@@ -63,7 +64,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         log.warn(e);
       }
     }
-    this.setImage(this.#localSettings!.lastUrl);
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy(): void {
