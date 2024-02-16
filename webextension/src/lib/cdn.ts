@@ -1,3 +1,5 @@
+const ImageCdnAppBlacklistedChars = /[ŽžÀ-ÿ()]/;
+
 export function getImageCdnUrl(
   imgUrl: string | undefined | null,
   width?: number | 'screen',
@@ -6,27 +8,23 @@ export function getImageCdnUrl(
   if (!imgUrl) {
     return '';
   }
-  if (/[ŽžÀ-ÿ]/.test(decodeURIComponent(imgUrl))) {
-    // imagecdn.app doesn't like characters with an accent or diacritic mark
-    return imgUrl;
+
+  const encodedUrl = encodeURIComponent(imgUrl);
+
+  let cdnUrl: string;
+  if (ImageCdnAppBlacklistedChars.test(decodeURIComponent(imgUrl))) {
+    // imagecdn.app doesn't like characters with an accent or diacritic mark as well as few other chars, so let's use another CDN that case
+    cdnUrl = `https://demo.tiny.pictures/?source=${encodedUrl}&resizeType=cover&format=webp&progressive=true&optimize=true`;
+  } else {
+    cdnUrl = `https://imagecdn.app/v2/image/${encodedUrl}?format=webp`;
   }
 
-  if (width === 'screen') {
-    width = document.documentElement.clientWidth;
-  }
-
-  if (height === 'screen') {
-    height = document.documentElement.clientHeight;
-  }
-
-  const strUrl = encodeURIComponent(imgUrl);
-  let cdnUrl = `https://imagecdn.app/v2/image/${strUrl}?format=webp`;
   if (width) {
-    cdnUrl += `&width=${width}`;
+    cdnUrl += `&width=${width === 'screen' ? document.documentElement.clientWidth : width}`;
   }
 
   if (height) {
-    cdnUrl += `&height=${height}`;
+    cdnUrl += `&height=${height === 'screen' ? document.documentElement.clientHeight : height}`;
   }
 
   return cdnUrl;
