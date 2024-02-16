@@ -270,7 +270,8 @@
     on:dragover={onWidgetCatalogItemDragOver}
     bind:this={workspaceEl}>
     <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
-    <div class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hover:w-[86px]">
+    <div
+      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[86px]">
       <div class="w-max flex flex-row">
         <button
           type="button"

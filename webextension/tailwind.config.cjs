@@ -11,7 +11,11 @@ const config = {
   darkMode: 'class',
 
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        hoverable: { raw: '(hover: hover)' },
+      },
+    },
   },
 
   plugins: [
