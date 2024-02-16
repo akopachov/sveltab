@@ -18,10 +18,10 @@ interface LocalSettings {
   totalPages: number;
 }
 
-function pickBetterUrl(src: string | undefined | null) {
+function pickBetterUrl(src: string | undefined | null, node: HTMLElement) {
   if (!src) return '';
-  const width = document.documentElement.clientWidth;
-  const height = document.documentElement.clientHeight;
+  const width = node.clientWidth;
+  const height = node.clientHeight;
 
   return `${src}?fit=crop&h=${height}&w=${width}`;
 }
@@ -115,7 +115,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc));
+    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
   }
 
   destroy() {

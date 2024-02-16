@@ -67,7 +67,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, this.node.offsetWidth, this.node.offsetHeight));
   }
 
   destroy() {

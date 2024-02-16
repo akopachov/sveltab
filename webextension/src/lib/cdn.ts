@@ -2,8 +2,8 @@ const ImageCdnAppBlacklistedChars = /[ŽžÀ-ÿ()]/;
 
 export function getImageCdnUrl(
   imgUrl: string | undefined | null,
-  width?: number | 'screen',
-  height?: number | 'screen',
+  width?: number | 'document',
+  height?: number | 'document',
 ) {
   if (!imgUrl) {
     return '';
@@ -20,11 +20,11 @@ export function getImageCdnUrl(
   }
 
   if (width) {
-    cdnUrl += `&width=${width === 'screen' ? document.documentElement.clientWidth : width}`;
+    cdnUrl += `&width=${width === 'document' ? document.documentElement.clientWidth : width}`;
   }
 
   if (height) {
-    cdnUrl += `&height=${height === 'screen' ? document.documentElement.clientHeight : height}`;
+    cdnUrl += `&height=${height === 'document' ? document.documentElement.clientHeight : height}`;
   }
 
   return cdnUrl;
