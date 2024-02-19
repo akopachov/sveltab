@@ -26,6 +26,14 @@
   {/key}
   <script>
     (function () {
+      const plain = localStorage.getItem('FontSource_preload');
+      if (plain) {
+        for (const src of plain.split(';')) {
+          document.write(`<link rel="preload" href="${src}" as="font" type="font/woff2" crossorigin />`);
+        }
+      }
+    })();
+    (function () {
       const preferedColorScheme = localStorage.getItem('preferedColorScheme') || 'auto';
       const elemHtmlClasses = document.documentElement.classList;
       const classDark = 'dark';

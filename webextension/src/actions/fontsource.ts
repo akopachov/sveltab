@@ -1,4 +1,6 @@
+import { browser } from '$app/environment';
 import { logger } from '$lib/logger';
+import pDebounce from 'p-debounce';
 import type { Action } from 'svelte/action';
 
 const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
@@ -43,6 +45,26 @@ export type FontSourceActionSettings = {
 function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
   return `${subset}_${weight}_${style}`;
 }
+
+const fontFaceSources = new WeakMap<FontFace, string>();
+const storeFontSourcesToPreload = pDebounce(async () => {
+  const values = await Promise.all(ActiveFonts.values());
+  const sources = [];
+  for (const { fontSets } of values) {
+    for (const { fontSet } of fontSets.values()) {
+      for (const fontFace of fontSet) {
+        const src = fontFaceSources.get(fontFace);
+        if (src) {
+          sources.push(src);
+        }
+      }
+    }
+  }
+
+  if (browser) {
+    localStorage.setItem('FontSource_preload', sources.join(';'));
+  }
+}, 500);
 
 export const fontsource: Action<
   HTMLElement,
@@ -130,18 +152,20 @@ export const fontsource: Action<
               activeFontRef.fontSets.set(cacheKey, loadedFontSet);
               const fontObj = ((activeFontRef.raw.variants[String(weight)] || {})[style] || {})[subset];
               if (!fontObj) continue;
-              const source = Object.entries(fontObj.url)
-                .map(([format, url]) => `url(${url}) format(${format})`)
-                .join(', ');
+              const uri = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
+              const format = fontObj.url.woff2 ? 'woff2' : fontObj.url.woff ? 'woff' : 'ttf';
+              const source = `url(${uri}) format(${format})`;
               const fontFace = new FontFace(activeFontRef.fontFamily, source, {
                 weight: String(weight),
                 style: style,
                 unicodeRange: unicodeRange,
               });
+              fontFaceSources.set(fontFace, uri);
               document.fonts.add(fontFace);
               loadedFontSet!.fontSet.add(fontFace);
               promisesToWait.push(fontFace.load());
               log.debug('Loaded font', activeFontRef.fontFamily, weight, style, subset);
+              storeFontSourcesToPreload();
             }
           }
         }
@@ -180,6 +204,8 @@ export const fontsource: Action<
                 for (const fontFace of fontSet.fontSet) {
                   fontFacesToRemove.push(fontFace);
                   log.debug('Unloaded font', activeFontRef.fontFamily, weight, style, subset);
+                  fontFaceSources.delete(fontFace);
+                  storeFontSourcesToPreload();
                 }
               }
             }
