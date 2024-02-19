@@ -28,9 +28,18 @@
     (function () {
       const plain = localStorage.getItem('FontSource_preload');
       if (plain) {
+        const frag = document.createDocumentFragment();
         for (const src of plain.split(';')) {
-          document.write(`<link rel="preload" href="${src}" as="font" type="font/woff2" crossorigin />`);
+          const link = document.createElement('link');
+          link.rel = 'preload';
+          link.as = 'font';
+          link.type = 'font/woff2';
+          link.crossOrigin = true;
+          link.setAttribute('href', src);
+          frag.appendChild(link);
         }
+
+        document.head.appendChild(frag);
       }
     })();
     (function () {
