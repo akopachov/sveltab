@@ -26,7 +26,7 @@
   {/key}
   <script>
     (function () {
-      const plain = localStorage.getItem('FontSource_preload') || $$DEFAULT_FONTSOURCE_PRELOAD$$;
+      const plain = localStorage.getItem('FontSource_preload') || __SVELTAB_DEFAULT_FONTSOURCE_PRELOAD__;
       if (plain) {
         const frag = document.createDocumentFragment();
         for (const src of plain.split(';')) {
