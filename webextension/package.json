@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@floating-ui/dom": "^1.6.3",
-    "@iconify/json": "^2.2.183",
+    "@iconify/json": "^2.2.184",
     "@iconify/tailwind": "^0.1.4",
     "@iconify/utils": "^2.1.22",
     "@inlang/paraglide-js": "1.2.5",

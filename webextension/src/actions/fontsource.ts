@@ -3,19 +3,44 @@ import type { Action } from 'svelte/action';
 
 const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
 
-const activeFonts = new Map<
+const ActiveFonts = new Map<
   string,
   Promise<{ fontFamily: string; fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>; raw: any }>
 >();
 
+export type FontSubset =
+  | 'latin'
+  | 'latin-ext'
+  | 'cyrillic'
+  | 'cyrillic-ext'
+  | 'greek'
+  | 'vietnamese'
+  | 'hebrew'
+  | 'cyrillic'
+  | (string & NonNullable<unknown>);
+
+export type FontStyle = 'normal' | 'italic' | (string & NonNullable<unknown>);
+
+export enum FontWeight {
+  Thin = 100,
+  ExtraLight = 200,
+  Light = 300,
+  Normal = 400,
+  Medium = 500,
+  SemiBold = 600,
+  Bold = 700,
+  ExtraBold = 800,
+  Heavy = 900,
+}
+
 export type FontSourceActionSettings = {
   font: string;
-  subsets?: ReadonlyArray<string> | null;
-  weights?: ReadonlyArray<number> | null;
-  styles?: ReadonlyArray<string> | null;
+  subsets?: ReadonlyArray<FontSubset> | null;
+  weights?: ReadonlyArray<FontWeight> | null;
+  styles?: ReadonlyArray<FontStyle> | null;
 };
 
-function getKey(subset: string, weight: number, style: string) {
+function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
   return `${subset}_${weight}_${style}`;
 }
 
@@ -25,9 +50,9 @@ export const fontsource: Action<
   { 'on:fontChanged': (e: CustomEvent<string>) => void }
 > = function (node: HTMLElement, settings: FontSourceActionSettings) {
   let currentFont: string | null = '';
-  const currentSubsets: Set<string> = new Set<string>();
-  const currentWeights: Set<number> = new Set<number>();
-  const currentStyles: Set<string> = new Set<string>();
+  const currentSubsets: Set<FontSubset> = new Set<FontSubset>();
+  const currentWeights: Set<FontWeight> = new Set<FontWeight>();
+  const currentStyles: Set<FontStyle> = new Set<FontStyle>();
 
   async function updateFont(s: FontSourceActionSettings) {
     if (
@@ -42,19 +67,19 @@ export const fontsource: Action<
 
     const fontFacesToRemove = await removeCurrentFont();
     if (fontId) {
-      let activeFontRefPromise = activeFonts.get(fontId);
+      let activeFontRefPromise = ActiveFonts.get(fontId);
       if (!activeFontRefPromise) {
         activeFontRefPromise = new Promise(resolve => {
           fetch(`https://api.fontsource.org/v1/fonts/${fontId}`)
             .then(r => r.json())
             .then(fontObj => resolve({ fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() }));
         });
-        activeFonts.set(fontId, activeFontRefPromise);
+        ActiveFonts.set(fontId, activeFontRefPromise);
       }
 
       const activeFontRef = await activeFontRefPromise;
 
-      const availableSubsets = <string[]>activeFontRef.raw.subsets;
+      const availableSubsets = <FontSubset[]>activeFontRef.raw.subsets;
       let subsets = s.subsets;
       if (subsets) {
         subsets = subsets.filter(s => availableSubsets.includes(s));
@@ -65,7 +90,7 @@ export const fontsource: Action<
         subsets = availableSubsets;
       }
 
-      const availableStyles = <string[]>activeFontRef.raw.styles;
+      const availableStyles = <FontStyle[]>activeFontRef.raw.styles;
       let styles = s.styles;
       if (styles) {
         styles = styles.filter(s => availableStyles.includes(s));
@@ -76,12 +101,12 @@ export const fontsource: Action<
         styles = availableStyles;
       }
 
-      const availableWeights = <number[]>activeFontRef.raw.weights;
+      const availableWeights = <FontWeight[]>activeFontRef.raw.weights;
       let weights = s.weights;
       if (weights) {
         weights = weights.filter(s => availableWeights.includes(s));
         if (weights.length <= 0) {
-          weights = [400];
+          weights = [FontWeight.Normal];
         }
       } else {
         weights = availableWeights;
@@ -140,7 +165,7 @@ export const fontsource: Action<
     if (!currentFont) return [];
 
     const fontFacesToRemove = [];
-    const activeFontRefPromise = activeFonts.get(currentFont);
+    const activeFontRefPromise = ActiveFonts.get(currentFont);
     if (activeFontRefPromise) {
       const activeFontRef = await activeFontRefPromise;
       for (const subset of currentSubsets) {
