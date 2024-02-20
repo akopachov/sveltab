@@ -26,10 +26,22 @@
   {/key}
   <script>
     (function () {
+      function* iterSplitStr(str, separator) {
+        let start = 0;
+        let end = 0;
+        while ((end = str.indexOf(separator, start)) >= 0) {
+          yield str.substring(start, end);
+          start = end + 1;
+        }
+
+        if (start < str.length) {
+          yield str.substring(start);
+        }
+      }
       const plain = localStorage.getItem('FontSource_preload') || __SVELTAB_DEFAULT_FONTSOURCE_PRELOAD__;
       if (plain) {
         const frag = document.createDocumentFragment();
-        for (const src of plain.split(';')) {
+        for (const src of iterSplitStr(plain, ';')) {
           const link = document.createElement('link');
           link.rel = 'preload';
           link.as = 'font';
