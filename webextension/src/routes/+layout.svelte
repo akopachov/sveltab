@@ -24,54 +24,6 @@
   {#key $locale}
     <title>{m.Core_Page_Title()}</title>
   {/key}
-  <script>
-    (function () {
-      function* iterSplitStr(str, separator) {
-        let start = 0;
-        let end = 0;
-        while ((end = str.indexOf(separator, start)) >= 0) {
-          yield str.substring(start, end);
-          start = end + 1;
-        }
-
-        if (start < str.length) {
-          yield str.substring(start);
-        }
-      }
-      const plain = localStorage.getItem('FontSource_preload') || __SVELTAB_DEFAULT_FONTSOURCE_PRELOAD__;
-      if (plain) {
-        const frag = document.createDocumentFragment();
-        for (const src of iterSplitStr(plain, ';')) {
-          const link = document.createElement('link');
-          link.rel = 'preload';
-          link.as = 'font';
-          link.type = 'font/woff2';
-          link.crossOrigin = true;
-          link.setAttribute('href', src);
-          frag.appendChild(link);
-        }
-
-        document.head.appendChild(frag);
-      }
-    })();
-    (function () {
-      const preferedColorScheme = localStorage.getItem('preferedColorScheme') || 'auto';
-      const elemHtmlClasses = document.documentElement.classList;
-      const classDark = 'dark';
-      if (preferedColorScheme === 'auto') {
-        const mql = window.matchMedia('(prefers-color-scheme: dark)');
-        if (mql.matches) {
-          elemHtmlClasses.add(classDark);
-        } else {
-          elemHtmlClasses.remove(classDark);
-        }
-      } else if (preferedColorScheme === 'dark') {
-        elemHtmlClasses.add(classDark);
-      } else {
-        elemHtmlClasses.remove(classDark);
-      }
-    })();
-  </script>
 </svelte:head>
 
 <svelte:document use:colorScheme />
