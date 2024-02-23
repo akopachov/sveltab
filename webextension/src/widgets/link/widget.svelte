@@ -32,7 +32,7 @@
   } = settings;
 
   $: {
-    ($iconSource || $icon || $url) && updateIconUrlDebounced();
+    ($iconSource || $icon || $url || $iconColor) && updateIconUrlDebounced();
   }
 
   function ensureFqdnUrl(url: string | null | undefined) {
