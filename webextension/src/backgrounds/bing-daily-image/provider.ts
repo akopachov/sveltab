@@ -15,10 +15,9 @@ interface LocalSettings {
   lastChangedTime: number;
 }
 
-function getClosestResolution() {
-  const w = window.screen.availWidth;
-  if (w > 1920) return 3840;
-  if (w > 1366) return 1920;
+function getClosestResolution(nodeWidth: number) {
+  if (nodeWidth > 1920) return 3840;
+  if (nodeWidth > 1366) return 1920;
   return 1366;
 }
 
@@ -59,7 +58,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     if (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale) {
       try {
         const response = await fetch(
-          `https://bing.biturl.top/?resolution=${getClosestResolution()}&format=json&index=0&mkt=${
+          `https://bing.biturl.top/?resolution=${getClosestResolution(this.node.offsetWidth)}&format=json&index=0&mkt=${
             this.settings.locale.value
           }&image_format=jpg`,
           {

@@ -1,3 +1,4 @@
+import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
 import type { Action } from 'svelte/action';
 
@@ -27,7 +28,9 @@ export const flickrSrc: Action<HTMLImageElement, FlickrImageData | undefined> = 
       currentSrc.sources[currentSrc.sources.length - 1];
 
     if (node.src != source.source) {
+      ResourcesToPreload.delete({ src: node.src });
       node.src = source.source;
+      ResourcesToPreload.add({ src: source.source, as: 'image' });
     }
   }
 

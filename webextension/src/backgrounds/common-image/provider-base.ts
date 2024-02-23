@@ -2,18 +2,28 @@ import type { BackgroundSettingsExtra } from '$lib/background-settings';
 import type { Observable } from '$lib/observable';
 import type { Filter } from '$stores/active-filters-store';
 import { BackgroundProvider } from '$stores/background-catalog';
+import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
 
 export abstract class ImageBackgroundProviderBase<
   T extends BackgroundSettingsExtra & { blur: Observable<number>; filter: Observable<Filter | undefined> },
 > extends BackgroundProvider<T> {
   #unsubscribeFilterChange!: () => void;
+  #lastImageUrl: string | undefined;
   constructor(node: HTMLElement, settings: T) {
     super(node, settings);
   }
 
   protected setImage(url: string): void {
+    if (this.#lastImageUrl) {
+      ResourcesToPreload.delete({ src: this.#lastImageUrl });
+    }
+
     this.node.style.backgroundImage = `url("${url}")`;
+    if (url) {
+      ResourcesToPreload.add({ src: url, as: 'image' });
+    }
+    this.#lastImageUrl = url;
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

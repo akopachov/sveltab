@@ -5,28 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script>
       (function () {
-        function* iterSplitStr(str, separator) {
-          let start = 0;
-          let end = 0;
-          while ((end = str.indexOf(separator, start)) >= 0) {
-            yield str.substring(start, end);
-            start = end + 1;
-          }
-  
-          if (start < str.length) {
-            yield str.substring(start);
-          }
-        }
-        const plain = localStorage.getItem('FontSource_preload') || __SVELTAB_DEFAULT_FONTSOURCE_PRELOAD__;
+        const plain = localStorage.getItem('external-resources__preload') || __SVELTAB_EXTERNAL_RESOURCES_PRELOAD__;
         if (plain) {
           const frag = document.createDocumentFragment();
-          for (const src of iterSplitStr(plain, ';')) {
+          let resources = [];
+          try {
+            resources = JSON.parse(plain);
+          } catch {}
+
+          for (const resource of resources) {
             const link = document.createElement('link');
             link.rel = 'preload';
-            link.as = 'font';
-            link.type = 'font/woff2';
+            link.as = resource.as;
+            if (resource.type) {
+              link.type = resource.type;
+            }
             link.crossOrigin = true;
-            link.setAttribute('href', src);
+            link.setAttribute('href', resource.src);
             frag.appendChild(link);
           }
   

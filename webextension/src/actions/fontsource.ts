@@ -1,6 +1,5 @@
-import { browser } from '$app/environment';
 import { logger } from '$lib/logger';
-import pDebounce from 'p-debounce';
+import { ResourcesToPreload } from '$stores/preload-resources';
 import type { Action } from 'svelte/action';
 
 const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
@@ -47,24 +46,6 @@ function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
 }
 
 const fontFaceSources = new WeakMap<FontFace, string>();
-const storeFontSourcesToPreload = pDebounce(async () => {
-  const values = await Promise.all(ActiveFonts.values());
-  const sources = [];
-  for (const { fontSets } of values) {
-    for (const { fontSet } of fontSets.values()) {
-      for (const fontFace of fontSet) {
-        const src = fontFaceSources.get(fontFace);
-        if (src) {
-          sources.push(src);
-        }
-      }
-    }
-  }
-
-  if (browser) {
-    localStorage.setItem('FontSource_preload', sources.join(';'));
-  }
-}, 500);
 
 export const fontsource: Action<
   HTMLElement,
@@ -161,11 +142,11 @@ export const fontsource: Action<
                 unicodeRange: unicodeRange,
               });
               fontFaceSources.set(fontFace, uri);
+              ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
               document.fonts.add(fontFace);
               loadedFontSet!.fontSet.add(fontFace);
               promisesToWait.push(fontFace.load());
               log.debug('Loaded font', activeFontRef.fontFamily, weight, style, subset);
-              storeFontSourcesToPreload();
             }
           }
         }
@@ -204,8 +185,11 @@ export const fontsource: Action<
                 for (const fontFace of fontSet.fontSet) {
                   fontFacesToRemove.push(fontFace);
                   log.debug('Unloaded font', activeFontRef.fontFamily, weight, style, subset);
-                  fontFaceSources.delete(fontFace);
-                  storeFontSourcesToPreload();
+                  const uri = fontFaceSources.get(fontFace);
+                  if (uri) {
+                    fontFaceSources.delete(fontFace);
+                    ResourcesToPreload.delete({ src: uri });
+                  }
                 }
               }
             }
