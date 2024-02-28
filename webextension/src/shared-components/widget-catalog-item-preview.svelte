@@ -12,7 +12,7 @@
   on:dragstart
   on:dragend
   {...otherProps}>
-  <div class="h-full object-contain [&>*]:h-full [&>*]:w-full">
+  <div class="h-full [&>*]:h-8 [&>*]:w-8">
     {#await widgetCatalogItem.components.preview.getValue() then preview}
       <svelte:component this={preview} />
     {/await}
