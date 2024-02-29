@@ -34,6 +34,8 @@ export const locale = {
   },
 };
 
+export const browserLocales = browser ? navigator.languages.map(m => new Intl.Locale(m)) : [new Intl.Locale('en')];
+
 export const localeCharSubset = derived(locale, $locale => LocaleCharSubsetMap.get($locale));
 export const userPosssibleLocaleCharSubset = derived(localeCharSubset, $v => {
   const localeCharsets = $v || [];
