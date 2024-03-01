@@ -139,6 +139,7 @@
   $: {
     if (chart?.data.datasets?.length > 0) {
       chart.data.datasets[0].borderColor = $chartLineColor;
+      chart.data.datasets[0].backgroundColor = $chartLineColor;
       chart.update();
     }
   }
