@@ -4,9 +4,8 @@
   import { browserLocales, userPosssibleLocaleCharSubset } from '$stores/locale';
   import pDebounce from 'p-debounce';
   import type { CoincapioAssetHistoryResponse, CoincapioAssetResponse } from './types/coincapio';
-  import type { ExchangerateApiResponse } from './types/exchangerate';
   import { storage } from '$stores/storage';
-  import { minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
+  import { minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
   import { Line } from 'svelte-chartjs';
   import {
@@ -23,14 +22,14 @@
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
+  import { exchangeRates } from './exchange-rate-store';
 
   ChartJS.register(LineElement, LinearScale, CategoryScale, PointElement, Tooltip, Legend);
 
   export let settings: Settings;
   export let id: string;
 
-  let exchangeRates: ExchangerateApiResponse;
-  $: currentExchangeRate = exchangeRates?.rates[$displayCurrency] || 1;
+  $: currentExchangeRate = $displayCurrency === 'USD' ? 1 : ($exchangeRates || {})[$displayCurrency] || 1;
 
   const storageKey = `Widget_CryptoAssets_${id}_LastPriceInfo`;
   let clockStore = getClockStore(minutesToMilliseconds(1));
@@ -147,10 +146,6 @@
     }
   }
 
-  $: {
-    $displayCurrency && updateExchangeRate();
-  }
-
   export async function onDelete() {
     await storage.local.remove(storageKey);
   }
@@ -167,7 +162,6 @@
       Date.now() - priceInfo.lastUpdate > minutesToMilliseconds(5) ||
       priceInfo.asset.id !== $asset.id
     ) {
-      updateExchangeRate();
       const promises = [
         fetch(`https://api.coincap.io/v2/assets/${$asset.id}`).then(r => r.json()),
         fetch(`https://api.coincap.io/v2/assets/${$asset.id}/history?interval=d1`).then(r => r.json()),
@@ -205,23 +199,6 @@
   }
 
   const updateDebounced = pDebounce(update, 500);
-
-  async function updateExchangeRate() {
-    if ($displayCurrency === 'USD') return;
-
-    if (!exchangeRates) {
-      exchangeRates = await fetch('https://open.er-api.com/v6/latest/USD', {
-        cache: 'force-cache',
-      }).then<ExchangerateApiResponse>(r => r.json());
-    }
-    if (exchangeRates) {
-      if (secondsToMilliseconds(exchangeRates.time_next_update_unix) < Date.now()) {
-        exchangeRates =
-          (await fetch('https://open.er-api.com/v6/latest/USD', { cache: 'reload' }).then(r => r.json())) ||
-          exchangeRates;
-      }
-    }
-  }
 
   function historyDataForTab(info: PriceInfo, tab: HistoryTab) {
     if (!info) return [];

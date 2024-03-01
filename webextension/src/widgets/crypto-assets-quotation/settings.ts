@@ -18,7 +18,7 @@ export class Settings extends WidgetSettingsExtra {
     this.chartLineColor = useObservable(initial.chartLineColor || '#000');
     this.asset = useObservable(initial.asset || { id: 'bitcoin', name: 'Bitcoin', code: 'BTC' });
     this.displayCurrency = useObservable(initial.displayCurrency || 'USD');
-    this.font = new FontSettings(initial.font || { size: 15 });
+    this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
   }
 
