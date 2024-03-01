@@ -250,6 +250,11 @@
         </svelte:fragment>
       </AccordionItem>
     </Accordion>
+    <div class="text-center mt-3">
+      <a class="anchor text-xs" rel="noreferrer" referrerpolicy="no-referrer" href="https://t.ly/ak-support">
+        {m.Core_Sidebar_SayThanksDev()}
+      </a>
+    </div>
     <div class="block mt-auto">
       <!-- svelte-ignore a11y-label-has-associated-control -->
       <label class="label flex justify-center items-center mb-3">
