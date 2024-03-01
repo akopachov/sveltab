@@ -210,7 +210,7 @@
 	"Widgets_Weather_Name": "Надвор'е",
 	"Widgets_Weather_Forecast_Hourly": "Штогадзіны",
 	"Widgets_Weather_Forecast_Daily": "Штодня",
-	"Widgets_Weather_Forecast_Details": "Дэталі",
+	"Widgets_Weather_Forecast_Details": "Падрабязней",
 	"Widgets_Weather_Forecast_Current_FeelsLike": "Адчувае, як",
 	"Widgets_Weather_Forecast_Current_WeatherIcon_Alt": "Значок надвор'я",
 	"Widgets_Weather_Forecast_Hourly_PrecipitationProbability": "Імавернасць ападкаў: {percent}%",
@@ -273,5 +273,22 @@
 	"Widgets_AnalogueClock_Settings_SecondsArm_Color": "Колер секунд",
 	"Widgets_AnalogueClock_Settings_MinutesArm_Color": "Колер хвілін",
 	"Widgets_AnalogueClock_Settings_HoursArm_Color": "Колер гадзін",
-	"Widgets_AnalogueClock_Settings_HourMarks_Color": "Колер пазнак"
+	"Widgets_AnalogueClock_Settings_HourMarks_Color": "Колер пазнак",
+
+  "Widgets_CryptoAssetQuotation_Name": "Крыптаактывы",
+  "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Дыяграма",
+  "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Тэкст",
+  "Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Фон",
+  "Widgets_CryptoAssetQuotation_Settings_Font": "Шрыфт",
+  "Widgets_CryptoAssetQuotation_Settings_Shadow": "Цень",
+  "Widgets_CryptoAssetQuotation_Settings_Color": "Колер",
+  "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Колер лініі",
+  "Widgets_CryptoAssetQuotation_Settings_Blur": "Размыццё",
+  "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Крыптаактыў",
+  "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
+  "Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Валюта адлюстравання",
+  "Widgets_CryptoAssetQuotation_Quotation_Hourly": "Пагадзінна",
+  "Widgets_CryptoAssetQuotation_Quotation_Minutely": "Штохвілінна",
+  "Widgets_CryptoAssetQuotation_Quotation_Daily": "Штодзённа",
+  "Widgets_CryptoAssetQuotation_Quotation_Details": "Падрабязней"
 }

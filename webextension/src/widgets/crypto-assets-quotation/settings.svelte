@@ -8,17 +8,29 @@
   import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import AssetSelect from './asset-select.svelte';
+  import { ExchangerateApiSupportedCurrencies } from './types/exchangerate';
+  import { locale } from '$stores/locale';
 
   export let settings: Settings;
   export let tab: number;
 
-  const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor } = settings;
+  const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor, displayCurrency } = settings;
+
+  $: currencyName = new Intl.DisplayNames($locale, { type: 'currency' });
 </script>
 
 {#if tab === GeneralTabId}
-  <div class="mb-2">
+  <div>
     <AssetSelect bind:asset={$asset} />
   </div>
+  <label class="label mb-2">
+    <span>{m.Widgets_CryptoAssetQuotation_Settings_DisplayCurrency()}</span>
+    <select class="select" bind:value={$displayCurrency}>
+      {#each ExchangerateApiSupportedCurrencies as currencyCode}
+        <option value={currencyCode}>{currencyName.of(currencyCode)}</option>
+      {/each}
+    </select>
+  </label>
 {:else if tab === ChartTabId}
   <div class="label">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_LineColor()}</span>

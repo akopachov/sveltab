@@ -5,7 +5,7 @@ import {
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
-import type { ExchangerateApiSupportedCurrencies } from './types/exchangerate';
+import type { ExchangerateApiSupportedCurrency } from './types/exchangerate';
 
 export type CryptoAssetRef = { id: string; name: string; code: string };
 
@@ -27,7 +27,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly textColor: Observable<string>;
   readonly chartLineColor: Observable<string>;
   readonly asset: Observable<CryptoAssetRef>;
-  readonly displayCurrency: Observable<ExchangerateApiSupportedCurrencies>;
+  readonly displayCurrency: Observable<ExchangerateApiSupportedCurrency>;
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
 }
