@@ -33,8 +33,8 @@ Key concepts and decisions behind SvelTab:
 
 ## Install
 
-[![Download for Firefox](docs/icons/amo-button.png)](https://addons.mozilla.org/firefox/addon/sveltab/)
-[![Download for Chrome](docs/icons/ChromeWebStore_BadgeWBorder_v2_206x58.png)](https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld)
+[![Download for Firefox](docs/icons/amo-button.svg)](https://addons.mozilla.org/firefox/addon/sveltab/)
+[![Download for Chrome](docs/icons/cwo-button.svg)](https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld)
 [![Download for Edge](docs/icons/edge-button.svg)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 
 or [try web version first](https://bespoke-kitten-980bd0.netlify.app/)
