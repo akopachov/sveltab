@@ -232,7 +232,7 @@
 </script>
 
 <div
-  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)]"
+  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[8cqmin]"
   style:background-color={$backgroundColor}
   style:font-weight={$fontWeight}
   style:--st-blur="{$backgroundBlur}px"
@@ -252,7 +252,7 @@
       <span class="font-medium">{currencyFormatter.format(priceInfo.currentPrice * currentExchangeRate)}</span>
     </p>
     <div
-      class="w-full flex-1 min-h-0 text-[max(.3em,6px)] [&>.tab-group]:h-full [&>.tab-group]:flex [&>.tab-group]:flex-col">
+      class="w-full flex-1 min-h-0 text-[max(.3em,8px)] [&>.tab-group]:h-full [&>.tab-group]:flex [&>.tab-group]:flex-col">
       <TabGroup
         padding="px-2 py-0"
         regionPanel="!mt-[3cqmin] min-h-0 flex-1"
