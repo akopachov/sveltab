@@ -142,7 +142,7 @@ jobs:
 
   publish-mozilla:
     runs-on: ubuntu-latest
-    needs: ['build', 'checksum']
+    needs: ['build']
     environment: store-mozilla
     steps:
       - name: Download release artifacts
@@ -168,7 +168,7 @@ jobs:
 
   publish-chrome-store:
     runs-on: ubuntu-latest
-    needs: ['build', 'checksum']
+    needs: ['build']
     environment: chrome-store
     steps:
       - name: Download release artifacts
@@ -193,7 +193,7 @@ jobs:
 
   publish-edge-store:
     runs-on: ubuntu-latest
-    needs: ['build', 'checksum']
+    needs: ['build']
     environment: store-edge
     steps:
       - name: Download release artifacts
