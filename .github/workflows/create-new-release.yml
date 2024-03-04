@@ -185,7 +185,7 @@ jobs:
 
       - uses: wdzeng/chrome-extension@v1
         with:
-          extension-id: your-extension-id
+          extension-id: ${{ secrets.EXTENSION_ID }}
           zip-path: ${{ steps.find_addon_file.outputs.ADDON_FILE }}
           client-id: ${{ secrets.CLIENT_ID }}
           client-secret: ${{ secrets.CLIENT_SECRET }}
