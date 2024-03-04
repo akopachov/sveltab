@@ -222,10 +222,16 @@
 
   function historyDataForTab(info: PriceInfo, tab: HistoryTab) {
     if (!info) return [];
-    if (tab === HistoryTab.Daily) return info.dailyHistoryPrices;
-    if (tab === HistoryTab.Hourly) return info.hourlyHistoryPrices;
-    if (tab === HistoryTab.Minutely) return info.minutelyHistoryPrices;
-    return [];
+    switch (tab) {
+      case HistoryTab.Daily:
+        return info.dailyHistoryPrices;
+      case HistoryTab.Hourly:
+        return info.hourlyHistoryPrices;
+      case HistoryTab.Minutely:
+        return info.minutelyHistoryPrices;
+      default:
+        return [];
+    }
   }
 
   onMount(() => update());
