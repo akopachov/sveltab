@@ -154,7 +154,7 @@ jobs:
       - name: Get addon file path
         run: |
           cd release
-          echo "ADDON_FILE=$(find . -type f -maxdepth 1 -name 'sveltab-firefox-*.zip')" >> $GITHUB_OUTPUT
+          echo "ADDON_FILE=$(find $(pwd) -type f -maxdepth 1 -name 'sveltab-firefox-*.zip')" >> $GITHUB_OUTPUT
         id: find_addon_file
 
       - uses: wdzeng/firefox-addon@v1
@@ -180,7 +180,7 @@ jobs:
       - name: Get addon file path
         run: |
           cd release
-          echo "ADDON_FILE=$(find . -type f -maxdepth 1 -name 'sveltab-chromium-*.zip')" >> $GITHUB_OUTPUT
+          echo "ADDON_FILE=$(find $(pwd) -type f -maxdepth 1 -name 'sveltab-chromium-*.zip')" >> $GITHUB_OUTPUT
         id: find_addon_file
 
       - uses: wdzeng/chrome-extension@v1
@@ -205,7 +205,7 @@ jobs:
       - name: Get addon file path
         run: |
           cd release
-          echo "ADDON_FILE=$(find . -type f -maxdepth 1 -name 'sveltab-chromium-*.zip')" >> $GITHUB_OUTPUT
+          echo "ADDON_FILE=$(find $(pwd) -type f -maxdepth 1 -name 'sveltab-chromium-*.zip')" >> $GITHUB_OUTPUT
         id: find_addon_file
 
       - uses: wdzeng/edge-addon@v1
