@@ -42,7 +42,9 @@
 <div>
   <span class="text-xs opacity-50">
     {m.Backgrounds_Pexels_Settings_Disclaimer()}
-    <a href="https://www.pexels.com" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Pexels</a>
+    <a class="anchor" href="https://www.pexels.com" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">
+      Pexels
+    </a>
   </span>
 </div>
 

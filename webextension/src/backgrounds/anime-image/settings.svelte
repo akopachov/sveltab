@@ -54,7 +54,9 @@
 <div>
   <span class="text-xs opacity-50">
     {m.Backgrounds_AnimeImage_Settings_Disclaimer()}
-    <a href="https://t.mwm.moe/us/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">t.mwm.moe</a>
+    <a class="anchor" href="https://t.mwm.moe/us/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">
+      t.mwm.moe
+    </a>
   </span>
 </div>
 

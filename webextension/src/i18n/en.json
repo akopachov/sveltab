@@ -280,6 +280,7 @@
   "Widgets_CryptoAssetQuotation_Settings_Shadow": "Shadow",
   "Widgets_CryptoAssetQuotation_Settings_Color": "Color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Line color",
+  "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Axis color",
   "Widgets_CryptoAssetQuotation_Settings_Blur": "Blur",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Crypto asset",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",

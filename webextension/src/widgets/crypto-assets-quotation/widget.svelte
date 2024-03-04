@@ -54,6 +54,23 @@
   let priceInfo: PriceInfo;
   let chart: ChartJS<'line', number[], unknown>;
 
+  const {
+    asset,
+    chartLineColor,
+    chartAxisColor,
+    displayCurrency,
+    backgroundColor,
+    backgroundBlur,
+    textColor,
+    font: { id: fontId, weight: fontWeight },
+    textShadow: {
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+      color: textShadowColor,
+    },
+  } = settings;
+
   $: currencyFormatter = new Intl.NumberFormat(
     browserLocales.map(m => m.toString()),
     { style: 'currency', currency: $displayCurrency },
@@ -61,32 +78,37 @@
 
   let currentTab = HistoryTab.Daily;
 
-  $: historyData = historyDataForTab(priceInfo, currentTab);
+  const chartData = {
+    labels: [],
+    datasets: [
+      {
+        label: '',
+        backgroundColor: 'rgb(205, 130, 158)',
+        fill: false,
+        borderColor: 'rgb(255, 130, 158)',
+        borderCapStyle: 'butt',
+        borderDash: [],
+        borderDashOffset: 0.0,
+        borderJoinStyle: 'miter',
+        pointHoverRadius: 4,
+        pointHoverBackgroundColor: 'rgb(0, 0, 0)',
+        pointHoverBorderColor: 'rgba(220, 220, 220,1)',
+        pointHoverBorderWidth: 2,
+        pointRadius: 0,
+        pointHitRadius: 10,
+        data: [],
+      },
+    ],
+  } satisfies ChartData<'line', number[], unknown>;
 
-  $: chartData = priceInfo
-    ? ({
-        labels: historyData.map(m => m.date.toLocaleString()),
-        datasets: [
-          {
-            label: '',
-            backgroundColor: 'rgb(205, 130, 158)',
-            fill: false,
-            borderColor: 'rgb(205, 130, 158)',
-            borderCapStyle: 'butt',
-            borderDash: [],
-            borderDashOffset: 0.0,
-            borderJoinStyle: 'miter',
-            pointHoverRadius: 4,
-            pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-            pointHoverBorderColor: 'rgba(220, 220, 220,1)',
-            pointHoverBorderWidth: 2,
-            pointRadius: 0,
-            pointHitRadius: 10,
-            data: historyData.map(m => m.price * currentExchangeRate),
-          },
-        ],
-      } satisfies ChartData<'line', number[], unknown>)
-    : undefined;
+  $: {
+    if (chart?.data.datasets?.length > 0) {
+      const historyData = historyDataForTab(priceInfo, currentTab);
+      chart.data.labels = historyData.map(m => m.date.toLocaleString());
+      chart.data.datasets[0].data = historyData.map(m => m.price * currentExchangeRate);
+      chart.update();
+    }
+  }
 
   const chartOptions = {
     responsive: true,
@@ -114,25 +136,12 @@
         ticks: {
           display: false,
         },
+        grid: {
+          color: $chartAxisColor,
+        },
       },
     },
   } satisfies ChartOptions<'line'>;
-
-  const {
-    asset,
-    chartLineColor,
-    displayCurrency,
-    backgroundColor,
-    backgroundBlur,
-    textColor,
-    font: { id: fontId, weight: fontWeight, size: fontSize },
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-  } = settings;
 
   $: {
     ($asset || $clockStore) && updateDebounced();
@@ -142,6 +151,13 @@
     if (chart?.data.datasets?.length > 0) {
       chart.data.datasets[0].borderColor = $chartLineColor;
       chart.data.datasets[0].backgroundColor = $chartLineColor;
+      chart.update();
+    }
+  }
+
+  $: {
+    if (chart?.options.scales) {
+      chart.options.scales!.y!.grid!.color = $chartAxisColor;
       chart.update();
     }
   }
@@ -219,7 +235,6 @@
   style:--st--text-color={$textColor}
   style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
-  style:font-size="{$fontSize}cqmin"
   class:placeholder={!priceInfo}
   use:fontsource={{
     font: $fontId,
@@ -254,11 +269,9 @@
           <span class="icon-[heroicons-solid--external-link]"></span>
         </TabAnchor>
         <svelte:fragment slot="panel">
-          {#if chartData}
-            <div class="w-full h-full">
-              <Line data={chartData} options={chartOptions} bind:chart />
-            </div>
-          {/if}
+          <div class="w-full h-full">
+            <Line data={chartData} options={chartOptions} bind:chart />
+          </div>
         </svelte:fragment>
       </TabGroup>
     </div>

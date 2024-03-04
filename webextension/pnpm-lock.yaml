@@ -13,8 +13,8 @@ devDependencies:
     specifier: ^1.6.3
     version: 1.6.3
   '@iconify/json':
-    specifier: ^2.2.188
-    version: 2.2.188
+    specifier: ^2.2.189
+    version: 2.2.189
   '@iconify/tailwind':
     specifier: ^0.1.4
     version: 0.1.4
@@ -61,8 +61,8 @@ devDependencies:
     specifier: ^7.1.0
     version: 7.1.0(eslint@8.57.0)(typescript@5.3.3)
   autoprefixer:
-    specifier: ^10.4.17
-    version: 10.4.17(postcss@8.4.35)
+    specifier: ^10.4.18
+    version: 10.4.18(postcss@8.4.35)
   browser-storage-polyfill:
     specifier: ^1.0.11
     version: 1.0.11
@@ -124,8 +124,8 @@ devDependencies:
     specifier: ^4.2.12
     version: 4.2.12
   svelte-awesome-color-picker:
-    specifier: 3.0.5
-    version: 3.0.5(svelte@4.2.12)
+    specifier: 3.0.6
+    version: 3.0.6(svelte@4.2.12)
   svelte-chartjs:
     specifier: ^3.1.5
     version: 3.1.5(chart.js@4.4.2)(svelte@4.2.12)
@@ -195,7 +195,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       '@jridgewell/gen-mapping': 0.3.5
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
   /@antfu/install-pkg@0.1.1:
@@ -617,8 +617,8 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
-  /@iconify/json@2.2.188:
-    resolution: {integrity: sha512-gsJwZ60Vb5IrtjYu+Al4qMaML9ZKUnop6Gi0537ZcA6nEhe3Nb58WH4c6b1+mXOHwOkFlLA8AFBXJUHY5nKMdA==}
+  /@iconify/json@2.2.189:
+    resolution: {integrity: sha512-q0DxpGQuQhtoNXELlHKbkxTSOjuzf/3Qaqq5uuJ/dM62XH1GUUxlXsgH/Moh/CEcs3evzWFp2mjIQifZmihQTA==}
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -813,7 +813,7 @@ packages:
     dependencies:
       '@jridgewell/set-array': 1.2.1
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
     dev: true
 
   /@jridgewell/resolve-uri@3.1.2:
@@ -830,8 +830,8 @@ packages:
     resolution: {integrity: sha512-eF2rxCRulEKXHTRiDrDy6erMYWqNw4LPdQ8UQA4huuxaQsVeRPFl2oM8oDGxMFhJUWZf9McpLtJasDDZb/Bpeg==}
     dev: true
 
-  /@jridgewell/trace-mapping@0.3.24:
-    resolution: {integrity: sha512-+VaWXDa6+l6MhflBvVXjIEAzb59nQ2JUK3bwRp2zRpPtU+8TFRy9Gg/5oIcNlkEL5PGlBFGfemUVvIgLnTzq7Q==}
+  /@jridgewell/trace-mapping@0.3.25:
+    resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -1043,11 +1043,11 @@ packages:
       '@octokit/types': 12.6.0
     dev: true
 
-  /@octokit/plugin-rest-endpoint-methods@10.4.0(@octokit/core@5.1.0):
-    resolution: {integrity: sha512-INw5rGXWlbv/p/VvQL63dhlXr38qYTHkQ5bANi9xofrF9OraqmjHsIGyenmjmul1JVRHpUlw5heFOj1UZLEolA==}
+  /@octokit/plugin-rest-endpoint-methods@10.4.1(@octokit/core@5.1.0):
+    resolution: {integrity: sha512-xV1b+ceKV9KytQe3zCVqjg+8GTGfDYwaT1ATU5isiUyVtlVAO3HNdzpS4sr4GBx4hxQ46s7ITtZrAsxG22+rVg==}
     engines: {node: '>= 18'}
     peerDependencies:
-      '@octokit/core': '>=5'
+      '@octokit/core': '5'
     dependencies:
       '@octokit/core': 5.1.0
       '@octokit/types': 12.6.0
@@ -1339,7 +1339,7 @@ packages:
       esm-env: 1.0.0
       import-meta-resolve: 4.0.0
       kleur: 4.1.5
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       mrmime: 2.0.0
       sade: 1.8.1
       set-cookie-parser: 2.6.0
@@ -1376,7 +1376,7 @@ packages:
       debug: 4.3.4
       deepmerge: 4.3.1
       kleur: 4.1.5
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       svelte: 4.2.12
       svelte-hmr: 0.15.3(svelte@4.2.12)
       vite: 5.1.4
@@ -1856,15 +1856,15 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: true
 
-  /autoprefixer@10.4.17(postcss@8.4.35):
-    resolution: {integrity: sha512-/cpVNRLSfhOtcGflT13P2794gVSgmPgTR+erw5ifnMLZb0UnSlkK4tquLmkd3BhA+nLo5tX8Cu0upUsGKvKbmg==}
+  /autoprefixer@10.4.18(postcss@8.4.35):
+    resolution: {integrity: sha512-1DKbDfsr6KUElM6wg+0zRNkB/Q7WcKYAaK+pzXn+Xqmszm/5Xa9coeNdtP88Vi+dPzZnMjhge8GIV49ZQkDa+g==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
     peerDependencies:
       postcss: ^8.1.0
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001591
+      caniuse-lite: 1.0.30001593
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -1976,8 +1976,8 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001591
-      electron-to-chromium: 1.4.689
+      caniuse-lite: 1.0.30001593
+      electron-to-chromium: 1.4.690
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
     dev: true
@@ -2064,13 +2064,13 @@ packages:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001591
+      caniuse-lite: 1.0.30001593
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
     dev: true
 
-  /caniuse-lite@1.0.30001591:
-    resolution: {integrity: sha512-PCzRMei/vXjJyL5mJtzNiUCKP59dm8Apqc3PH8gJkMnMXZGox93RbE76jHsmLwmIo6/3nsYIpJtx0O7u5PqFuQ==}
+  /caniuse-lite@1.0.30001593:
+    resolution: {integrity: sha512-UWM1zlo3cZfkpBysd7AS+z+v007q9G1+fLTUU42rQnY6t2axoogPW/xol6T7juU5EUoOhML4WgBIdG+9yYqAjQ==}
     dev: true
 
   /caseless@0.12.0:
@@ -2765,8 +2765,8 @@ packages:
       safe-buffer: 5.2.1
     dev: true
 
-  /electron-to-chromium@1.4.689:
-    resolution: {integrity: sha512-GatzRKnGPS1go29ep25reM94xxd1Wj8ritU0yRhCJ/tr1Bg8gKnm6R9O/yPOhGQBoLMZ9ezfrpghNaTw97C/PQ==}
+  /electron-to-chromium@1.4.690:
+    resolution: {integrity: sha512-+2OAGjUx68xElQhydpcbqH50hE8Vs2K6TkAeLhICYfndb67CVH0UsZaijmRUE3rHlIxU1u0jxwhgVe6fK3YANA==}
     dev: true
 
   /emoji-regex@8.0.0:
@@ -4159,8 +4159,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /magic-string@0.30.7:
-    resolution: {integrity: sha512-8vBuFF/I/+OSLRmdf2wwFCJCz+nSn0m6DPvGH1fS/KiQoSaR+sETbov0eIk9KhEKy8CYqIkIAnbohxT/4H0kuA==}
+  /magic-string@0.30.8:
+    resolution: {integrity: sha512-ISQTe55T2ao7XtlAStud6qwYPZjE4GK1S/BeVPus4jrq6JuOnQ00YKQC581RWhR122W7msZV263KzVeLoqidyQ==}
     engines: {node: '>=12'}
     dependencies:
       '@jridgewell/sourcemap-codec': 1.4.15
@@ -4490,7 +4490,7 @@ packages:
       '@octokit/oauth-app': 6.1.0
       '@octokit/plugin-paginate-graphql': 4.0.0(@octokit/core@5.1.0)
       '@octokit/plugin-paginate-rest': 9.2.1(@octokit/core@5.1.0)
-      '@octokit/plugin-rest-endpoint-methods': 10.4.0(@octokit/core@5.1.0)
+      '@octokit/plugin-rest-endpoint-methods': 10.4.1(@octokit/core@5.1.0)
       '@octokit/plugin-retry': 6.0.1(@octokit/core@5.1.0)
       '@octokit/plugin-throttling': 8.2.0(@octokit/core@5.1.0)
       '@octokit/request-error': 5.0.1
@@ -5981,8 +5981,8 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-awesome-color-picker@3.0.5(svelte@4.2.12):
-    resolution: {integrity: sha512-8btMs7m8nVkKrKXlqwGJGcial+3fgPi5f7H6m7Vpq+aPuSzT4gDcC8IcvGdR+GEaORgBCO+Q8t41FvpVBrSbLg==}
+  /svelte-awesome-color-picker@3.0.6(svelte@4.2.12):
+    resolution: {integrity: sha512-lkyT9+78mpvzUm6yZLh2RKGHJn9U/XOZsc+WrCZVPaNTRnleled3dwR+EX0SgiAeFV7V/ieK3bu4wpgU0HRFlQ==}
     peerDependencies:
       svelte: ^3.55.1 || ^4.0.0
     dependencies:
@@ -6015,7 +6015,7 @@ packages:
     peerDependencies:
       svelte: ^3.55.0 || ^4.0.0-next.0 || ^4.0.0 || ^5.0.0-next.0
     dependencies:
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       chokidar: 3.6.0
       fast-glob: 3.3.2
       import-fresh: 3.3.0
@@ -6058,7 +6058,7 @@ packages:
     peerDependencies:
       svelte: ^3.44.1 || ^4.0.0
     dependencies:
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       svelte: 4.2.12
       svelte-parse-markup: 0.1.2(svelte@4.2.12)
     dev: true
@@ -6130,7 +6130,7 @@ packages:
     dependencies:
       '@types/pug': 2.0.10
       detect-indent: 6.1.0
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       postcss: 8.4.35
       sorcery: 0.11.0
       strip-indent: 3.0.0
@@ -6168,7 +6168,7 @@ packages:
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@jridgewell/sourcemap-codec': 1.4.15
-      '@jridgewell/trace-mapping': 0.3.24
+      '@jridgewell/trace-mapping': 0.3.25
       '@types/estree': 1.0.5
       acorn: 8.11.3
       aria-query: 5.3.0
@@ -6178,7 +6178,7 @@ packages:
       estree-walker: 3.0.3
       is-reference: 3.0.2
       locate-character: 3.0.0
-      magic-string: 0.30.7
+      magic-string: 0.30.8
       periscopic: 3.1.0
     dev: true
 

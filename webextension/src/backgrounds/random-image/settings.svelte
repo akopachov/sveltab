@@ -42,7 +42,9 @@
 <div>
   <span class="text-xs opacity-50">
     {m.Backgrounds_RandomImage_Settings_Disclaimer()}
-    <a href="https://unsplash.com/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">Unsplash</a>
+    <a class="anchor" href="https://unsplash.com/" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">
+      Unsplash
+    </a>
   </span>
 </div>
 

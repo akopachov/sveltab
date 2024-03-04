@@ -23,6 +23,7 @@
   <span class="text-xs opacity-50">
     {m.Backgrounds_WikimediaCommonsPod_Settings_Disclaimer()}
     <a
+      class="anchor"
       href="https://commons.wikimedia.org/wiki/Main_Page"
       target="_blank"
       rel="noreferrer"

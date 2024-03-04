@@ -14,7 +14,8 @@
   export let settings: Settings;
   export let tab: number;
 
-  const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor, displayCurrency } = settings;
+  const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor, displayCurrency, chartAxisColor } =
+    settings;
 
   $: currencyName = new Intl.DisplayNames($locale, { type: 'currency' });
 </script>
@@ -36,6 +37,12 @@
     <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_LineColor()}</span>
     <div>
       <ColorPicker bind:color={$chartLineColor} />
+    </div>
+  </div>
+  <div class="label">
+    <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor()}</span>
+    <div>
+      <ColorPicker bind:color={$chartAxisColor} />
     </div>
   </div>
 {:else if tab === TextTabId}

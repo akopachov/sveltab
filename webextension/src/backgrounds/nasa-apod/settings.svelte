@@ -22,7 +22,12 @@
 <div>
   <span class="text-xs opacity-50">
     {m.Backgrounds_NasaApod_Settings_Disclaimer()}
-    <a href="https://apod.nasa.gov/apod/astropix.html" target="_blank" rel="noreferrer" referrerpolicy="no-referrer">
+    <a
+      class="anchor"
+      href="https://apod.nasa.gov/apod/astropix.html"
+      target="_blank"
+      rel="noreferrer"
+      referrerpolicy="no-referrer">
       NASA
     </a>
   </span>

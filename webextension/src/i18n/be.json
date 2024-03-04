@@ -284,6 +284,7 @@
   "Widgets_CryptoAssetQuotation_Settings_Shadow": "Цень",
   "Widgets_CryptoAssetQuotation_Settings_Color": "Колер",
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Колер лініі",
+  "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Колер восі",
   "Widgets_CryptoAssetQuotation_Settings_Blur": "Размыццё",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Крыптаактыў",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
