@@ -34,7 +34,7 @@
   const storageKey = `Widget_CryptoAssets_${id}_LastPriceInfo`;
   let clockStore = getClockStore(minutesToMilliseconds(1));
 
-  type HistoryPrice = { price: number; date: Date };
+  type HistoryPrice = { price: number; date: number };
 
   type PriceInfo = {
     lastUpdate: number;
@@ -75,6 +75,10 @@
     browserLocales.map(m => m.toString()),
     { style: 'currency', currency: $displayCurrency },
   );
+  const dateFormatter = new Intl.DateTimeFormat(
+    browserLocales.map(m => m.toString()),
+    { dateStyle: 'medium', timeStyle: 'medium' },
+  );
 
   let currentTab = HistoryTab.Daily;
 
@@ -104,7 +108,7 @@
   $: {
     if (chart?.data.datasets?.length > 0) {
       const historyData = historyDataForTab(priceInfo, currentTab);
-      chart.data.labels = historyData.map(m => m.date.toLocaleString());
+      chart.data.labels = historyData.map(m => dateFormatter.format(m.date));
       chart.data.datasets[0].data = historyData.map(m => m.price * currentExchangeRate);
       chart.update();
     }
@@ -198,15 +202,15 @@
         currentPrice: assetData.data.priceUsd,
         dailyHistoryPrices: dailyHistoryData.data.map(m => ({
           price: m.priceUsd,
-          date: new Date(m.time),
+          date: m.time,
         })),
         hourlyHistoryPrices: hourlyHistoryData.data.map(m => ({
           price: m.priceUsd,
-          date: new Date(m.time),
+          date: m.time,
         })),
         minutelyHistoryPrices: minutelyHistoryData.data.map(m => ({
           price: m.priceUsd,
-          date: new Date(m.time),
+          date: m.time,
         })),
         asset: $asset,
       };
