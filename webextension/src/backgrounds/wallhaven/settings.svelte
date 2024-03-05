@@ -37,7 +37,7 @@
 </label>
 <label class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_ApiKey()}</span>
-  <input type="password" class="input" bind:value={$apiKey} />
+  <input type="password" class="input" autocomplete="off" bind:value={$apiKey} />
 </label>
 <div class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_Purity()}</span>
