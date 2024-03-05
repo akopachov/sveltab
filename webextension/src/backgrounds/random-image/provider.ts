@@ -11,7 +11,6 @@ const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Random Image', 'Provi
 interface LocalSettings {
   lastChangedTime: number;
   lastUrl: string;
-  lastSearchTerm: string;
 }
 
 export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
@@ -31,8 +30,18 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
       this.#update(abortSignal);
     }, minutesToMilliseconds(1));
 
+    const forceRefresh = () => {
+      this.#localSettings!.lastChangedTime = 0;
+    };
+
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
-    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(() => updateDeb());
+
+    const updateDebWithRefresh = () => {
+      forceRefresh();
+      updateDeb();
+    };
+
+    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
 
     this.#unsubscribe = () => {
       clearInterval(interval);
@@ -52,10 +61,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
     }
 
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
-    if (
-      timeSinceLastChange >= this.settings.updateInterval.value ||
-      this.#localSettings!.lastSearchTerm !== this.settings.searchTerms.value
-    ) {
+    if (timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
         const response = await fetch(
           `https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${encodeURIComponent(this.settings.searchTerms.value)}`,
@@ -63,7 +69,6 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
         );
         this.#localSettings!.lastUrl = response.url;
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastSearchTerm = this.settings.searchTerms.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         log.warn(e);

@@ -4,10 +4,11 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
-import { PUBLIC_PEXELS_API_KEY } from '$env/static/public';
+import { getImageCdnUrl } from '$lib/cdn';
+import { getCorsFriendlyUrl } from '$lib/cors-bypass';
 
-const LocalSettingsKey = 'PexelsBackgroundProvider_LocalSettings';
-const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Pexels', 'Provider'] });
+const LocalSettingsKey = 'WallhavenBackgroundProvider_LocalSettings';
+const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wallhaven', 'Provider'] });
 
 interface LocalSettings {
   lastChangedTime: number;
@@ -15,17 +16,10 @@ interface LocalSettings {
   pool: string[];
   currentPage: number;
   totalPages: number;
+  seed: string;
 }
 
-function pickBetterUrl(src: string | undefined | null, node: HTMLElement) {
-  if (!src) return '';
-  const width = node.clientWidth;
-  const height = node.clientHeight;
-
-  return `${src}?fit=crop&h=${height}&w=${width}`;
-}
-
-export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
+export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
@@ -38,16 +32,17 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       };
     }
 
-    const interval = setInterval(() => {
-      this.#update(abortSignal);
-    }, minutesToMilliseconds(1));
-
     const forceRefresh = () => {
       this.#localSettings!.pool = [];
       this.#localSettings!.currentPage = 0;
       this.#localSettings!.totalPages = 0;
       this.#localSettings!.lastChangedTime = 0;
+      this.#localSettings!.seed = '';
     };
+
+    const interval = setInterval(() => {
+      this.#update(abortSignal);
+    }, minutesToMilliseconds(1));
 
     const updateDeb = pDebounce(() => {
       this.#update(abortSignal);
@@ -59,6 +54,9 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     };
 
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
+    const purityUnsubsribe = this.settings.purity.subscribe(updateDebWithRefresh);
+    const apiKeyUnsubsribe = this.settings.apiKey.subscribe(updateDebWithRefresh);
+    const colorsUnsubsribe = this.settings.colors.subscribe(updateDebWithRefresh);
 
     const resizeObserver = new ResizeObserver(() => updateDeb());
     resizeObserver.observe(this.node);
@@ -66,6 +64,9 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     this.#unsubscribe = () => {
       clearInterval(interval);
       searchTermUnsubsribe();
+      purityUnsubsribe();
+      apiKeyUnsubsribe();
+      colorsUnsubsribe();
       resizeObserver.unobserve(this.node);
     };
     this.#update(abortSignal);
@@ -88,24 +89,42 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
             this.#localSettings!.currentPage++;
           } else {
             this.#localSettings!.currentPage = 1;
+            this.#localSettings!.seed = '';
           }
 
-          const requestUri = this.settings.searchTerms.value
-            ? `https://api.pexels.com/v1/search?query=${encodeURIComponent(this.settings.searchTerms.value)}&`
-            : 'https://api.pexels.com/v1/curated?';
+          const requestUri = new URL(
+            `https://wallhaven.cc/api/v1/search?page=${this.#localSettings!.currentPage}&sorting=random`,
+          );
+          if (this.settings.searchTerms.value) {
+            requestUri.searchParams.set('q', this.settings.searchTerms.value);
+          }
 
-          const response = await fetch(`${requestUri}per_page=50&page=${this.#localSettings!.currentPage}`, {
-            headers: {
-              Authorization: PUBLIC_PEXELS_API_KEY,
-            },
+          if (this.settings.apiKey.value) {
+            requestUri.searchParams.set('apikey', this.settings.apiKey.value);
+          }
+
+          if (this.settings.purity.value) {
+            requestUri.searchParams.set('purity', this.settings.purity.value);
+          }
+
+          if (this.settings.colors.value?.length > 0) {
+            requestUri.searchParams.set('colors', this.settings.colors.value.join(','));
+          }
+
+          if (this.#localSettings!.seed) {
+            requestUri.searchParams.set('seed', this.#localSettings!.seed);
+          }
+
+          const response = await fetch(getCorsFriendlyUrl(requestUri.toString()), {
             signal: abortSignal,
           }).then(r => r.json());
-          if (!Array.isArray(response?.photos)) {
+          if (!Array.isArray(response?.data)) {
             throw new Error('Unexpected response');
           }
 
-          this.#localSettings!.pool = response.photos.map((m: any) => m.src.original);
-          this.#localSettings!.totalPages = Math.ceil(response.total_results / response.per_page);
+          this.#localSettings!.pool = response.data.map((m: any) => m.path);
+          this.#localSettings!.totalPages = response.meta.last_page;
+          this.#localSettings!.seed = response.meta.seed;
         }
 
         const randomIndex = Math.floor(Math.random() * this.#localSettings!.pool.length);
@@ -119,7 +138,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastSrc, 'document', 'document'));
   }
 
   destroy() {

@@ -9,7 +9,7 @@
   const { locale, blur, filter } = settings;
 </script>
 
-<label class="label mb-2">
+<label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Country()}</span>
   <select class="select" bind:value={$locale}>
     <option value="random">{m.Backgrounds_BingDaily_Settings_Country_Any()}</option>
