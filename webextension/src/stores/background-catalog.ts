@@ -14,6 +14,7 @@ import { Background as AnimeImageBackground } from '../backgrounds/anime-image';
 import { Background as NasaApodBackground } from '../backgrounds/nasa-apod';
 import { Background as PexelsBackground } from '../backgrounds/pexels';
 import { Background as WikimediaCommonsPodBackground } from '../backgrounds/wikimedia-commons-pod';
+import { Background as WallhavenBackground } from '../backgrounds/wallhaven';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
@@ -56,4 +57,5 @@ export const BackgroundCatalog: Readonly<BackgroundCatalogItem[]> = [
   NasaApodBackground,
   PexelsBackground,
   WikimediaCommonsPodBackground,
+  WallhavenBackground,
 ];

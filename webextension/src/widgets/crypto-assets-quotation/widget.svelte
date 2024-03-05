@@ -238,7 +238,7 @@
 </script>
 
 <div
-  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[8cqmin]"
+  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[9cqmin]"
   style:background-color={$backgroundColor}
   style:font-weight={$fontWeight}
   style:--st-blur="{$backgroundBlur}px"

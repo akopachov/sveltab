@@ -14,7 +14,7 @@
   }
 </script>
 
-<label class="label mb-2">
+<label class="label">
   <span>{m.Backgrounds_Pexels_Settings_SearchTerms()}</span>
   <input
     type="search"

@@ -9,7 +9,7 @@
   const { url, blur, filter } = settings;
 </script>
 
-<label class="label mb-2">
+<label class="label">
   <span>{m.Backgrounds_StaticImage_Settings_Url()}</span>
   <input type="url" class="input" bind:value={$url} />
 </label>
