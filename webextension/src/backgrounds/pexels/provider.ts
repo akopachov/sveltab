@@ -30,6 +30,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
   #unsubscribe!: () => void;
 
   async apply(abortSignal: AbortSignal) {
+    let initialized = false;
     super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -54,8 +55,10 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     }, secondsToMilliseconds(1));
 
     const updateDebWithRefresh = () => {
-      forceRefresh();
-      updateDeb();
+      if (initialized) {
+        forceRefresh();
+        updateDeb();
+      }
     };
 
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
@@ -68,6 +71,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       searchTermUnsubsribe();
       resizeObserver.unobserve(this.node);
     };
+    initialized = true;
     this.#update(abortSignal);
   }
 

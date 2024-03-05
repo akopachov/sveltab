@@ -18,6 +18,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
   #unsubscribe!: () => void;
 
   async apply(abortSignal: AbortSignal) {
+    let initialized = false;
     super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -37,8 +38,10 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
 
     const updateDebWithRefresh = () => {
-      forceRefresh();
-      updateDeb();
+      if (initialized) {
+        forceRefresh();
+        updateDeb();
+      }
     };
 
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
@@ -47,6 +50,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
       clearInterval(interval);
       searchTermUnsubsribe();
     };
+    initialized = true;
     this.#update(abortSignal);
   }
 

@@ -24,6 +24,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
   #unsubscribe!: () => void;
 
   async apply(abortSignal: AbortSignal) {
+    let initialized = false;
     super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -49,8 +50,10 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     }, secondsToMilliseconds(1));
 
     const updateDebWithRefresh = () => {
-      forceRefresh();
-      updateDeb();
+      if (initialized) {
+        forceRefresh();
+        updateDeb();
+      }
     };
 
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
@@ -69,6 +72,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       colorsUnsubsribe();
       resizeObserver.unobserve(this.node);
     };
+    initialized = true;
     this.#update(abortSignal);
   }
 
