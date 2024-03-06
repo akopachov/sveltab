@@ -6,8 +6,8 @@ const ImageCdnAppBlacklist = [
 
 export function getImageCdnUrl(
   imgUrl: string | undefined | null,
-  width?: number | 'document',
-  height?: number | 'document',
+  width?: number | 'document' | 'screen',
+  height?: number | 'document' | 'screen',
 ) {
   if (!imgUrl) {
     return '';
@@ -24,12 +24,24 @@ export function getImageCdnUrl(
     cdnUrl = `https://imagecdn.app/v2/image/${encodedUrl}?format=webp`;
   }
 
+  if (width === 'document') {
+    width = document.documentElement.clientWidth;
+  } else if (width === 'screen') {
+    width = window.screen.availWidth * window.devicePixelRatio;
+  }
+
+  if (height === 'document') {
+    height = document.documentElement.clientHeight;
+  } else if (height === 'screen') {
+    height = window.screen.availHeight * window.devicePixelRatio;
+  }
+
   if (width) {
-    cdnUrl += `&width=${width === 'document' ? document.documentElement.clientWidth : width}`;
+    cdnUrl += `&width=${Math.trunc(width)}`;
   }
 
   if (height) {
-    cdnUrl += `&height=${height === 'document' ? document.documentElement.clientHeight : height}`;
+    cdnUrl += `&height=${Math.trunc(height)}`;
   }
 
   return cdnUrl;

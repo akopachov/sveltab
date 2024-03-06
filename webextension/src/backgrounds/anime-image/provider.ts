@@ -5,6 +5,7 @@ import pDebounce from 'p-debounce';
 import { AnimeTopics, type Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
 import { getImageCdnUrl } from '$lib/cdn';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
@@ -36,13 +37,12 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const topicUnsubsribe = this.settings.topic.subscribe(() => updateDeb());
 
-    const resizeObserver = new ResizeObserver(() => updateDeb());
-    resizeObserver.observe(this.node);
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
       clearInterval(interval);
       topicUnsubsribe();
-      resizeObserver.unobserve(this.node);
+      screenResolutionUnsubscribe();
     };
     this.#update(abortSignal);
   }
@@ -81,7 +81,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, this.node.offsetWidth, this.node.offsetHeight));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

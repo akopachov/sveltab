@@ -5,6 +5,7 @@ import type { Settings } from './settings';
 import { isToday, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'WikimediaCommonsPodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wikimedia Commons POD', 'Provider'] });
@@ -28,11 +29,10 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     const updateDeb = pDebounce(() => {
       this.#update(abortSignal);
     }, secondsToMilliseconds(1));
-    const resizeObserver = new ResizeObserver(() => updateDeb());
-    resizeObserver.observe(this.node);
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
-      resizeObserver.unobserve(this.node);
+      screenResolutionUnsubscribe();
     };
 
     await this.#update(abortSignal);
@@ -71,7 +71,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, this.node.offsetWidth, this.node.offsetHeight));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

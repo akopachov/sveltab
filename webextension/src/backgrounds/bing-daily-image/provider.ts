@@ -5,6 +5,7 @@ import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl } from '$lib/cdn';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
@@ -35,12 +36,11 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     const updateDeb = pDebounce.promise(() => this.#update(abortSignal));
     const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const localeUnsubscribe = this.settings.locale.subscribe(() => updateDeb());
-    const resizeObserver = new ResizeObserver(() => update1SecDeb());
-    resizeObserver.observe(this.node);
+    const screenResolutionUnsubscribe = observeScreenResolution(update1SecDeb);
 
     this.#unsubscribe = () => {
       localeUnsubscribe();
-      resizeObserver.unobserve(this.node);
+      screenResolutionUnsubscribe();
     };
     updateDeb();
   }
@@ -79,7 +79,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, this.node.offsetWidth, this.node.offsetHeight));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy(): void {

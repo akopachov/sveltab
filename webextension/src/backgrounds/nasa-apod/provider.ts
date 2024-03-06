@@ -6,6 +6,7 @@ import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
 import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
 import { getImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'NasaApodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'NASA APOD', 'Provider'] });
@@ -29,11 +30,10 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     const updateDeb = pDebounce(() => {
       this.#update(abortSignal);
     }, secondsToMilliseconds(1));
-    const resizeObserver = new ResizeObserver(() => updateDeb());
-    resizeObserver.observe(this.node);
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
-      resizeObserver.unobserve(this.node);
+      screenResolutionUnsubscribe();
     };
 
     await this.#update(abortSignal);
@@ -67,7 +67,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, this.node.offsetWidth, this.node.offsetHeight));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

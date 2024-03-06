@@ -6,6 +6,7 @@ import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
 import { getImageCdnUrl } from '$lib/cdn';
 import { getCorsFriendlyUrl } from '$lib/cors-bypass';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'WallhavenBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wallhaven', 'Provider'] });
@@ -61,16 +62,15 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     const apiKeyUnsubsribe = this.settings.apiKey.subscribe(updateDebWithRefresh);
     const colorsUnsubsribe = this.settings.colors.subscribe(updateDebWithRefresh);
 
-    const resizeObserver = new ResizeObserver(() => updateDeb());
-    resizeObserver.observe(this.node);
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
       clearInterval(interval);
+      screenResolutionUnsubscribe();
       searchTermUnsubsribe();
       purityUnsubsribe();
       apiKeyUnsubsribe();
       colorsUnsubsribe();
-      resizeObserver.unobserve(this.node);
     };
     initialized = true;
     this.#update(abortSignal);
@@ -142,7 +142,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastSrc, 'document', 'document'));
+    this.setImage(getImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
   }
 
   destroy() {
