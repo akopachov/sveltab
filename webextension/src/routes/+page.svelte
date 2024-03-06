@@ -251,7 +251,7 @@
       </AccordionItem>
     </Accordion>
     <div class="text-center mt-3">
-      <a class="anchor text-xs" rel="noreferrer" referrerpolicy="no-referrer" href="https://t.ly/ak-support">
+      <a class="anchor text-xs" rel="noreferrer" referrerpolicy="no-referrer" href="https://bit.ly/ak-support">
         {m.Core_Sidebar_SayThanksDev()}
       </a>
     </div>
