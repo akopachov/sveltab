@@ -5,6 +5,7 @@
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import FilterSelector from '$shared-components/filter-selector.svelte';
+  import { nanoid } from 'nanoid/non-secure';
 
   export let settings: Settings;
   const { searchTerms, blur, filter, apiKey, purity, colors } = settings;
@@ -37,7 +38,7 @@
 </label>
 <label class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_ApiKey()}</span>
-  <input type="password" class="input" autocomplete="off" bind:value={$apiKey} />
+  <input type="password" class="input" autocomplete={nanoid()} bind:value={$apiKey} />
 </label>
 <div class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_Purity()}</span>

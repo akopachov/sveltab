@@ -4,7 +4,7 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import { AnimeTopics, type Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
-import { getImageCdnUrl } from '$lib/cdn';
+import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
@@ -13,7 +13,7 @@ const availableTopics = Object.values(AnimeTopics).filter(f => f !== AnimeTopics
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastUrl: string;
+  lastUrl: string | null | undefined;
   lastTopic: AnimeTopics;
 }
 
@@ -70,7 +70,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         if (!response?.url) {
           throw new Error('Unexpected response');
         }
-        this.#localSettings!.lastUrl = response.url;
+        this.#localSettings!.lastUrl = await getImageCdnUrl(response.url, 'screen', 'screen');
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
@@ -81,7 +81,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

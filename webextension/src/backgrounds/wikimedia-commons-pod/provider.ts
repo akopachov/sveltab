@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 import { isToday, secondsToMilliseconds } from 'date-fns';
-import { getImageCdnUrl } from '$lib/cdn';
+import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
@@ -11,7 +11,7 @@ const LocalSettingsKey = 'WikimediaCommonsPodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wikimedia Commons POD', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string;
+  lastUrl: string | undefined | null;
   lastChangedTime: number;
 }
 
@@ -62,7 +62,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = now.valueOf();
-        this.#localSettings!.lastUrl = response.image.image.source;
+        this.#localSettings!.lastUrl = await getImageCdnUrl(response.image.image.source, 'screen', 'screen');
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         log.warn(e);
@@ -71,7 +71,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

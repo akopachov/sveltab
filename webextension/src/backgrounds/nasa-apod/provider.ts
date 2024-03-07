@@ -4,7 +4,7 @@ import { storage } from '$stores/storage';
 import type { Settings } from './settings';
 import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
 import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
-import { getImageCdnUrl } from '$lib/cdn';
+import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
@@ -12,7 +12,7 @@ const LocalSettingsKey = 'NasaApodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'NASA APOD', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string;
+  lastUrl: string | null | undefined;
   lastChangedTime: number;
 }
 
@@ -58,7 +58,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = response.hdurl;
+        this.#localSettings!.lastUrl = await getImageCdnUrl(response.hdurl, 'screen', 'screen');
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         log.warn(e);
@@ -67,7 +67,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

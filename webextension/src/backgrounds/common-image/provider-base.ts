@@ -9,12 +9,12 @@ export abstract class ImageBackgroundProviderBase<
   T extends BackgroundSettingsExtra & { blur: Observable<number>; filter: Observable<Filter | undefined> },
 > extends BackgroundProvider<T> {
   #unsubscribeFilterChange!: () => void;
-  #lastImageUrl: string | undefined;
+  #lastImageUrl: string | undefined | null;
   constructor(node: HTMLElement, settings: T) {
     super(node, settings);
   }
 
-  protected setImage(url: string): void {
+  protected setImage(url: string | undefined | null): void {
     if (this.#lastImageUrl) {
       ResourcesToPreload.delete({ src: this.#lastImageUrl });
     }

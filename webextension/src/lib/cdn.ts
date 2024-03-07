@@ -1,10 +1,13 @@
-// What imagecdn.app doesn't like
-const ImageCdnAppBlacklist = [
-  /[ŽžÀ-ÿ()]/, // characters with an accent or diacritic mark as well as few other chars
-  /^https:\/\/upload.wikimedia.org/, // sometimes it may not like images from upload.wikimedia.org
-] as const;
+function cdnCanHandle(src: string): Promise<boolean> {
+  return new Promise(resolve => {
+    const image = new Image();
+    image.onload = () => resolve(true);
+    image.onerror = () => resolve(false);
+    image.src = src;
+  });
+}
 
-export function getImageCdnUrl(
+export async function getImageCdnUrl(
   imgUrl: string | undefined | null,
   width?: number | 'document' | 'screen',
   height?: number | 'document' | 'screen',
@@ -14,16 +17,26 @@ export function getImageCdnUrl(
   }
 
   const encodedUrl = encodeURIComponent(imgUrl);
-  const pureDecodedUrl = decodeURIComponent(imgUrl);
 
-  let cdnUrl: string;
-  if (ImageCdnAppBlacklist.some(b => b.test(pureDecodedUrl))) {
-    // if unlikely imagecdn.app would server given url - let's use another CDN
-    cdnUrl = `https://demo.tiny.pictures/?source=${encodedUrl}&resizeType=cover&format=webp&progressive=true&optimize=true`;
-  } else {
-    cdnUrl = `https://imagecdn.app/v2/image/${encodedUrl}?format=webp`;
+  let cdnUrl = updateImageCdnUrl(`https://imagecdn.app/v2/image/${encodedUrl}?format=webp`, width, height);
+  if (!(await cdnCanHandle(cdnUrl!))) {
+    // if imagecdn.app can't server given image - let's use another CDN
+    cdnUrl = updateImageCdnUrl(
+      `https://demo.tiny.pictures/?source=${encodedUrl}&resizeType=cover&format=webp&progressive=true&optimize=true`,
+      width,
+      height,
+    );
   }
 
+  return cdnUrl;
+}
+
+export function updateImageCdnUrl(
+  imgUrl: string | undefined | null,
+  width?: number | 'document' | 'screen',
+  height?: number | 'document' | 'screen',
+) {
+  if (!imgUrl) return imgUrl;
   if (width === 'document') {
     width = document.documentElement.clientWidth;
   } else if (width === 'screen') {
@@ -36,13 +49,18 @@ export function getImageCdnUrl(
     height = window.screen.availHeight * window.devicePixelRatio;
   }
 
+  const imgUrlObj = new URL(imgUrl);
   if (width) {
-    cdnUrl += `&width=${Math.trunc(width)}`;
+    imgUrlObj.searchParams.set('width', width.toFixed(0));
+  } else {
+    imgUrlObj.searchParams.delete('width');
   }
 
   if (height) {
-    cdnUrl += `&height=${Math.trunc(height)}`;
+    imgUrlObj.searchParams.set('height', height.toFixed(0));
+  } else {
+    imgUrlObj.searchParams.delete('height');
   }
 
-  return cdnUrl;
+  return imgUrlObj.toString();
 }

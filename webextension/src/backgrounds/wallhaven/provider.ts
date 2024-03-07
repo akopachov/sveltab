@@ -4,7 +4,7 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
-import { getImageCdnUrl } from '$lib/cdn';
+import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { getCorsFriendlyUrl } from '$lib/cors-bypass';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
@@ -132,7 +132,11 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
         }
 
         const randomIndex = Math.floor(Math.random() * this.#localSettings!.pool.length);
-        this.#localSettings!.lastSrc = this.#localSettings!.pool.splice(randomIndex, 1)[0];
+        this.#localSettings!.lastSrc = await getImageCdnUrl(
+          this.#localSettings!.pool.splice(randomIndex, 1)[0],
+          'screen',
+          'screen',
+        );
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
@@ -142,7 +146,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
   }
 
   destroy() {

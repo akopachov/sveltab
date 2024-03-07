@@ -4,14 +4,14 @@ import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
-import { getImageCdnUrl } from '$lib/cdn';
+import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string;
+  lastUrl: string | null | undefined;
   lastLocale: string;
   lastChangedTime: number;
 }
@@ -70,7 +70,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         }
         this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = response.url;
+        this.#localSettings!.lastUrl = await getImageCdnUrl(response.url, 'screen', 'screen');
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
       } catch (e) {
         log.warn(e);
@@ -79,7 +79,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(getImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy(): void {
