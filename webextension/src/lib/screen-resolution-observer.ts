@@ -8,6 +8,7 @@ export function observeScreenResolution(callback: () => void) {
   function pixelRatioUpdated() {
     media.removeEventListener('change', pixelRatioUpdated);
     media = getMedia();
+    media.addEventListener('change', pixelRatioUpdated);
     callback();
   }
 
