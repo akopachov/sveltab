@@ -47,6 +47,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     if (abortSignal.aborted) {
       return;
     }
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     if (!isToday(this.#localSettings!.lastChangedTime)) {
       try {
         const now = new Date();
@@ -64,14 +65,15 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
         this.#localSettings!.lastChangedTime = now.valueOf();
         this.#localSettings!.lastUrl = await getImageCdnUrl(response.image.image.source, 'screen', 'screen');
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+        if (abortSignal.aborted) {
+          return;
+        }
+
+        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

@@ -84,6 +84,8 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     if (abortSignal.aborted) {
       return;
     }
+
+    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
@@ -116,14 +118,15 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
         this.#localSettings!.lastSrc = this.#localSettings!.pool.splice(randomIndex, 1)[0];
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+
+        if (abortSignal.aborted) {
+          return;
+        }
+        this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
   }
 
   destroy() {

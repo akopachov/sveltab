@@ -54,6 +54,8 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     if (abortSignal.aborted) {
       return;
     }
+
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale) {
       try {
@@ -72,14 +74,15 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastUrl = await getImageCdnUrl(response.url, 'screen', 'screen');
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+
+        if (abortSignal.aborted) {
+          return;
+        }
+        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy(): void {

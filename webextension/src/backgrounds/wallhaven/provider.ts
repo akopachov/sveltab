@@ -85,6 +85,9 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     if (abortSignal.aborted) {
       return;
     }
+
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
+
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
@@ -139,14 +142,15 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
         );
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+        if (abortSignal.aborted) {
+          return;
+        }
+
+        this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
   }
 
   destroy() {

@@ -56,6 +56,8 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     if (abortSignal.aborted) {
       return;
     }
+
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (
       timeSinceLastChange >= this.settings.updateInterval.value ||
@@ -74,14 +76,15 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+
+        if (abortSignal.aborted) {
+          return;
+        }
+        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
   }
 
   destroy() {

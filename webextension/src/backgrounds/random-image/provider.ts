@@ -64,6 +64,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
       return;
     }
 
+    this.setImage(this.#localSettings!.lastUrl);
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
@@ -74,15 +75,15 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
         this.#localSettings!.lastUrl = response.url;
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
+
+        if (abortSignal.aborted) {
+          return;
+        }
+        this.setImage(this.#localSettings!.lastUrl);
       } catch (e) {
         log.warn(e);
       }
     }
-    if (abortSignal.aborted) {
-      return;
-    }
-
-    this.setImage(this.#localSettings!.lastUrl);
   }
 
   destroy() {

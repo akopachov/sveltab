@@ -19,10 +19,14 @@ export abstract class ImageBackgroundProviderBase<
       ResourcesToPreload.delete({ src: this.#lastImageUrl });
     }
 
-    this.node.style.backgroundImage = `url("${url}")`;
+    this.node.style.backgroundImage = url ? `url("${url}")` : '';
     if (url) {
+      this.node.style.backgroundImage = `url("${url}")`;
       ResourcesToPreload.add({ src: url, as: 'image' });
+    } else {
+      this.node.style.backgroundImage = '';
     }
+
     this.#lastImageUrl = url;
   }
 
