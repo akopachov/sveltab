@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 jobs:
   fetch-token:
-    environment: chrome-store
+    environment: google-token-touch
     runs-on: ubuntu-latest
     steps:
       - uses: cardinalby/google-api-fetch-token-action@v1
