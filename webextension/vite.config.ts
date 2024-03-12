@@ -16,6 +16,10 @@ async function getGenerators() {
     envFileArgs.push('--env-file', '.env');
   }
 
+  if (fs.existsSync(`.env.${process.env.NODE_ENV}`)) {
+    envFileArgs.push('--env-file', `.env.${process.env.NODE_ENV}`);
+  }
+
   for (const generatorFile of generatorFiles) {
     console.log(`Loading generator from ${generatorFile}`);
     const generatorFileUrl = pathToFileURL(generatorFile).toString();
