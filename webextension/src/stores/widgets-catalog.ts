@@ -6,7 +6,7 @@ import type {
   WidgetSettingsInitial,
 } from '$lib/widget-settings';
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Lazy } from '$lib/lazy';
+import type { LazyLike } from '$lib/lazy';
 import { Widget as ClockWidget } from '$widgets/clock';
 import { Widget as DateWidget } from '$widgets/date';
 import { Widget as RandomQuoteWidget } from '$widgets/quote';
@@ -36,12 +36,12 @@ export interface WidgetCatalogItem {
 }
 
 export interface WidgetCatalogItemComponents {
-  readonly widget: Lazy<Promise<ComponentType<SvelteComponent>>>;
-  readonly preview: Lazy<Promise<ComponentType<SvelteComponent>>>;
+  readonly widget: LazyLike<Promise<ComponentType<SvelteComponent>>>;
+  readonly preview: LazyLike<Promise<ComponentType<SvelteComponent>>>;
   readonly settings: {
-    readonly tabs: Lazy<Promise<{ id: number | string; title: () => string }[]>>;
-    readonly component: Lazy<Promise<ComponentType<SvelteComponent>>>;
-    readonly model: Lazy<Promise<new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra>>;
+    readonly tabs: LazyLike<Promise<{ id: number | string; title: () => string }[]>>;
+    readonly component: LazyLike<Promise<ComponentType<SvelteComponent>>>;
+    readonly model: LazyLike<Promise<new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra>>;
   };
 }
 

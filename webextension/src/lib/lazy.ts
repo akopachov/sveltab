@@ -1,4 +1,8 @@
-export class Lazy<T> {
+export interface LazyLike<T> {
+  getValue(): T;
+}
+
+export class Lazy<T> implements LazyLike<T> {
   #factory: () => T;
   #value: T | undefined;
   #valueConstructed: boolean = false;
@@ -17,7 +21,7 @@ export class Lazy<T> {
   }
 }
 
-export class WeakLazy<T extends WeakKey> {
+export class WeakLazy<T extends WeakKey> implements LazyLike<T> {
   #factory: () => T;
   #value: WeakRef<T> | undefined;
 

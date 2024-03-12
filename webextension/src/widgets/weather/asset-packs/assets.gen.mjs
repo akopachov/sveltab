@@ -4,6 +4,8 @@ import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import glob from 'tiny-glob';
 
+export default { name: '[Widgets]: [Weather]: Assets pack generator', pattern: ['*.json'] };
+
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 
 function ensureGeneratedFolderInited() {
@@ -100,10 +102,12 @@ function processFile(filePath) {
   console.groupEnd();
 }
 
-console.info('Started generating asset packs');
-const jsonFiles = await glob('*.json', { cwd: scriptDir, absolute: true, dot: true, filesOnly: true });
-for (const jsonFile of jsonFiles) {
-  processFile(jsonFile);
-}
+export async function main() {
+  console.info('Started generating asset packs');
+  const jsonFiles = await glob('*.json', { cwd: scriptDir, absolute: true, dot: true, filesOnly: true });
+  for (const jsonFile of jsonFiles) {
+    processFile(jsonFile);
+  }
 
-console.info('Finished generating asset packs');
+  console.info('Finished generating asset packs');
+}
