@@ -1,4 +1,4 @@
-import { getCorsFriendlyUrl } from '$lib/cors-bypass';
+import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 import type { SearchProvider } from './search-provider';
 
 export class BraveSearchProvider implements SearchProvider {

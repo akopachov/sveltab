@@ -5,7 +5,7 @@ import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
-import { getCorsFriendlyUrl } from '$lib/cors-bypass';
+import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
 const LocalSettingsKey = 'WallhavenBackgroundProvider_LocalSettings';
