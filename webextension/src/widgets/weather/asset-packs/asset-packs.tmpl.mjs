@@ -1,7 +1,5 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import { dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
 import glob from 'tiny-glob';
 
 export default { name: '[Widgets]: [Weather]: Assets pack generator', watch: ['*.json'], outExt: '.gen.ts' };
@@ -92,9 +90,8 @@ async function processFile(filePath, assetPackGeneratedCodeFile) {
 
 export async function generate(outputFileHandle) {
   console.info('Started generating asset packs');
-  const scriptDir = dirname(fileURLToPath(import.meta.url));
   await fs.writeFile(outputFileHandle, "import { BaseAssetsPack } from './asset-pack-base';\n\n");
-  const jsonFiles = await glob('*.json', { cwd: scriptDir, absolute: true, dot: true, filesOnly: true });
+  const jsonFiles = await glob('*.json', { absolute: true, dot: true, filesOnly: true });
   for (const [i, jsonFile] of jsonFiles.entries()) {
     await processFile(jsonFile, outputFileHandle);
     if (i < jsonFiles.length - 1) {

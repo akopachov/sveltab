@@ -1,7 +1,7 @@
 import { run } from 'vite-plugin-run';
 import glob from 'tiny-glob';
 import { dirname, resolve } from 'node:path';
-import { fileURLToPath, pathToFileURL } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import { existsSync } from 'node:fs';
 import type { Plugin } from 'vite';
 
@@ -21,7 +21,7 @@ export async function runGenerators(params: { searchPath: string }) {
     console.log(`Loading generator from ${generatorFile}`);
     const generatorFileUrl = pathToFileURL(generatorFile).toString();
     const generator = await import(generatorFileUrl).then(m => m.default);
-    const generatorDir = dirname(fileURLToPath(generatorFileUrl));
+    const generatorDir = dirname(generatorFile);
     const watchPatterns = (generator.watch || []).map((p: string) => resolve(generatorDir, p));
     const outputFilePath = generatorFile.replace(/(\.(gen|g|d|t|tmpl))?\.[^/.]+$/, '') + (generator.outExt || '');
     generators.push(
@@ -33,7 +33,8 @@ export async function runGenerators(params: { searchPath: string }) {
               process.argv[0],
               ...envFileArgs,
               '-e',
-              'Promise.all([import("node:fs/promises"), import(process.argv[1]).then(a => a.generate)]).then(([fs, generate]) => Promise.all([generate, fs.open(process.argv[2], "w")])).then(([generate, outFile]) => Promise.all([outFile, generate(outFile)])).then(([outFile, _]) => outFile.close());',
+              'process.chdir(process.argv[1]);Promise.all([import("node:fs/promises"),import(process.argv[2]).then((e=>e.generate))]).then((([e,o])=>Promise.all([o,e.open(process.argv[3],"w")]))).then((([e,o])=>Promise.all([o,e(o)]))).then((([e,o])=>e.close()));',
+              generatorDir,
               generatorFileUrl,
               outputFilePath,
             ],
