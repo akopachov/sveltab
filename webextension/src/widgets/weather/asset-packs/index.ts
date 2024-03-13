@@ -2,8 +2,7 @@ import { PUBLIC_EXTERNAL_ASSETS_URI } from '$env/static/public';
 import { WeakLazy } from '$lib/lazy';
 import type { BaseAssetsPack } from './asset-pack-base';
 import * as m from '$i18n/messages';
-import { ModernAssetsPack } from './generated/modern';
-import { IconifyAssetsPack } from './generated/iconify';
+import { ModernAssetsPack, IconifyAssetsPack } from './asset-packs.gen';
 import { IconifyMainUrl } from '$lib/service-mirrors';
 
 // https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
