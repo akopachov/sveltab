@@ -138,6 +138,9 @@ devDependencies:
   svelte-moveable:
     specifier: ^0.45.0
     version: 0.45.0(svelte@4.2.12)
+  svelte-selecto:
+    specifier: ^1.26.3
+    version: 1.26.3
   svelte-use-debounce:
     specifier: ^0.0.2
     version: 0.0.2(svelte@4.2.12)
@@ -6154,6 +6157,12 @@ packages:
       strip-indent: 3.0.0
       svelte: 4.2.12
       typescript: 5.4.2
+    dev: true
+
+  /svelte-selecto@1.26.3:
+    resolution: {integrity: sha512-57Z59O5tB9hmYa2G6PuCRN45VPwp4uFsEU6z46FHA0RkUVVbsxhnEb/u8a+SvD9xOG2xvsDLvrC2doeS7RikDw==}
+    dependencies:
+      selecto: 1.26.3
     dev: true
 
   /svelte-use-debounce@0.0.2(svelte@4.2.12):

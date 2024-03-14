@@ -10,64 +10,47 @@
     type OnRotateGroup,
     type OnRotateGroupEnd,
   } from 'svelte-moveable';
+  import Selecto, { type OnDragStart, type OnSelectEnd } from 'svelte-selecto';
 
   export let selected: Set<WidgetInstance>;
   export let widgets: ReadonlySet<WidgetInstance>;
   export let workspace: HTMLElement;
 
-  $: {
-    workspace.addEventListener('mousedown', onWorkspaceClick);
-  }
+  $: snappableList = Array.from(widgets, m => (selectedWidgetsMap.has(m) ? null : `#widget_${m.id}`));
+  $: widgetElementIdMap = new Map(Array.from(widgets, m => [`widget_${m.id}`, m]));
 
-  $: snappableList = Array.from(widgets, m => (selectedWidgets.has(m) ? null : `#widget_${m.id}`));
+  let moveableRef: Moveable;
+  let selectoRef: Selecto;
+  let selectedWidgetsMap = new Map<WidgetInstance, HTMLElement>();
+  let selectedWidgetHtmlElementsMap = new Map<HTMLElement, WidgetInstance>();
+  const unspecified: any = undefined;
 
-  let moveable: Moveable;
-  let selectedWidgets = new Map<WidgetInstance, HTMLElement>();
-
-  export function select(widget: WidgetInstance, e: MouseEvent) {
-    if (e.button === 0 && moveable) {
-      e.stopPropagation();
-
-      if (e.ctrlKey && selectedWidgets.has(widget)) {
-        unselect(widget);
-      } else if (!selectedWidgets.has(widget)) {
-        if (!e.ctrlKey) {
-          unselectAll();
-        }
-        const selectedWidgetEl = e.currentTarget as HTMLElement;
-
-        const absolutePos = widget.settings.position.getAbsolute(workspace);
-
-        selectedWidgetEl.style.width = `${absolutePos.width}px`;
-        selectedWidgetEl.style.height = `${absolutePos.height}px`;
-        selectedWidgetEl.style.left = `${absolutePos.x}px`;
-        selectedWidgetEl.style.top = `${absolutePos.y}px`;
-
-        selectedWidgetEl.classList.add('selected');
-        selectedWidgets.set(widget, selectedWidgetEl);
-        selectedWidgets = selectedWidgets;
-        selected.add(widget);
-        selected = selected;
-      }
-
-      setTimeout(() => {
-        moveable.dragStart(e);
-      });
+  function select(widget: WidgetInstance, selectedWidgetEl: HTMLElement) {
+    if (selectedWidgetsMap.has(widget)) {
+      return;
     }
+
+    const absolutePos = widget.settings.position.getAbsolute(workspace);
+
+    selectedWidgetEl.style.width = `${absolutePos.width}px`;
+    selectedWidgetEl.style.height = `${absolutePos.height}px`;
+    selectedWidgetEl.style.left = `${absolutePos.x}px`;
+    selectedWidgetEl.style.top = `${absolutePos.y}px`;
+
+    selectedWidgetEl.classList.add('selected');
+    selectedWidgetsMap.set(widget, selectedWidgetEl);
+    selectedWidgetHtmlElementsMap.set(selectedWidgetEl, widget);
+    selectedWidgetsMap = selectedWidgetsMap;
+    selectedWidgetHtmlElementsMap = selectedWidgetHtmlElementsMap;
+    selected.add(widget);
   }
 
   export function unselectAll() {
-    selectedWidgets.forEach((_, widget) => unselect(widget));
-  }
-
-  function onWorkspaceClick(e: MouseEvent) {
-    if (e.target instanceof HTMLElement && e.target.closest('.moveable-control-box') === null) {
-      unselectAll();
-    }
+    selectedWidgetsMap.forEach((_, widget) => unselect(widget));
   }
 
   export function unselect(widget: WidgetInstance) {
-    const selectedWidgetEl = selectedWidgets.get(widget);
+    const selectedWidgetEl = selectedWidgetsMap.get(widget);
     if (selectedWidgetEl) {
       const selectedWidgetSettings = widget.settings;
       selectedWidgetSettings.position.setFromAbsolute(workspace, {
@@ -83,8 +66,10 @@
       selectedWidgetEl.style.top = '';
 
       selectedWidgetEl.classList.remove('selected');
-      selectedWidgets.delete(widget);
-      selectedWidgets = selectedWidgets;
+      selectedWidgetsMap.delete(widget);
+      selectedWidgetHtmlElementsMap.delete(selectedWidgetEl);
+      selectedWidgetsMap = selectedWidgetsMap;
+      selectedWidgetHtmlElementsMap = selectedWidgetHtmlElementsMap;
       selected.delete(widget);
       selected = selected;
     }
@@ -129,13 +114,15 @@
   }
 
   function onRotateEnd({ detail }: CustomEvent<OnRotateEnd>) {
-    selectedWidgets.forEach((_, widget) => {
+    selectedWidgetsMap.forEach((_, widget) => {
       widget.settings.rotation.value = detail.lastEvent.rotation;
     });
   }
 
   function onRotateGroupEnd({ detail: { events } }: CustomEvent<OnRotateGroupEnd>) {
-    const targetToWidget = new Map<Element, WidgetInstance>(Array.from(selectedWidgets.entries(), ([k, v]) => [v, k]));
+    const targetToWidget = new Map<Element, WidgetInstance>(
+      Array.from(selectedWidgetsMap.entries(), ([k, v]) => [v, k]),
+    );
     events.forEach(ev => {
       const widget = targetToWidget.get(ev.target);
       if (widget) {
@@ -144,13 +131,55 @@
         ev.target.style.top = `${ev.lastEvent.drag.top}px`;
       }
     });
-    setTimeout(() => moveable.updateRect());
+    setTimeout(() => moveableRef.updateRect());
+  }
+
+  function onDragStart({ detail: e }: CustomEvent<OnDragStart>) {
+    const moveable = moveableRef;
+    let target = e.inputEvent.target;
+    if (moveable.isMoveableElement(target)) {
+      e.stop();
+    } else {
+      let widget = null;
+      while (target && !(widget = selectedWidgetHtmlElementsMap.get(target))) {
+        target = target.parentElement;
+      }
+      if (widget) {
+        e.stop();
+      }
+    }
+  }
+
+  function onSelectEnd({ detail: e }: CustomEvent<OnSelectEnd>) {
+    const moveable = moveableRef;
+    if (e.isDragStart) {
+      e.inputEvent.preventDefault();
+      moveable.waitToChangeTarget().then(() => {
+        moveable.dragStart(e.inputEvent);
+      });
+    }
+
+    selected.forEach(w => {
+      const htmlEl = selectedWidgetsMap.get(w);
+      if (htmlEl && !e.selected.includes(htmlEl)) {
+        unselect(w);
+      }
+    });
+    e.selected.forEach(el => {
+      if (el instanceof HTMLElement) {
+        const widget = widgetElementIdMap.get(el.id);
+        if (widget) {
+          select(widget, el);
+        }
+      }
+    });
+    selected = selected;
   }
 </script>
 
 <Moveable
-  bind:this={moveable}
-  target={Array.from(selectedWidgets.values())}
+  bind:this={moveableRef}
+  target={Array.from(selectedWidgetsMap.values())}
   origin={false}
   edge={false}
   draggable={true}
@@ -180,3 +209,34 @@
   on:rotateGroup={onRotateGroup}
   on:rotateEnd={onRotateEnd}
   on:rotateGroupEnd={onRotateGroupEnd} />
+
+<Selecto
+  bind:this={selectoRef}
+  container={workspace}
+  rootContainer={workspace}
+  dragContainer={workspace}
+  selectableTargets={['.widget']}
+  hitRate={0}
+  selectByClick={true}
+  selectFromInside={false}
+  clickBySelectEnd={unspecified}
+  continueSelectWithoutDeselect={unspecified}
+  continueSelect={unspecified}
+  toggleContinueSelectWithoutDeselect={unspecified}
+  keyContainer={unspecified}
+  boundContainer={workspace}
+  scrollOptions={unspecified}
+  innerScrollOptions={unspecified}
+  checkInput={false}
+  preventDefault={false}
+  cspNonce=""
+  getElementRect={unspecified}
+  dragCondition={unspecified}
+  portalContainer={null}
+  checkOverflow={false}
+  toggleContinueSelect={['ctrl']}
+  ratio={0}
+  className=""
+  preventDragFromInside={unspecified}
+  on:dragStart={onDragStart}
+  on:selectEnd={onSelectEnd} />

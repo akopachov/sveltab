@@ -300,11 +300,10 @@
       <WidgetFactorty
         {widget}
         {widgetSettingsPopupSettings}
-        on:mousedown={e => !$workspaceLocked && moveable?.select(widget, e)}
         on:delete={onWidgetDelete}
         isSelected={!$workspaceLocked && selectedWidgets.has(widget)}
         id="widget_{widget.id}"
-        class="widget_{widget.settings.type}"
+        class="widget widget_{widget.settings.type}"
         workspaceLocked={$workspaceLocked}
         on:autosettingsupdate={saveWorkspaceChanges} />
     {/each}
