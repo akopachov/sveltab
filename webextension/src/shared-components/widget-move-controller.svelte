@@ -216,7 +216,7 @@
   rootContainer={workspace}
   dragContainer={workspace}
   selectableTargets={['.widget']}
-  hitRate={0}
+  hitRate={50}
   selectByClick={true}
   selectFromInside={false}
   clickBySelectEnd={unspecified}
