@@ -100,6 +100,7 @@
         name="searchQuery"
         class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50"
         placeholder={m.Widgets_Search_Placeholder()}
+        enterkeyhint="search"
         bind:value={searchTerm}
         use:popup={popupSettings}
         use:debounce={debounceOpts} />
