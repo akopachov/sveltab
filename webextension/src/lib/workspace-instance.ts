@@ -128,6 +128,7 @@ export class WorkspaceInstance {
     if (instance.settings.filter.value) {
       ActiveFilters.remove(instance.settings.filter.value);
     }
+    instance.htmlElement = null;
   }
 
   export() {

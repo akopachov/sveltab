@@ -48,6 +48,7 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
+  bind:this={widget.htmlElement}
   class="absolute [container-type:size] relative-position {$$restProps.class ||
     ''} focus-within:!z-[99999] focus:!z-[99999]"
   id={$$restProps.id || ''}

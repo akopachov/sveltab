@@ -16,17 +16,16 @@
   export let widgets: ReadonlySet<WidgetInstance>;
   export let workspace: HTMLElement;
 
-  $: snappableList = Array.from(widgets, m => (selectedWidgetsMap.has(m) ? null : `#widget_${m.id}`));
-  $: widgetElementIdMap = new Map(Array.from(widgets, m => [`widget_${m.id}`, m]));
+  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : m.htmlElement)), workspace];
+  $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElement!, m]));
+  $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElement!, m]));
 
   let moveableRef: Moveable;
   let selectoRef: Selecto;
-  let selectedWidgetsMap = new Map<WidgetInstance, HTMLElement>();
-  let selectedWidgetHtmlElementsMap = new Map<HTMLElement, WidgetInstance>();
   const unspecified: any = undefined;
 
   function select(widget: WidgetInstance, selectedWidgetEl: HTMLElement) {
-    if (selectedWidgetsMap.has(widget)) {
+    if (selected.has(widget)) {
       return;
     }
 
@@ -38,20 +37,16 @@
     selectedWidgetEl.style.top = `${absolutePos.y}px`;
 
     selectedWidgetEl.classList.add('selected');
-    selectedWidgetsMap.set(widget, selectedWidgetEl);
-    selectedWidgetHtmlElementsMap.set(selectedWidgetEl, widget);
-    selectedWidgetsMap = selectedWidgetsMap;
-    selectedWidgetHtmlElementsMap = selectedWidgetHtmlElementsMap;
     selected.add(widget);
   }
 
   export function unselectAll() {
-    selectedWidgetsMap.forEach((_, widget) => unselect(widget));
+    selected.forEach(widget => unselect(widget));
   }
 
   export function unselect(widget: WidgetInstance) {
-    const selectedWidgetEl = selectedWidgetsMap.get(widget);
-    if (selectedWidgetEl) {
+    if (selected.has(widget)) {
+      const selectedWidgetEl = widget.htmlElement!;
       const selectedWidgetSettings = widget.settings;
       selectedWidgetSettings.position.setFromAbsolute(workspace, {
         x: parseFloat(selectedWidgetEl.style.left),
@@ -66,10 +61,6 @@
       selectedWidgetEl.style.top = '';
 
       selectedWidgetEl.classList.remove('selected');
-      selectedWidgetsMap.delete(widget);
-      selectedWidgetHtmlElementsMap.delete(selectedWidgetEl);
-      selectedWidgetsMap = selectedWidgetsMap;
-      selectedWidgetHtmlElementsMap = selectedWidgetHtmlElementsMap;
       selected.delete(widget);
       selected = selected;
     }
@@ -114,17 +105,14 @@
   }
 
   function onRotateEnd({ detail }: CustomEvent<OnRotateEnd>) {
-    selectedWidgetsMap.forEach((_, widget) => {
+    selected.forEach(widget => {
       widget.settings.rotation.value = detail.lastEvent.rotation;
     });
   }
 
   function onRotateGroupEnd({ detail: { events } }: CustomEvent<OnRotateGroupEnd>) {
-    const targetToWidget = new Map<Element, WidgetInstance>(
-      Array.from(selectedWidgetsMap.entries(), ([k, v]) => [v, k]),
-    );
     events.forEach(ev => {
-      const widget = targetToWidget.get(ev.target);
+      const widget = widgetElementMap.get(ev.target as HTMLElement);
       if (widget) {
         widget.settings.rotation.value = ev.lastEvent.rotation;
         ev.target.style.left = `${ev.lastEvent.drag.left}px`;
@@ -135,9 +123,8 @@
   }
 
   function onDragStart({ detail: e }: CustomEvent<OnDragStart>) {
-    const moveable = moveableRef;
     let target = e.inputEvent.target;
-    if (moveable.isMoveableElement(target)) {
+    if (moveableRef.isMoveableElement(target)) {
       e.stop();
     } else {
       let widget = null;
@@ -151,23 +138,22 @@
   }
 
   function onSelectEnd({ detail: e }: CustomEvent<OnSelectEnd>) {
-    const moveable = moveableRef;
     if (e.isDragStart) {
       e.inputEvent.preventDefault();
-      moveable.waitToChangeTarget().then(() => {
-        moveable.dragStart(e.inputEvent);
+      moveableRef.waitToChangeTarget().then(() => {
+        moveableRef.dragStart(e.inputEvent);
       });
     }
 
     selected.forEach(w => {
-      const htmlEl = selectedWidgetsMap.get(w);
-      if (htmlEl && !e.selected.includes(htmlEl)) {
+      if (w.htmlElement && !e.selected.includes(w.htmlElement)) {
         unselect(w);
       }
     });
+
     e.selected.forEach(el => {
       if (el instanceof HTMLElement) {
-        const widget = widgetElementIdMap.get(el.id);
+        const widget = widgetElementMap.get(el);
         if (widget) {
           select(widget, el);
         }
@@ -179,7 +165,7 @@
 
 <Moveable
   bind:this={moveableRef}
-  target={Array.from(selectedWidgetsMap.values())}
+  target={Array.from(selectedWidgetHtmlElementsMap.keys())}
   origin={false}
   edge={false}
   draggable={true}
@@ -197,8 +183,8 @@
   snapGap={true}
   snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
   elementSnapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
-  elementGuidelines={[...snappableList, '.workspace']}
-  snapContainer={'.workspace'}
+  elementGuidelines={snappableList}
+  snapContainer={workspace}
   bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}
   isDisplaySnapDigit={true}
   on:drag={onDrag}
@@ -215,7 +201,7 @@
   container={workspace}
   rootContainer={workspace}
   dragContainer={workspace}
-  selectableTargets={['.widget']}
+  selectableTargets={Array.from(widgetElementMap.keys())}
   hitRate={50}
   selectByClick={true}
   selectFromInside={false}
