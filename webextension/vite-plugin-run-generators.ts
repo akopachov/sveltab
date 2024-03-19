@@ -33,7 +33,7 @@ export async function runGenerators(params: { searchPath: string }) {
               process.argv[0],
               ...envFileArgs,
               '-e',
-              'process.chdir(process.argv[1]);Promise.all([import("node:fs/promises"),import(process.argv[2]).then((e=>e.generate))]).then((([e,o])=>Promise.all([o,e.open(process.argv[3],"w")]))).then((([e,o])=>Promise.all([o,e(o)]))).then((([e,o])=>e.close()));',
+              'process.chdir(process.argv[1]);Promise.all([import("node:fs/promises"),import("ejs"),import(process.argv[2]).then(g=>Promise.all([g.model(),g.view]))]).then((([f,e,g])=>Promise.all([f,e,g,f.open(process.argv[3],"w")]))).then((([f,e,g,o])=>Promise.all([o,f.writeFile(o,e.render(g[1],g[0],{}))]))).then((([o,_])=>o.close()));',
               generatorDir,
               generatorFileUrl,
               outputFilePath,
