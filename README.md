@@ -30,6 +30,12 @@ Key concepts and decisions behind SvelTab:
 <a href="docs/screenshots/3.png">
   <img src="docs/screenshots/3_preview.png" width="200px" />
 </a>
+<a href="docs/screenshots/4.png">
+  <img src="docs/screenshots/4_preview.png" width="200px" />
+</a>
+<a href="docs/screenshots/5.png">
+  <img src="docs/screenshots/5_preview.png" width="200px" />
+</a>
 
 ## Install
 
