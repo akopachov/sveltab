@@ -1,50 +1,120 @@
-import { run } from 'vite-plugin-run';
 import glob from 'tiny-glob';
 import { dirname, resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { existsSync } from 'node:fs';
+import fs from 'node:fs/promises';
+import { relative } from 'node:path';
 import type { Plugin } from 'vite';
+import ejs from 'ejs';
+import { hashFile } from 'hasha';
+import picomatch from 'picomatch';
 
-export async function runGenerators(params: { searchPath: string }) {
-  const generators: Plugin<any>[] = [];
-  const generatorFiles = await glob(params.searchPath, { cwd: __dirname, absolute: true, dot: true, filesOnly: true });
-  const envFileArgs: string[] = [];
-  if (existsSync('.env')) {
-    envFileArgs.push('--env-file', '.env');
+export type TemplateData =
+  | Record<string, any>
+  | (() => Record<string, any> | Promise<Record<string, any>>)
+  | Promise<Record<string, any>>;
+export type Template = string | (() => string | Promise<string>) | Promise<string>;
+
+type GeneratorInfo = {
+  readonly generatorFileUri: URL;
+  readonly generatorFilePath: string;
+  readonly outputFilePath: string;
+  readonly cwd: string;
+  readonly watchPatterns: string[];
+  isMatchWatchPattern: (path: string) => boolean;
+};
+
+async function runGenerator(generator: GeneratorInfo) {
+  const cwd = process.cwd();
+  try {
+    process.chdir(generator.cwd);
+    const { template, templateData } = await import(generator.generatorFileUri.toString());
+    const resolvedTemplateData = templateData instanceof Function ? await templateData() : await templateData;
+    const resolvedTemplate = template instanceof Function ? await template() : await template;
+    const renderedTemplate = await ejs.render(resolvedTemplate, resolvedTemplateData);
+    await fs.writeFile(generator.outputFilePath, renderedTemplate, { encoding: 'utf-8' });
+  } finally {
+    process.chdir(cwd);
   }
+}
 
-  if (existsSync(`.env.${process.env.NODE_ENV}`)) {
-    envFileArgs.push('--env-file', `.env.${process.env.NODE_ENV}`);
-  }
+export default async function runGeneratorsPlugin(searchPath: string): Promise<Plugin> {
+  const LOADED_GENERATORS = await loadGenerators(searchPath);
+  return {
+    name: 'vite-plugin-run-generators',
+    enforce: 'pre',
+    apply: () => true,
+    async configResolved() {
+      for (const generator of LOADED_GENERATORS.values()) {
+        await runGenerator(generator);
+      }
+    },
+    async configureServer(server) {
+      const isMatchSearchPath = picomatch(searchPath, { windows: true });
+      server.watcher.add(searchPath);
+      for (const generator of LOADED_GENERATORS.values()) {
+        server.watcher.add(generator.generatorFilePath);
+        server.watcher.add(generator.watchPatterns);
+      }
 
+      async function onFileChange(filePath: string) {
+        if (isMatchSearchPath(relative(__dirname, filePath))) {
+          const generator = await loadGenerator(filePath);
+          LOADED_GENERATORS.set(filePath, generator);
+          server.watcher.add(generator.watchPatterns);
+          await runGenerator(generator);
+          return;
+        }
+
+        for (const generator of LOADED_GENERATORS.values()) {
+          if (generator.isMatchWatchPattern(filePath)) {
+            await runGenerator(generator);
+          }
+        }
+      }
+
+      server.watcher.on('change', onFileChange);
+      server.watcher.on('add', onFileChange);
+      server.watcher.on('unlink', filePath => {
+        if (LOADED_GENERATORS.has(filePath)) {
+          const generator = LOADED_GENERATORS.get(filePath)!;
+          fs.unlink(generator.outputFilePath);
+          LOADED_GENERATORS.delete(filePath);
+          server.watcher.unwatch(generator.watchPatterns);
+          server.watcher.unwatch(generator.generatorFilePath);
+        }
+      });
+    },
+  };
+}
+
+async function loadGenerators(searchPath: string) {
+  const generatorFiles = new Set(
+    await glob(searchPath, { cwd: __dirname, absolute: true, dot: true, filesOnly: true }),
+  );
+  const generators = new Map<string, GeneratorInfo>();
   for (const generatorFile of generatorFiles) {
-    console.log(`Loading generator from ${generatorFile}`);
-    const generatorFileUrl = pathToFileURL(generatorFile).toString();
-    const generator = await import(generatorFileUrl).then(m => m.default);
-    const generatorDir = dirname(generatorFile);
-    const watchPatterns = (generator.watch || []).map((p: string) => resolve(generatorDir, p));
-    const outputFilePath = generatorFile.replace(/(\.(gen|g|d|t|tmpl))?\.[^/.]+$/, '') + (generator.outExt || '');
-    generators.push(
-      run({
-        input: [
-          {
-            name: generator.name,
-            run: [
-              process.argv[0],
-              ...envFileArgs,
-              '-e',
-              'process.chdir(process.argv[1]);Promise.all([import("node:fs/promises"),import("ejs"),import(process.argv[2]).then(g=>Promise.all([g.model(),g.view]))]).then((([f,e,g])=>Promise.all([f,e,g,f.open(process.argv[3],"w")]))).then((([f,e,g,o])=>Promise.all([o,f.writeFile(o,e.render(g[1],g[0],{}))]))).then((([o,_])=>o.close()));',
-              generatorDir,
-              generatorFileUrl,
-              outputFilePath,
-            ],
-            pattern: [generatorFile, ...watchPatterns],
-          },
-        ],
-        silent: false,
-      }),
-    );
+    generators.set(generatorFile, await loadGenerator(generatorFile));
   }
 
   return generators;
+}
+
+async function loadGenerator(generatorFile: string) {
+  console.log(`Loading generator from ${generatorFile}`);
+  const generatorFileUri = pathToFileURL(generatorFile);
+  const hash = await hashFile(generatorFile, { algorithm: 'md5' });
+  generatorFileUri.searchParams.set('v', hash);
+
+  const { default: generator } = await import(generatorFileUri.toString());
+  const generatorDir = dirname(generatorFile);
+  const watchPatterns = (generator.watch || []).map((p: string) => resolve(generatorDir, p));
+  const outputFilePath = generatorFile.replace(/(\.(gen|g|d|t|tmpl))?\.[^/.]+$/, '') + (generator.outExt || '');
+  return {
+    isMatchWatchPattern: picomatch(watchPatterns, { windows: true }),
+    watchPatterns,
+    outputFilePath,
+    cwd: generatorDir,
+    generatorFileUri: generatorFileUri,
+    generatorFilePath: generatorFile,
+  } satisfies GeneratorInfo;
 }

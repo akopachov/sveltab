@@ -2,8 +2,6 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import glob from 'tiny-glob';
 
-export default { name: '[Widgets]: [Weather]: Assets pack generator', watch: ['*.json'], outExt: '.gen.ts' };
-
 async function processFile(filePath) {
   const assetPackDef = JSON.parse(await fs.readFile(filePath, { encoding: 'utf-8' }));
   const assetNameFile = path.parse(filePath).name;
@@ -67,7 +65,7 @@ async function processFile(filePath) {
   return { className, assetNameFile, iconAliasMap, iconMap, canBeColored };
 }
 
-export async function model() {
+export async function templateData() {
   console.info('Started generating asset packs');
   const assetPacks = [];
   const jsonFiles = await glob('*.json', { absolute: true, dot: true, filesOnly: true });
@@ -79,7 +77,7 @@ export async function model() {
   return { assetPacks };
 }
 
-export const view = `<%# -%>
+export const template = `<%# -%>
 import { BaseAssetsPack } from './asset-pack-base';
 
 <%_ for (const { className, assetNameFile, iconAliasMap, iconMap, canBeColored } of assetPacks) { _%>
@@ -110,3 +108,9 @@ export class <%= className %> extends BaseAssetsPack {
 
 <%_ } _%>
 `;
+
+export default {
+  name: '[Widgets]: [Weather]: Assets pack generator',
+  watch: ['*.json'],
+  outExt: '.gen.ts',
+};
