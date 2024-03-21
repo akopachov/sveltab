@@ -7,4 +7,4 @@ This document gives you a step by step guide on how to add your own translations
 3. Make sure you committed all the changes and translation looks good for you
 4. Submit a Pull Request back to the [SvelTab repository](https://github.com/akopachov/sveltab)
 
-You can test your changes at anytime by running a [local development build](webextension/README.md) of SvelTab.
+You can test your changes at anytime by running a [local development build](apps/webextension/README.md) of SvelTab.
