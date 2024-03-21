@@ -92,32 +92,29 @@ jobs:
           run_install: false
 
       - name: Install dependencies
-        working-directory: ./webextension
         run: |
           sudo apt-get install -y rename
-          pnpm install
+          pnpm -r install
 
       - name: Build
-        working-directory: ./webextension
         run: |
-          pnpm build
-          pnpm build:web-ext:chromium
-          pnpm build:web-ext:firefox
-          rename 's/sveltab-/sveltab-chromium-/' build-web-ext/chromium/sveltab-*.zip
-          rename 's/sveltab-/sveltab-firefox-/' build-web-ext/firefox/sveltab-*.zip
-          find ./build-web-ext -type f -mindepth 2 -exec mv {} ./build-web-ext \;
+          pnpm nx build webextension
+          pnpm nx build:web-ext:firefox webextension
+          pnpm nx build:web-ext:chromium webextension
+          rename 's/sveltab-/sveltab-chromium-/' ./apps/webextension/build-web-ext/chromium/sveltab-*.zip
+          rename 's/sveltab-/sveltab-firefox-/' ./apps/webextension/build-web-ext/firefox/sveltab-*.zip
       
       - uses: actions/upload-artifact@v4
         with:
           name: release
           path: |
-            webextension/build-web-ext/**/*.zip
+            ./apps/webextension/build-web-ext/**/*.zip
       
       - name: Upload Release Asset
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ needs.create-release.outputs.upload_url }}
-          asset_path: webextension/build-web-ext/**/*.zip
+          asset_path: ./apps/webextension/build-web-ext/**/*.zip
 
   checksum:
     runs-on: ubuntu-latest
