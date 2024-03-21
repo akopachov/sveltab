@@ -1,6 +1,6 @@
 import glob from 'tiny-glob';
 import { dirname, resolve } from 'node:path';
-import { pathToFileURL, fileURLToPath } from 'node:url';
+import { pathToFileURL } from 'node:url';
 import fs from 'node:fs/promises';
 import { relative } from 'node:path';
 import type { Plugin } from 'vite';
