@@ -1,7 +1,0 @@
-[build]
-  command = "cp -r ../webextension web && cd web && pnpm install && pnpm run build"
-  publish = "web/build"
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF ../webextension ."
-
-[functions]
-  directory = "functions"

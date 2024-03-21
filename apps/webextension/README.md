@@ -7,8 +7,8 @@ To develop with external services you will additionally need to signup for your 
 Once done, use
 
 ```bash
-pnpm install
-pnpm dev
+pnpm -r install
+pnpm dev:webext
 ```
 
 ## Building
@@ -16,12 +16,13 @@ pnpm dev
 To build production artifacts use
 
 ```bash
-pnpm install
-pnpm build
+pnpm -r install
+pnpm nx build webextension
 ```
 
 Then to generate web extension package based of production artifacts use
 
 ```bash
-pnpm build:web-ext
+pnpm nx build:web-ext:firefox webextension
+pnpm nx build:web-ext:chromium webextension
 ```

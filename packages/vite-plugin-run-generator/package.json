@@ -1,0 +1,31 @@
+{
+  "name": "vite-plugin-run-generator",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Alexander Kopachov (@akopachov)",
+  "keywords": [],
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "packageManager": "pnpm@8.14.0",
+  "engines": {
+    "pnpm": "^8.0.0",
+    "node": "^20.0.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -d"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/node": "^20.11.30",
+    "@types/picomatch": "^2.3.3",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "hasha": "^6.0.0",
+    "picomatch": "^4.0.1",
+    "tiny-glob": "^0.2.9",
+    "vite": "^5.2.2"
+  }
+}
