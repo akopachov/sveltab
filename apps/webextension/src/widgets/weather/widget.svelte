@@ -75,6 +75,11 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    showDetails,
+    showCity,
+    showAdminArea1,
+    showCountry,
+    showCurrentIcon,
   } = settings;
 
   const storageKey = `Widget_Weather_${id}_LatestForecast`;
@@ -124,6 +129,14 @@
         .filter(f => f[0] > $clockStore.valueOf())
         .slice(0, 14)
     : [];
+
+  $: locationDisplayText = [
+    $city && $showCity ? $city : '',
+    $admin1 && $showAdminArea1 ? $admin1 : '',
+    $country && $showCountry ? $country : '',
+  ]
+    .filter(Boolean)
+    .join(', ');
 
   let currentTab = 0;
 
@@ -300,109 +313,115 @@
   {#if forecast?.lastUpdate > 0}
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">
-        <h4 class="text-[max(0.4em,10px)] leading-none">{$city}, {$admin1 ? `${$admin1}, ` : ''}{$country}</h4>
-        <div class="min-h-0 p-[1cqmin]">
-          <img
-            class="block object-contain object-left-top w-full h-full"
-            draggable="false"
-            use:imgSrcEx={assetPack.getIconUrl(
-              forecast.current.weatherCode,
-              forecast.current.timeOfDay,
-              $debouncedTextColor,
-            )}
-            alt={m.Widgets_Weather_Forecast_Current_WeatherIcon_Alt()} />
-        </div>
+        <h4 class="{$showDetails ? 'text-[max(0.4em,10px)]' : 'text-[max(1em,10px)]'} leading-none">
+          {locationDisplayText}
+        </h4>
+        {#if $showCurrentIcon}
+          <div class="min-h-0 p-[1cqmin]">
+            <img
+              class="block object-contain object-left-top w-full h-full"
+              draggable="false"
+              use:imgSrcEx={assetPack.getIconUrl(
+                forecast.current.weatherCode,
+                forecast.current.timeOfDay,
+                $debouncedTextColor,
+              )}
+              alt={m.Widgets_Weather_Forecast_Current_WeatherIcon_Alt()} />
+          </div>
+        {/if}
       </div>
       <div class="row-start-1 col-start-2 row-end-2 col-end-3">
-        <div class="text-right text-[1.3em] leading-none">
+        <div class="text-right {$showDetails ? 'text-[1.3em]' : 'text-[calc(85cqh-max(1em,7px))]'} leading-none">
           {adaptTemperature(forecast.current.temperature2m, $measurementUnits)}&deg;
         </div>
-        <div class="text-[max(0.4em,7px)]">
+        <div class={$showDetails ? 'text-[max(0.4em,7px)]' : 'text-[max(1em,7px)]'}>
           {m.Widgets_Weather_Forecast_Current_FeelsLike()}
           {adaptTemperature(forecast.current.apparentTemperature, $measurementUnits)}&deg;
         </div>
       </div>
-      <div class="row-start-2 col-start-1 row-end-3 col-end-3 text-[max(.3em,6px)]">
-        <TabGroup
-          padding="px-2 py-0"
-          regionPanel="!mt-[3cqmin]"
-          border="border-b border-[var(--st--text-color)]"
-          active="border-b-2 border-[var(--st--text-color)]"
-          hover="hover:bg-[color-mix(in_srgb,currentColor_20%,transparent)]">
-          <Tab bind:group={currentTab} name="Widget_{id}_tab_hourly" value={0}>
-            <span>{m.Widgets_Weather_Forecast_Hourly()}</span>
-          </Tab>
-          <Tab bind:group={currentTab} name="Widget_{id}_tab_daily" value={1}>
-            <span>{m.Widgets_Weather_Forecast_Daily()}</span>
-          </Tab>
-          <TabAnchor href={weatherDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
-            {m.Widgets_Weather_Forecast_Details()}
-            <span class="icon-[heroicons-solid--external-link]"></span>
-          </TabAnchor>
-          <svelte:fragment slot="panel">
-            {#if currentTab === 0}
-              <div class="flex flex-row gap-1 overflow-x-hidden hover:overflow-x-auto pb-[4cqmin]">
-                {#each hourlyRange as item}
-                  <div
-                    title={m.Widgets_Weather_Forecast_Hourly_PrecipitationProbability({
-                      percent: forecast.hourly.precipitationProbability[item[1]].toFixed(0),
-                    })}
-                    class="flex flex-col min-w-fit flex-grow">
-                    <time class="block text-center whitespace-nowrap mx-1 leading-tight">
-                      {intlTimeFormat.format(item[0])}
-                    </time>
-                    <div class="h-[15cqh] p-[1cqmin]">
-                      <img
-                        class="object-contain w-full h-full"
-                        draggable="false"
-                        use:imgSrcEx={assetPack.getIconUrl(
-                          forecast.hourly.weatherCode[item[1]],
-                          forecast.hourly.timeOfDay[item[1]],
-                          $debouncedTextColor,
-                        )}
-                        alt={m.Widgets_Weather_Forecast_Hourly_WeatherIcon_Alt()} />
+      {#if $showDetails}
+        <div class="row-start-2 col-start-1 row-end-3 col-end-3 text-[max(.3em,6px)]">
+          <TabGroup
+            padding="px-2 py-0"
+            regionPanel="!mt-[3cqmin]"
+            border="border-b border-[var(--st--text-color)]"
+            active="border-b-2 border-[var(--st--text-color)]"
+            hover="hover:bg-[color-mix(in_srgb,currentColor_20%,transparent)]">
+            <Tab bind:group={currentTab} name="Widget_{id}_tab_hourly" value={0}>
+              <span>{m.Widgets_Weather_Forecast_Hourly()}</span>
+            </Tab>
+            <Tab bind:group={currentTab} name="Widget_{id}_tab_daily" value={1}>
+              <span>{m.Widgets_Weather_Forecast_Daily()}</span>
+            </Tab>
+            <TabAnchor href={weatherDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
+              {m.Widgets_Weather_Forecast_Details()}
+              <span class="icon-[heroicons-solid--external-link]"></span>
+            </TabAnchor>
+            <svelte:fragment slot="panel">
+              {#if currentTab === 0}
+                <div class="flex flex-row gap-1 overflow-x-hidden hover:overflow-x-auto pb-[4cqmin]">
+                  {#each hourlyRange as item}
+                    <div
+                      title={m.Widgets_Weather_Forecast_Hourly_PrecipitationProbability({
+                        percent: forecast.hourly.precipitationProbability[item[1]].toFixed(0),
+                      })}
+                      class="flex flex-col min-w-fit flex-grow">
+                      <time class="block text-center whitespace-nowrap mx-1 leading-tight">
+                        {intlTimeFormat.format(item[0])}
+                      </time>
+                      <div class="h-[15cqh] p-[1cqmin]">
+                        <img
+                          class="object-contain w-full h-full"
+                          draggable="false"
+                          use:imgSrcEx={assetPack.getIconUrl(
+                            forecast.hourly.weatherCode[item[1]],
+                            forecast.hourly.timeOfDay[item[1]],
+                            $debouncedTextColor,
+                          )}
+                          alt={m.Widgets_Weather_Forecast_Hourly_WeatherIcon_Alt()} />
+                      </div>
+                      <div class="text-center mt-auto leading-tight">
+                        {adaptTemperature(forecast.hourly.temperature2m[item[1]], $measurementUnits)}&deg;
+                      </div>
                     </div>
-                    <div class="text-center mt-auto leading-tight">
-                      {adaptTemperature(forecast.hourly.temperature2m[item[1]], $measurementUnits)}&deg;
+                  {/each}
+                </div>
+              {:else if currentTab === 1}
+                <div class="flex flex-row gap-1 overflow-x-auto pb-[4cqmin]">
+                  {#each dailyRange as item}
+                    <div
+                      title={m.Widgets_Weather_Forecast_Daily_PrecipitationProbability({
+                        percent: forecast.daily.precipitationProbabilityMax[item[1]].toFixed(0),
+                      })}
+                      class="flex flex-col min-w-fit flex-grow">
+                      <time class="block text-center mx-1 leading-tight">
+                        {intlDateFormat.format(item[0])}
+                      </time>
+                      <div class="h-[15cqh] p-[1cqmin]">
+                        <img
+                          class="object-contain w-full h-full"
+                          draggable="false"
+                          use:imgSrcEx={assetPack.getIconUrl(
+                            forecast.daily.weatherCode[item[1]],
+                            forecast.current.timeOfDay,
+                            $debouncedTextColor,
+                          )}
+                          alt={m.Widgets_Weather_Forecast_Daily_WeatherIcon_Alt()} />
+                      </div>
+                      <div class="text-center mt-auto leading-tight">
+                        {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $measurementUnits)}&deg; / {adaptTemperature(
+                          forecast.daily.temperature2mMax[item[1]],
+                          $measurementUnits,
+                        )}&deg;
+                      </div>
                     </div>
-                  </div>
-                {/each}
-              </div>
-            {:else if currentTab === 1}
-              <div class="flex flex-row gap-1 overflow-x-auto pb-[4cqmin]">
-                {#each dailyRange as item}
-                  <div
-                    title={m.Widgets_Weather_Forecast_Daily_PrecipitationProbability({
-                      percent: forecast.daily.precipitationProbabilityMax[item[1]].toFixed(0),
-                    })}
-                    class="flex flex-col min-w-fit flex-grow">
-                    <time class="block text-center mx-1 leading-tight">
-                      {intlDateFormat.format(item[0])}
-                    </time>
-                    <div class="h-[15cqh] p-[1cqmin]">
-                      <img
-                        class="object-contain w-full h-full"
-                        draggable="false"
-                        use:imgSrcEx={assetPack.getIconUrl(
-                          forecast.daily.weatherCode[item[1]],
-                          forecast.current.timeOfDay,
-                          $debouncedTextColor,
-                        )}
-                        alt={m.Widgets_Weather_Forecast_Daily_WeatherIcon_Alt()} />
-                    </div>
-                    <div class="text-center mt-auto leading-tight">
-                      {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $measurementUnits)}&deg; / {adaptTemperature(
-                        forecast.daily.temperature2mMax[item[1]],
-                        $measurementUnits,
-                      )}&deg;
-                    </div>
-                  </div>
-                {/each}
-              </div>
-            {/if}
-          </svelte:fragment>
-        </TabGroup>
-      </div>
+                  {/each}
+                </div>
+              {/if}
+            </svelte:fragment>
+          </TabGroup>
+        </div>
+      {/if}
     </div>
   {/if}
 </div>

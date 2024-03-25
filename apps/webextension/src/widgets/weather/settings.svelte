@@ -2,7 +2,7 @@
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { MeasurementUnits, type Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
+  import { TextTabId, BackgroundTabId, LayoutTabId } from './settings-tabs';
   import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
@@ -13,7 +13,20 @@
   export let settings: Settings;
   export let tab: number;
 
-  const { measurementUnits, assetPack, font, textColor, backgroundBlur, backgroundColor, queryUserLocation } = settings;
+  const {
+    measurementUnits,
+    assetPack,
+    font,
+    textColor,
+    backgroundBlur,
+    backgroundColor,
+    queryUserLocation,
+    showDetails,
+    showCity,
+    showAdminArea1,
+    showCountry,
+    showCurrentIcon,
+  } = settings;
 </script>
 
 {#if tab === GeneralTabId}
@@ -40,6 +53,27 @@
         <option value={pack[0]}>{pack[1].name()}</option>
       {/each}
     </select>
+  </label>
+{:else if tab === LayoutTabId}
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$showDetails} />
+    <p>{m.Widgets_Weather_Settings_Layout_ShowDetails()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$showCity} />
+    <p>{m.Widgets_Weather_Settings_Layout_ShowCity()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$showAdminArea1} />
+    <p>{m.Widgets_Weather_Settings_Layout_ShowAdminArea1()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$showCountry} />
+    <p>{m.Widgets_Weather_Settings_Layout_ShowCountry()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" bind:checked={$showCurrentIcon} />
+    <p>{m.Widgets_Weather_Settings_Layout_ShowCurrentIcon()}</p>
   </label>
 {:else if tab === TextTabId}
   <div class="label mb-2">

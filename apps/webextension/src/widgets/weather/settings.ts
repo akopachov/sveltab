@@ -42,6 +42,11 @@ export class Settings extends WidgetSettingsExtra {
     this.location = new GeoLocation(initial.location || {});
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
+    this.showDetails = useObservable(initial.showDetails ?? true);
+    this.showCountry = useObservable(initial.showCountry ?? true);
+    this.showAdminArea1 = useObservable(initial.showAdminArea1 ?? true);
+    this.showCity = useObservable(initial.showCity ?? true);
+    this.showCurrentIcon = useObservable(initial.showCurrentIcon ?? true);
   }
 
   readonly backgroundColor: Observable<string>;
@@ -54,4 +59,9 @@ export class Settings extends WidgetSettingsExtra {
   readonly location: GeoLocation;
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
+  readonly showDetails: Observable<boolean>;
+  readonly showCountry: Observable<boolean>;
+  readonly showAdminArea1: Observable<boolean>;
+  readonly showCity: Observable<boolean>;
+  readonly showCurrentIcon: Observable<boolean>;
 }
