@@ -12,13 +12,13 @@ const LocaleCharSubsetMap = new Map<string, string[]>([
   ['sk', ['latin', 'latin-ext']],
   ['tr', ['latin', 'latin-ext']],
   ['lt', ['latin', 'latin-ext']],
-  ['by', ['cyrillic', 'cyrillic-ext']],
-  ['uk', ['cyrillic', 'cyrillic-ext']],
-  ['bg', ['cyrillic']],
-  ['el', ['greek']],
-  ['vi', ['vietnamese']],
-  ['he', ['hebrew']],
-  ['ru', ['cyrillic']],
+  ['by', ['latin', 'cyrillic', 'cyrillic-ext']],
+  ['uk', ['latin', 'cyrillic', 'cyrillic-ext']],
+  ['bg', ['latin', 'cyrillic']],
+  ['el', ['latin', 'greek']],
+  ['vi', ['latin', 'vietnamese']],
+  ['he', ['latin', 'hebrew']],
+  ['ru', ['latin', 'cyrillic']],
 ]);
 
 const LocalStorageLocaleKey = 'locale';
