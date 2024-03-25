@@ -296,7 +296,9 @@
 </script>
 
 <div
-  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] pb-[1cqmin] text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit]"
+  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] {$showDetails
+    ? 'pb-[1cqmin]'
+    : 'pb-[5cqmin]'} text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit]"
   style:background-color={$backgroundColor}
   style:--st--text-color={$textColor}
   style:font-weight={$fontWeight}
