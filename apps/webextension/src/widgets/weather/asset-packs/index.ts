@@ -2,7 +2,7 @@ import { PUBLIC_EXTERNAL_ASSETS_URI } from '$env/static/public';
 import { WeakLazy } from '$lib/lazy';
 import type { BaseAssetsPack } from './asset-pack-base';
 import * as m from '$i18n/messages';
-import { ModernAssetsPack, IconifyAssetsPack } from './asset-packs.gen';
+import { ModernAssetsPack, IconifyAssetsPack, DegryAssetsPack } from './asset-packs.gen';
 import { IconifyMainUrl } from '$lib/service-mirrors';
 
 // https://www.nodc.noaa.gov/archive/arc0021/0002199/1.1/data/0-data/HTML/WMO-CODE/WMO4677.HTM
@@ -26,6 +26,15 @@ export const AssetsPacks: ReadonlyMap<string, AssetPackInfo> = new Map([
     {
       name: () => m.Widgets_Weather_AssetPack_Iconify_Name(),
       assetPack: new WeakLazy<BaseAssetsPack>(() => new IconifyAssetsPack(IconifyMainUrl)),
+    },
+  ],
+  [
+    'degry',
+    {
+      name: () => m.Widgets_Weather_AssetPack_Degry_Name(),
+      assetPack: new WeakLazy<BaseAssetsPack>(
+        () => new DegryAssetsPack(`${PUBLIC_EXTERNAL_ASSETS_URI}/widgets/weather/asset-packs/degry`),
+      ),
     },
   ],
 ]);

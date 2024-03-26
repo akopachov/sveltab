@@ -248,6 +248,7 @@
   "Widgets_Weather_Settings_AssetPack_Color": "Icons color",
   "Widgets_Weather_AssetPack_Default_Name": "Default",
   "Widgets_Weather_AssetPack_Iconify_Name": "Iconify",
+  "Widgets_Weather_AssetPack_Degry_Name": "Degry",
   "Widgets_Weather_Settings_Layout_ShowDetails": "Display daily \\ hourly forecast",
   "Widgets_Weather_Settings_Layout_ShowCity": "Display city",
   "Widgets_Weather_Settings_Layout_ShowAdminArea1": "Display state \\ admin area",
