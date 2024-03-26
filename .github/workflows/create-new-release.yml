@@ -74,6 +74,7 @@ jobs:
       PUBLIC_THEQUOTEAPI_KEY: ${{secrets.PUBLIC_THEQUOTEAPI_KEY}}
       PUBLIC_NASA_APOD_API_KEY: ${{secrets.PUBLIC_NASA_APOD_API_KEY}}
       PUBLIC_PEXELS_API_KEY: ${{secrets.PUBLIC_PEXELS_API_KEY}}
+      VITE_CORS_BYPASS: ${{secrets.VITE_CORS_BYPASS}}
     
     steps:
       - uses: actions/checkout@v4
