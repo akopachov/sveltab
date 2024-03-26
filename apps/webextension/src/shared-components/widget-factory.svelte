@@ -104,17 +104,21 @@
   {/if}
 </div>
 {#if showControls}
-  <div use:settingsFloatingContent class="absolute {controlsClassName} z-[99999]">
+  <div
+    use:settingsFloatingContent
+    class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
     <button
-      class="btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
+      class="btn-icon variant-filled-surface rounded-none w-full h-full"
       title={m.Widgets_Common_Menu_OpenSettings()}
       on:click={() => fakeEditButton.click()}>
       <span class="w-full h-full icon-[fluent--settings-20-regular]"></span>
     </button>
   </div>
-  <div use:deleteFloatingContent class="absolute {controlsClassName} z-[99999]">
+  <div
+    use:deleteFloatingContent
+    class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
     <button
-      class="{controlsClassName} btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
+      class="{controlsClassName} btn-icon variant-filled-error rounded-none w-full h-full"
       title={m.Widgets_Common_Menu_Delete()}
       on:click={onDeleteWidgetClick}>
       <span class="w-full h-full icon-[fluent--delete-28-regular]"></span>
