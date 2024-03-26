@@ -1,32 +1,32 @@
 [
-  [[0], "day_clear", "night_half_moon_clear"],
-  [[[1, 2]], "day_partial_cloud", "night_half_moon_partial_cloud"],
-  [[3], "cloudy"],
-  [[4], "angry_clouds"],
+  [[0], "day_clear.svg", "night_half_moon_clear.svg"],
+  [[[1, 2]], "day_partial_cloud.svg", "night_half_moon_partial_cloud.svg"],
+  [[3], "cloudy.svg"],
+  [[4], "angry_clouds.svg"],
   [
     [
       [5, 6],
       [10, 12]
     ],
-    "mist"
+    "mist.svg"
   ],
-  [[13, 17, 29], "thunder"],
-  [[18, [30, 39], [7, 9]], "wind"],
-  [[19], "tornado"],
-  [[[14, 16], [50, 55], [58, 59], 80, 91, 20], "day_rain", "night_half_moon_rain"],
-  [[[56, 57], 83, 93, [23, 24]], "day_sleet", "night_half_moon_sleet"],
-  [[[60, 65], [81, 82], 92, 21, 25], "rain"],
-  [[[66, 69], 84, 94, 27], "sleet"],
-  [[[40, 49], 28], "fog"],
+  [[13, 17, 29], "thunder.svg"],
+  [[18, [30, 39], [7, 9]], "wind.svg"],
+  [[19], "tornado.svg"],
+  [[[14, 16], [50, 55], [58, 59], 80, 91, 20], "day_rain.svg", "night_half_moon_rain.svg"],
+  [[[56, 57], 83, 93, [23, 24]], "day_sleet.svg", "night_half_moon_sleet.svg"],
+  [[[60, 65], [81, 82], 92, 21, 25], "rain.svg"],
+  [[[66, 69], 84, 94, 27], "sleet.svg"],
+  [[[40, 49], 28], "fog.svg"],
   [
     [
       [70, 73],
       [87, 90]
     ],
-    "day_snow",
-    "night_half_moon_snow"
+    "day_snow.svg",
+    "night_half_moon_snow.svg"
   ],
-  [[[74, 79], [85, 86], 22, 26], "snow"],
-  [[[95, 96]], "day_rain_thunder", "night_half_moon_rain_thunder"],
-  [[[97, 99]], "snow_thunder"]
+  [[[74, 79], [85, 86], 22, 26], "snow.svg"],
+  [[[95, 96]], "day_rain_thunder.svg", "night_half_moon_rain_thunder.svg"],
+  [[[97, 99]], "snow_thunder.svg"]
 ]

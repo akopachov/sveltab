@@ -1,23 +1,23 @@
 [
-  [[0], "clear-day", "clear-night"],
-  [[[1, 2]], "partly-cloudy-day", "partly-cloudy-night"],
-  [[3], "cloudy"],
-  [[4], "overcast"],
-  [[13, 17, 29, [95, 96]], "thunderstorm-showers"],
-  [[18, [30, 39], [7, 9], 19], "windy"],
-  [[[14, 16], [50, 55], [58, 59], 80, 91, 20], "showers"],
-  [[[56, 57], 83, 93, [23, 24]], "sleet"],
-  [[[60, 65], [81, 82], 92, 21, 25], "heavy-showers"],
-  [[[66, 69], 84, 94, 27], "heavy-sleet"],
-  [[[40, 49], [5, 6], [10, 12], 28], "fog"],
+  [[0], "clear-day.svg", "clear-night.svg"],
+  [[[1, 2]], "partly-cloudy-day.svg", "partly-cloudy-night.svg"],
+  [[3], "cloudy.svg"],
+  [[4], "overcast.svg"],
+  [[13, 17, 29, [95, 96]], "thunderstorm-showers.svg"],
+  [[18, [30, 39], [7, 9], 19], "windy.svg"],
+  [[[14, 16], [50, 55], [58, 59], 80, 91, 20], "showers.svg"],
+  [[[56, 57], 83, 93, [23, 24]], "sleet.svg"],
+  [[[60, 65], [81, 82], 92, 21, 25], "heavy-showers.svg"],
+  [[[66, 69], 84, 94, 27], "heavy-sleet.svg"],
+  [[[40, 49], [5, 6], [10, 12], 28], "fog.svg"],
   [
     [
       [70, 73],
       [87, 90],
       85
     ],
-    "snow"
+    "snow.svg"
   ],
-  [[[74, 79], 86, 22, 26], "heavy-snow"],
-  [[[97, 99]], "thunderstorm-snow"]
+  [[[74, 79], 86, 22, 26], "heavy-snow.svg"],
+  [[[97, 99]], "thunderstorm-snow.svg"]
 ]
