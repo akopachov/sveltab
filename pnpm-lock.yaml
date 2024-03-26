@@ -25,6 +25,9 @@ importers:
 
   apps/preview:
     devDependencies:
+      netlify-plugin-replace-env:
+        specifier: ^1.0.1
+        version: 1.0.1
       webextension:
         specifier: workspace:*
         version: link:../webextension
@@ -5135,6 +5138,10 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /netlify-plugin-replace-env@1.0.1:
+    resolution: {integrity: sha512-f951cK3r09v2QQBWhJksRm9wJYXBXGNH/DligJjQyPHrJtcGaN0ZRVG6CwykAaExeOufj3JfpSst/QQqMqMu5A==}
+    dev: true
 
   /node-domexception@1.0.0:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
