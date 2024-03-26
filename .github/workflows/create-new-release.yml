@@ -127,6 +127,7 @@ jobs:
         with:
           name: release
           path: release
+          merge-multiple: true
       
       - name: Generate checksum
         run: |
