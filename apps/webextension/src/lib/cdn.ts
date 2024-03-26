@@ -7,53 +7,6 @@ function cdnCanHandle(src: string): Promise<boolean> {
   });
 }
 
-function getImageSizeHandler(widthParamName: string, heightParamName: string) {
-  return (url: URL, width?: number, height?: number) => {
-    if (width) {
-      url.searchParams.set(widthParamName, width.toFixed(0));
-    } else {
-      url.searchParams.delete(widthParamName);
-    }
-
-    if (height) {
-      url.searchParams.set(heightParamName, height.toFixed(0));
-    } else {
-      url.searchParams.delete(heightParamName);
-    }
-  };
-}
-
-interface ImageCdn {
-  getUrl(imageUrl: string): string;
-  setImageSizeParams(url: URL, width?: number, height?: number): void;
-  host: string;
-}
-
-const ImageCdnPool: ImageCdn[] = [
-  {
-    getUrl(imageUrl: string) {
-      return `https://media.assets.so/?url=${encodeURIComponent(imageUrl)}&f=webp&fit=cover`;
-    },
-    setImageSizeParams: getImageSizeHandler('w', 'h'),
-    host: 'media.assets.so',
-  },
-  {
-    getUrl(imageUrl: string) {
-      return `https://imagecdn.app/v2/image/${encodeURIComponent(imageUrl)}?format=webp`;
-    },
-    setImageSizeParams: getImageSizeHandler('width', 'height'),
-    host: 'imagecdn.app',
-  },
-  {
-    getUrl(imageUrl: string) {
-      return `https://demo.tiny.pictures/?source=${encodeURIComponent(imageUrl)}&resizeType=cover&format=webp&progressive=true&optimize=true`;
-    },
-    setImageSizeParams: getImageSizeHandler('width', 'height'),
-    host: 'demo.tiny.pictures',
-  },
-];
-const ImageCdnIndex = Object.fromEntries(ImageCdnPool.map(cdn => [cdn.host, cdn]));
-
 export async function getImageCdnUrl(
   imgUrl: string | undefined | null,
   width?: number | 'document' | 'screen',
@@ -63,15 +16,19 @@ export async function getImageCdnUrl(
     return '';
   }
 
-  let cdnedUrl: string = imgUrl;
-  for (const cdn of ImageCdnPool) {
-    cdnedUrl = updateImageCdnUrl(cdn.getUrl(imgUrl), width, height)!;
-    if (await cdnCanHandle(cdnedUrl)) {
-      break;
-    }
+  const encodedUrl = encodeURIComponent(imgUrl);
+
+  let cdnUrl = updateImageCdnUrl(`https://imagecdn.app/v2/image/${encodedUrl}?format=webp`, width, height);
+  if (!(await cdnCanHandle(cdnUrl!))) {
+    // if imagecdn.app can't server given image - let's use another CDN
+    cdnUrl = updateImageCdnUrl(
+      `https://demo.tiny.pictures/?source=${encodedUrl}&resizeType=cover&format=webp&progressive=true&optimize=true`,
+      width,
+      height,
+    );
   }
 
-  return cdnedUrl;
+  return cdnUrl;
 }
 
 export function updateImageCdnUrl(
@@ -93,7 +50,17 @@ export function updateImageCdnUrl(
   }
 
   const imgUrlObj = new URL(imgUrl);
-  ImageCdnIndex[imgUrlObj.host]?.setImageSizeParams(imgUrlObj, width, height);
+  if (width) {
+    imgUrlObj.searchParams.set('width', width.toFixed(0));
+  } else {
+    imgUrlObj.searchParams.delete('width');
+  }
+
+  if (height) {
+    imgUrlObj.searchParams.set('height', height.toFixed(0));
+  } else {
+    imgUrlObj.searchParams.delete('height');
+  }
 
   return imgUrlObj.toString();
 }
