@@ -7,6 +7,7 @@ import type { Plugin } from 'vite';
 import ejs from 'ejs';
 import { hashFile } from 'hasha';
 import picomatch from 'picomatch';
+import slash from 'slash';
 
 export type TemplateData =
   | Record<string, any>
@@ -53,18 +54,12 @@ export default async function runGeneratorsPlugin(searchPath: string): Promise<P
       }
     },
     async configureServer(server) {
-      const isMatchSearchPath = picomatch(searchPath, <any>{ windows: true });
-      server.watcher.add(searchPath);
-      for (const generator of LOADED_GENERATORS.values()) {
-        server.watcher.add(generator.generatorFilePath);
-        server.watcher.add(generator.watchPatterns);
-      }
-
+      const isMatchSearchPath = picomatch(slash(searchPath));
       async function onFileChange(filePath: string) {
-        if (isMatchSearchPath(relative(__dirname, filePath))) {
+        filePath = slash(filePath);
+        if (isMatchSearchPath(slash(relative(__dirname, filePath)))) {
           const generator = await loadGenerator(filePath);
           LOADED_GENERATORS.set(filePath, generator);
-          server.watcher.add(generator.watchPatterns);
           await runGenerator(generator);
           return;
         }
@@ -79,12 +74,11 @@ export default async function runGeneratorsPlugin(searchPath: string): Promise<P
       server.watcher.on('change', onFileChange);
       server.watcher.on('add', onFileChange);
       server.watcher.on('unlink', filePath => {
+        filePath = slash(filePath);
         if (LOADED_GENERATORS.has(filePath)) {
           const generator = LOADED_GENERATORS.get(filePath)!;
           fs.unlink(generator.outputFilePath);
           LOADED_GENERATORS.delete(filePath);
-          server.watcher.unwatch(generator.watchPatterns);
-          server.watcher.unwatch(generator.generatorFilePath);
         }
       });
     },
@@ -92,14 +86,16 @@ export default async function runGeneratorsPlugin(searchPath: string): Promise<P
 }
 
 async function loadGenerators(searchPath: string) {
-  const generatorFiles = new Set(
+  const generatorFiles = Array.from(
     await glob(searchPath, {
       cwd: __dirname,
       absolute: true,
       dot: true,
       filesOnly: true,
     }),
+    p => slash(p),
   );
+
   const generators = new Map<string, GeneratorInfo>();
   for (const generatorFile of generatorFiles) {
     generators.set(generatorFile, await loadGenerator(generatorFile));
@@ -115,15 +111,15 @@ async function loadGenerator(generatorFile: string) {
   generatorFileUri.searchParams.set('v', hash);
 
   const { default: generator } = await import(generatorFileUri.toString());
-  const generatorDir = dirname(generatorFile);
-  const watchPatterns = (generator.watch || []).map((p: string) => resolve(generatorDir, p));
+  const generatorDir = slash(dirname(generatorFile));
+  const watchPatterns = (generator.watch || []).map((p: string) => slash(resolve(generatorDir, p)));
   const outputFilePath = generatorFile.replace(/(\.(gen|g|d|t|tmpl))?\.[^/.]+$/, '') + (generator.outExt || '');
   return {
-    isMatchWatchPattern: picomatch(watchPatterns, <any>{ windows: true }),
+    isMatchWatchPattern: picomatch(watchPatterns),
     watchPatterns,
     outputFilePath,
     cwd: generatorDir,
     generatorFileUri: generatorFileUri,
-    generatorFilePath: generatorFile,
+    generatorFilePath: slash(generatorFile),
   } satisfies GeneratorInfo;
 }
