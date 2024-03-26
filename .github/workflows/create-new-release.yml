@@ -112,7 +112,7 @@ jobs:
           name: release
           compression-level: 0
           path: |
-            ./apps/webextension/sveltab-*.zip
+            ./apps/webextension/build-web-ext/sveltab-*.zip
       
       - name: Upload Release Asset
         uses: shogo82148/actions-upload-release-asset@v1
