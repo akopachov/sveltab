@@ -4,11 +4,14 @@
   import { SvelteComponent, createEventDispatcher } from 'svelte';
   import * as m from '$i18n/messages';
   import type { WidgetSettingsExtra } from '$lib/widget-settings';
+  import { offset, flip, shift } from 'svelte-floating-ui/dom';
+  import { createFloatingActions } from 'svelte-floating-ui';
 
   export let widget: WidgetInstance;
   export let widgetSettingsPopupSettings: PopupSettings;
-  export let isSelected: boolean;
+  export let showControls: boolean;
   export let workspaceLocked: boolean;
+  export let controlsClassName: string = '';
 
   type WidgetComponent = SvelteComponent & {
     onDelete?: () => void | Promise<void>;
@@ -20,6 +23,18 @@
   const modalStore = getModalStore();
   let fakeEditButton: HTMLElement;
   let widgetComponent: WidgetComponent;
+
+  const [settingsFloatingRef, settingsFloatingContent] = createFloatingActions({
+    strategy: 'absolute',
+    placement: 'top-start',
+    middleware: [offset(0), flip(), shift()],
+  });
+
+  const [deleteFloatingRef, deleteFloatingContent] = createFloatingActions({
+    strategy: 'absolute',
+    placement: 'top-end',
+    middleware: [offset({ mainAxis: 0, crossAxis: -1 }), flip(), shift()],
+  });
 
   const {
     zIndex,
@@ -49,6 +64,8 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   bind:this={widget.htmlElement}
+  use:settingsFloatingRef
+  use:deleteFloatingRef
   class="absolute [container-type:size] relative-position {$$restProps.class ||
     ''} focus-within:!z-[99999] focus:!z-[99999]"
   id={$$restProps.id || ''}
@@ -85,21 +102,25 @@
     </div>
     <div class="absolute top-0 left-0 w-full h-full cursor-move"></div>
   {/if}
-  {#if isSelected}
+</div>
+{#if showControls}
+  <div use:settingsFloatingContent class="absolute {controlsClassName} z-[99999]">
     <button
-      class="absolute btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
+      class="btn-icon variant-filled-surface top-0 left-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
       title={m.Widgets_Common_Menu_OpenSettings()}
       on:click={() => fakeEditButton.click()}>
       <span class="w-full h-full icon-[fluent--settings-20-regular]"></span>
     </button>
+  </div>
+  <div use:deleteFloatingContent class="absolute {controlsClassName} z-[99999]">
     <button
-      class="absolute btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none z-10"
+      class="{controlsClassName} btn-icon variant-filled-error right-0 top-0 w-8 min-w-[16px] max-w-[32px] rounded-none"
       title={m.Widgets_Common_Menu_Delete()}
       on:click={onDeleteWidgetClick}>
       <span class="w-full h-full icon-[fluent--delete-28-regular]"></span>
     </button>
-  {/if}
-</div>
+  </div>
+{/if}
 
 <style>
   .relative-position {

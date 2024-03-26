@@ -301,9 +301,10 @@
         {widget}
         {widgetSettingsPopupSettings}
         on:delete={onWidgetDelete}
-        isSelected={!$workspaceLocked && selectedWidgets.has(widget)}
+        showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
         id="widget_{widget.id}"
         class="widget widget_{widget.settings.type}"
+        controlsClassName="widget-control"
         workspaceLocked={$workspaceLocked}
         on:autosettingsupdate={saveWorkspaceChanges} />
     {/each}
@@ -312,7 +313,8 @@
         bind:this={moveable}
         bind:selected={selectedWidgets}
         widgets={$widgets}
-        workspace={workspaceEl} />
+        workspace={workspaceEl}
+        widgetControlsZone=".widget-control" />
     {/if}
   </div>
   <div

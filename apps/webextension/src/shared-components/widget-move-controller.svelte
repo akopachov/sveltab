@@ -15,13 +15,13 @@
   export let selected: Set<WidgetInstance>;
   export let widgets: ReadonlySet<WidgetInstance>;
   export let workspace: HTMLElement;
+  export let widgetControlsZone: string;
 
   $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : m.htmlElement)), workspace];
   $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElement!, m]));
   $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElement!, m]));
 
   let moveableRef: Moveable;
-  let selectoRef: Selecto;
   const unspecified: any = undefined;
 
   function select(widget: WidgetInstance, selectedWidgetEl: HTMLElement) {
@@ -123,12 +123,17 @@
   }
 
   function onDragStart({ detail: e }: CustomEvent<OnDragStart>) {
-    let target = e.inputEvent.target;
-    if (moveableRef.isMoveableElement(target)) {
+    let target = <HTMLElement | null>e.inputEvent.target;
+    if (target && moveableRef.isMoveableElement(target)) {
       e.stop();
     } else {
       let widget = null;
       while (target && !(widget = selectedWidgetHtmlElementsMap.get(target))) {
+        if (widgetControlsZone && target.matches(widgetControlsZone)) {
+          e.stop();
+          return;
+        }
+
         target = target.parentElement;
       }
       if (widget) {
@@ -145,9 +150,12 @@
       });
     }
 
-    selected.forEach(w => {
-      if (w.htmlElement && !e.selected.includes(w.htmlElement)) {
-        unselect(w);
+    e.removed.forEach(el => {
+      if (el instanceof HTMLElement) {
+        const widget = widgetElementMap.get(el);
+        if (widget) {
+          unselect(widget);
+        }
       }
     });
 
@@ -197,7 +205,6 @@
   on:rotateGroupEnd={onRotateGroupEnd} />
 
 <Selecto
-  bind:this={selectoRef}
   container={workspace}
   rootContainer={workspace}
   dragContainer={workspace}
