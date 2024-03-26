@@ -10,7 +10,6 @@
     "build": "echo \"Done\""
   },
   "devDependencies": {
-    "netlify-plugin-replace-env": "^1.0.1",
     "webextension": "workspace:*"
   },
   "type": "module"

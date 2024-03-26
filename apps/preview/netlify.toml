@@ -5,6 +5,3 @@
 
 [functions]
   directory = "apps/preview/functions"
-
-[[plugins]]
-  package = 'netlify-plugin-replace-env'
