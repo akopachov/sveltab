@@ -8,6 +8,7 @@ export async function onPreBuild({ inputs, utils }) {
     const envVariable = process.env[inputs.variable];
     const { stdout: interpolated } = await utils.run("echo", [envVariable], {
       env: process.env,
+      shell: true,
     });
     process.env[inputs.variable] = interpolated;
     log(`Environmental variable ${inputs.variable} has been updated`);
