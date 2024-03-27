@@ -7,19 +7,16 @@ body {
   @apply overflow-hidden;
 }
 
-.color-picker .wrapper {
-  @apply m-0 border-none bg-surface-100 dark:bg-surface-800;
+.picker_wrapper {
+  @apply !bg-transparent !shadow-none;
 }
-
-.color-picker .wrapper .text-input input {
-  @apply input !w-1 !outline-none text-token;
+.picker_editor {
+  @apply w-[calc(100%-5rem)] flex-auto;
 }
-
-.color-picker .wrapper .text-input input[type='number'] {
-  @apply hidden;
+.picker_editor input {
+  @apply input !font-[inherit] !px-3 !py-1;
 }
-
-.color-picker .wrapper .text-input button {
+.picker_done {
   @apply hidden;
 }
 

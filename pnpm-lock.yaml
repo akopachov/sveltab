@@ -148,9 +148,6 @@ importers:
       svelte:
         specifier: ^4.2.12
         version: 4.2.12
-      svelte-awesome-color-picker:
-        specifier: 3.0.6
-        version: 3.0.6(svelte@4.2.12)
       svelte-chartjs:
         specifier: ^3.1.5
         version: 3.1.5(chart.js@4.4.2)(svelte@4.2.12)
@@ -193,9 +190,12 @@ importers:
       typescript:
         specifier: ^5.4.3
         version: 5.4.3
+      vanilla-picker:
+        specifier: ^2.12.3
+        version: 2.12.3
       vite:
         specifier: ^5.2.6
-        version: 5.2.6(@types/node@20.11.30)
+        version: 5.2.6
       vite-plugin-run-generator:
         specifier: workspace:*
         version: link:../../packages/vite-plugin-run-generator
@@ -1749,6 +1749,10 @@ packages:
       tailwindcss: 3.4.1
     dev: true
 
+  /@sphinxxxx/color-conversion@2.2.2:
+    resolution: {integrity: sha512-XExJS3cLqgrmNBIP3bBw6+1oQ1ksGjFh0+oClDKFYpCCqx/hlqwWO5KO/S63fzUo67SxI9dMrF0y5T/Ey7h8Zw==}
+    dev: true
+
   /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.5.4):
     resolution: {integrity: sha512-6lMvf7xYEJ+oGeR5L8DFJJrowkefTK6ZgA4JiMqoClMkKq0s6yvsd3FZfCFvX1fQ0tpCD7fkuRVHsnUVgsHyNg==}
     peerDependencies:
@@ -1781,7 +1785,7 @@ packages:
       sirv: 2.0.4
       svelte: 4.2.12
       tiny-glob: 0.2.9
-      vite: 5.2.6(@types/node@20.11.30)
+      vite: 5.2.6
     dev: true
 
   /@sveltejs/vite-plugin-svelte-inspector@2.0.0(@sveltejs/vite-plugin-svelte@3.0.2)(svelte@4.2.12)(vite@5.2.6):
@@ -1795,7 +1799,7 @@ packages:
       '@sveltejs/vite-plugin-svelte': 3.0.2(svelte@4.2.12)(vite@5.2.6)
       debug: 4.3.4
       svelte: 4.2.12
-      vite: 5.2.6(@types/node@20.11.30)
+      vite: 5.2.6
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -1814,7 +1818,7 @@ packages:
       magic-string: 0.30.8
       svelte: 4.2.12
       svelte-hmr: 0.15.3(svelte@4.2.12)
-      vite: 5.2.6(@types/node@20.11.30)
+      vite: 5.2.6
       vitefu: 0.2.5(vite@5.2.6)
     transitivePeerDependencies:
       - supports-color
@@ -6887,24 +6891,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /svelte-awesome-color-picker@3.0.6(svelte@4.2.12):
-    resolution: {integrity: sha512-lkyT9+78mpvzUm6yZLh2RKGHJn9U/XOZsc+WrCZVPaNTRnleled3dwR+EX0SgiAeFV7V/ieK3bu4wpgU0HRFlQ==}
-    peerDependencies:
-      svelte: ^3.55.1 || ^4.0.0
-    dependencies:
-      colord: 2.9.3
-      svelte: 4.2.12
-      svelte-awesome-slider: 1.1.0(svelte@4.2.12)
-    dev: true
-
-  /svelte-awesome-slider@1.1.0(svelte@4.2.12):
-    resolution: {integrity: sha512-MgY6ZdBON42HVZqNWNjq2HOgyDlC35q0TNbV/YO1l1/bcb5yhM8EE97h1AJ/7F6t6sLzXhQ3qPf5nGyCdDSnCg==}
-    peerDependencies:
-      svelte: ^3.54.0 || ^4.0.0
-    dependencies:
-      svelte: 4.2.12
-    dev: true
-
   /svelte-chartjs@3.1.5(chart.js@4.4.2)(svelte@4.2.12):
     resolution: {integrity: sha512-ka2zh7v5FiwfAX1oMflZ0HkNkgjHjFqANgRyC+vNYXfxtx2ku68Zo+2KgbKeBH2nS1ThDqkIACPzGxy4T0UaoA==}
     peerDependencies:
@@ -7435,6 +7421,12 @@ packages:
     hasBin: true
     dev: true
 
+  /vanilla-picker@2.12.3:
+    resolution: {integrity: sha512-qVkT1E7yMbUsB2mmJNFmaXMWE2hF8ffqzMMwe9zdAikd8u2VfnsVY2HQcOUi2F38bgbxzlJBEdS1UUhOXdF9GQ==}
+    dependencies:
+      '@sphinxxxx/color-conversion': 2.2.2
+    dev: true
+
   /verror@1.10.0:
     resolution: {integrity: sha512-ZZKSmDAEFOijERBLkmYfJ+vmk3w+7hOLYDNkRCuRuMJGEmqYNCNLyBBFwWKVMhfwaEF3WOd0Zlw86U/WC/+nYw==}
     engines: {'0': node >=0.6.0}
@@ -7451,7 +7443,42 @@ packages:
     dependencies:
       estree-walker: 3.0.3
       purgecss: 6.0.0-alpha.0
-      vite: 5.2.6(@types/node@20.11.30)
+      vite: 5.2.6
+    dev: true
+
+  /vite@5.2.6:
+    resolution: {integrity: sha512-FPtnxFlSIKYjZ2eosBQamz4CbyrTizbZ3hnGJlh/wMtCrlp1Hah6AzBLjGI5I2urTfNnpovpHdrL6YRuBOPnCA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
+      esbuild: 0.20.2
+      postcss: 8.4.38
+      rollup: 4.13.0
+    optionalDependencies:
+      fsevents: 2.3.3
     dev: true
 
   /vite@5.2.6(@types/node@20.11.30):
@@ -7488,6 +7515,7 @@ packages:
       rollup: 4.13.0
     optionalDependencies:
       fsevents: 2.3.3
+    dev: false
 
   /vitefu@0.2.5(vite@5.2.6):
     resolution: {integrity: sha512-SgHtMLoqaeeGnd2evZ849ZbACbnwQCIwRH57t18FxcXoZop0uQu0uzlIhJBlF/eWVzuce0sHeqPcDo+evVcg8Q==}
@@ -7497,7 +7525,7 @@ packages:
       vite:
         optional: true
     dependencies:
-      vite: 5.2.6(@types/node@20.11.30)
+      vite: 5.2.6
     dev: true
 
   /watchpack@2.4.0:
