@@ -20,6 +20,7 @@ import { Widget as TopSitesWidget } from '$widgets/top-sites';
 import { Widget as HtmlWidget } from '$widgets/html';
 import { Widget as AnalogueClockWidget } from '$widgets/analogue-clock';
 import { Widget as CryptoAssetQuotationWidget } from '$widgets/crypto-assets-quotation';
+import { Widget as AirQualityWidget } from '$widgets/air-quality';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
   position: Omit<WidgetPositionInitial, 'x' | 'y' | 'positionUnits' | 'sizeUnits'> &
@@ -52,6 +53,7 @@ export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   LinkWidget,
   SearchWidget,
   WeatherWidget,
+  AirQualityWidget,
   GreetingWidget,
   RandomQuoteWidget,
   FlickrWidget,
