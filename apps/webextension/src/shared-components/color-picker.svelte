@@ -89,8 +89,7 @@
   :global(.picker_wrapper .picker_arrow) {
     display: none;
   }
-
-  :global(.layout_default.picker_wrapper) {
+  :global(.layout_default) {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
