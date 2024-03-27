@@ -1,0 +1,4 @@
+name: netlify-plugin-interpolate-env-variable
+inputs:
+  - name: variable
+    required: true
