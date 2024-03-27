@@ -3,7 +3,6 @@
   import { nanoid } from 'nanoid/non-secure';
   import { onDestroy } from 'svelte';
   import Picker from 'vanilla-picker/csp';
-  import 'vanilla-picker/dist/vanilla-picker.csp.css';
 
   export let color: string;
   export let inline: boolean = false;
