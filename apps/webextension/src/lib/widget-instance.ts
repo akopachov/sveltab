@@ -30,9 +30,9 @@ export class WidgetInstance {
   get id() {
     return this.settings.id;
   }
-  readonly components: WidgetCatalogItemComponents;
-  readonly settings: WidgetSettings;
   get htmlElementId() {
     return `widget_${this.id}`;
   }
+  readonly components: WidgetCatalogItemComponents;
+  readonly settings: WidgetSettings;
 }
