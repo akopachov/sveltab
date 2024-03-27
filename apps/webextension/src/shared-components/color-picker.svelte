@@ -89,7 +89,7 @@
   :global(.picker_wrapper .picker_arrow) {
     display: none;
   }
-  :global(.layout_default) {
+  :global(.picker_wrapper) {
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -99,15 +99,15 @@
     padding: 0.5em;
   }
 
-  :global(.layout_default.picker_wrapper button, .layout_default.picker_wrapper input) {
+  :global(.picker_wrapper button, .picker_wrapper input) {
     font-size: 1rem;
   }
 
-  :global(.layout_default.picker_wrapper > *) {
+  :global(.picker_wrapper > *) {
     margin: 0.5em;
   }
 
-  :global(.layout_default.picker_wrapper::before) {
+  :global(.picker_wrapper::before) {
     content: '';
     display: block;
     width: 100%;
@@ -115,40 +115,40 @@
     order: 1;
   }
 
-  :global(.layout_default .picker_selector, .layout_default .picker_slider) {
+  :global(.picker_wrapper .picker_selector, .picker_wrapper .picker_slider) {
     padding: 1em;
   }
 
-  :global(.layout_default .picker_hue) {
+  :global(.picker_wrapper .picker_hue) {
     width: 100%;
   }
 
-  :global(.layout_default .picker_sl) {
+  :global(.picker_wrapper .picker_sl) {
     flex: 1 1 auto;
   }
 
-  :global(.layout_default .picker_sl::before) {
+  :global(.picker_wrapper .picker_sl::before) {
     content: '';
     display: block;
     padding-bottom: 100%;
   }
 
-  :global(.layout_default .picker_editor) {
+  :global(.picker_wrapper .picker_editor) {
     order: 1;
     width: 6.5rem;
   }
 
-  :global(.layout_default .picker_editor input) {
+  :global(.picker_wrapper .picker_editor input) {
     width: 100%;
     height: 100%;
   }
 
-  :global(.layout_default .picker_sample) {
+  :global(.picker_wrapper .picker_sample) {
     order: 1;
     flex: 1 1 auto;
   }
 
-  :global(.layout_default .picker_cancel, .layout_default .picker_done) {
+  :global(.picker_wrapper .picker_cancel, .picker_wrapper .picker_done) {
     order: 1;
   }
 
