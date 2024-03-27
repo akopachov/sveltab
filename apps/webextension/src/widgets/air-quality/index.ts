@@ -16,7 +16,7 @@ export const Widget: WidgetCatalogItem = {
   settings: {
     type: 'air-quality',
     position: {
-      height: 40,
+      height: 20,
       width: 50,
     },
   },

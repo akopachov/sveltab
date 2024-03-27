@@ -9,7 +9,6 @@ import { WidgetsCatalog, type WidgetCatalogItem, type WidgetCatalogItemComponent
 const WidgetsCatalogIndex = new Map<string, WidgetCatalogItem>(WidgetsCatalog.map(c => [c.settings.type, c]));
 
 export class WidgetInstance {
-  #htmlElement: WeakRef<HTMLElement> | null = null;
   private constructor(
     catalogItem: WidgetCatalogItem,
     settings: WidgetSettingsInitial,
@@ -33,10 +32,7 @@ export class WidgetInstance {
   }
   readonly components: WidgetCatalogItemComponents;
   readonly settings: WidgetSettings;
-  get htmlElement() {
-    return this.#htmlElement?.deref() ?? null;
-  }
-  set htmlElement(value: HTMLElement | null) {
-    this.#htmlElement = value ? new WeakRef(value) : null;
+  get htmlElementId() {
+    return `widget_${this.id}`;
   }
 }

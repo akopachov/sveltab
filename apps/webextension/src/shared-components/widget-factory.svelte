@@ -63,12 +63,11 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  bind:this={widget.htmlElement}
   use:settingsFloatingRef
   use:deleteFloatingRef
   class="absolute [container-type:size] relative-position {$$restProps.class ||
     ''} focus-within:!z-[99999] focus:!z-[99999]"
-  id={$$restProps.id || ''}
+  id={widget.htmlElementId}
   tabindex="-1"
   on:mousedown
   style:z-index={$zIndex}

@@ -302,7 +302,6 @@
         {widgetSettingsPopupSettings}
         on:delete={onWidgetDelete}
         showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
-        id="widget_{widget.id}"
         class="widget widget_{widget.settings.type}"
         controlsClassName="widget-control"
         workspaceLocked={$workspaceLocked}

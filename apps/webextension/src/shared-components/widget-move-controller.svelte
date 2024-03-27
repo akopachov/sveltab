@@ -17,9 +17,9 @@
   export let workspace: HTMLElement;
   export let widgetControlsZone: string;
 
-  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : m.htmlElement)), workspace];
-  $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElement!, m]));
-  $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElement!, m]));
+  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : m.htmlElementId)), workspace];
+  $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElementId, m]));
+  $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElementId, m]));
 
   let moveableRef: Moveable;
   const unspecified: any = undefined;
@@ -46,7 +46,7 @@
 
   export function unselect(widget: WidgetInstance) {
     if (selected.has(widget)) {
-      const selectedWidgetEl = widget.htmlElement!;
+      const selectedWidgetEl = document.getElementById(widget.htmlElementId)!;
       const selectedWidgetSettings = widget.settings;
       selectedWidgetSettings.position.setFromAbsolute(workspace, {
         x: parseFloat(selectedWidgetEl.style.left),
@@ -112,7 +112,7 @@
 
   function onRotateGroupEnd({ detail: { events } }: CustomEvent<OnRotateGroupEnd>) {
     events.forEach(ev => {
-      const widget = widgetElementMap.get(ev.target as HTMLElement);
+      const widget = widgetElementMap.get(ev.target.id);
       if (widget) {
         widget.settings.rotation.value = ev.lastEvent.rotation;
         ev.target.style.left = `${ev.lastEvent.drag.left}px`;
@@ -128,7 +128,7 @@
       e.stop();
     } else {
       let widget = null;
-      while (target && !(widget = selectedWidgetHtmlElementsMap.get(target))) {
+      while (target && !(widget = selectedWidgetHtmlElementsMap.get(target.id))) {
         if (widgetControlsZone && target.matches(widgetControlsZone)) {
           e.stop();
           return;
@@ -152,7 +152,7 @@
 
     e.removed.forEach(el => {
       if (el instanceof HTMLElement) {
-        const widget = widgetElementMap.get(el);
+        const widget = widgetElementMap.get(el.id);
         if (widget) {
           unselect(widget);
         }
@@ -161,7 +161,7 @@
 
     e.selected.forEach(el => {
       if (el instanceof HTMLElement) {
-        const widget = widgetElementMap.get(el);
+        const widget = widgetElementMap.get(el.id);
         if (widget) {
           select(widget, el);
         }
@@ -173,7 +173,7 @@
 
 <Moveable
   bind:this={moveableRef}
-  target={Array.from(selectedWidgetHtmlElementsMap.keys())}
+  target={Array.from(selectedWidgetHtmlElementsMap.keys(), v => `#${v}`)}
   origin={false}
   edge={false}
   draggable={true}
@@ -208,7 +208,7 @@
   container={workspace}
   rootContainer={workspace}
   dragContainer={workspace}
-  selectableTargets={Array.from(widgetElementMap.keys())}
+  selectableTargets={Array.from(widgetElementMap.keys(), v => `#${v}`)}
   hitRate={50}
   selectByClick={true}
   selectFromInside={false}
