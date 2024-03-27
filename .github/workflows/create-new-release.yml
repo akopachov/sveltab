@@ -89,7 +89,7 @@ jobs:
 
       - name: Set generate external assets CDN
         run: |
-          echo "PUBLIC_EXTERNAL_ASSETS_URI=$(echo "$PUBLIC_EXTERNAL_ASSETS_URI")" >> $GITHUB_ENV
+          echo "PUBLIC_EXTERNAL_ASSETS_URI=$PUBLIC_EXTERNAL_ASSETS_URI" >> $GITHUB_ENV
     
       - uses: pnpm/action-setup@v3.0.0
         name: Install pnpm
