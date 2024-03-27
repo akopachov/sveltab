@@ -70,7 +70,6 @@ jobs:
       PUBLIC_FLICKR_API_KEY: ${{secrets.PUBLIC_FLICKR_API_KEY}}
       PRIVATE_CORS_BYPASS: ${{secrets.PRIVATE_CORS_BYPASS}}
       PUBLIC_OWM_REDIRECT: ${{secrets.PUBLIC_OWM_REDIRECT}}
-      PUBLIC_EXTERNAL_ASSETS_URI_TEMPLATE: ${{secrets.PUBLIC_EXTERNAL_ASSETS_URI_TEMPLATE}}
       PUBLIC_THEQUOTEAPI_KEY: ${{secrets.PUBLIC_THEQUOTEAPI_KEY}}
       PUBLIC_NASA_APOD_API_KEY: ${{secrets.PUBLIC_NASA_APOD_API_KEY}}
       PUBLIC_PEXELS_API_KEY: ${{secrets.PUBLIC_PEXELS_API_KEY}}
@@ -89,7 +88,7 @@ jobs:
 
       - name: Set generate external assets CDN
         run: |
-          echo "PUBLIC_EXTERNAL_ASSETS_URI=$PUBLIC_EXTERNAL_ASSETS_URI_TEMPLATE" >> $GITHUB_ENV
+          echo "PUBLIC_EXTERNAL_ASSETS_URI=${{secrets.PUBLIC_EXTERNAL_ASSETS_URI_TEMPLATE}}" >> $GITHUB_ENV
     
       - uses: pnpm/action-setup@v3.0.0
         name: Install pnpm
