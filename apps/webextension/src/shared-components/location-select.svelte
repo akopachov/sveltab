@@ -1,9 +1,30 @@
+<script context="module" lang="ts">
+  export type GeoLocationInitial = Partial<Unobserved<GeoLocation>>;
+  export class GeoLocation {
+    constructor(initial: GeoLocationInitial) {
+      this.city = useObservable(initial.city || '');
+      this.latitude = useObservable(initial.latitude || 0);
+      this.longitude = useObservable(initial.longitude || 0);
+      this.country = useObservable(initial.country || '');
+      this.admin1 = useObservable(initial.admin1 || '');
+      this.admin2 = useObservable(initial.admin2 || '');
+    }
+
+    readonly city: Observable<string>;
+    readonly latitude: Observable<number>;
+    readonly longitude: Observable<number>;
+    readonly country: Observable<string>;
+    readonly admin1: Observable<string>;
+    readonly admin2: Observable<string>;
+  }
+</script>
+
 <script lang="ts">
-  import type { GeoLocation, GeoLocationInitial } from './settings';
   import * as m from '$i18n/messages';
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import { locale } from '$stores/locale';
+  import { useObservable, type Observable, type Unobserved } from '$lib/observable';
 
   export let location: GeoLocation;
 
@@ -55,12 +76,12 @@
 </script>
 
 <label class="label">
-  <span>{m.Widgets_Weather_Settings_Location_Label()}</span>
+  <span>{m.LocationSelector_Label()}</span>
   <input
     class="input"
     type="search"
     value={$city ? `${$city}, ${$country}` : ''}
-    placeholder={m.Widgets_Weather_Settings_Location_Placeholder()}
+    placeholder={m.LocationSelector_Placeholder()}
     use:popup={locationPopupSettings}
     use:debounce={locationSearchDebounceOpts} />
 </label>

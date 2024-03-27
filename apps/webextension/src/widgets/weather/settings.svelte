@@ -7,7 +7,7 @@
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import ShadowSelector from '$shared-components/shadow-selector.svelte';
-  import LocationSelect from './location-select.svelte';
+  import LocationSelect from '$shared-components/location-select.svelte';
   import { AssetsPacks } from './asset-packs';
 
   export let settings: Settings;

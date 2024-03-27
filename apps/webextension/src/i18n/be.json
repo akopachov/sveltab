@@ -34,6 +34,10 @@
 	"ShadowSelector_OffsetY": "Зрушэнне Y",
 	"ShadowSelector_Blur": "Размыццё",
 	"ShadowSelector_Color": "Колер",
+
+  "LocationSelector_Placeholder": "Пошук",
+	"LocationSelector_Label": "Размяшчэнне",
+
 	"DataManage_Restore": "Аднавіць",
 	"DataManage_Restore_Error": "Падчас аднаўлення адбылася памылка",
 	"DataManage_Restore_Error_VersionMistmatch": "Несупадзенне версій",
@@ -241,8 +245,6 @@
 	"Widgets_Weather_Settings_Blur": "Размыццё",
 	"Widgets_Weather_Settings_Shadow": "Цень",
 	"Widgets_Weather_Settings_Location_QueryBrowser": "Запытаць месцазнаходжанне з браўзера",
-	"Widgets_Weather_Settings_Location_Placeholder": "Пошук",
-	"Widgets_Weather_Settings_Location_Label": "Размяшчэнне",
 	"Widgets_Weather_Settings_MeasurementUnits": "Адзінкі",
 	"Widgets_Weather_Settings_MeasurementUnits_Metric": "Метрычная",
 	"Widgets_Weather_Settings_MeasurementUnits_Imperial": "Імператарская",

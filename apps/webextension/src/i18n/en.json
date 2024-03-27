@@ -34,6 +34,10 @@
   "ShadowSelector_OffsetY": "Offset Y",
   "ShadowSelector_Blur": "Blur",
   "ShadowSelector_Color": "Color",
+
+  "LocationSelector_Placeholder": "Search",
+  "LocationSelector_Label": "Location",
+
   "DataManage_Restore": "Restore",
   "DataManage_Restore_Error": "An error occurred during restoring",
   "DataManage_Restore_Error_VersionMistmatch": "Version mistmatch",
@@ -239,8 +243,6 @@
   "Widgets_Weather_Settings_Blur": "Blur",
   "Widgets_Weather_Settings_Shadow": "Shadow",
   "Widgets_Weather_Settings_Location_QueryBrowser": "Query location from browser",
-  "Widgets_Weather_Settings_Location_Placeholder": "Search",
-  "Widgets_Weather_Settings_Location_Label": "Location",
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
   "Widgets_Weather_Settings_MeasurementUnits_Metric": "Metric",
   "Widgets_Weather_Settings_MeasurementUnits_Imperial": "Imperial",
