@@ -86,6 +86,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: ./.nvmrc
+
+      - name: Set generate external assets CDN
+        run: |
+          echo "PUBLIC_EXTERNAL_ASSETS_URI=$(echo "$PUBLIC_EXTERNAL_ASSETS_URI")" >> $GITHUB_ENV
     
       - uses: pnpm/action-setup@v3.0.0
         name: Install pnpm
