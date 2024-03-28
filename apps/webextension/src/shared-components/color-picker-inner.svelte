@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import FlatUIColorPallets from 'flat-ui-colors-json/palettes.json';
+  import * as m from '$i18n/messages';
   import 'vanilla-colorful/hex-alpha-color-picker.js';
   import 'vanilla-colorful/hex-input.js';
 
@@ -20,8 +21,8 @@
 </script>
 
 <TabGroup>
-  <Tab bind:group={currentTab} name="picker" value={Tabs.Picker}>Color picker</Tab>
-  <Tab bind:group={currentTab} name="pallet" value={Tabs.Pallet}>Pallet</Tab>
+  <Tab bind:group={currentTab} name="picker" value={Tabs.Picker}>{m.ColorPicker_Picker()}</Tab>
+  <Tab bind:group={currentTab} name="pallet" value={Tabs.Pallet}>{m.ColorPicker_Palette()}</Tab>
   <svelte:fragment slot="panel">
     {#if currentTab === Tabs.Picker}
       <div class="flex flex-col items-center gap-3 w-min px-4 pt-1 pb-3">
