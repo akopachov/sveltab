@@ -3,7 +3,7 @@
   import VirtualScroll from 'svelte-virtual-scroll-list';
   import { onMount } from 'svelte';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
-  import ColorPicker from './color-picker.svelte';
+  import ColorPicker, { ColorPickerLayout } from './color-picker.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
   import type { FontSettings } from '$lib/widget-settings';
@@ -133,7 +133,7 @@
   </div>
   {#if color}
     <div class="absolute w-6 h-6 !mt-[-32px] !ml-[9px]">
-      <ColorPicker bind:color class="!p-0 font-color-picker bg-transparent" />
+      <ColorPicker bind:color layout={ColorPickerLayout.ButtonPopup} />
     </div>
   {/if}
   <div

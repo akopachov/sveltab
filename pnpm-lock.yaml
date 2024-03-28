@@ -121,6 +121,9 @@ importers:
       fast-json-patch:
         specifier: ^3.1.1
         version: 3.1.1
+      flat-ui-colors-json:
+        specifier: ^0.1.0
+        version: 0.1.0
       nanoid:
         specifier: ^5.0.6
         version: 5.0.6
@@ -190,9 +193,9 @@ importers:
       typescript:
         specifier: ^5.4.3
         version: 5.4.3
-      vanilla-picker:
-        specifier: ^2.12.3
-        version: 2.12.3
+      vanilla-colorful:
+        specifier: ^0.7.2
+        version: 0.7.2
       vite:
         specifier: ^5.2.6
         version: 5.2.6(@types/node@20.11.30)
@@ -1754,10 +1757,6 @@ packages:
       tailwindcss: '>=3.0.0'
     dependencies:
       tailwindcss: 3.4.3
-    dev: true
-
-  /@sphinxxxx/color-conversion@2.2.2:
-    resolution: {integrity: sha512-XExJS3cLqgrmNBIP3bBw6+1oQ1ksGjFh0+oClDKFYpCCqx/hlqwWO5KO/S63fzUo67SxI9dMrF0y5T/Ey7h8Zw==}
     dev: true
 
   /@sveltejs/adapter-static@3.0.1(@sveltejs/kit@2.5.4):
@@ -3857,6 +3856,10 @@ packages:
       flatted: 3.3.1
       keyv: 4.5.4
       rimraf: 3.0.2
+    dev: true
+
+  /flat-ui-colors-json@0.1.0:
+    resolution: {integrity: sha512-prIlW++oSkno1hBo1UwwfTkvws3tFtLUa2baq8LdgOgrn8ZyY0O5AENr9RMpY3+6Kw2w3ZJPesDsvxbXMLK+MQ==}
     dev: true
 
   /flat@5.0.2:
@@ -7429,10 +7432,8 @@ packages:
     hasBin: true
     dev: true
 
-  /vanilla-picker@2.12.3:
-    resolution: {integrity: sha512-qVkT1E7yMbUsB2mmJNFmaXMWE2hF8ffqzMMwe9zdAikd8u2VfnsVY2HQcOUi2F38bgbxzlJBEdS1UUhOXdF9GQ==}
-    dependencies:
-      '@sphinxxxx/color-conversion': 2.2.2
+  /vanilla-colorful@0.7.2:
+    resolution: {integrity: sha512-z2YZusTFC6KnLERx1cgoIRX2CjPRP0W75N+3CC6gbvdX5Ch47rZkEMGO2Xnf+IEmi3RiFLxS18gayMA27iU7Kg==}
     dev: true
 
   /verror@1.10.0:

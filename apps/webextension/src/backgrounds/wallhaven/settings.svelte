@@ -76,7 +76,8 @@
   <div class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(1.5rem,1fr))]">
     {#each WallhavenSearchColors as color}
       <label
-        class="[&>input:checked_~_span]:outline-primary-500 [&>input:checked~span]:outline-4 [&>input:checked~span]:outline aspect-square">
+        style:--sv-outline-color="#{color}"
+        class="[&>input:checked_~_span]:outline-[var(--sv-outline-color)] [&>input:checked~span]:outline-4 [&>input:checked~span]:outline aspect-square">
         <input type="checkbox" class="hidden" value={color} bind:group={$colors} />
         <span style:background-color="#{color}" class="block w-full h-full cursor-pointer"></span>
       </label>

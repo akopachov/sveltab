@@ -1,5 +1,5 @@
 <script lang="ts">
-  import ColorPicker from '$shared-components/color-picker.svelte';
+  import ColorPicker, { ColorPickerLayout } from '$shared-components/color-picker.svelte';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
 
@@ -11,5 +11,7 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label">
   <span>{m.Backgrounds_StaticColor_Settings_Color()}</span>
-  <ColorPicker bind:color={$color} inline={true} />
+  <div class="flex flex-col items-center">
+    <ColorPicker bind:color={$color} layout={ColorPickerLayout.Inline} />
+  </div>
 </label>

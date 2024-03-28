@@ -1,19 +1,21 @@
+<script context="module" lang="ts">
+  export enum ColorPickerLayout {
+    Inline = 'inline',
+    ButtonPopup = 'button-popup',
+    InputPopup = 'input-popup',
+  }
+</script>
+
 <script lang="ts">
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { nanoid } from 'nanoid/non-secure';
-  import { onDestroy } from 'svelte';
-  import Picker from 'vanilla-picker/csp';
+  import ColorPickerInner from './color-picker-inner.svelte';
+  import 'vanilla-colorful/hex-input.js';
 
   export let color: string;
-  export let inline: boolean = false;
+  export let layout: ColorPickerLayout = ColorPickerLayout.InputPopup;
 
-  let pickerParent: HTMLElement;
   let popupVisible: boolean = false;
-  let picker: Picker;
-
-  $: {
-    initializePicker(pickerParent);
-  }
 
   let popupSettings: PopupSettings = {
     event: 'click',
@@ -30,46 +32,44 @@
     },
   };
 
-  onDestroy(() => {
-    picker?.destroy();
-    picker = null;
-  });
-
-  function initializePicker(parent: HTMLElement) {
-    picker?.destroy();
-    picker = null;
-    if (parent) {
-      picker = new Picker({
-        popup: false,
-        parent: parent,
-        color: color,
-        onChange: (c: any) => {
-          color = c.hex;
-        },
-      });
-    }
+  function onColorChanged(event: CustomEvent<{ value: string }>) {
+    color = event.detail.value;
   }
 </script>
 
-{#if inline}
-  <div bind:this={pickerParent}></div>
+{#if layout === ColorPickerLayout.Inline}
+  <ColorPickerInner bind:color hexInput={true} />
 {:else}
-  <button
-    class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')] {$$restProps.class || ''}"
-    tabindex="-1"
-    use:popup={popupSettings}
-    style:box-shadow="inset 0 0 0 1.5rem {color}">
-  </button>
   <div
-    class="card shadow-xl w-fit h-fit overflow-y-auto flex z-[99999] px-1"
+    class="card shadow-xl w-fit h-fit overflow-y-auto max-w-[100cqw] max-h-[calc(100cqh-16px)] flex z-[99999] p-1"
     tabindex="-1"
     style:visibility={popupVisible ? 'visible' : 'hidden'}
     data-popup={popupSettings.target}>
     {#if popupVisible}
-      <div bind:this={pickerParent} class="contents"></div>
+      <ColorPickerInner bind:color hexInput={layout === ColorPickerLayout.ButtonPopup} />
     {/if}
   </div>
-{/if}
 
-<style lang="postcss">
-</style>
+  {#if layout === ColorPickerLayout.InputPopup}
+    <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
+      <div class="input-group-shim !px-2 border-r">
+        <button
+          class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')]"
+          tabindex="-1"
+          use:popup={popupSettings}
+          style:box-shadow="inset 0 0 0 1.5rem {color}">
+        </button>
+      </div>
+      <hex-input {color} alpha="true" prefixed="true" on:color-changed={onColorChanged}>
+        <input type="text" class="w-full border-surface-500" />
+      </hex-input>
+    </div>
+  {:else if layout === ColorPickerLayout.ButtonPopup}
+    <button
+      class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')]"
+      tabindex="-1"
+      use:popup={popupSettings}
+      style:box-shadow="inset 0 0 0 1.5rem {color}">
+    </button>
+  {/if}
+{/if}
