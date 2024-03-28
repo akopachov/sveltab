@@ -17,7 +17,7 @@
   export let workspace: HTMLElement;
   export let widgetControlsZone: string;
 
-  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : m.htmlElementId)), workspace];
+  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : `#${m.htmlElementId}`)), workspace];
   $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElementId, m]));
   $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElementId, m]));
 
