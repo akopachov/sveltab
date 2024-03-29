@@ -1,8 +1,0 @@
-{
-  "name": "sveltab-ntlify-functions",
-  "version": "0.0.0",
-  "private": true,
-  "dependencies": {
-    "@netlify/functions": "^2.4.1"
-  }
-}

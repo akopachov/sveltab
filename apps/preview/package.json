@@ -7,10 +7,15 @@
     "node": "^20.0.0"
   },
   "scripts": {
-    "build": "echo \"Done\""
+    "build": "tsc -d"
+  },
+  "dependencies": {
+    "@netlify/functions": "^2.4.1"
   },
   "devDependencies": {
-    "webextension": "workspace:*"
+    "webextension": "workspace:*",
+    "netlify-plugin-interpolate-env-variable": "workspace:*",
+    "typescript": "^5.4.3"
   },
   "type": "module"
 }

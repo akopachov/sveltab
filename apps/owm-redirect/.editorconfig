@@ -1,3 +1,5 @@
+root = false
+
 [*.{js,mjs,json,ts,mts}]
 charset = utf-8
 indent_style = space

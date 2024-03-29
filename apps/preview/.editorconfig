@@ -1,8 +1,4 @@
-root = true
-
-[*]
-end_of_line = unset
-insert_final_newline = false
+root = false
 
 [*.{js,mjs,json,ts,mts}]
 charset = utf-8

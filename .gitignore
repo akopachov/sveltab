@@ -1,3 +1,6 @@
 node_modules/
-
+.env
+.env.*
+!.env.example
 .nx/cache
+.DS_Store

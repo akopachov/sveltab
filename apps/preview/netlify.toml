@@ -7,6 +7,6 @@
   directory = "apps/preview/functions"
 
 [[plugins]]
-  package = "/apps/preview/plugins/netlify-plugin-interpolate-env-variable"
+  package = "/packages/netlify-plugin-interpolate-env-variable"
   [plugins.inputs]
     variable = "PUBLIC_EXTERNAL_ASSETS_URI"
