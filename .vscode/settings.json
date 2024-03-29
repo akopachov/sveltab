@@ -13,7 +13,6 @@
   },
   "eslint.validate": [
     "javascript",
-    "javascriptreact",
     "svelte"
   ],
   "explorer.fileNesting.enabled": true,
