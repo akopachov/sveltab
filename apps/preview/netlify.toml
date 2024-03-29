@@ -1,5 +1,6 @@
 [build.environment]
   PNPM_FLAGS="-r --frozen-lockfile"
+
 [build]
   command = "pnpm nx build preview"
   publish = "apps/preview/node_modules/webextension/build"
