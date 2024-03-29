@@ -6,12 +6,18 @@
   import { logger } from '$lib/logger';
   import { Workspaces } from '$stores/workspace-index';
   import { CommonToastType, getToastFacade } from '$lib/toast-facade';
+  import { version } from '$app/environment';
 
   const log = logger.getSubLogger({ prefix: ['Shared Components', 'ImportExport'] });
   const toastFacade = getToastFacade();
 
   type WorkspacesExportObject = { [key: string]: WorkspaceSettingsInitial };
-  type ExportObject = { version: number; workspaces: WorkspacesExportObject; defaultWorkspaceId: string };
+  type ExportObject = {
+    version: number;
+    appVersion: string;
+    workspaces: WorkspacesExportObject;
+    defaultWorkspaceId: string;
+  };
 
   export let activeWorkspaceId: string;
   export let activeWorkspace: WorkspaceInstance | undefined;
@@ -30,6 +36,7 @@
     }
     const exportObject: ExportObject = {
       version: 1,
+      appVersion: version,
       workspaces: workspacesExportData,
       defaultWorkspaceId: activeWorkspaceId,
     };
