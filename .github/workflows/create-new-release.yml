@@ -99,7 +99,7 @@ jobs:
       - name: Install dependencies
         run: |
           sudo apt-get install -y rename
-          pnpm -r install
+          pnpm install -r --frozen-lockfile
 
       - name: Build
         run: |
