@@ -7,7 +7,7 @@
     "node": "^20.0.0"
   },
   "scripts": {
-    "build": "tsc -d"
+    "build": "tsc"
   },
   "dependencies": {
     "@netlify/functions": "^2.4.1"
