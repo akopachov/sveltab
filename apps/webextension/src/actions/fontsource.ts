@@ -39,6 +39,7 @@ export type FontSourceActionSettings = {
   subsets?: ReadonlyArray<FontSubset> | null;
   weights?: ReadonlyArray<FontWeight> | null;
   styles?: ReadonlyArray<FontStyle> | null;
+  noPreload?: boolean;
 };
 
 function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
@@ -47,10 +48,12 @@ function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
 
 const fontFaceSources = new WeakMap<FontFace, string>();
 
+export type FontChangedEventDetails = { target: HTMLElement; fontFamily: string };
+
 export const fontsource: Action<
   HTMLElement,
   FontSourceActionSettings,
-  { 'on:fontChanged': (e: CustomEvent<string>) => void }
+  { 'on:fontChanged': (e: CustomEvent<FontChangedEventDetails>) => void }
 > = function (node: HTMLElement, settings: FontSourceActionSettings) {
   let currentFont: string | null = '';
   const currentSubsets: Set<FontSubset> = new Set<FontSubset>();
@@ -142,7 +145,9 @@ export const fontsource: Action<
                 unicodeRange: unicodeRange,
               });
               fontFaceSources.set(fontFace, uri);
-              ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
+              if (settings.noPreload !== true) {
+                ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
+              }
               document.fonts.add(fontFace);
               loadedFontSet!.fontSet.add(fontFace);
               promisesToWait.push(fontFace.load());
@@ -154,12 +159,18 @@ export const fontsource: Action<
 
       Promise.allSettled(promisesToWait).then(() => {
         node.style.fontFamily = `"${activeFontRef!.fontFamily}", ${activeFontRef.raw.category}`;
-        node.dispatchEvent(new CustomEvent('fontChanged', { detail: activeFontRef!.fontFamily }));
+        node.dispatchEvent(
+          new CustomEvent<FontChangedEventDetails>('fontChanged', {
+            detail: { target: node, fontFamily: activeFontRef!.fontFamily },
+          }),
+        );
         fontFacesToRemove.forEach(f => document.fonts.delete(f));
       });
     } else {
       node.style.fontFamily = '';
-      node.dispatchEvent(new CustomEvent('fontChanged', { detail: '' }));
+      node.dispatchEvent(
+        new CustomEvent<FontChangedEventDetails>('fontChanged', { detail: { target: node, fontFamily: '' } }),
+      );
       fontFacesToRemove.forEach(f => document.fonts.delete(f));
     }
 
@@ -188,7 +199,9 @@ export const fontsource: Action<
                   const uri = fontFaceSources.get(fontFace);
                   if (uri) {
                     fontFaceSources.delete(fontFace);
-                    ResourcesToPreload.delete({ src: uri });
+                    if (settings.noPreload !== true) {
+                      ResourcesToPreload.delete({ src: uri });
+                    }
                   }
                 }
               }

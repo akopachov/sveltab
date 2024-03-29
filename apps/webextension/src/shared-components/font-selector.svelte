@@ -1,13 +1,13 @@
 <script lang="ts">
   import { ProgressRadial, type PopupSettings, popup, RangeSlider } from '@skeletonlabs/skeleton';
   import VirtualScroll from 'svelte-virtual-scroll-list';
-  import { onMount } from 'svelte';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import ColorPicker, { ColorPickerLayout } from './color-picker.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
   import type { FontSettings } from '$lib/widget-settings';
-  import { FontWeight } from '$actions/fontsource';
+  import { FontWeight, fontsource } from '$actions/fontsource';
+  import { onMount } from 'svelte';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
 
@@ -79,7 +79,13 @@
         fallbackAxisSideDirection: 'start',
       },
     },
-    state: v => (fontSelectVisible = v.state),
+    state: v => {
+      const needToScroll = v.state && !fontSelectVisible;
+      fontSelectVisible = v.state;
+      if (needToScroll) {
+        scrollToCurrent();
+      }
+    },
   };
 
   function onSelected(e: FontInfo) {
@@ -91,6 +97,16 @@
     }
   }
 
+  async function scrollToCurrent() {
+    if (font) {
+      const loadedFonts = await fonts;
+      const index = loadedFonts.findIndex(f => f.id == $fontId);
+      if (index >= 0) {
+        fontList.scrollToIndex(index);
+      }
+    }
+  }
+
   onMount(async () => {
     if (font) {
       const loadedFonts = await fonts;
@@ -98,7 +114,6 @@
       if (index >= 0) {
         selectedFontInfo = loadedFonts[index];
         searchValue = selectedFontInfo.label;
-        fontList.scrollToIndex(index);
       }
     }
   });
@@ -142,13 +157,22 @@
     style:visibility={fontSelectVisible ? 'visible' : 'hidden'}
     data-popup={popupSettings.target}>
     <div class="flex p-4 max-h-[inherit]">
-      <VirtualScroll bind:this={fontList} data={fontsResult} let:data>
-        <button
-          class="btn {$fontId === data.id ? 'variant-filled' : 'variant-soft'} w-full mb-1 rounded-sm"
-          on:click={() => onSelected(data)}>
-          {data.label}
-        </button>
-      </VirtualScroll>
+      {#if fontSelectVisible}
+        <VirtualScroll bind:this={fontList} data={fontsResult} let:data>
+          <button
+            class="btn {$fontId === data.id ? 'variant-filled' : 'variant-soft'} w-full mb-1 rounded-sm fontloading"
+            use:fontsource={{
+              font: data.id,
+              subsets: ['latin'],
+              styles: ['normal'],
+              weights: [FontWeight.Normal],
+              noPreload: true,
+            }}
+            on:click={() => onSelected(data)}>
+            {data.label}
+          </button>
+        </VirtualScroll>
+      {/if}
     </div>
   </div>
   {#if $size}
