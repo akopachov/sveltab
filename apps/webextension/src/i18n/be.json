@@ -35,6 +35,11 @@
 	"ShadowSelector_Blur": "Размыццё",
 	"ShadowSelector_Color": "Колер",
 
+  "Favicon_Settings_Type_Default": "Па змаўчанню",
+  "Favicon_Settings_Type_Manual": "Уручную",
+  "Favicon_Settings_UploadIcon": "Загрузіць значок",
+  "Favicon_Settings_Label": "Значок сайта",
+
   "LocationSelector_Placeholder": "Пошук",
 	"LocationSelector_Label": "Размяшчэнне",
 

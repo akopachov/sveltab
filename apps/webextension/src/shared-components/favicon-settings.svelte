@@ -6,6 +6,7 @@
   import { FileButton, ProgressRadial, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
   import { nanoid } from 'nanoid/non-secure';
   import { onMount } from 'svelte';
+  import * as m from '$i18n/messages';
 
   export let workspaceInstance: WorkspaceInstance | undefined;
 
@@ -167,9 +168,11 @@
     name="favicon_default"
     value={FaviconType.Default}
     on:change={onFaviconTypeChange}>
-    Default
+    {m.Favicon_Settings_Type_Default()}
   </RadioItem>
-  <RadioItem bind:group={faviconType} name="favicon_manual" value={FaviconType.Manual}>Manual</RadioItem>
+  <RadioItem bind:group={faviconType} name="favicon_manual" value={FaviconType.Manual}>
+    {m.Favicon_Settings_Type_Manual()}
+  </RadioItem>
 </RadioGroup>
 {#if faviconType === FaviconType.Manual}
   <div class="mt-2 flex justify-center">
@@ -199,7 +202,7 @@
               alt="16x16" />
           {/if}
         {/if}
-        <span>Upload icon</span>
+        <span>{m.Favicon_Settings_UploadIcon()}</span>
       </div>
     </FileButton>
   </div>

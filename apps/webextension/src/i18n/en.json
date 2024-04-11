@@ -34,6 +34,10 @@
   "ShadowSelector_OffsetY": "Offset Y",
   "ShadowSelector_Blur": "Blur",
   "ShadowSelector_Color": "Color",
+  "Favicon_Settings_Type_Default": "Default",
+  "Favicon_Settings_Type_Manual": "Manual",
+  "Favicon_Settings_UploadIcon": "Upload icon",
+  "Favicon_Settings_Label": "Favicon",
 
   "LocationSelector_Placeholder": "Search",
   "LocationSelector_Label": "Location",

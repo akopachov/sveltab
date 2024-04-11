@@ -233,7 +233,7 @@
             <Lightswitch />
           </div>
           <div>
-            <span>Favicon</span>
+            <span>{m.Favicon_Settings_Label()}</span>
             <FaviconSettings workspaceInstance={workspace} />
           </div>
           <!-- svelte-ignore a11y-label-has-associated-control -->
