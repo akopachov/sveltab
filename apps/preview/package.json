@@ -10,12 +10,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^2.4.1"
+    "@netlify/functions": "^2.6.0"
   },
   "devDependencies": {
-    "webextension": "workspace:*",
     "netlify-plugin-interpolate-env-variable": "workspace:*",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.5",
+    "webextension": "workspace:*"
   },
   "type": "module"
 }

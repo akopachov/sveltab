@@ -31,6 +31,8 @@
   import CustomStyles from '$shared-components/custom-styles.svelte';
   import { customStyles as customCss } from '$actions/custom-styles';
   import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
+  import FaviconSettings from '$shared-components/favicon-settings.svelte';
+  import Favicon from '$shared-components/favicon.svelte';
 
   const drawerStore = getDrawerStore();
 
@@ -174,6 +176,10 @@
 <svelte:window on:beforeunload={onBeforeUnload} />
 <svelte:document use:customCss={$customStyles} />
 
+<svelte:head>
+  <Favicon workspaceInstance={workspace} />
+</svelte:head>
+
 <Drawer>
   <div class="flex flex-col h-full w-full">
     <Accordion autocollapse>
@@ -225,6 +231,10 @@
           <div class="label">
             <span>{m.Core_Sidebar_Settings_ColorScheme()}</span>
             <Lightswitch />
+          </div>
+          <div>
+            <span>Favicon</span>
+            <FaviconSettings workspaceInstance={workspace} />
           </div>
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label class="label">

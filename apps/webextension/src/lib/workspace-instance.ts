@@ -4,7 +4,7 @@ import type { BackgroundSettingsInitial } from './background-settings';
 import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable, unobserve } from './observable';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
-import type { WorkspaceSettingsInitial } from './workspace-settings';
+import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
 
 export class WorkspaceInstance {
   #widgets: Observable<Set<WidgetInstance>>;
@@ -12,7 +12,13 @@ export class WorkspaceInstance {
   #hasChanges: Observable<boolean> = useObservable(false);
   #trackingObjects = new Map<Subscribable<any>, () => void>();
 
-  private constructor(name: string, widgets: WidgetInstance[], background: BackgroundInstance, customStyles: string) {
+  private constructor(
+    name: string,
+    widgets: WidgetInstance[],
+    background: BackgroundInstance,
+    customStyles: string,
+    favicon: FaviconInfoInitial,
+  ) {
     this.#widgets = useObservable(new Set(widgets));
     this.#widgets.value.forEach(w => {
       this.#trackObjectChange(w.settings);
@@ -29,14 +35,17 @@ export class WorkspaceInstance {
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
     this.customStyles = useObservable(customStyles);
+    this.favicon = new FaviconInfo(favicon);
 
     this.#trackObjectChange(this.name);
     this.#trackObjectChange(this.customStyles);
+    this.#trackObjectChange(this.favicon);
   }
 
   readonly isLocked: Observable<boolean>;
   readonly name: Observable<string>;
   readonly customStyles: Observable<string>;
+  readonly favicon: FaviconInfo;
 
   #trackObjectChange(instance: any) {
     if (!instance) return;
@@ -128,7 +137,6 @@ export class WorkspaceInstance {
     if (instance.settings.filter.value) {
       ActiveFilters.remove(instance.settings.filter.value);
     }
-    instance.htmlElement = null;
   }
 
   export() {
@@ -137,7 +145,8 @@ export class WorkspaceInstance {
       background: unobserve(this.#background.value.settings),
       widgets: [...this.#widgets.value].map(m => unobserve(m.settings)),
       customStyles: this.customStyles.value,
-    };
+      favicon: unobserve(this.favicon),
+    } satisfies WorkspaceSettingsInitial;
   }
 
   async commit(handler: (data: any) => Promise<void>) {
@@ -148,6 +157,12 @@ export class WorkspaceInstance {
   static async create(settings: WorkspaceSettingsInitial) {
     const background = await BackgroundInstance.create(settings.background || { type: 'static-color' });
     const widgets = await Promise.all((settings.widgets || []).map(m => WidgetInstance.create(m)));
-    return new WorkspaceInstance(settings.name || '', widgets, background, settings.customStyles || '');
+    return new WorkspaceInstance(
+      settings.name || '',
+      widgets,
+      background,
+      settings.customStyles || '',
+      settings.favicon || {},
+    );
   }
 }
