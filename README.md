@@ -12,7 +12,7 @@ Transform your new tab page to something beautiful and yours. SvelTab offers hun
 
 We care about your privacy and your experience. SvelTab is private, fast, and free.
 
-Key concepts and decisions behind SvelTab:
+## Key concepts and decisions
 
 1. No ads, no trackers, no analytics, no data-mining or similar things
 2. Preference to open-sourced privacy-oriented 3rd party services
