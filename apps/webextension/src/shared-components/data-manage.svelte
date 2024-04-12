@@ -8,6 +8,7 @@
   import { CommonToastType, getToastFacade } from '$lib/toast-facade';
   import { version } from '$app/environment';
   import { createEventDispatcher } from 'svelte';
+  import { Opfs } from '$lib/opfs';
 
   const log = logger.getSubLogger({ prefix: ['Shared Components', 'ImportExport'] });
   const toastFacade = getToastFacade();
@@ -19,7 +20,7 @@
     appVersion: string;
     workspaces: WorkspacesExportObject;
     defaultWorkspaceId: string;
-    assets: Record<string, string>;
+    data: Record<string, string>;
   };
 
   export let activeWorkspaceId: string;
@@ -28,15 +29,13 @@
   let importFiles: FileList;
 
   async function getInternalAssets(paths: string[]) {
-    const opfsRoot = await navigator.storage.getDirectory();
     const result: Record<string, string> = {};
     for (const path of paths) {
       if (path?.startsWith('opfs://')) {
-        const fileName = path.substring(7);
-        const file = await opfsRoot.getFileHandle(fileName, { create: false }).then(h => h.getFile());
+        const file = await Opfs.get(path);
         const reader = new FileReader();
         reader.readAsDataURL(file);
-        result[fileName] = await new Promise<string>((resolve, reject) => {
+        result[path] = await new Promise<string>((resolve, reject) => {
           reader.onload = () => {
             const dataUrl = reader.result as string;
             const base64 = dataUrl.substring(dataUrl.indexOf(',') + 1);
@@ -56,12 +55,12 @@
     }
 
     const workspacesExportData: WorkspacesExportObject = {};
-    const internalAssets: Record<string, string> = {};
+    const internalAssetsData: Record<string, string> = {};
     for (const wi of Workspaces.entries) {
       const workspaceSettings = await Workspaces.getInitialSettings(wi.id);
       workspacesExportData[wi.id] = workspaceSettings;
       if (workspaceSettings.favicon) {
-        Object.assign(internalAssets, await getInternalAssets(Object.values(workspaceSettings.favicon)));
+        Object.assign(internalAssetsData, await getInternalAssets(Object.values(workspaceSettings.favicon)));
       }
     }
     const exportObject: ExportObject = {
@@ -69,7 +68,7 @@
       appVersion: version,
       workspaces: workspacesExportData,
       defaultWorkspaceId: activeWorkspaceId,
-      assets: internalAssets,
+      data: internalAssetsData,
     };
     const blob = new Blob([JSON.stringify(exportObject, null, '  ')], { type: 'application/json' });
     const downloadUrl = URL.createObjectURL(blob);
@@ -116,18 +115,12 @@
         await Workspaces.save(id, initial);
       }
 
-      const opfsRoot = await navigator.storage.getDirectory();
-      for await (let name of (<any>opfsRoot).keys()) {
-        opfsRoot.removeEntry(name, { recursive: true });
-      }
+      await Opfs.wipe();
 
-      if (importData.assets) {
-        for (const [fileName, base64] of Object.entries(importData.assets)) {
-          const file = await opfsRoot.getFileHandle(fileName, { create: true });
-          const writable = await file.createWritable();
+      if (importData.data) {
+        for (const [filePath, base64] of Object.entries(importData.data)) {
           const arrayBuffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0)).buffer;
-          await writable.write(arrayBuffer);
-          await writable.close();
+          await Opfs.save(filePath, arrayBuffer);
         }
       }
 

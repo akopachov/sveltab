@@ -1,3 +1,4 @@
+import { Opfs } from '$lib/opfs';
 import type { Action } from 'svelte/action';
 
 type HTMLElementWithRef = HTMLElement & ({ src: string | undefined } | { href: string | undefined });
@@ -6,7 +7,6 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
   node: HTMLElementWithRef,
   src: string | undefined,
 ) {
-  const opfsRoot = navigator.storage.getDirectory();
   function getRef() {
     if ('src' in node) return node.src;
     if ('href' in node) return node.href;
@@ -27,7 +27,7 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
     }
 
     if (s.startsWith('opfs://')) {
-      const file = await (await opfsRoot).getFileHandle(s.substring(7), { create: false }).then(h => h.getFile());
+      const file = await Opfs.get(s);
       setRef(URL.createObjectURL(file));
     } else {
       setRef(s);

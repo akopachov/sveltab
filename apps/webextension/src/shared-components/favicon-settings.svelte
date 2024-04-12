@@ -46,28 +46,24 @@
     overlapping_markups: string[];
   }
 
-  async function saveFavicon(opfsRoot: FileSystemDirectoryHandle, url: string) {
+  async function saveFavicon(url: string) {
     if (!url) {
       return '';
     }
     const response = await fetch(url);
     const blob = await response.blob();
     const fileExtension = url.split('.').pop();
-    const fileName = `favicon-${nanoid()}.${fileExtension}`;
-    const fileHandle = await opfsRoot.getFileHandle(fileName, { create: true });
-    const writable = await fileHandle.createWritable();
-    await writable.write(blob);
-    await writable.close();
-    return `opfs://${fileName}`;
+    const filePath = `favicon-${nanoid()}.${fileExtension}`;
+    return await workspaceInstance?.addInternalAsset(filePath, blob);
   }
 
-  async function tryRemoveFavicon(opfsRoot: FileSystemDirectoryHandle, fileName: string | undefined) {
-    if (!fileName || !fileName.startsWith('opfs://')) {
+  async function tryRemoveFavicon(fileName: string | undefined) {
+    if (!fileName) {
       return;
     }
 
     try {
-      await opfsRoot.removeEntry(fileName.substring(7));
+      await workspaceInstance?.removeInternalAsset(fileName);
     } catch (error) {
       console.error(error);
     }
@@ -84,12 +80,7 @@
 
   async function onFaviconTypeChange() {
     if (faviconType === FaviconType.Default) {
-      const opfsRoot = await navigator.storage.getDirectory();
-      await Promise.all([
-        tryRemoveFavicon(opfsRoot, $icon16),
-        tryRemoveFavicon(opfsRoot, $icon32),
-        tryRemoveFavicon(opfsRoot, $iconIco),
-      ]);
+      await Promise.all([tryRemoveFavicon($icon16), tryRemoveFavicon($icon32), tryRemoveFavicon($iconIco)]);
       $icon16 = '';
       $icon32 = '';
       $iconIco = '';
@@ -134,18 +125,12 @@
       }).then<FaviconGenerationResponse>(response => response.json());
       const favIconUrls = favIconResponse.favicon_generation_result?.favicon?.files_urls || [];
 
-      const opfsRoot = await navigator.storage.getDirectory();
-
-      await Promise.all([
-        tryRemoveFavicon(opfsRoot, $icon16),
-        tryRemoveFavicon(opfsRoot, $icon32),
-        tryRemoveFavicon(opfsRoot, $iconIco),
-      ]);
+      await Promise.all([tryRemoveFavicon($icon16), tryRemoveFavicon($icon32), tryRemoveFavicon($iconIco)]);
 
       [$icon16, $icon32, $iconIco] = await Promise.all([
-        saveFavicon(opfsRoot, favIconUrls.find(url => url.includes('16x16')) || ''),
-        saveFavicon(opfsRoot, favIconUrls.find(url => url.includes('32x32')) || ''),
-        saveFavicon(opfsRoot, favIconUrls.find(url => url.endsWith('.ico')) || ''),
+        saveFavicon(favIconUrls.find(url => url.includes('16x16')) || ''),
+        saveFavicon(favIconUrls.find(url => url.includes('32x32')) || ''),
+        saveFavicon(favIconUrls.find(url => url.endsWith('.ico')) || ''),
       ]);
     } catch (error) {
       console.error(error);

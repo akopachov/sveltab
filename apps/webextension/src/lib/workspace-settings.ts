@@ -32,4 +32,5 @@ export class WorkspaceSettings {
   background: BackgroundSettingsInitial;
   customStyles: string;
   favicon: FaviconInfoInitial;
+  assets: string[] = [];
 }

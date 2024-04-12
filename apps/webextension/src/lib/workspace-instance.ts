@@ -2,6 +2,7 @@ import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
 import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable, unobserve } from './observable';
+import { Opfs } from './opfs';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
@@ -11,12 +12,14 @@ export class WorkspaceInstance {
   #background: Observable<BackgroundInstance>;
   #hasChanges: Observable<boolean> = useObservable(false);
   #trackingObjects = new Map<Subscribable<any>, () => void>();
+  #internalAssets: Observable<Set<string>>;
 
   private constructor(
     name: string,
     widgets: WidgetInstance[],
     background: BackgroundInstance,
     customStyles: string,
+    assets: string[],
     favicon: FaviconInfoInitial,
   ) {
     this.#widgets = useObservable(new Set(widgets));
@@ -35,10 +38,12 @@ export class WorkspaceInstance {
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
     this.customStyles = useObservable(customStyles);
+    this.#internalAssets = useObservable(new Set(assets));
     this.favicon = new FaviconInfo(favicon);
 
     this.#trackObjectChange(this.name);
     this.#trackObjectChange(this.customStyles);
+    this.#trackObjectChange(this.#internalAssets);
     this.#trackObjectChange(this.favicon);
   }
 
@@ -104,6 +109,10 @@ export class WorkspaceInstance {
     return this.#background;
   }
 
+  get internalAssets(): ReadOnlyObservable<ReadonlySet<string>> {
+    return this.#internalAssets;
+  }
+
   async setBackground(settings: BackgroundSettingsInitial) {
     if (this.#background.value) {
       this.#untrackObjectChange(this.#background.value.settings);
@@ -146,12 +155,29 @@ export class WorkspaceInstance {
       widgets: [...this.#widgets.value].map(m => unobserve(m.settings)),
       customStyles: this.customStyles.value,
       favicon: unobserve(this.favicon),
+      assets: [...this.#internalAssets.value],
     } satisfies WorkspaceSettingsInitial;
   }
 
   async commit(handler: (data: any) => Promise<void>) {
     await handler(this.export());
     this.#hasChanges.value = false;
+  }
+
+  async addInternalAsset(opfsPath: string, data: ArrayBufferLike | Blob) {
+    if (!opfsPath.startsWith('opfs://')) {
+      opfsPath = `opfs://${opfsPath}`;
+    }
+    await Opfs.save(opfsPath, data);
+    this.#internalAssets.value.add(opfsPath);
+    this.#internalAssets.set(this.#internalAssets.value);
+    return opfsPath;
+  }
+
+  async removeInternalAsset(opfsUrl: string) {
+    Opfs.remove(opfsUrl);
+    this.#internalAssets.value.delete(opfsUrl);
+    this.#internalAssets.set(this.#internalAssets.value);
   }
 
   static async create(settings: WorkspaceSettingsInitial) {
@@ -162,6 +188,7 @@ export class WorkspaceInstance {
       widgets,
       background,
       settings.customStyles || '',
+      settings.assets || [],
       settings.favicon || {},
     );
   }
