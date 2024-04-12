@@ -10,6 +10,10 @@
 
   export let workspaceInstance: WorkspaceInstance | undefined;
 
+  let faviconType: FaviconType;
+  let iconFileSources: FileList;
+  let isLoading = false;
+
   $: icon16 = workspaceInstance?.favicon[16];
   $: icon32 = workspaceInstance?.favicon[32];
   $: iconIco = workspaceInstance?.favicon.ico;
@@ -41,10 +45,6 @@
     compression: string;
     overlapping_markups: string[];
   }
-
-  let faviconType: FaviconType;
-  let iconFileSources: FileList;
-  let isLoading = false;
 
   async function saveFavicon(opfsRoot: FileSystemDirectoryHandle, url: string) {
     if (!url) {

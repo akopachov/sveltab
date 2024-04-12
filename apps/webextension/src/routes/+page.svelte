@@ -243,7 +243,10 @@
           </label>
           <div class="label">
             <span>{m.Core_Sidebar_Settings_Data()}</span>
-            <DataManage bind:activeWorkspaceId={workspaceId} bind:activeWorkspace={workspace} />
+            <DataManage
+              bind:activeWorkspaceId={workspaceId}
+              bind:activeWorkspace={workspace}
+              on:dataImported={() => drawerStore.close()} />
           </div>
         </svelte:fragment>
       </AccordionItem>
