@@ -7,6 +7,10 @@
   import { nanoid } from 'nanoid/non-secure';
   import { onMount } from 'svelte';
   import * as m from '$i18n/messages';
+  import type { RealFaviconGenerator } from '$lib/realfavicongenerator';
+  import { logger } from '$lib/logger';
+
+  const log = logger.getSubLogger({ prefix: ['Favicon settings:'] });
 
   export let workspaceInstance: WorkspaceInstance | undefined;
 
@@ -21,29 +25,6 @@
   enum FaviconType {
     Default = 'default',
     Manual = 'manual',
-  }
-
-  interface FaviconGenerationResponse {
-    favicon_generation_result: {
-      result: {
-        status: string;
-      };
-      favicon: FaviconInfo;
-      files_location: {
-        type: string;
-        path: string;
-      };
-      preview_picture_url: string;
-      version: string;
-    };
-  }
-
-  interface FaviconInfo {
-    package_url: string;
-    files_urls: string[];
-    html_code: string;
-    compression: string;
-    overlapping_markups: string[];
   }
 
   async function saveFavicon(url: string) {
@@ -65,7 +46,7 @@
     try {
       await workspaceInstance?.removeInternalAsset(fileName);
     } catch (error) {
-      console.error(error);
+      log.error(error);
     }
   }
 
@@ -94,7 +75,7 @@
 
     isLoading = true;
     try {
-      const requestBody = {
+      const requestBody: RealFaviconGenerator.GenerationRequest = {
         favicon_generation: {
           api_key: PUBLIC_REALFAVICON_API_KEY,
           master_picture: {
@@ -102,15 +83,14 @@
             content: await fileToBase64(iconFileSources[0]),
           },
           files_location: {
-            type: 'path',
-            path: '/',
+            type: 'root',
           },
           favicon_design: {
             desktop_browser: {},
           },
           settings: {
             compression: '3',
-            scaling_algorithm: 'Mitchell',
+            scaling_algorithm: 'Lanczos',
             error_on_image_too_small: false,
             readme_file: false,
             html_code_file: false,
@@ -122,7 +102,7 @@
       const favIconResponse = await fetch(getCorsFriendlyUrl('https://realfavicongenerator.net/api/favicon'), {
         method: 'POST',
         body: JSON.stringify(requestBody),
-      }).then<FaviconGenerationResponse>(response => response.json());
+      }).then<RealFaviconGenerator.GenerationResponse>(response => response.json());
       const favIconUrls = favIconResponse.favicon_generation_result?.favicon?.files_urls || [];
 
       await Promise.all([tryRemoveFavicon($icon16), tryRemoveFavicon($icon32), tryRemoveFavicon($iconIco)]);
@@ -133,7 +113,7 @@
         saveFavicon(favIconUrls.find(url => url.endsWith('.ico')) || ''),
       ]);
     } catch (error) {
-      console.error(error);
+      log.error(error);
       $icon16 = '';
       $icon32 = '';
       $iconIco = '';

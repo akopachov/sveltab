@@ -1,7 +1,10 @@
+import { logger } from '$lib/logger';
 import { Opfs } from '$lib/opfs';
 import type { Action } from 'svelte/action';
 
 type HTMLElementWithRef = HTMLElement & ({ src: string | undefined } | { href: string | undefined });
+
+const log = logger.getSubLogger({ prefix: ['OPFS source loader:'] });
 
 export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function (
   node: HTMLElementWithRef,
@@ -27,8 +30,13 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
     }
 
     if (s.startsWith('opfs://')) {
-      const file = await Opfs.get(s);
-      setRef(URL.createObjectURL(file));
+      try {
+        const file = await Opfs.get(s);
+        setRef(URL.createObjectURL(file));
+      } catch (e) {
+        log.error('Error loading file from OPFS:', e);
+        setRef('');
+      }
     } else {
       setRef(s);
     }
