@@ -5,7 +5,7 @@
   import { fontsource } from '$actions/fontsource';
   import { locale } from '$stores/locale';
   import { secondsToMilliseconds } from 'date-fns';
-  import { isChrome } from '$lib/browsers-check';
+  import { isChromium } from '$lib/browsers-check';
 
   let clockStore = getClockStore(secondsToMilliseconds(1));
   let timeDisplay: DynamicSizeText | null;
@@ -35,7 +35,7 @@
 
   function redrawAll() {
     timeDisplay?.refresh();
-    if (isChrome) {
+    if (isChromium) {
       setTimeout(() => timeDisplay?.refresh(), 100);
     }
   }
