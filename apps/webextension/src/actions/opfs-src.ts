@@ -5,6 +5,7 @@ import type { Action } from 'svelte/action';
 type HTMLElementWithRef = HTMLElement & ({ src: string | undefined } | { href: string | undefined });
 
 const log = logger.getSubLogger({ prefix: ['OPFS source loader:'] });
+const BLOB_STRATEGY_THRESHOLD = 32_768; // 32KiB
 
 export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function (
   node: HTMLElementWithRef,
@@ -32,7 +33,17 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
     if (s.startsWith('opfs://')) {
       try {
         const file = await Opfs.get(s);
-        setRef(URL.createObjectURL(file));
+        if (file.size > BLOB_STRATEGY_THRESHOLD) {
+          // If file is too big, use blob URL
+          setRef(URL.createObjectURL(file));
+        } else {
+          // Otherwise, load it as data URL
+          const reader = new FileReader();
+          reader.onload = () => {
+            setRef(reader.result as string);
+          };
+          reader.readAsDataURL(file);
+        }
       } catch (e) {
         log.error('Error loading file from OPFS:', e);
         setRef('');
