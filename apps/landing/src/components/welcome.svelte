@@ -42,17 +42,17 @@
             data-aos="zoom-y-out"
             data-aos-delay="300">
             <a class="btn btn-link p-0 h-fit" href="https://addons.mozilla.org/firefox/addon/sveltab/">
-              <img src="./amo-button.svg" alt="Addon for FireFox" />
+              <img src="./amo-button.svg" alt="Addon for FireFox" width="172" height="60" />
             </a>
             <a
               class="btn btn-link p-0 h-fit"
               href="https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld">
-              <img src="./cwo-button.svg" alt="Addon for Chrome" />
+              <img src="./cwo-button.svg" alt="Addon for Chrome" width="198" height="60" />
             </a>
             <a
               class="btn btn-link p-0 h-fit"
               href="https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj">
-              <img src="./edge-button.svg" alt="Addon for Edge" />
+              <img src="./edge-button.svg" alt="Addon for Edge" width="172" height="60" />
             </a>
           </div>
           <div class="mt-2">
