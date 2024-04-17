@@ -1,22 +1,18 @@
 <script lang="ts">
   import emblaCarouselSvelte from 'embla-carousel-svelte';
+  import { onMount } from 'svelte';
 
   let emblaApi: any;
   let screenshotDialog: HTMLDialogElement;
   let clickedScreenshot: Screenshot | undefined;
 
   type Screenshot = {
-    src: string;
+    fullSrc: any;
+    previewSrc: any;
     alt: string;
   };
 
-  let screenshots: Screenshot[] = [
-    { src: './screenshots/1.png', alt: 'Screenshot #1' },
-    { src: './screenshots/2.png', alt: 'Screenshot #2' },
-    { src: './screenshots/3.png', alt: 'Screenshot #3' },
-    { src: './screenshots/4.png', alt: 'Screenshot #4' },
-    { src: './screenshots/5.png', alt: 'Screenshot #5' },
-  ];
+  let screenshots: Screenshot[] = [];
 
   function onInit(event: any) {
     emblaApi = event.detail;
@@ -30,6 +26,27 @@
   function onCloseScreenshotDialog() {
     clickedScreenshot = undefined;
   }
+
+  onMount(() => {
+    const fullPictures = import.meta.glob('../lib/screenshots/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp}', {
+      query: {
+        enhanced: true,
+      },
+      eager: true,
+    });
+    const previewPictures = import.meta.glob('../lib/screenshots/*.{avif,gif,heif,jpeg,jpg,png,tiff,webp}', {
+      query: {
+        enhanced: true,
+        w: 768,
+      },
+      eager: true,
+    });
+    screenshots = Object.entries(fullPictures).map(([path, src], i) => ({
+      fullSrc: (<any>src).default,
+      previewSrc: (<any>previewPictures[path]).default,
+      alt: `Screenshot #${i + 1}`,
+    }));
+  });
 </script>
 
 <div>
@@ -48,7 +65,12 @@
               {#each screenshots as screenshot}
                 <div class="flex-[0_0_100%] w-full h-full">
                   <button class="embla__slide__number" on:click={() => openScreenshotDialog(screenshot)}>
-                    <img class="max-w-full max-h-full" src={screenshot.src} alt={screenshot.alt} />
+                    <enhanced:img
+                      class="max-w-full max-h-full"
+                      loading="lazy"
+                      decoding="async"
+                      src={screenshot.previewSrc}
+                      alt={screenshot.alt} />
                   </button>
                 </div>
               {/each}
@@ -57,21 +79,21 @@
         </div>
       </div>
       <div
-        class="flex flex-row justify-between min-w-fit w-full max-mdd:max-w-60 max-mdd:mt-3 mdd:absolute mdd:top-[calc(50%-1.5rem)] mdd:left-[calc(50%-384px-5rem)] mdd:w-[calc(768px+10rem)]">
-        <button class="btn btn-ghost" type="button" on:click={() => emblaApi.scrollPrev()}>
+        class="flex flex-row justify-between min-w-fit w-full max-mdd:max-w-60 max-mdd:mt-3 mdd:absolute mdd:top-[calc(50%-1.5rem)] mdd:left-[calc(50%-384px-5rem)] mdd:w-[calc(768px+10rem)] pointer-events-none">
+        <button class="btn btn-ghost pointer-events-auto" type="button" on:click={() => emblaApi.scrollPrev()}>
           <span class="w-9 h-9 icon-[ooui--previous-ltr]"></span>
         </button>
 
-        <button class="btn btn-ghost" type="button" on:click={() => emblaApi.scrollNext()}>
+        <button class="btn btn-ghost pointer-events-auto" type="button" on:click={() => emblaApi.scrollNext()}>
           <span class="w-9 h-9 icon-[ooui--previous-rtl]"></span>
         </button>
       </div>
     </div>
   </div>
   <dialog bind:this={screenshotDialog} class="modal">
-    <div class="modal-box flex max-w-[calc(100vw-5em)] w-auto h-auto">
+    <div class="modal-box flex max-w-[calc(100vw-5em)] w-auto h-auto [&>picture]:contents">
       {#if clickedScreenshot}
-        <img class="object-contain" src={clickedScreenshot?.src} alt={clickedScreenshot?.alt} />
+        <enhanced:img class="object-contain" src={clickedScreenshot.fullSrc} alt={clickedScreenshot.alt} />
       {/if}
     </div>
     <form method="dialog" class="modal-backdrop">
