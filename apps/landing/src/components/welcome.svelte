@@ -57,7 +57,7 @@
           </div>
           <div class="mt-2">
             or
-            <a class="btn btn-link p-0" href="https://bespoke-kitten-980bd0.netlify.app/">try web version first</a>
+            <a class="btn btn-link p-0" href="https://sveltab.netlify.app/">try web version first</a>
           </div>
         </div>
       </div>
