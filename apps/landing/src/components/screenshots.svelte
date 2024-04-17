@@ -1,6 +1,5 @@
 <script lang="ts">
   import emblaCarouselSvelte from 'embla-carousel-svelte';
-  import { PUBLIC_IMAGE_HOST } from '$env/static/public';
 
   let emblaApi: any;
   let screenshotDialog: HTMLDialogElement;
@@ -12,11 +11,11 @@
   };
 
   let screenshots: Screenshot[] = [
-    { src: `${PUBLIC_IMAGE_HOST}./screenshots/1.png`, alt: 'Screenshot #1' },
-    { src: `${PUBLIC_IMAGE_HOST}./screenshots/2.png`, alt: 'Screenshot #2' },
-    { src: `${PUBLIC_IMAGE_HOST}./screenshots/3.png`, alt: 'Screenshot #3' },
-    { src: `${PUBLIC_IMAGE_HOST}./screenshots/4.png`, alt: 'Screenshot #4' },
-    { src: `${PUBLIC_IMAGE_HOST}./screenshots/5.png`, alt: 'Screenshot #5' },
+    { src: './screenshots/1.png', alt: 'Screenshot #1' },
+    { src: './screenshots/2.png', alt: 'Screenshot #2' },
+    { src: './screenshots/3.png', alt: 'Screenshot #3' },
+    { src: './screenshots/4.png', alt: 'Screenshot #4' },
+    { src: './screenshots/5.png', alt: 'Screenshot #5' },
   ];
 
   function onInit(event: any) {
