@@ -1,11 +1,11 @@
 {
   "name": "monorepo",
   "private": true,
-  "packageManager": "pnpm@8.14.0",
-  "engines": {
-    "pnpm": "^8.0.0",
-    "node": "^20.0.0"
-  },
+  "packageManager": "pnpm@9.0.0",
+	"engines": {
+		"pnpm": ">=8.0.0",
+		"node": ">=20.0.0"
+	},
   "scripts": {
     "nx": "nx",
     "dev:webext": "nx dev webextension"
