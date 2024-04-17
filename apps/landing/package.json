@@ -1,0 +1,53 @@
+{
+	"name": "landing",
+	"version": "1.0.0",
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"preview": "vite preview",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write ."
+	},
+	"devDependencies": {
+		"@fontsource/inter": "^5.0.17",
+		"@iconify/json": "^2.2.201",
+		"@iconify/tailwind": "^0.1.4",
+		"@iconify/utils": "^2.1.23",
+		"@neoconfetti/svelte": "^2.2.1",
+		"@sveltejs/adapter-auto": "^3.2.0",
+		"@sveltejs/kit": "^2.5.6",
+		"@sveltejs/vite-plugin-svelte": "^3.1.0",
+		"@types/aos": "^3.0.7",
+		"@types/eslint": "8.56.9",
+		"@typescript-eslint/eslint-plugin": "^7.7.0",
+		"@typescript-eslint/parser": "^7.7.0",
+		"autoprefixer": "^10.4.19",
+		"cssnano": "^6.1.2",
+		"cssnano-preset-default": "^6.1.2",
+		"cssnano-preset-lite": "^3.1.0",
+		"daisyui": "^4.10.2",
+		"embla-carousel-svelte": "^8.0.2",
+		"eslint": "^9.0.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.37.0",
+		"postcss": "^8.4.38",
+		"postcss-load-config": "^5.0.3",
+		"prettier": "^3.2.5",
+		"prettier-plugin-svelte": "^3.2.3",
+		"prettier-plugin-tailwindcss": "^0.5.14",
+		"svelte": "^4.2.14",
+		"svelte-check": "^3.6.9",
+		"tailwindcss": "^3.4.3",
+		"tslib": "^2.6.2",
+		"typescript": "^5.4.5",
+		"vite": "^5.2.9"
+	},
+	"type": "module",
+	"dependencies": {
+		"@tailwindcss/forms": "^0.5.7",
+		"aos": "^2.3.4",
+		"svelte-body": "^1.4.0"
+	}
+}
