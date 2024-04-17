@@ -6,19 +6,20 @@
 [![Microsoft Edge Addons](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fgjmmknaifmjpakigdnodcdmpfkkccegj)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dce10aad-7467-4c01-a091-63d45eaf29f6/deploy-status)](https://app.netlify.com/sites/bespoke-kitten-980bd0/deploys)
 
-A beautiful, customizable New Tab page for Firefox, Chrome, Edge and other Chromium-based browsers.
+A beautiful, customizable New Tab page for Firefox, Chrome, Edge, and other Chromium-based browsers.
 
-Transform your new tab page to something beautiful and yours. SvelTab offers hundreds of customization options to create a new tab page that unique to you. Choose from many background providers, and be rewarded with stunning, new pictures every time you open a new tab. Add your favorite widgets to stay productive throughout your day. Create your own new tab experience.
+Transform your new tab page into something beautiful and yours. SvelTab offers hundreds of customization options to create a new tab page that is unique to you. Choose from many background providers, and be rewarded with stunning, new pictures every time you open a new tab. Add your favorite widgets to stay productive throughout your day. Create your own new tab experience.
 
 We care about your privacy and your experience. SvelTab is private, fast, and free.
 
-## Key concepts and decisions
+## Features
 
 1. No ads, no trackers, no analytics, no data-mining or similar things
-2. Preference to open-sourced privacy-oriented 3rd party services
-3. Load time should be low, overall performance should be high
-4. No polyfills to support obsolete browsers, targeting latest & greatest browsers only
-5. [Firefox](https://www.mozilla.org/en-US/firefox/new/) as a primary browser for development and testing
+2. Lots of widgets. Millions of backgrounds. 
+3. Preference to open-sourced privacy-oriented 3rd party services
+4. Load time is low, overall performance is high
+5. No polyfills to support obsolete browsers, targeting the latest & greatest browsers only
+6. [Firefox](https://www.mozilla.org/en-US/firefox/new/) as a primary browser for development and testing
 
 ## Screenshots
 
