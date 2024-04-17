@@ -9,4 +9,5 @@
 [[redirects]]
   from = "/screenshots/:file"
   to = "/.netlify/images?url=/screenshots/:file"
+  force = true
   status = 200
