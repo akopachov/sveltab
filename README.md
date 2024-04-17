@@ -1,4 +1,4 @@
-# SvelTab
+# [SvelTab](https://sveltab.com/)
 
 [![License](https://img.shields.io/github/license/akopachov/sveltab)](/LICENSE)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/sveltab)](https://addons.mozilla.org/firefox/addon/sveltab/)
@@ -45,7 +45,7 @@ We care about your privacy and your experience. SvelTab is private, fast, and fr
 [![Download for Chrome](docs/icons/cwo-button.svg)](https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld)
 [![Download for Edge](docs/icons/edge-button.svg)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 
-or [try web version first](https://sveltab.netlify.app/)
+or [try web version first](https://demo.sveltab.com/)
 
 ## Translations
 
