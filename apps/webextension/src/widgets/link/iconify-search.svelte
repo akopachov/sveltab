@@ -6,7 +6,7 @@
   import pDebounce from 'p-debounce';
   import { createEventDispatcher } from 'svelte';
   import { AppliedColorScheme } from '$actions/color-scheme';
-  import ColorPicker from '$shared-components/color-picker.svelte';
+  import ColorPicker, { ColorPickerLayout } from '$shared-components/color-picker.svelte';
   import { getSvgUrl } from '../../lib/service-mirrors';
   import { secondsToMilliseconds } from 'date-fns';
 
@@ -68,7 +68,7 @@
 <div
   class="absolute w-6 h-6 !mt-[-32px] !ml-[9px]"
   title={m.Widgets_Link_Settings_IconSource_Iconify_Search_IconColor_Title()}>
-  <ColorPicker bind:color class="!p-0 bg-transparent" />
+  <ColorPicker bind:color layout={ColorPickerLayout.ButtonPopup} />
 </div>
 <div>
   <span class="text-xs opacity-50">
