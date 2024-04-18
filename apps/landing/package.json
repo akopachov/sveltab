@@ -17,7 +17,7 @@
 	},
 	"devDependencies": {
 		"@fontsource/inter": "^5.0.17",
-		"@iconify/json": "^2.2.201",
+		"@iconify/json": "^2.2.202",
 		"@iconify/tailwind": "^0.1.4",
 		"@iconify/utils": "^2.1.23",
 		"@neoconfetti/svelte": "^2.2.1",

@@ -33,8 +33,8 @@ importers:
         specifier: ^5.0.17
         version: 5.0.17
       '@iconify/json':
-        specifier: ^2.2.201
-        version: 2.2.201
+        specifier: ^2.2.202
+        version: 2.2.202
       '@iconify/tailwind':
         specifier: ^0.1.4
         version: 0.1.4
@@ -160,8 +160,8 @@ importers:
         specifier: ^1.6.3
         version: 1.6.3
       '@iconify/json':
-        specifier: ^2.2.201
-        version: 2.2.201
+        specifier: ^2.2.202
+        version: 2.2.202
       '@iconify/tailwind':
         specifier: ^0.1.4
         version: 0.1.4
@@ -169,11 +169,11 @@ importers:
         specifier: ^2.1.23
         version: 2.1.23
       '@inlang/paraglide-js':
-        specifier: 1.6.2
-        version: 1.6.2
+        specifier: 1.7.0
+        version: 1.7.0
       '@inlang/paraglide-js-adapter-vite':
-        specifier: ^1.2.39
-        version: 1.2.39
+        specifier: ^1.2.40
+        version: 1.2.40
       '@skeletonlabs/skeleton':
         specifier: ^2.9.1
         version: 2.9.1(svelte@4.2.15)
@@ -822,8 +822,8 @@ packages:
   '@humanwhocodes/object-schema@2.0.3':
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
 
-  '@iconify/json@2.2.201':
-    resolution: {integrity: sha512-5jM9TAa55YSEfx2WX1/GsHL9FSSH1PsA38V3p26SDmnOSmfb3V7r5yBgO8oIFkXdFQFk59MgESEOziapNtTGkw==}
+  '@iconify/json@2.2.202':
+    resolution: {integrity: sha512-ohR6hsbWPUYscf8FW2HdyN8L07mrhJraruVyMBDWltU2JzY6W0NDB0mIpZ5+3vuhvlecSZyWL95XiH0QFQpoFg==}
 
   '@iconify/tailwind@0.1.4':
     resolution: {integrity: sha512-U7RzcU2fkwOfMDsGQ3mtpLIaApSnqb+vgcJJknPPbg8/NF5s7tI1o5otEMfcpnLGk4PbYB8bxmKTz7IJVUlU2Q==}
@@ -973,14 +973,14 @@ packages:
     peerDependencies:
       '@sinclair/typebox': ^0.31.17
 
-  '@inlang/paraglide-js-adapter-unplugin@1.4.28':
-    resolution: {integrity: sha512-yvi72OeKc+pXnPjXqXLy9c9SiH67eZH30ItFmKDje2pEjzg0NzFLTaniMHRhV6doqR6K1JW/IHx3kvyas7BCKw==}
+  '@inlang/paraglide-js-adapter-unplugin@1.4.29':
+    resolution: {integrity: sha512-CDhQ69M9Ej8wfY/8P2rdNzwq6ux69A4nlFJqPcWffEX21xMaWGlt8JNspjMjc158KpAYyBGB8bFgTZ5K6o1fwg==}
 
-  '@inlang/paraglide-js-adapter-vite@1.2.39':
-    resolution: {integrity: sha512-F4fxEvAaPTO3AOg803Co0J4MUzXqaH7T3rpMtIbOTLeGI0+yyD9UV/FHA/q+exYV+sEqs38fISKnVkYh4no1mw==}
+  '@inlang/paraglide-js-adapter-vite@1.2.40':
+    resolution: {integrity: sha512-2+mAYI4hDMTr7AAei5CNzjqpjzOvsnlGrVvHrohtYs+Jn+tayokDaO7iL5o9k9SYrlXBZ7tUshAw88UQ1+f82Q==}
 
-  '@inlang/paraglide-js@1.6.2':
-    resolution: {integrity: sha512-Fyf3NzTDyCht24pG6Ysc9ebtFfx69NEiS3gEMO0BrbBSbLKQtBe7Fg9YUbqwGtksb5wWxEOk7uR8c/ZQ3hBbEg==}
+  '@inlang/paraglide-js@1.7.0':
+    resolution: {integrity: sha512-FkyOqMAPd8iks66xZpIqzepzlnMPT/t7sHmZkwN9QzjFu6RUjdSbHSP6dZPdmD1puobhtDQcbbub6NA/OmpuzA==}
     hasBin: true
 
   '@inlang/plugin@2.4.9':
@@ -1939,8 +1939,8 @@ packages:
   caniuse-api@3.0.0:
     resolution: {integrity: sha512-bsTwuIg/BZZK/vreVTYYbSWoe2F+71P7K5QGEX+pT250DZbfU1MQ5prOKpPR+LL6uWKK3KMwMCAS74QB3Um1uw==}
 
-  caniuse-lite@1.0.30001610:
-    resolution: {integrity: sha512-QFutAY4NgaelojVMjY63o6XlZyORPaLfyMnsl3HgnWdJUcX6K0oaJymHjH8PT5Gk7sTm8rvC/c5COUQKXqmOMA==}
+  caniuse-lite@1.0.30001611:
+    resolution: {integrity: sha512-19NuN1/3PjA3QI8Eki55N8my4LzfkMCRLgCVfrl/slbSAchQfV0+GwjPrK3rq37As4UCLlM/DHajbKkAqbv92Q==}
 
   capnp-ts@0.7.0:
     resolution: {integrity: sha512-XKxXAC3HVPv7r674zP0VC3RTXz+/JKhfyw94ljvF80yynK6VkTnqE3jMuN8b3dUVmmc43TjyxjW4KTsmB3c86g==}
@@ -2104,6 +2104,9 @@ packages:
   concat-stream@1.6.2:
     resolution: {integrity: sha512-27HBghJxjiZtIk3Ycvn/4kbJk/1uZuJFfuPEns6LaEvpvG1f0hTea8lilrouyo9mVc2GWdcEZ8OLoGmSADlrCw==}
     engines: {'0': node >= 0.8}
+
+  confbox@0.1.7:
+    resolution: {integrity: sha512-uJcB/FKZtBMCJpK8MQji6bJHgu1tixKPxRLeGkNzBoOZzpnZUJm0jm2/sBDWcuBx1dYgxV4JU+g5hmNxCyAmdA==}
 
   config-chain@1.1.13:
     resolution: {integrity: sha512-qj+f8APARXHrM0hraqXYb2/bOVSV4PvJQlNZ/DVj0QrmNM2q2euizkeuVckQ57J+W0mRH6Hvi+k50M4Jul2VRQ==}
@@ -2407,8 +2410,8 @@ packages:
     engines: {node: '>=0.10.0'}
     hasBin: true
 
-  electron-to-chromium@1.4.738:
-    resolution: {integrity: sha512-lwKft2CLFztD+vEIpesrOtCrko/TFnEJlHFdRhazU7Y/jx5qc4cqsocfVrBg4So4gGe9lvxnbLIoev47WMpg+A==}
+  electron-to-chromium@1.4.740:
+    resolution: {integrity: sha512-Yvg5i+iyv7Xm18BRdVPVm8lc7kgxM3r6iwqCH2zB7QZy1kZRNmd0Zqm0zcD9XoFREE5/5rwIuIAOT+/mzGcnZg==}
 
   embla-carousel-reactive-utils@8.0.2:
     resolution: {integrity: sha512-nLZqDkQdO0hvOP49/dUwjkkepMnUXgIzhyRuDjwGqswpB4Ibnc5M+w7rSQQAM+uMj0cPaXnYOTlv8XD7I/zVNw==}
@@ -3208,9 +3211,6 @@ packages:
   jsonc-parser@3.2.0:
     resolution: {integrity: sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==}
 
-  jsonc-parser@3.2.1:
-    resolution: {integrity: sha512-AilxAyFOAcK5wA1+LeaySVBrHsGQvUFCDWXKpZjzaL0PqW+xfBOttn8GNtWKFWqneyMZj41MWF9Kl6iPWLwgOA==}
-
   jsonfile@6.1.0:
     resolution: {integrity: sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==}
 
@@ -3779,8 +3779,8 @@ packages:
     resolution: {integrity: sha512-HRDzbaKjC+AOWVXxAU/x54COGeIv9eb+6CkDSQoNTt4XyWoIJvuPsXizxu/Fr23EiekbtZwmh1IcIG/l/a10GQ==}
     engines: {node: '>=8'}
 
-  pkg-types@1.0.3:
-    resolution: {integrity: sha512-nN7pYi0AQqJnoLPC9eHFQ8AcyaixBUOwvqc5TDnIKCMEE6I0y8P7OKA7fPexsXGCGxQDl/cmrLAp26LhcwxZ4A==}
+  pkg-types@1.1.0:
+    resolution: {integrity: sha512-/RpmvKdxKf8uILTtoOhAgf30wYbP2Qw+L9p3Rvshx1JZVX+XQNZQFjlbmGHEGIm4CkVPlSn+NXmIM8+9oWQaSA==}
 
   postcss-calc@9.0.1:
     resolution: {integrity: sha512-TipgjGyzP5QzEhsOZUaIkeO5mKeMFpebWzRogWG/ysonUlnHcq5aJe0jOjpfzUU8PeSaBQnrE8ehR0QA5vs8PQ==}
@@ -5505,7 +5505,7 @@ snapshots:
 
   '@humanwhocodes/object-schema@2.0.3': {}
 
-  '@iconify/json@2.2.201':
+  '@iconify/json@2.2.202':
     dependencies:
       '@iconify/types': 2.0.0
       pathe: 1.1.2
@@ -5635,9 +5635,9 @@ snapshots:
       '@inlang/plugin': 2.4.9(@sinclair/typebox@0.31.28)
       '@sinclair/typebox': 0.31.28
 
-  '@inlang/paraglide-js-adapter-unplugin@1.4.28':
+  '@inlang/paraglide-js-adapter-unplugin@1.4.29':
     dependencies:
-      '@inlang/paraglide-js': 1.6.2
+      '@inlang/paraglide-js': 1.7.0
       '@inlang/sdk': 0.33.0
       '@lix-js/client': 1.2.1
       unplugin: 1.5.1
@@ -5646,15 +5646,15 @@ snapshots:
       - debug
       - supports-color
 
-  '@inlang/paraglide-js-adapter-vite@1.2.39':
+  '@inlang/paraglide-js-adapter-vite@1.2.40':
     dependencies:
-      '@inlang/paraglide-js-adapter-unplugin': 1.4.28
+      '@inlang/paraglide-js-adapter-unplugin': 1.4.29
     transitivePeerDependencies:
       - babel-plugin-macros
       - debug
       - supports-color
 
-  '@inlang/paraglide-js@1.6.2':
+  '@inlang/paraglide-js@1.7.0':
     dependencies:
       '@inlang/detect-json-formatting': 1.0.0
       commander: 11.1.0
@@ -6602,7 +6602,7 @@ snapshots:
   autoprefixer@10.4.19(postcss@8.4.38):
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001610
+      caniuse-lite: 1.0.30001611
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
@@ -6681,8 +6681,8 @@ snapshots:
 
   browserslist@4.23.0:
     dependencies:
-      caniuse-lite: 1.0.30001610
-      electron-to-chromium: 1.4.738
+      caniuse-lite: 1.0.30001611
+      electron-to-chromium: 1.4.740
       node-releases: 2.0.14
       update-browserslist-db: 1.0.13(browserslist@4.23.0)
 
@@ -6740,11 +6740,11 @@ snapshots:
   caniuse-api@3.0.0:
     dependencies:
       browserslist: 4.23.0
-      caniuse-lite: 1.0.30001610
+      caniuse-lite: 1.0.30001611
       lodash.memoize: 4.1.2
       lodash.uniq: 4.5.0
 
-  caniuse-lite@1.0.30001610: {}
+  caniuse-lite@1.0.30001611: {}
 
   capnp-ts@0.7.0:
     dependencies:
@@ -6917,6 +6917,8 @@ snapshots:
       inherits: 2.0.4
       readable-stream: 2.3.8
       typedarray: 0.0.6
+
+  confbox@0.1.7: {}
 
   config-chain@1.1.13:
     dependencies:
@@ -7225,7 +7227,7 @@ snapshots:
     dependencies:
       jake: 10.8.7
 
-  electron-to-chromium@1.4.738: {}
+  electron-to-chromium@1.4.740: {}
 
   embla-carousel-reactive-utils@8.0.2(embla-carousel@8.0.2):
     dependencies:
@@ -8089,8 +8091,6 @@ snapshots:
 
   jsonc-parser@3.2.0: {}
 
-  jsonc-parser@3.2.1: {}
-
   jsonfile@6.1.0:
     dependencies:
       universalify: 2.0.1
@@ -8200,7 +8200,7 @@ snapshots:
   local-pkg@0.5.0:
     dependencies:
       mlly: 1.6.1
-      pkg-types: 1.0.3
+      pkg-types: 1.1.0
 
   locate-character@3.0.0: {}
 
@@ -8355,7 +8355,7 @@ snapshots:
     dependencies:
       acorn: 8.11.3
       pathe: 1.1.2
-      pkg-types: 1.0.3
+      pkg-types: 1.1.0
       ufo: 1.5.3
 
   moment@2.30.1:
@@ -8697,9 +8697,9 @@ snapshots:
     dependencies:
       find-up: 4.1.0
 
-  pkg-types@1.0.3:
+  pkg-types@1.1.0:
     dependencies:
-      jsonc-parser: 3.2.1
+      confbox: 0.1.7
       mlly: 1.6.1
       pathe: 1.1.2
 
