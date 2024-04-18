@@ -4,7 +4,7 @@
 
 <section class="relative">
   <!-- Illustration behind hero content -->
-  <div class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none -z-1" aria-hidden="true">
+  <div class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none z-1" aria-hidden="true">
     <svg width="1360" height="578" viewBox="0 0 1360 578" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="illustration-01">
@@ -26,7 +26,14 @@
       <!-- Section header -->
       <div class="text-center pb-12 md:pb-16">
         <h1 class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
-          Make your New Tab <span class="bg-clip-text text-transparent wonderful-text">wonderful</span>
+          Make your New Tab <span class="inline-grid relative">
+            <span
+              class="bg-clip-text text-transparent wonderful-text blur-lg pointer-events-none opacity-80"
+              aria-hidden="true">
+              wonderful
+            </span>
+            <span class="bg-clip-text text-transparent wonderful-text absolute top-0">wonderful</span>
+          </span>
         </h1>
         <div class="max-w-3xl mx-auto">
           <p class="text-xl text-gray-600" data-aos="zoom-y-out" data-aos-delay="150">
