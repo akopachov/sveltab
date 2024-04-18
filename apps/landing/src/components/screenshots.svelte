@@ -68,7 +68,6 @@
                     <enhanced:img
                       class="max-w-full max-h-full"
                       loading="lazy"
-                      decoding="async"
                       src={screenshot.previewSrc}
                       alt={screenshot.alt} />
                   </button>
