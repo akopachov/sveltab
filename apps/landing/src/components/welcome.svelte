@@ -26,9 +26,7 @@
       <!-- Section header -->
       <div class="text-center pb-12 md:pb-16">
         <h1 class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
-          Make your New Tab <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
-            wonderful
-          </span>
+          Make your New Tab <span class="bg-clip-text text-transparent wonderful-text">wonderful</span>
         </h1>
         <div class="max-w-3xl mx-auto">
           <p class="text-xl text-gray-600" data-aos="zoom-y-out" data-aos-delay="150">
@@ -66,3 +64,30 @@
     </div>
   </div>
 </section>
+
+<style lang="postcss">
+  @keyframes gradientAnimation {
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  .wonderful-text {
+    background-image: linear-gradient(
+      45deg,
+      #ff5733,
+      #4caf50,
+      #3498db,
+      #ffc107,
+      #e91e63,
+      #9c27b0,
+      #00bcd4,
+      #ff9800,
+      #607d8b,
+      #8bc34a
+    );
+    background-size: 200% 200%;
+
+    animation: gradientAnimation 15s linear infinite;
+  }
+</style>
