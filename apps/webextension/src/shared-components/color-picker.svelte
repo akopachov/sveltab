@@ -55,7 +55,7 @@
     <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
       <div class="input-group-shim !px-2 border-r">
         <button
-          style:background-image="url({transparentSm})"
+          style:background-image="url('{transparentSm}')"
           class="btn rounded-full !p-0 w-6 h-6 bg-contain"
           tabindex="-1"
           use:popup={popupSettings}
@@ -68,7 +68,7 @@
     </div>
   {:else if layout === ColorPickerLayout.ButtonPopup}
     <button
-      style:background-image="url({transparentSm})"
+      style:background-image="url('{transparentSm}')"
       class="btn rounded-full !p-0 w-6 h-6 bg-contain"
       tabindex="-1"
       use:popup={popupSettings}

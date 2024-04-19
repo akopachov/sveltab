@@ -9,7 +9,7 @@
 <section class="relative">
   <!-- Illustration behind hero content -->
   <div
-    style:background-image="url({bgImage})"
+    style:background-image="url('{bgImage}')"
     class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none z-1 w-[1360px] h-[578px]"
     aria-hidden="true">
   </div>
