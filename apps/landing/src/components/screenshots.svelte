@@ -79,11 +79,19 @@
       </div>
       <div
         class="flex flex-row justify-between min-w-fit w-full max-mdd:max-w-60 max-mdd:mt-3 mdd:absolute mdd:top-[calc(50%-1.5rem)] mdd:left-[calc(50%-384px-5rem)] mdd:w-[calc(768px+10rem)] pointer-events-none">
-        <button class="btn btn-ghost pointer-events-auto" type="button" on:click={() => emblaApi.scrollPrev()}>
+        <button
+          class="btn btn-ghost pointer-events-auto"
+          type="button"
+          on:click={() => emblaApi.scrollPrev()}
+          aria-label="Previous screenshot">
           <span class="w-9 h-9 icon-[ooui--previous-ltr]"></span>
         </button>
 
-        <button class="btn btn-ghost pointer-events-auto" type="button" on:click={() => emblaApi.scrollNext()}>
+        <button
+          class="btn btn-ghost pointer-events-auto"
+          type="button"
+          on:click={() => emblaApi.scrollNext()}
+          aria-label="Next screenshot">
           <span class="w-9 h-9 icon-[ooui--previous-rtl]"></span>
         </button>
       </div>
