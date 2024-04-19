@@ -8,13 +8,10 @@
 
 <section class="relative">
   <!-- Illustration behind hero content -->
-  <div
-    class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none z-1 w-[1360px] h-[578px]"
-    aria-hidden="true">
+  <div class="absolute pointer-events-none z-1 w-full bottom-0" aria-hidden="true">
     <!-- svelte-ignore a11y-missing-attribute -->
-    <img src={bgImage} width="1360" height="578" />
+    <img class="mx-auto" src={bgImage} width="1360" height="578" />
   </div>
-
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <!-- Hero content -->
     <div class="pt-32 md:pt-40">
