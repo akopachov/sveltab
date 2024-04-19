@@ -4,7 +4,6 @@
   import AOS from 'aos';
   import Header from '../components/header.svelte';
   import Footer from '../components/footer.svelte';
-  import '@fontsource/inter';
   // CSS
   import '../app.pcss';
   import 'aos/dist/aos.css';
