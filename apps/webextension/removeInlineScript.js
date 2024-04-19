@@ -1,18 +1,8 @@
 // removeInlineScript.cjs
-const glob = require('tiny-glob');
-const path = require('node:path');
-const fs = require('node:fs');
-
-function hash(value) {
-  let hash = 5381;
-  let i = value.length;
-  if (typeof value === 'string') {
-    while (i) hash = (hash * 33) ^ value.charCodeAt(--i);
-  } else {
-    while (i) hash = (hash * 33) ^ value[--i];
-  }
-  return (hash >>> 0).toString(36);
-}
+import glob from 'tiny-glob';
+import path from 'node:path';
+import fs from 'node:fs';
+import { hashSync } from 'hasha';
 
 async function removeInlineScript(directory) {
   console.log('Removing Inline Scripts');
@@ -34,7 +24,8 @@ async function removeInlineScript(directory) {
           const inlineContent = script
             .replace('__sveltekit', 'const __sveltekit')
             .replace('document.currentScript.parentElement', 'document.body.firstElementChild');
-          const fn = `/script-${hash(inlineContent)}.js`;
+          const hash = hashSync(inlineContent, { encoding: 'base64', algorithm: 'md5' }).replace(/\W/gi, '');
+          const fn = `/script-${hash}.js`;
           fs.writeFileSync(`${directory}${fn}`, inlineContent);
           console.log(`Inline script extracted and saved at: ${directory}${fn}`);
           return `<script type="module" src="${fn}"></script>`;
@@ -45,4 +36,4 @@ async function removeInlineScript(directory) {
     });
 }
 
-removeInlineScript(path.resolve(__dirname, 'build'));
+removeInlineScript(process.argv[2]);

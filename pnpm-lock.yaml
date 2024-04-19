@@ -246,6 +246,9 @@ importers:
       flat-ui-colors-json:
         specifier: ^0.1.0
         version: 0.1.0
+      hasha:
+        specifier: ^6.0.0
+        version: 6.0.0
       nanoid:
         specifier: ^5.0.7
         version: 5.0.7
