@@ -19,7 +19,6 @@
   });
 </script>
 
-<svelte:head></svelte:head>
 <svelte:body use:classList={'font-inter antialiased bg-white text-gray-900 tracking-tight'} />
 <main class="grow">
   <div class="flex flex-col min-h-screen overflow-hidden supports-[overflow:clip]:overflow-clip">
