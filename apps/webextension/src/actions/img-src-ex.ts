@@ -1,5 +1,6 @@
 import { getMirrorFor } from '$lib/service-mirrors';
 import type { Action } from 'svelte/action';
+import fallbackImage from '$lib/assets/image-fallback.svg';
 
 const placeholderClasses = ['placeholder', 'animate-pulse', '!rounded-[inherit]'];
 
@@ -27,7 +28,7 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
       node.style.backgroundColor = '';
       updateSrc(mirror);
     } else if (Boolean(node.dataset['fallback']) === true) {
-      updateSrc('./image-fallback.svg');
+      updateSrc(fallbackImage);
       node.style.backgroundColor = '#fff';
     } else {
       loadEnd();

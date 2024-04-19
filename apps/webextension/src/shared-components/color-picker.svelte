@@ -11,6 +11,7 @@
   import { nanoid } from 'nanoid/non-secure';
   import ColorPickerInner from './color-picker-inner.svelte';
   import 'vanilla-colorful/hex-input.js';
+  import transparentSm from '$lib/assets/transparent-sm.png';
 
   export let color: string;
   export let layout: ColorPickerLayout = ColorPickerLayout.InputPopup;
@@ -54,7 +55,8 @@
     <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
       <div class="input-group-shim !px-2 border-r">
         <button
-          class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')]"
+          style:background-image="url({transparentSm})"
+          class="btn rounded-full !p-0 w-6 h-6 bg-contain"
           tabindex="-1"
           use:popup={popupSettings}
           style:box-shadow="inset 0 0 0 1.5rem {color}">
@@ -66,7 +68,8 @@
     </div>
   {:else if layout === ColorPickerLayout.ButtonPopup}
     <button
-      class="btn rounded-full !p-0 w-6 h-6 bg-contain bg-[url('/transparent-sm.png')]"
+      style:background-image="url({transparentSm})"
+      class="btn rounded-full !p-0 w-6 h-6 bg-contain"
       tabindex="-1"
       use:popup={popupSettings}
       style:box-shadow="inset 0 0 0 1.5rem {color}">

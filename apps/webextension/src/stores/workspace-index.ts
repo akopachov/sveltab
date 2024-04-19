@@ -38,7 +38,9 @@ export class WorkspaceIndex {
     }
 
     if (!storageRecord) {
-      const defaultWorkspace: WorkspaceSettingsInitial = await fetch('default_workspace.json').then(r => r.json());
+      const defaultWorkspace: WorkspaceSettingsInitial = (await import('$lib/assets/default_workspace.json').then(
+        p => p.default,
+      )) as any;
       for (const widget of defaultWorkspace.widgets!) {
         if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
           if (widget.position!.width! > document.documentElement.offsetWidth - 10) {

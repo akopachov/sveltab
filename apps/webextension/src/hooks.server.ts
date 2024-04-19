@@ -1,5 +1,5 @@
 import { type Handle } from '@sveltejs/kit';
-import defaultWorkspace from '../static/default_workspace.json';
+import defaultWorkspace from '$lib/assets/default_workspace.json';
 import type { ResourceInfo } from '$stores/preload-resources';
 
 const resourcesToPreload = new Set<ResourceInfo>();

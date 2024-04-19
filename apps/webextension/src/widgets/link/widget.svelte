@@ -82,7 +82,7 @@
       use:imgSrcEx={iconUrl}
       data-fallback="true" />
   {:else}
-    <span class="w-full h-full icon-[bx--image]"></span>
+    <span class="w-full h-full icon-[bx--image] text-black"></span>
   {/if}
   {#if $title}
     <div
