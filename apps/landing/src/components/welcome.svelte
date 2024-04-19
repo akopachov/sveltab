@@ -1,5 +1,8 @@
 <script lang="ts">
   import Screenshots from '$components/screenshots.svelte';
+  import amoImage from '$lib/assets/amo-button.svg';
+  import cwoImage from '$lib/assets/cwo-button.svg';
+  import edgeImage from '$lib/assets/edge-button.svg';
 </script>
 
 <section class="relative">
@@ -47,17 +50,17 @@
             data-aos="zoom-y-out"
             data-aos-delay="300">
             <a class="btn btn-link p-0 h-fit" href="https://addons.mozilla.org/firefox/addon/sveltab/">
-              <img src="./amo-button.svg" alt="Addon for FireFox" width="172" height="60" />
+              <img src={amoImage} alt="Addon for FireFox" width="172" height="60" />
             </a>
             <a
               class="btn btn-link p-0 h-fit"
               href="https://chromewebstore.google.com/detail/sveltab/kjfmkbajdehhjlfmldcghgcgmffnohld">
-              <img src="./cwo-button.svg" alt="Addon for Chrome" width="198" height="60" />
+              <img src={cwoImage} alt="Addon for Chrome" width="198" height="60" />
             </a>
             <a
               class="btn btn-link p-0 h-fit"
               href="https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj">
-              <img src="./edge-button.svg" alt="Addon for Edge" width="172" height="60" />
+              <img src={edgeImage} alt="Addon for Edge" width="172" height="60" />
             </a>
           </div>
           <div class="mt-2">
