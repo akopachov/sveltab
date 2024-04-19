@@ -3,15 +3,9 @@
   import amoImage from '$lib/assets/amo-button.svg';
   import cwoImage from '$lib/assets/cwo-button.svg';
   import edgeImage from '$lib/assets/edge-button.svg';
-  import bgImage from '$lib/assets/welcome_bg-image.svg';
 </script>
 
 <section class="relative">
-  <!-- Illustration behind hero content -->
-  <div class="absolute pointer-events-none z-1 w-full bottom-0" aria-hidden="true">
-    <!-- svelte-ignore a11y-missing-attribute -->
-    <img class="mx-auto" src={bgImage} width="1360" height="578" />
-  </div>
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
     <!-- Hero content -->
     <div class="pt-32 md:pt-40">
