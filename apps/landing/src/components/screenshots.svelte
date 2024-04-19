@@ -18,7 +18,11 @@
     emblaApi = event.detail;
   }
 
-  function openScreenshotDialog(screenshot: Screenshot) {
+  function openScreenshotDialog(e: MouseEvent, screenshot: Screenshot) {
+    if (window.innerWidth < 768) {
+      e.preventDefault();
+      return;
+    }
     clickedScreenshot = screenshot;
     screenshotDialog.showModal();
   }
@@ -52,7 +56,7 @@
 <div>
   <div class="relative flex flex-col justify-center items-center mb-8" data-aos="zoom-y-out" data-aos-delay="450">
     <div class="relative flex flex-col justify-center items-center w-full">
-      <div class="mockup-browser border bg-base-300 w-full md:w-[768px]">
+      <div class="mockup-browser border bg-base-300 w-full max-w-[768px]">
         <div class="mockup-browser-toolbar">
           <div class="input"></div>
         </div>
@@ -62,12 +66,14 @@
             use:emblaCarouselSvelte={{ options: { loop: true }, plugins: [] }}
             on:emblaInit={onInit}>
             <div class="embla__container w-full h-full">
-              {#each screenshots as screenshot}
+              {#each screenshots as screenshot, i}
                 <div class="flex-[0_0_100%] w-full h-full">
-                  <button class="embla__slide__number" on:click={() => openScreenshotDialog(screenshot)}>
+                  <button
+                    class="embla__slide__number cursor-default md:cursor-pointer"
+                    on:click={e => openScreenshotDialog(e, screenshot)}>
                     <enhanced:img
                       class="max-w-full max-h-full"
-                      loading="lazy"
+                      loading={i === 0 ? 'eager' : 'lazy'}
                       src={screenshot.previewSrc}
                       alt={screenshot.alt} />
                   </button>

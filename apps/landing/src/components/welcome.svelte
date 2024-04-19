@@ -3,24 +3,15 @@
   import amoImage from '$lib/assets/amo-button.svg';
   import cwoImage from '$lib/assets/cwo-button.svg';
   import edgeImage from '$lib/assets/edge-button.svg';
+  import bgImage from '$lib/assets/welcome_bg-image.svg';
 </script>
 
 <section class="relative">
   <!-- Illustration behind hero content -->
-  <div class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none z-1" aria-hidden="true">
-    <svg width="1360" height="578" viewBox="0 0 1360 578" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="illustration-01">
-          <stop stop-color="#FFF" offset="0%" />
-          <stop stop-color="#EAEAEA" offset="77.402%" />
-          <stop stop-color="#DFDFDF" offset="100%" />
-        </linearGradient>
-      </defs>
-      <g fill="url(#illustration-01)" fill-rule="evenodd">
-        <circle cx="1232" cy="128" r="128" />
-        <circle cx="155" cy="443" r="64" />
-      </g>
-    </svg>
+  <div
+    style:background-image="url({bgImage})"
+    class="absolute left-1/2 transform -translate-x-1/2 bottom-0 pointer-events-none z-1 w-[1360px] h-[578px]"
+    aria-hidden="true">
   </div>
 
   <div class="max-w-6xl mx-auto px-4 sm:px-6">
@@ -31,11 +22,11 @@
         <h1 class="text-5xl md:text-6xl font-extrabold leading-tighter tracking-tighter mb-4" data-aos="zoom-y-out">
           Make your New Tab <span class="inline-grid relative">
             <span
-              class="bg-clip-text text-transparent wonderful-text blur-lg pointer-events-none opacity-80"
+              class="absolute bg-clip-text text-transparent wonderful-text blur-lg pointer-events-none opacity-80 select-none"
               aria-hidden="true">
               wonderful
             </span>
-            <span class="bg-clip-text text-transparent wonderful-text absolute top-0">wonderful</span>
+            <span class="bg-clip-text text-transparent wonderful-text">wonderful</span>
           </span>
         </h1>
         <div class="max-w-3xl mx-auto">
