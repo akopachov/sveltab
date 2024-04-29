@@ -6,11 +6,6 @@
   "keywords": [],
   "license": "GPL-3.0-only",
   "type": "module",
-  "packageManager": "pnpm@9.0.4",
-	"engines": {
-		"pnpm": ">=8.0.0",
-		"node": ">=20.0.0"
-	},
   "main": "index.js",
   "scripts": {
     "build": "tsc"
@@ -27,6 +22,6 @@
     "picomatch": "^4.0.2",
     "slash": "^5.1.0",
     "tiny-glob": "^0.2.9",
-    "vite": "^5.2.9"
+    "vite": "^5.2.10"
   }
 }
