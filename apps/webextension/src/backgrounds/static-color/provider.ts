@@ -3,6 +3,9 @@ import type { Settings } from './settings';
 
 export class StaticColorBackgroundProvider extends BackgroundProvider<Settings> {
   #unsubscribe!: () => void;
+  get canGoNext() {
+    return false;
+  }
   apply(): void {
     this.#unsubscribe = this.settings.color.subscribe(() => this.forceUpdate());
   }

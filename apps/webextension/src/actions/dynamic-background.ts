@@ -1,11 +1,16 @@
 import type { BackgroundInstance } from '$lib/background-instance';
+import type { IBackgroundProvider } from '$stores/background-catalog';
 import type { Action } from 'svelte/action';
+import { writable, type Readable } from 'svelte/store';
 
 const forceNewSubscribers = new Set<() => void>();
 
 export function forceUpdateBackground() {
   forceNewSubscribers.forEach(f => f());
 }
+
+const _activeBackgroundProvider = writable<IBackgroundProvider | undefined>(undefined);
+export const ActiveBackgroundProvider: Readable<IBackgroundProvider | undefined> = _activeBackgroundProvider;
 
 export const dynamicBackground: Action<
   HTMLElement,
@@ -31,7 +36,10 @@ export const dynamicBackground: Action<
       backgroundProviderDestroyPromise = background.components.provider.getValue().then(providerClass => {
         const provider = new providerClass(node, background.settings.extra);
         const abortController = new AbortController();
-        provider.addEventListener('backgroundChanged', notifyBackgroundChanged);
+        if (provider instanceof EventTarget) {
+          provider.addEventListener('backgroundChanged', notifyBackgroundChanged);
+        }
+
         function forceNew() {
           if (background) {
             provider.forceUpdate(abortController.signal);
@@ -39,9 +47,13 @@ export const dynamicBackground: Action<
         }
         forceNewSubscribers.add(forceNew);
         provider.apply(abortController.signal);
+        _activeBackgroundProvider.set(provider);
         return () => {
+          _activeBackgroundProvider.set(undefined);
           forceNewSubscribers.delete(forceNew);
-          provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
+          if (provider instanceof EventTarget) {
+            provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
+          }
           abortController.abort('User has changed background provider');
           provider.destroy();
         };

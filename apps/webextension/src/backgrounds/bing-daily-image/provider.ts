@@ -26,6 +26,10 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return false;
+  }
+
   async apply(abortSignal: AbortSignal) {
     super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {

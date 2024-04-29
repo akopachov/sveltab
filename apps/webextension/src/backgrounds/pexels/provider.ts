@@ -29,6 +29,10 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return true;
+  }
+
   async apply(abortSignal: AbortSignal) {
     let initialized = false;
     super.apply(abortSignal);

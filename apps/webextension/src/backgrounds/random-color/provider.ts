@@ -6,6 +6,10 @@ import randomColor from 'randomcolor';
 export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> {
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return true;
+  }
+
   apply(): void {
     this.node.style.transition = 'background-color 0.3s ease';
     const forceUpdateDeb = debounce(() => this.forceUpdate(), 10);

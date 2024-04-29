@@ -16,7 +16,7 @@
   import WidgetSettingsComponent from '$shared-components/widget-settings.svelte';
   import { onDestroy, onMount } from 'svelte';
   import { BackgroundCatalog } from '$stores/background-catalog';
-  import { dynamicBackground } from '$actions/dynamic-background';
+  import { ActiveBackgroundProvider, dynamicBackground } from '$actions/dynamic-background';
   import * as m from '$i18n/messages';
   import type { WorkspaceInstance } from '$lib/workspace-instance';
   import type { WidgetInstance } from '$lib/widget-instance';
@@ -33,6 +33,7 @@
   import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
   import FaviconSettings from '$shared-components/favicon-settings.svelte';
   import Favicon from '$shared-components/favicon.svelte';
+  import { forceUpdateBackground } from '$actions/dynamic-background';
 
   const drawerStore = getDrawerStore();
 
@@ -289,7 +290,7 @@
     bind:this={workspaceEl}>
     <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
     <div
-      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[86px]">
+      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[129px]">
       <div class="w-max flex flex-row">
         <button
           type="button"
@@ -307,6 +308,15 @@
             : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
           <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
         </button>
+        {#if $ActiveBackgroundProvider?.canGoNext}
+          <button
+            type="button"
+            class="btn-icon bg-transparent hover:bg-surface-100-800-token main-menu-icon"
+            on:click={() => forceUpdateBackground()}
+            title={m.Core_MainMenu_NextBackground_Title()}>
+            <span class="w-6 h-6 icon-[mage--next]"></span>
+          </button>
+        {/if}
       </div>
     </div>
     {#each $widgets as widget (widget.id)}

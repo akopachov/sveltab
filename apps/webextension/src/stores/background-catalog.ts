@@ -18,7 +18,17 @@ import { Background as WallhavenBackground } from '../backgrounds/wallhaven';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
-export abstract class BackgroundProvider<T extends BackgroundSettingsExtra> extends EventTarget {
+export interface IBackgroundProvider {
+  apply(abortSignal: AbortSignal): void;
+  forceUpdate(abortSignal: AbortSignal): void;
+  destroy(): void;
+  get canGoNext(): boolean;
+}
+
+export abstract class BackgroundProvider<T extends BackgroundSettingsExtra>
+  extends EventTarget
+  implements IBackgroundProvider
+{
   constructor(node: HTMLElement, settings: T) {
     super();
     this.node = node;
@@ -31,6 +41,7 @@ export abstract class BackgroundProvider<T extends BackgroundSettingsExtra> exte
   abstract apply(abortSignal: AbortSignal): void;
   abstract forceUpdate(abortSignal: AbortSignal): void;
   abstract destroy(): void;
+  abstract get canGoNext(): boolean;
 }
 
 export interface BackgroundCatalogItem {
@@ -40,7 +51,7 @@ export interface BackgroundCatalogItem {
 }
 
 export interface BackgroundCatalogItemComponents {
-  readonly provider: LazyLike<Promise<new (node: HTMLElement, settings: any) => BackgroundProvider<any>>>;
+  readonly provider: LazyLike<Promise<new (node: HTMLElement, settings: any) => IBackgroundProvider>>;
   readonly settings: {
     readonly component: LazyLike<Promise<ComponentType<SvelteComponent>>>;
     readonly model: LazyLike<Promise<new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra>>;

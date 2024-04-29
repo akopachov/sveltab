@@ -21,6 +21,10 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return true;
+  }
+
   async apply(abortSignal: AbortSignal) {
     super.apply(abortSignal);
     if (!this.#localSettings) {

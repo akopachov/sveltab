@@ -15,6 +15,7 @@
   "Core_MainMenu_Menu_Title": "Open main menu",
   "Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Lock workspace",
   "Core_MainMenu_LockWorkspaceToggle_Title_Unlock": "Unlock workspace",
+  "Core_MainMenu_NextBackground_Title": "Next background",
   "Core_Toasts_ErrorDetail": "Error details:",
   "FontSelector_Search_Placeholder": "Search...",
   "FontSelector_Weight_Thin": "Thin",

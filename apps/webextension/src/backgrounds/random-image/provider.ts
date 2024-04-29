@@ -17,6 +17,10 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return true;
+  }
+
   async apply(abortSignal: AbortSignal) {
     let initialized = false;
     super.apply(abortSignal);

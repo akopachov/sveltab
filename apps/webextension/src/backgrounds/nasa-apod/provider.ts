@@ -20,6 +20,10 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return false;
+  }
+
   async apply(abortSignal: AbortSignal) {
     super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {

@@ -24,6 +24,10 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
 
+  get canGoNext() {
+    return true;
+  }
+
   async apply(abortSignal: AbortSignal) {
     let initialized = false;
     super.apply(abortSignal);
