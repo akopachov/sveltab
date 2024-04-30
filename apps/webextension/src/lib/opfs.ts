@@ -1,5 +1,15 @@
 import { WeakLazy, type LazyLike } from './lazy';
 
+declare global {
+  interface FileSystemDirectoryHandle {
+    /**
+     * Returns an async iterator that yields the names of the entries in the directory.
+     * @returns An async iterator of strings representing the names of the entries in the directory.
+     */
+    keys(): AsyncIterableIterator<string>;
+  }
+}
+
 export class OpfsManager {
   #opfsRoot: LazyLike<Promise<FileSystemDirectoryHandle>>;
 
@@ -22,7 +32,7 @@ export class OpfsManager {
 
   async wipe() {
     const opfsRoot = await this.#opfsRoot.getValue();
-    for await (let name of (<any>opfsRoot).keys()) {
+    for await (let name of opfsRoot.keys()) {
       opfsRoot.removeEntry(name, { recursive: true });
     }
   }
