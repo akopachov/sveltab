@@ -40,7 +40,7 @@
           </p>
         </div>
         <div class="relative flex flex-col items-center p-6 bg-white rounded shadow-xl">
-          <span class="w-12 h-12 icon-[mdi--firefox]"></span>
+          <span class="w-12 h-12 icon-[simple-icons--firefox]"></span>
           <h3 class="text-xl font-bold leading-snug tracking-tight mb-1">Multi-browser</h3>
           <p class="text-gray-600 text-center">
             Firefox is used as a primary browser for development and testing. There is no any Chrome-only features.
