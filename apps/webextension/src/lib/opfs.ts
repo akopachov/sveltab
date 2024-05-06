@@ -10,6 +10,8 @@ declare global {
   }
 }
 
+export const OpfsSchema = 'opfs';
+
 export class OpfsManager {
   #opfsRoot: LazyLike<Promise<FileSystemDirectoryHandle>>;
 
@@ -43,8 +45,8 @@ export class OpfsManager {
   }
 
   async #parseOpfsUrl(opfsUrl: string, create?: boolean): Promise<[FileSystemDirectoryHandle, string]> {
-    if (opfsUrl.startsWith('opfs://')) {
-      opfsUrl = opfsUrl.substring(7);
+    if (opfsUrl.startsWith(`${OpfsSchema}://`)) {
+      opfsUrl = opfsUrl.substring(OpfsSchema.length + 3);
     }
 
     const parts = opfsUrl.split('/');

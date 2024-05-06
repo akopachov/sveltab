@@ -2,7 +2,7 @@ import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
 import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable, unobserve } from './observable';
-import { Opfs } from './opfs';
+import { Opfs, OpfsSchema } from './opfs';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
@@ -165,8 +165,8 @@ export class WorkspaceInstance {
   }
 
   async addInternalAsset(opfsPath: string, data: ArrayBufferLike | Blob) {
-    if (!opfsPath.startsWith('opfs://')) {
-      opfsPath = `opfs://${opfsPath}`;
+    if (!opfsPath.startsWith(`${OpfsSchema}://`)) {
+      opfsPath = `${OpfsSchema}://${opfsPath}`;
     }
     await Opfs.save(opfsPath, data);
     this.#internalAssets.value.add(opfsPath);

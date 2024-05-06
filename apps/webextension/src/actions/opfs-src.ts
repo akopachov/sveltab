@@ -1,5 +1,5 @@
 import { logger } from '$lib/logger';
-import { Opfs } from '$lib/opfs';
+import { Opfs, OpfsSchema } from '$lib/opfs';
 import type { Action } from 'svelte/action';
 
 type HTMLElementWithRef = HTMLElement & ({ src: string | undefined } | { href: string | undefined });
@@ -30,7 +30,7 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
       return;
     }
 
-    if (s.startsWith('opfs://')) {
+    if (s.startsWith(`${OpfsSchema}://`)) {
       try {
         const file = await Opfs.get(s);
         if (file.size > BLOB_STRATEGY_THRESHOLD) {
