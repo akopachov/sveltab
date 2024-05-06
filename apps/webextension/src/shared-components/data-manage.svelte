@@ -8,7 +8,7 @@
   import { CommonToastType, getToastFacade } from '$lib/toast-facade';
   import { version } from '$app/environment';
   import { createEventDispatcher } from 'svelte';
-  import { Opfs } from '$lib/opfs';
+  import { Opfs, OpfsSchema } from '$lib/opfs';
 
   const log = logger.getSubLogger({ prefix: ['Shared Components', 'ImportExport'] });
   const toastFacade = getToastFacade();
@@ -31,10 +31,9 @@
   async function getInternalAssets(paths: string[]) {
     const result: Record<string, string> = {};
     for (const path of paths) {
-      if (path?.startsWith('opfs://')) {
+      if (path?.startsWith(`${OpfsSchema}://`)) {
         const file = await Opfs.get(path);
         const reader = new FileReader();
-        reader.readAsDataURL(file);
         result[path] = await new Promise<string>((resolve, reject) => {
           reader.onload = () => {
             const dataUrl = reader.result as string;
@@ -43,6 +42,7 @@
           };
           reader.onerror = () => reject(reader.error);
         });
+        reader.readAsDataURL(file);
       }
     }
 
