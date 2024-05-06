@@ -5,7 +5,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^2.6.0"
+    "@netlify/functions": "^2.6.3"
   },
   "devDependencies": {
     "netlify-plugin-interpolate-env-variable": "workspace:*",
