@@ -173,6 +173,9 @@ importers:
       '@inlang/paraglide-js-adapter-vite':
         specifier: ^1.2.40
         version: 1.2.40
+      '@putout/minify':
+        specifier: ^3.9.0
+        version: 3.9.0
       '@skeletonlabs/skeleton':
         specifier: ^2.9.2
         version: 2.9.2(svelte@4.2.16)
@@ -280,7 +283,7 @@ importers:
         version: 3.1.5(chart.js@4.4.2)(svelte@4.2.16)
       svelte-check:
         specifier: ^3.7.1
-        version: 3.7.1(postcss-load-config@5.1.0(jiti@1.21.0)(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.16)
+        version: 3.7.1(postcss-load-config@5.1.0(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.16)
       svelte-fast-dimension:
         specifier: ^1.1.0
         version: 1.1.0(svelte@4.2.16)
@@ -299,9 +302,6 @@ importers:
       svelte-virtual-scroll-list:
         specifier: ^1.3.0
         version: 1.3.0(svelte@4.2.16)
-      svelte-webext-storage-adapter:
-        specifier: ^3.0.2
-        version: 3.0.2(svelte@4.2.16)
       tailwindcss:
         specifier: ^3.4.3
         version: 3.4.3
@@ -1370,6 +1370,10 @@ packages:
 
   '@polka/url@1.0.0-next.25':
     resolution: {integrity: sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ==}
+
+  '@putout/minify@3.9.0':
+    resolution: {integrity: sha512-6QUtp0W2fZyjeLpIyuf+RAmfagM6ZGJeLnwsqr6XkAyKp+0KYnhkh0c3j5oTpasdyNI7fdfSuR864I34p82WVw==}
+    engines: {node: '>=18'}
 
   '@rollup/pluginutils@5.1.0':
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
@@ -4784,11 +4788,6 @@ packages:
     peerDependencies:
       svelte: '>=3.5.0'
 
-  svelte-webext-storage-adapter@3.0.2:
-    resolution: {integrity: sha512-oVUgEmYlD2V7f++hp1ot2JPBZJNjVdTZPkiyXkiOqCmRKdcS4DKMwWcC3XkEOKHcyg5h1n0oaXp46ngx5laHgw==}
-    peerDependencies:
-      svelte: ^3.0.0 || ^4.0.0-next.1 || ^5.0.0-next.94
-
   svelte@4.2.16:
     resolution: {integrity: sha512-mQwHpqHD2PmFcCyHaZ7XiTqposaLvJ75WpYcyY5/ce3qxbYtwQpZ+M7ZKP+2CG5U6kfnBZBpPLyofhlE6ROrnQ==}
     engines: {node: '>=16'}
@@ -6231,6 +6230,8 @@ snapshots:
       config-chain: 1.1.13
 
   '@polka/url@1.0.0-next.25': {}
+
+  '@putout/minify@3.9.0': {}
 
   '@rollup/pluginutils@5.1.0(rollup@4.17.2)':
     dependencies:
@@ -8977,6 +8978,14 @@ snapshots:
       jiti: 1.21.0
       postcss: 8.4.38
 
+  postcss-load-config@5.1.0(postcss@8.4.38):
+    dependencies:
+      lilconfig: 3.1.1
+      yaml: 2.4.2
+    optionalDependencies:
+      postcss: 8.4.38
+    optional: true
+
   postcss-merge-longhand@7.0.0(postcss@8.4.38):
     dependencies:
       postcss: 8.4.38
@@ -9752,6 +9761,28 @@ snapshots:
       - stylus
       - sugarss
 
+  svelte-check@3.7.1(postcss-load-config@5.1.0(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.16):
+    dependencies:
+      '@jridgewell/trace-mapping': 0.3.25
+      chokidar: 3.6.0
+      fast-glob: 3.3.2
+      import-fresh: 3.3.0
+      picocolors: 1.0.0
+      sade: 1.8.1
+      svelte: 4.2.16
+      svelte-preprocess: 5.1.4(postcss-load-config@5.1.0(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.16)(typescript@5.4.5)
+      typescript: 5.4.5
+    transitivePeerDependencies:
+      - '@babel/core'
+      - coffeescript
+      - less
+      - postcss
+      - postcss-load-config
+      - pug
+      - sass
+      - stylus
+      - sugarss
+
   svelte-eslint-parser@0.35.0(svelte@4.2.16):
     dependencies:
       eslint-scope: 7.2.2
@@ -9800,6 +9831,19 @@ snapshots:
       postcss-load-config: 5.1.0(jiti@1.21.0)(postcss@8.4.38)
       typescript: 5.4.5
 
+  svelte-preprocess@5.1.4(postcss-load-config@5.1.0(postcss@8.4.38))(postcss@8.4.38)(svelte@4.2.16)(typescript@5.4.5):
+    dependencies:
+      '@types/pug': 2.0.10
+      detect-indent: 6.1.0
+      magic-string: 0.30.10
+      sorcery: 0.11.0
+      strip-indent: 3.0.0
+      svelte: 4.2.16
+    optionalDependencies:
+      postcss: 8.4.38
+      postcss-load-config: 5.1.0(postcss@8.4.38)
+      typescript: 5.4.5
+
   svelte-selecto@1.26.3:
     dependencies:
       selecto: 1.26.3
@@ -9809,10 +9853,6 @@ snapshots:
       svelte: 4.2.16
 
   svelte-virtual-scroll-list@1.3.0(svelte@4.2.16):
-    dependencies:
-      svelte: 4.2.16
-
-  svelte-webext-storage-adapter@3.0.2(svelte@4.2.16):
     dependencies:
       svelte: 4.2.16
 
