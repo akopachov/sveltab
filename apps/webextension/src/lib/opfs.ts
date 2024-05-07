@@ -33,7 +33,7 @@ export class OpfsManager {
   }
 
   async wipe() {
-    const opfsRoot = await this.#opfsRoot.getValue();
+    const opfsRoot = await this.#opfsRoot.value;
     for await (let name of opfsRoot.keys()) {
       opfsRoot.removeEntry(name, { recursive: true });
     }
@@ -51,7 +51,7 @@ export class OpfsManager {
 
     const parts = opfsUrl.split('/');
     const fileName = parts.pop()!;
-    let dirHandle = await this.#opfsRoot.getValue();
+    let dirHandle = await this.#opfsRoot.value;
     for (const part of parts) {
       dirHandle = await dirHandle.getDirectoryHandle(part, { create: create });
     }

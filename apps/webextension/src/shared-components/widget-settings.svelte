@@ -41,14 +41,14 @@
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <TabGroup>
   <Tab bind:group={currentTabId} name="tabCommon" value={0}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
-  {#await tabs.getValue() then resolvedTabs}
+  {#await tabs.value then resolvedTabs}
     {#each resolvedTabs as tab (tab.id)}
       <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title()}</Tab>
     {/each}
   {/await}
   <svelte:fragment slot="panel">
     <div class="overflow-auto max-h-[calc(100cqh-92px)]">
-      {#await widget.components.settings.component.getValue()}
+      {#await widget.components.settings.component.value}
         <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
       {:then component}
         <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} />

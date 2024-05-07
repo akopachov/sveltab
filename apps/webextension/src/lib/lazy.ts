@@ -1,5 +1,5 @@
 export interface LazyLike<T> {
-  getValue(): T;
+  get value(): T;
 }
 
 export class Lazy<T> implements LazyLike<T> {
@@ -11,7 +11,7 @@ export class Lazy<T> implements LazyLike<T> {
     this.#factory = factory;
   }
 
-  getValue(): T {
+  get value(): T {
     if (!this.#valueConstructed) {
       this.#value = this.#factory();
       this.#valueConstructed = true;
@@ -21,15 +21,17 @@ export class Lazy<T> implements LazyLike<T> {
   }
 }
 
+type NonUndefined<T> = T extends undefined ? never : T;
+
 export class WeakLazy<T extends WeakKey> implements LazyLike<T> {
-  #factory: () => T;
+  #factory: () => NonUndefined<T>;
   #value: WeakRef<T> | undefined;
 
-  constructor(factory: () => T) {
+  constructor(factory: () => NonUndefined<T>) {
     this.#factory = factory;
   }
 
-  getValue(): T {
+  get value(): T {
     let value: T | undefined;
     if (!this.#value || (value = this.#value.deref()) === undefined) {
       value = this.#factory();

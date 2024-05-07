@@ -33,7 +33,7 @@ export const dynamicBackground: Action<
 
   async function initializeNew(background: BackgroundInstance | undefined | null) {
     if (background) {
-      backgroundProviderDestroyPromise = background.components.provider.getValue().then(providerClass => {
+      backgroundProviderDestroyPromise = background.components.provider.value.then(providerClass => {
         const provider = new providerClass(node, background.settings.extra);
         const abortController = new AbortController();
         if (provider instanceof EventTarget) {

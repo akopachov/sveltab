@@ -27,7 +27,7 @@ export class BackgroundInstance {
     if (!catalogItem) {
       throw new Error(`Unknown background type "${settings.type}"`);
     }
-    const extra = await catalogItem.components.settings.model.getValue();
+    const extra = await catalogItem.components.settings.model.value;
     return new BackgroundInstance(catalogItem, settings, extra);
   }
 

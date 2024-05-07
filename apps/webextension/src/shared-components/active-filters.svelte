@@ -22,7 +22,7 @@
 
 {#each $ActiveFilters as f (f)}
   {@const filterLoader = AvailableFilters.get(f)}
-  {#await filterLoader?.getValue() then loadedFilter}
+  {#await filterLoader?.value then loadedFilter}
     <svelte:component this={loadedFilter} />
   {/await}
 {/each}

@@ -103,7 +103,7 @@
     .replace('{lat}', String($latitude))
     .replace('{lon}', String($longitude));
 
-  $: assetPack = (AssetsPacks.get($assetPackId) ?? DefaultAssetsPack).assetPack.getValue();
+  $: assetPack = (AssetsPacks.get($assetPackId) ?? DefaultAssetsPack).assetPack.value;
 
   const debouncedTextColor = debouncedDerived(textColor, 300);
 

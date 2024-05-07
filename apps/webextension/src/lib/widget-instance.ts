@@ -23,7 +23,7 @@ export class WidgetInstance {
     if (!catalogItem) {
       throw new Error(`Unknown widget type "${settings.type}"`);
     }
-    const extra = await catalogItem.components.settings.model.getValue();
+    const extra = await catalogItem.components.settings.model.value;
     return new WidgetInstance(catalogItem, settings, extra);
   }
 

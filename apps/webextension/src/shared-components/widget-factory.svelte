@@ -82,7 +82,7 @@
   style:transform="rotate({$rotation}deg)"
   style:--st-border-radius="{$borderRadius}cqmin">
   <div class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)]">
-    {#await widget.components.widget.getValue() then component}
+    {#await widget.components.widget.value then component}
       <div class="w-full h-full rounded-[inherit]" style:filter={$filter ? `url('#${$filter}')` : ''}>
         <svelte:component
           this={component}

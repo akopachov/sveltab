@@ -13,7 +13,7 @@
   on:dragend
   {...otherProps}>
   <div class="h-full [&>*]:h-8 [&>*]:w-8">
-    {#await widgetCatalogItem.components.preview.getValue() then preview}
+    {#await widgetCatalogItem.components.preview.value then preview}
       <svelte:component this={preview} />
     {/await}
   </div>
