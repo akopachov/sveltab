@@ -91,7 +91,7 @@
       styles: ['normal'],
       weights: [$fontWeight],
     }}>
-    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square">
+    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square bg-transparent">
       <span class="w-full h-full {searchProviderAdapter?.iconClass || ''}"></span>
     </div>
     <form on:submit|preventDefault={doSearch}>
