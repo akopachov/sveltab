@@ -30,7 +30,7 @@
 		"cssnano": "^7.0.1",
 		"cssnano-preset-default": "^7.0.1",
 		"cssnano-preset-lite": "^4.0.0",
-		"daisyui": "^4.10.5",
+		"daisyui": "^4.11.1",
 		"embla-carousel-svelte": "^8.0.4",
 		"eslint": "^9.2.0",
 		"eslint-config-prettier": "^9.1.0",

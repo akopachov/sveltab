@@ -10,8 +10,8 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { nanoid } from 'nanoid/non-secure';
   import ColorPickerInner from './color-picker-inner.svelte';
-  import 'vanilla-colorful/hex-input.js';
   import transparentSm from '$lib/assets/transparent-sm.png';
+  import { onMount } from 'svelte';
 
   export let color: string;
   export let layout: ColorPickerLayout = ColorPickerLayout.InputPopup;
@@ -36,6 +36,10 @@
   function onColorChanged(event: CustomEvent<{ value: string }>) {
     color = event.detail.value;
   }
+
+  onMount(() => {
+    import('vanilla-colorful/hex-input.js');
+  });
 </script>
 
 {#if layout === ColorPickerLayout.Inline}

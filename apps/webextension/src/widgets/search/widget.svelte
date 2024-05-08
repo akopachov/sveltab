@@ -84,7 +84,7 @@
   style:--st-font-weight={$fontWeight}
   style:--st-background-blur="{$backgroundBlur}px">
   <div
-    class="input-group grid-cols-[auto_1fr] w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
+    class="input-group border-none grid-cols-[auto_1fr] w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     use:fontsource={{
       font: $fontId,
       subsets: $userPosssibleLocaleCharSubset,

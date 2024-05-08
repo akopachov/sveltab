@@ -159,6 +159,8 @@ export class WidgetSettings {
     this.rotation = useObservable(initial.rotation || 0);
     this.zIndex = useObservable(initial.zIndex || 0);
     this.borderRadius = useObservable(initial.borderRadius || 0);
+    this.borderSize = useObservable(initial.borderSize || 0);
+    this.borderColor = useObservable(initial.borderColor || '#000');
     this.keepRatio = useObservable(Boolean(initial.keepRatio));
     this.extra = new extraConstructor(initial.extra || {});
     this.position = new WidgetPosition(initial.position || {});
@@ -171,6 +173,8 @@ export class WidgetSettings {
   readonly rotation: Observable<number>;
   readonly zIndex: Observable<number>;
   readonly borderRadius: Observable<number>;
+  readonly borderSize: Observable<number>;
+  readonly borderColor: Observable<string>;
   readonly extra: WidgetSettingsExtra;
   readonly keepRatio: Observable<boolean>;
   readonly filter: Observable<Filter | undefined>;

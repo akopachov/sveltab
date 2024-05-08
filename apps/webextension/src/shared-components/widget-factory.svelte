@@ -39,6 +39,8 @@
   const {
     zIndex,
     borderRadius,
+    borderColor,
+    borderSize,
     rotation,
     filter,
     position: { width, height, sizeUnits, positionUnits, x, y, offsetX, offsetY },
@@ -80,8 +82,11 @@
   style:--relative-origin-y={$offsetY / 100}
   style:--relative-origin-x={$offsetX / 100}
   style:transform="rotate({$rotation}deg)"
-  style:--st-border-radius="{$borderRadius}cqmin">
-  <div class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)]">
+  style:--st-border-radius="{$borderRadius}cqmin"
+  style:--st-border-color={$borderColor}
+  style:--st-border-size="{$borderSize}cqmin">
+  <div
+    class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] outline outline-[color:var(--st-border-color)] [outline-width:var(--st-border-size)]">
     {#await widget.components.widget.value then component}
       <div class="w-full h-full rounded-[inherit]" style:filter={$filter ? `url('#${$filter}')` : ''}>
         <svelte:component

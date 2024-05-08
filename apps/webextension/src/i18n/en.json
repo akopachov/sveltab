@@ -39,13 +39,10 @@
   "Favicon_Settings_Type_Manual": "Manual",
   "Favicon_Settings_UploadIcon": "Upload icon",
   "Favicon_Settings_Label": "Favicon",
-
   "LocationSelector_Placeholder": "Search",
   "LocationSelector_Label": "Location",
-
   "ColorPicker_Picker": "Picker",
   "ColorPicker_Palette": "Pallet",
-
   "DataManage_Restore": "Restore",
   "DataManage_Restore_Error": "An error occurred during restoring",
   "DataManage_Restore_Error_VersionMistmatch": "Version mistmatch",
@@ -71,12 +68,10 @@
   "Backgrounds_NasaApod_Settings_Blur": "Blur",
   "Backgrounds_NasaApod_Settings_Filter": "Filter",
   "Backgrounds_NasaApod_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_WikimediaCommonsPod_Name": "Wikimedia Commons Picture of the Day",
   "Backgrounds_WikimediaCommonsPod_Settings_Blur": "Blur",
   "Backgrounds_WikimediaCommonsPod_Settings_Filter": "Filter",
   "Backgrounds_WikimediaCommonsPod_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_RandomColor_Name": "Random color",
   "Backgrounds_RandomColor_Settings_Luminosity": "Luminosity",
   "Backgrounds_RandomColor_Settings_Luminosity_Any": "Any",
@@ -109,7 +104,6 @@
   "Backgrounds_Pexels_Settings_Filter": "Filter",
   "Backgrounds_Pexels_Settings_Refresh": "Refresh",
   "Backgrounds_Pexels_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_Wallhaven_Name": "Wallhaven",
   "Backgrounds_Wallhaven_Settings_SearchTerms": "Search terms",
   "Backgrounds_Wallhaven_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
@@ -124,7 +118,6 @@
   "Backgrounds_Wallhaven_Settings_Filter": "Filter",
   "Backgrounds_Wallhaven_Settings_Refresh": "Refresh",
   "Backgrounds_Wallhaven_Settings_Disclaimer": "Content provided by",
-
   "Backgrounds_AnimeImage_Name": "Anime image",
   "Backgrounds_AnimeImage_Settings_Topic": "Topic",
   "Backgrounds_AnimeImage_Settings_Topic_Any": "Any",
@@ -140,6 +133,7 @@
   "Backgrounds_StaticImage_Settings_Blur": "Blur",
   "Backgrounds_StaticImage_Settings_Filter": "Filter",
   "Widgets_Common_Settings_Tabs_General": "General",
+  "Widgets_Common_Settings_Tabs_Border": "Border",
   "Widgets_Common_Settings_Anchor": "Anchor",
   "Widgets_Common_Settings_PositionUnit": "Position",
   "Widgets_Common_Settings_PositionUnit_Scale": "Scale",
@@ -147,7 +141,9 @@
   "Widgets_Common_Settings_SizeUnit": "Size",
   "Widgets_Common_Settings_SizeUnit_Scale": "Scale",
   "Widgets_Common_Settings_SizeUnit_Fixed": "Fixed",
-  "Widgets_Common_Settings_BorderRadius": "Border radius",
+  "Widgets_Common_Settings_BorderRadius": "Radius",
+  "Widgets_Common_Settings_BorderSize": "Width",
+  "Widgets_Common_Settings_BorderColor": "Color",
   "Widgets_Common_Settings_ZIndex": "Z-Index",
   "Widgets_Common_Settings_Filter": "Filter",
   "Widgets_Common_Settings_Filter_None": "None",
@@ -264,7 +260,6 @@
   "Widgets_Weather_Settings_Layout_ShowAdminArea1": "Display state \\ admin area",
   "Widgets_Weather_Settings_Layout_ShowCountry": "Display country",
   "Widgets_Weather_Settings_Layout_ShowCurrentIcon": "Display current condition icon",
-
   "Widgets_AirQuality_Name": "Air Quality",
   "Widgets_AirQuality_Settings_Tabs_Text": "Text",
   "Widgets_AirQuality_Settings_Tabs_Variables": "Variables",
@@ -289,7 +284,6 @@
   "Widgets_AirQuality_USAQI_Condition_Unhealthy": "Unhealthy",
   "Widgets_AirQuality_USAQI_Condition_VeryUnhealthy": "Very unhealthy",
   "Widgets_AirQuality_USAQI_Condition_Hazardous": "Hazardous",
-
   "Widgets_FreeText_Name": "Text",
   "Widgets_FreeText_Settings_Tabs_Text": "Text",
   "Widgets_FreeText_Settings_Tabs_Background": "Background",
@@ -330,7 +324,6 @@
   "Widgets_AnalogueClock_Settings_MinutesArm_Color": "Minutes color",
   "Widgets_AnalogueClock_Settings_HoursArm_Color": "Hours color",
   "Widgets_AnalogueClock_Settings_HourMarks_Color": "Hour marks color",
-
   "Widgets_CryptoAssetQuotation_Name": "Crypto assets",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Chart",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Text",

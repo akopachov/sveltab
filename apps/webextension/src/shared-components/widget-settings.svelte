@@ -1,5 +1,6 @@
 <script context="module">
-  export const GeneralTabId = 0;
+  export const GeneralTabId = -1;
+  export const BorderTabId = 0;
 </script>
 
 <script lang="ts">
@@ -9,6 +10,7 @@
   import * as m from '$i18n/messages';
   import { WidgetMeasurementUnits } from '$lib/widget-settings';
   import FilterSelector from './filter-selector.svelte';
+  import ColorPicker, { ColorPickerLayout } from './color-picker.svelte';
 
   export let widget: WidgetInstance;
   export let workspace: HTMLElement;
@@ -21,6 +23,8 @@
   $: widgetPositionPositionUnits = widgetPosition.positionUnits;
   $: widgetPositionSizeUnits = widgetPosition.sizeUnits;
   $: borderRadius = widgetSettings.borderRadius;
+  $: borderSize = widgetSettings.borderSize;
+  $: borderColor = widgetSettings.borderColor;
   $: zIndex = widgetSettings.zIndex;
   $: filter = widgetSettings.filter;
   $: tabs = widget.components.settings.tabs;
@@ -40,7 +44,8 @@
 
 <!-- svelte-ignore a11y-label-has-associated-control -->
 <TabGroup>
-  <Tab bind:group={currentTabId} name="tabCommon" value={0}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
+  <Tab bind:group={currentTabId} name="tabCommon" value={GeneralTabId}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
+  <Tab bind:group={currentTabId} name="tabCommon" value={BorderTabId}>{m.Widgets_Common_Settings_Tabs_Border()}</Tab>
   {#await tabs.value then resolvedTabs}
     {#each resolvedTabs as tab (tab.id)}
       <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title()}</Tab>
@@ -161,17 +166,28 @@
         </div>
         <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
-          <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
-          <RangeSlider name="borderRadiusSlider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
-        </label>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
-        <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_ZIndex()}</span>
           <NumberInput placeholder={m.Widgets_Common_Settings_ZIndex()} bind:value={$zIndex} min={-999} max={999} />
         </label>
         <label class="label">
           <span>{m.Widgets_Common_Settings_Filter()}</span>
           <FilterSelector bind:filter={$filter} />
+        </label>
+      {:else if currentTabId === BorderTabId}
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label mb-2">
+          <span>{m.Widgets_Common_Settings_BorderSize()}</span>
+          <RangeSlider name="borderSizeSlider" bind:value={$borderSize} min={0} max={10} step={0.1}></RangeSlider>
+        </label>
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label mb-2">
+          <span>{m.Widgets_Common_Settings_BorderColor()}</span>
+          <ColorPicker bind:color={$borderColor} layout={ColorPickerLayout.InputPopup} />
+        </label>
+        <!-- svelte-ignore a11y-label-has-associated-control -->
+        <label class="label mb-2">
+          <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
+          <RangeSlider name="borderRadiusSlider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
         </label>
       {/if}
     </div>

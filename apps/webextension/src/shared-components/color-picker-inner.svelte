@@ -2,8 +2,7 @@
   import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import FlatUIColorPallets from 'flat-ui-colors-json/palettes.json';
   import * as m from '$i18n/messages';
-  import 'vanilla-colorful/hex-alpha-color-picker.js';
-  import 'vanilla-colorful/hex-input.js';
+  import { onMount } from 'svelte';
 
   export let color: string;
   export let hexInput: boolean;
@@ -18,6 +17,11 @@
   function onColorChanged(event: CustomEvent<{ value: string }>) {
     color = event.detail.value;
   }
+
+  onMount(() => {
+    import('vanilla-colorful/hex-alpha-color-picker.js');
+    import('vanilla-colorful/hex-input.js');
+  });
 </script>
 
 <TabGroup>
