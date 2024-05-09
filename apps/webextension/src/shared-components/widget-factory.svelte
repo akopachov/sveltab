@@ -17,6 +17,7 @@
     onDelete?: () => void | Promise<void>;
     settings?: WidgetSettingsExtra;
     id?: string;
+    overrideBorder?: boolean;
   };
 
   const dispatch = createEventDispatcher();
@@ -85,9 +86,12 @@
   style:--st-border-radius="{$borderRadius}cqmin"
   style:--st-border-color={$borderColor}
   style:--st-border-size="{$borderSize}cqmin">
-  <div
-    class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] border-[color:var(--st-border-color)] [border-width:var(--st-border-size)]">
-    {#await widget.components.widget.value then component}
+  {#await widget.components.widget.value then component}
+    <div
+      class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] {widgetComponent?.overrideBorder !==
+      true
+        ? 'border-[color:var(--st-border-color)] [border-width:var(--st-border-size)]'
+        : ''}">
       <div
         class="w-full h-full rounded-[calc(var(--st-border-radius)-var(--st-border-size))]"
         style:filter={$filter ? `url('#${$filter}')` : ''}>
@@ -98,8 +102,8 @@
           id={widget.id}
           on:autosettingsupdate />
       </div>
-    {/await}
-  </div>
+    </div>
+  {/await}
   {#if !workspaceLocked}
     <div
       class="absolute top-0 left-0 w-full h-full invisible pointer-events-none"

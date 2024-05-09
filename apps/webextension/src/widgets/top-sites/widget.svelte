@@ -9,6 +9,7 @@
   import { isFirefox } from '$lib/browsers-check';
 
   export let settings: Settings;
+  export const overrideBorder = true;
 
   function getTopSites(limit: number) {
     if (isFirefox) {
@@ -50,7 +51,7 @@
           href={item.url}
           rel="noreferrer"
           referrerpolicy="no-referrer"
-          class="btn min-h-0 min-w-0 rounded-[var(--st-border-radius)] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] overflow-hidden"
+          class="btn min-h-0 min-w-0 rounded-[var(--st-border-radius)] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] overflow-hidden border-[color:var(--st-border-color)] [border-width:var(--st-border-size)]"
           style:padding="{5 / Math.min($rowsCount, $itemsPerRow)}cqmin"
           style:background-color={$backgroundColor}
           style:--st-blur="{$backgroundBlur}px"
