@@ -133,7 +133,6 @@
 	"Backgrounds_StaticImage_Settings_Blur": "Размыццё",
 	"Backgrounds_StaticImage_Settings_Filter": "Фільтр",
 	"Widgets_Common_Settings_Tabs_General": "Агульнае",
-  "Widgets_Common_Settings_Tabs_Border": "Мяжа",
 	"Widgets_Common_Settings_Anchor": "Якар",
 	"Widgets_Common_Settings_PositionUnit": "Пазіцыя",
 	"Widgets_Common_Settings_PositionUnit_Scale": "Дынам.",
@@ -142,8 +141,6 @@
 	"Widgets_Common_Settings_SizeUnit_Scale": "Дынам.",
 	"Widgets_Common_Settings_SizeUnit_Fixed": "Фікс.",
 	"Widgets_Common_Settings_BorderRadius": "Скругленне",
-	"Widgets_Common_Settings_BorderSize": "Памер",
-	"Widgets_Common_Settings_BorderColor": "Колер",
 	"Widgets_Common_Settings_ZIndex": "Z-індэкс",
 	"Widgets_Common_Settings_Filter": "Фільтр",
 	"Widgets_Common_Settings_Filter_None": "Няма",
@@ -340,5 +337,8 @@
 	"Widgets_CryptoAssetQuotation_Quotation_Hourly": "Пагадзінна",
 	"Widgets_CryptoAssetQuotation_Quotation_Minutely": "Штохвілінна",
 	"Widgets_CryptoAssetQuotation_Quotation_Daily": "Штодзённа",
-	"Widgets_CryptoAssetQuotation_Quotation_Details": "Падрабязней"
+	"Widgets_CryptoAssetQuotation_Quotation_Details": "Падрабязней",
+	"Widgets_Common_Settings_Tabs_Border": "Мяжа",
+	"Widgets_Common_Settings_BorderSize": "Памер",
+	"Widgets_Common_Settings_BorderColor": "Колер"
 }

@@ -84,21 +84,21 @@
   style:--st-font-weight={$fontWeight}
   style:--st-background-blur="{$backgroundBlur}px">
   <div
-    class="input-group border-none grid-cols-[auto_1fr] w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
+    class="input-group border-none flex w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     use:fontsource={{
       font: $fontId,
       subsets: $userPosssibleLocaleCharSubset,
       styles: ['normal'],
       weights: [$fontWeight],
     }}>
-    <div class="input-group-shim h-[100cqh] w-auto !p-[15cqh] aspect-square bg-transparent">
+    <div class="input-group-shim h-full w-auto !p-[calc(15cqh-var(--st-border-size)/2)] aspect-square bg-transparent">
       <span class="w-full h-full {searchProviderAdapter?.iconClass || ''}"></span>
     </div>
-    <form on:submit|preventDefault={doSearch}>
+    <form on:submit|preventDefault={doSearch} class="w-full">
       <input
         type="search"
         name="searchQuery"
-        class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50"
+        class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-var(--st-border-size)/2-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50"
         placeholder={m.Widgets_Search_Placeholder()}
         enterkeyhint="search"
         bind:value={searchTerm}

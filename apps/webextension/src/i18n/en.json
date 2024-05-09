@@ -133,7 +133,6 @@
   "Backgrounds_StaticImage_Settings_Blur": "Blur",
   "Backgrounds_StaticImage_Settings_Filter": "Filter",
   "Widgets_Common_Settings_Tabs_General": "General",
-  "Widgets_Common_Settings_Tabs_Border": "Border",
   "Widgets_Common_Settings_Anchor": "Anchor",
   "Widgets_Common_Settings_PositionUnit": "Position",
   "Widgets_Common_Settings_PositionUnit_Scale": "Scale",
@@ -142,14 +141,12 @@
   "Widgets_Common_Settings_SizeUnit_Scale": "Scale",
   "Widgets_Common_Settings_SizeUnit_Fixed": "Fixed",
   "Widgets_Common_Settings_BorderRadius": "Radius",
-  "Widgets_Common_Settings_BorderSize": "Width",
-  "Widgets_Common_Settings_BorderColor": "Color",
   "Widgets_Common_Settings_ZIndex": "Z-Index",
   "Widgets_Common_Settings_Filter": "Filter",
   "Widgets_Common_Settings_Filter_None": "None",
   "Widgets_Common_Menu_OpenSettings": "Settings",
   "Widgets_Common_Menu_Delete": "Delete",
-  "Widgets_Common_Menu_Delete_Confirm_Title": "Please Confirm",
+  "Widgets_Common_Menu_Delete_Confirm_Title": "Please confirm",
   "Widgets_Common_Menu_Delete_Confirm_Body": "Are you sure you wish to delete widget instance?",
   "Widgets_Clock_Name": "Clock",
   "Widgets_Clock_Settings_Tabs_Text": "Text",
@@ -340,5 +337,8 @@
   "Widgets_CryptoAssetQuotation_Quotation_Hourly": "Hourly",
   "Widgets_CryptoAssetQuotation_Quotation_Minutely": "Minutely",
   "Widgets_CryptoAssetQuotation_Quotation_Daily": "Daily",
-  "Widgets_CryptoAssetQuotation_Quotation_Details": "Details"
+  "Widgets_CryptoAssetQuotation_Quotation_Details": "Details",
+  "Widgets_Common_Settings_Tabs_Border": "Border",
+  "Widgets_Common_Settings_BorderSize": "Width",
+  "Widgets_Common_Settings_BorderColor": "Color"
 }

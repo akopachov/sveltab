@@ -86,9 +86,11 @@
   style:--st-border-color={$borderColor}
   style:--st-border-size="{$borderSize}cqmin">
   <div
-    class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] outline outline-[color:var(--st-border-color)] [outline-width:var(--st-border-size)]">
+    class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] border-[color:var(--st-border-color)] [border-width:var(--st-border-size)]">
     {#await widget.components.widget.value then component}
-      <div class="w-full h-full rounded-[inherit]" style:filter={$filter ? `url('#${$filter}')` : ''}>
+      <div
+        class="w-full h-full rounded-[calc(var(--st-border-radius)-var(--st-border-size))]"
+        style:filter={$filter ? `url('#${$filter}')` : ''}>
         <svelte:component
           this={component}
           bind:this={widgetComponent}
