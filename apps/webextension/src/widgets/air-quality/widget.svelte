@@ -20,6 +20,7 @@
   } from '$lib/geolocation';
   import { getAirQualityIndexDescription, getAirQualityIndexMaxValue } from './aqi-utils';
   import { ProgressRadial } from '@skeletonlabs/skeleton';
+  import { PUBLIC_IQA_REDIRECT } from '$env/static/public';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Air Quality'] });
   const dispatch = createEventDispatcher();
@@ -86,6 +87,10 @@
   $: currentAirQualityIndexPercent = latestInfo
     ? (latestInfo.current.airQualityIndex / getAirQualityIndexMaxValue(latestInfo?.legislation)) * 100
     : 0;
+
+  $: airQualityDetailsLink = PUBLIC_IQA_REDIRECT.replace('{city}', encodeURIComponent($city))
+    .replace('{lat}', String($latitude))
+    .replace('{lon}', String($longitude));
 
   onMount(() => {
     ensureLocationPresent();
@@ -213,7 +218,11 @@
   {#if latestInfo?.lastUpdate > 0}
     <div class="flex flex-row max-h-[calc(100cqh-10cqmin)] h-full">
       <div class="flex flex-col flex-auto">
-        <p class="mb-[.5em]">{currentAirQualityIndexText}</p>
+        <p class="mb-[.5em]">
+          <a href={airQualityDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
+            {currentAirQualityIndexText}
+          </a>
+        </p>
         <div class="overflow-y-auto">
           <table class="text-[max(0.5em,7px)] w-full max-w-[10em] leading-normal">
             {#if $showVariables.includes(AirQualityVariables.PM2_5)}
@@ -304,9 +313,11 @@
             track={airQualityDescriptor?.trackColor || ''}
             strokeLinecap="butt" />
         </div>
-        <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[1.5em]">
-          {latestInfo.current.airQualityIndex.toFixed(0)}
-        </span>
+        <a href={airQualityDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
+          <span class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[1.5em]">
+            {latestInfo.current.airQualityIndex.toFixed(0)}
+          </span>
+        </a>
       </div>
     </div>
   {/if}

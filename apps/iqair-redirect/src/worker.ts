@@ -56,20 +56,23 @@ export default {
       return getFailedResponse();
     }
 
+    let closestObjectUrl;
     if (objectsToSearch.length === 1) {
-      return Response.redirect(objectsToSearch[0].url, 308);
+      closestObjectUrl = objectsToSearch[0].url;
+    } else {
+      const distances = objectsToSearch.map((item) => ({
+        url: item.url,
+        distance: targetPosition.Distance(
+          new GeoPosition(
+            item.coordinates.latitude,
+            item.coordinates.longitude,
+          ),
+        ),
+      }));
+
+      closestObjectUrl = distances.sort((a, b) => a.distance - b.distance)[0]
+        .url;
     }
-
-    const distances = objectsToSearch.map((item) => ({
-      url: item.url,
-      distance: targetPosition.Distance(
-        new GeoPosition(item.coordinates.latitude, item.coordinates.longitude),
-      ),
-    }));
-
-    const closestObjectUrl = distances.sort(
-      (a, b) => a.distance - b.distance,
-    )[0].url;
 
     return Response.redirect(`https://www.iqair.com${closestObjectUrl}`, 308);
   },
