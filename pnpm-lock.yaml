@@ -17,6 +17,19 @@ importers:
         specifier: 19.0.1
         version: 19.0.1
 
+  apps/iqair-redirect:
+    dependencies:
+      geo-position.ts:
+        specifier: ^1.4.1
+        version: 1.4.1
+      unidecode:
+        specifier: ^1.0.1
+        version: 1.0.1
+    devDependencies:
+      wrangler:
+        specifier: ^3.53.1
+        version: 3.53.1
+
   apps/landing:
     devDependencies:
       '@fontsource/inter':

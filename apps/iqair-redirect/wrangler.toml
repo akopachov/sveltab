@@ -1,0 +1,4 @@
+name = "iqair-redirect"
+main = "src/worker.ts"
+compatibility_date = "2023-12-28"
+
