@@ -1,3 +1,5 @@
+import { GeoPosition } from "geo-position.ts";
+
 declare global {
   const Netlify: {
     env: {
@@ -20,11 +22,14 @@ export default async (request: Request) => {
   const url = new URL(request.url);
   const city = url.searchParams.get("city");
   const country = url.searchParams.get("country");
-  const lat = Number(url.searchParams.get("lat"));
-  const lon = Number(url.searchParams.get("lon"));
+
   if (!city || !country) {
     return getFailedResponse();
   }
+
+  const lat = Number(url.searchParams.get("lat"));
+  const lon = Number(url.searchParams.get("lon"));
+  const targetPosition = new GeoPosition(lat, lon);
 
   const q = encodeURIComponent(`${city}, ${country}`);
   const apiKey = Netlify.env.get("OWM_API_KEY");
@@ -41,9 +46,11 @@ export default async (request: Request) => {
   } else {
     const idList = owmResponse.list.map((item) => ({
       id: item.id,
-      diff: Math.abs(item.coord.lat - lat) + Math.abs(item.coord.lon - lon),
+      distance: targetPosition.Distance(
+        new GeoPosition(item.coord.lat, item.coord.lon),
+      ),
     }));
-    idList.sort((a, b) => a.diff - b.diff);
+    idList.sort((a, b) => a.distance - b.distance);
     cityId = idList[0].id;
   }
   return Response.redirect(`https://openweathermap.org/city/${cityId}`, 308);

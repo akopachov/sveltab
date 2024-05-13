@@ -5,9 +5,12 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^2.6.3"
+    "@netlify/functions": "^2.6.3",
+    "geo-position.ts": "^1.4.1",
+    "unidecode": "^1.0.1"
   },
   "devDependencies": {
+    "@types/unidecode": "^0.1.3",
     "netlify-plugin-interpolate-env-variable": "workspace:*",
     "typescript": "^5.4.5",
     "webextension": "workspace:*"
