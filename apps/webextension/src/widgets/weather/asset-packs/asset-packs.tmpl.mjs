@@ -66,14 +66,12 @@ async function processFile(filePath) {
 }
 
 export async function templateData() {
-  console.info('Started generating asset packs');
   const assetPacks = [];
   const jsonFiles = await glob('*.json', { absolute: true, dot: true, filesOnly: true });
   for (const jsonFile of jsonFiles) {
     assetPacks.push(await processFile(jsonFile));
   }
 
-  console.info('Finished generating asset packs');
   return { assetPacks };
 }
 

@@ -14,7 +14,6 @@
   import { imgSrcEx } from '$actions/img-src-ex';
   import { debouncedDerived } from '$stores/debounce-store';
   import { isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
-  import { PUBLIC_OWM_REDIRECT } from '$env/static/public';
   import { logger } from '$lib/logger';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import {
@@ -25,6 +24,7 @@
     compareCoordinates,
     reverseGeocode,
   } from '$lib/geolocation';
+  import { getRedirectUrl } from './owm-redirect.gen';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
   const dispatch = createEventDispatcher();
@@ -98,10 +98,7 @@
     $queryUserLocation && queryUserGeolocation();
   }
 
-  $: weatherDetailsLink = PUBLIC_OWM_REDIRECT.replace('{country}', encodeURIComponent($country))
-    .replace('{city}', encodeURIComponent($city))
-    .replace('{lat}', String($latitude))
-    .replace('{lon}', String($longitude));
+  $: weatherDetailsLink = getRedirectUrl($city, $country, $latitude, $longitude);
 
   $: assetPack = (AssetsPacks.get($assetPackId) ?? DefaultAssetsPack).assetPack.value;
 

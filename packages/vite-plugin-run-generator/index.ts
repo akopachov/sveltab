@@ -20,6 +20,7 @@ const __dirname = process.cwd();
 type GeneratorInfo = {
   readonly generatorFileUri: URL;
   readonly generatorFilePath: string;
+  readonly generatorName: string;
   readonly outputFilePath: string;
   readonly cwd: string;
   readonly watchPatterns: string[];
@@ -30,6 +31,7 @@ async function runGenerator(generator: GeneratorInfo) {
   const cwd = process.cwd();
   try {
     process.chdir(generator.cwd);
+    console.group('[Generator]:', generator.generatorName);
     const { template, templateData } = await import(generator.generatorFileUri.toString());
     const resolvedTemplateData = templateData instanceof Function ? await templateData() : await templateData;
     const resolvedTemplate = template instanceof Function ? await template() : await template;
@@ -39,6 +41,7 @@ async function runGenerator(generator: GeneratorInfo) {
     });
   } finally {
     process.chdir(cwd);
+    console.groupEnd();
   }
 }
 
@@ -105,7 +108,7 @@ async function loadGenerators(searchPath: string) {
 }
 
 async function loadGenerator(generatorFile: string) {
-  console.log(`Loading generator from ${generatorFile}`);
+  console.log('Loading generator from', generatorFile);
   const generatorFileUri = pathToFileURL(generatorFile);
   const hash = await hashFile(generatorFile, { algorithm: 'md5' });
   generatorFileUri.searchParams.set('v', hash);
@@ -121,5 +124,6 @@ async function loadGenerator(generatorFile: string) {
     cwd: generatorDir,
     generatorFileUri: generatorFileUri,
     generatorFilePath: slash(generatorFile),
+    generatorName: generator.name,
   } satisfies GeneratorInfo;
 }
