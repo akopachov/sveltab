@@ -9,7 +9,6 @@ async function removeInlineScript(directory) {
   const files = await glob('**/*.{html}', {
     cwd: directory,
     dot: true,
-    aboslute: true,
     filesOnly: true,
   });
   const scriptWritePromises = [];
