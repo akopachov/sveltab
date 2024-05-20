@@ -59,14 +59,17 @@ export default async (request: Request) => {
   if (objectsToSearch.length === 1) {
     closestObjectUrl = objectsToSearch[0].url;
   } else {
-    const distances = objectsToSearch.map((item) => ({
-      url: item.url,
-      distance: targetPosition.Distance(
-        new GeoPosition(item.coordinates.latitude, item.coordinates.longitude),
-      ),
-    }));
-
-    closestObjectUrl = distances.sort((a, b) => a.distance - b.distance)[0].url;
+    closestObjectUrl = objectsToSearch
+      .map((item) => ({
+        url: item.url,
+        distance: targetPosition.Distance(
+          new GeoPosition(
+            item.coordinates.latitude,
+            item.coordinates.longitude,
+          ),
+        ),
+      }))
+      .reduce((a, b) => (a.distance < b.distance ? a : b)).url;
   }
 
   return Response.redirect(`https://www.iqair.com${closestObjectUrl}`, 308);

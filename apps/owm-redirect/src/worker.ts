@@ -1,3 +1,5 @@
+import { GeoPosition } from "geo-position.ts";
+
 export interface Env {
   OWM_API_KEY: string;
 }
@@ -17,11 +19,14 @@ export default {
     const url = new URL(request.url);
     const city = url.searchParams.get("city");
     const country = url.searchParams.get("country");
-    const lat = Number(url.searchParams.get("lat"));
-    const lon = Number(url.searchParams.get("lon"));
+
     if (!city || !country) {
       return getFailedResponse();
     }
+
+    const lat = Number(url.searchParams.get("lat"));
+    const lon = Number(url.searchParams.get("lon"));
+    const targetPosition = new GeoPosition(lat, lon);
 
     const q = encodeURIComponent(`${city}, ${country}`);
     const owmResponse = await fetch(
@@ -35,12 +40,14 @@ export default {
     if (owmResponse.list.length === 1) {
       cityId = owmResponse.list[0].id;
     } else {
-      const idList = owmResponse.list.map((item) => ({
-        id: item.id,
-        diff: Math.abs(item.coord.lat - lat) + Math.abs(item.coord.lon - lon),
-      }));
-      idList.sort((a, b) => a.diff - b.diff);
-      cityId = idList[0].id;
+      cityId = owmResponse.list
+        .map((item) => ({
+          id: item.id,
+          distance: targetPosition.Distance(
+            new GeoPosition(item.coord.lat, item.coord.lon),
+          ),
+        }))
+        .reduce((a, b) => (a.distance < b.distance ? a : b)).id;
     }
     return Response.redirect(`https://openweathermap.org/city/${cityId}`, 308);
   },

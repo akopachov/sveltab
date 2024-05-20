@@ -44,14 +44,14 @@ export default async (request: Request) => {
   if (owmResponse.list.length === 1) {
     cityId = owmResponse.list[0].id;
   } else {
-    const idList = owmResponse.list.map((item) => ({
-      id: item.id,
-      distance: targetPosition.Distance(
-        new GeoPosition(item.coord.lat, item.coord.lon),
-      ),
-    }));
-    idList.sort((a, b) => a.distance - b.distance);
-    cityId = idList[0].id;
+    cityId = owmResponse.list
+      .map((item) => ({
+        id: item.id,
+        distance: targetPosition.Distance(
+          new GeoPosition(item.coord.lat, item.coord.lon),
+        ),
+      }))
+      .reduce((a, b) => (a.distance < b.distance ? a : b)).id;
   }
   return Response.redirect(`https://openweathermap.org/city/${cityId}`, 308);
 };

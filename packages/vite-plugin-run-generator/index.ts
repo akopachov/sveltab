@@ -8,6 +8,7 @@ import ejs from 'ejs';
 import { hashFile } from 'hasha';
 import picomatch from 'picomatch';
 import slash from 'slash';
+import { blue, bold, green } from 'colorette';
 
 export type TemplateData =
   | Record<string, any>
@@ -31,7 +32,7 @@ async function runGenerator(generator: GeneratorInfo) {
   const cwd = process.cwd();
   try {
     process.chdir(generator.cwd);
-    console.group('[Generator]:', generator.generatorName);
+    console.group(blue(bold('[Generator]:')), generator.generatorName);
     const { template, templateData } = await import(generator.generatorFileUri.toString());
     const resolvedTemplateData = templateData instanceof Function ? await templateData() : await templateData;
     const resolvedTemplate = template instanceof Function ? await template() : await template;
@@ -108,7 +109,7 @@ async function loadGenerators(searchPath: string) {
 }
 
 async function loadGenerator(generatorFile: string) {
-  console.log('Loading generator from', generatorFile);
+  console.log(green('Loading generator'), relative(__dirname, generatorFile));
   const generatorFileUri = pathToFileURL(generatorFile);
   const hash = await hashFile(generatorFile, { algorithm: 'md5' });
   generatorFileUri.searchParams.set('v', hash);
