@@ -51,7 +51,7 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $updateInterval) {
+    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $updateInterval && navigator.onLine) {
       await loadNewQuote();
     }
   }

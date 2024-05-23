@@ -70,7 +70,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
 
     this.setImage(this.#localSettings!.lastUrl);
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
-    if (timeSinceLastChange >= this.settings.updateInterval.value) {
+    if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
         const response = await fetch(
           `https://source.unsplash.com/random/${window.innerWidth}×${window.innerHeight}/?${encodeURIComponent(this.settings.searchTerms.value)}`,

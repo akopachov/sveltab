@@ -171,16 +171,15 @@
   }
 
   async function update() {
-    if (!$asset) {
-      return;
-    }
     if (!priceInfo) {
       priceInfo = (await storage.local.get(storageKey))[storageKey];
     }
+    if (!$asset) {
+      return;
+    }
     if (
-      !priceInfo ||
-      Date.now() - priceInfo.lastUpdate > minutesToMilliseconds(5) ||
-      priceInfo.asset.id !== $asset.id
+      navigator.onLine &&
+      (!priceInfo || Date.now() - priceInfo.lastUpdate > minutesToMilliseconds(5) || priceInfo.asset.id !== $asset.id)
     ) {
       const promises = [
         fetch(`https://api.coincap.io/v2/assets/${$asset.id}`).then(r => r.json()),

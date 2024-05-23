@@ -340,5 +340,14 @@
 	"Widgets_CryptoAssetQuotation_Quotation_Details": "Падрабязней",
 	"Widgets_Common_Settings_Tabs_Border": "Мяжа",
 	"Widgets_Common_Settings_BorderSize": "Памер",
-	"Widgets_Common_Settings_BorderColor": "Колер"
+	"Widgets_Common_Settings_BorderColor": "Колер",
+
+  "Widgets_IpInfo_Name": "IP Info",
+  "Widgets_IpInfo_Settings_Tabs_Background": "Фон",
+  "Widgets_IpInfo_Settings_Tabs_Variables": "Значэнні",
+  "Widgets_IpInfo_Settings_Tabs_Text": "Тэкст",
+  "Widgets_IpInfo_Settings_Font": "Шрыфт",
+  "Widgets_IpInfo_Settings_Shadow": "Цень",
+  "Widgets_IpInfo_Settings_Color": "Колер",
+  "Widgets_IpInfo_Settings_Blur": "Размыццё"
 }

@@ -61,7 +61,10 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
-    if (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale) {
+    if (
+      navigator.onLine &&
+      (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale)
+    ) {
       try {
         const response = await fetch(
           `https://bing.biturl.top/?resolution=${getClosestResolution(this.node.offsetWidth)}&format=json&index=0&mkt=${

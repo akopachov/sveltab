@@ -158,7 +158,7 @@
   }
 
   async function loadNewInfo() {
-    if (!$city) return;
+    if (!$city || !navigator.onLine) return;
     const params = {
       latitude: $latitude,
       longitude: $longitude,

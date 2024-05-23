@@ -91,7 +91,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
 
     this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
-    if (timeSinceLastChange >= this.settings.updateInterval.value) {
+    if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
         if (this.#localSettings!.pool.length <= 0) {
           if (this.#localSettings!.currentPage < this.#localSettings!.totalPages) {

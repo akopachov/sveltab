@@ -1,5 +1,6 @@
 import { storage } from '$stores/storage';
 import { minutesToMilliseconds } from 'date-fns';
+import { getGeoIpInfo } from './ipapi-co';
 
 export type GeolocationCoordinates = { latitude: number; longitude: number; accuracy: number };
 export type Geolocation = { city: string; country: string; admin1: string; admin2: string };
@@ -36,7 +37,7 @@ export async function getBrowserGeolocation() {
 }
 
 export async function getIpGeolocation(): Promise<Geolocation & Coordinates> {
-  const response: any = await fetch('https://ipapi.co/json/').then(r => r.json());
+  const response = await getGeoIpInfo();
   return {
     city: response.city,
     country: response.country_name,

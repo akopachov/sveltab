@@ -28,7 +28,7 @@
   const debounceOpts: DebounceOptions = {
     ms: 500,
     callback: async str => {
-      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter) {
+      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter && navigator.onLine) {
         searchSuggestions = await searchProviderAdapter.getSuggestion(str);
       } else {
         searchSuggestions = [];

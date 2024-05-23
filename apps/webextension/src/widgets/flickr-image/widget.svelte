@@ -54,6 +54,7 @@
   async function pickRandomPhoto() {
     if (
       latestSearchResult &&
+      navigator.onLine &&
       (!latestSearchResult.activeImage ||
         !latestSearchResult.activeImage.sources ||
         millisecondsToSeconds(Date.now() - latestSearchResult.lastUpdate) >= $updateInterval ||

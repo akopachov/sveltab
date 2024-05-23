@@ -55,7 +55,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
-    if (hoursSinceLastChange > 12) {
+    if (navigator.onLine && hoursSinceLastChange > 12) {
       try {
         const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${PUBLIC_NASA_APOD_API_KEY}`, {
           signal: abortSignal,

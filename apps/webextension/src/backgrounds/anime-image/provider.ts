@@ -64,8 +64,9 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (
-      timeSinceLastChange >= this.settings.updateInterval.value ||
-      this.#localSettings!.lastTopic !== this.settings.topic.value
+      navigator.onLine &&
+      (timeSinceLastChange >= this.settings.updateInterval.value ||
+        this.#localSettings!.lastTopic !== this.settings.topic.value)
     ) {
       try {
         const topic =

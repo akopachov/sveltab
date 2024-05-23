@@ -336,5 +336,14 @@
 	"Widgets_CryptoAssetQuotation_Quotation_Details": "Szczegoły",
 	"Widgets_Common_Settings_Tabs_Border": "Granica",
 	"Widgets_Common_Settings_BorderSize": "Szerokość",
-	"Widgets_Common_Settings_BorderColor": "Kolor"
+	"Widgets_Common_Settings_BorderColor": "Kolor",
+
+  "Widgets_IpInfo_Name": "IP Info",
+  "Widgets_IpInfo_Settings_Tabs_Background": "Tło",
+  "Widgets_IpInfo_Settings_Tabs_Variables": "Zmienne",
+  "Widgets_IpInfo_Settings_Tabs_Text": "Tekst",
+  "Widgets_IpInfo_Settings_Font": "Czcionka",
+  "Widgets_IpInfo_Settings_Shadow": "Cień",
+  "Widgets_IpInfo_Settings_Color": "Kolor",
+  "Widgets_IpInfo_Settings_Blur": "Rozmywanie"
 }

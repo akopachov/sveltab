@@ -314,7 +314,7 @@
             class="btn-icon bg-transparent hover:bg-surface-100-800-token main-menu-icon"
             on:click={() => forceUpdateBackground()}
             title={m.Core_MainMenu_NextBackground_Title()}>
-            <span class="w-6 h-6 icon-[mage--next]"></span>
+            <span class="w-7 h-7 icon-[heroicons--play]"></span>
           </button>
         {/if}
       </div>
