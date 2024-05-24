@@ -65,6 +65,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     const purityUnsubsribe = this.settings.purity.subscribe(updateDebWithRefresh);
     const apiKeyUnsubsribe = this.settings.apiKey.subscribe(updateDebWithRefresh);
     const colorsUnsubsribe = this.settings.colors.subscribe(updateDebWithRefresh);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
@@ -75,6 +76,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       purityUnsubsribe();
       apiKeyUnsubsribe();
       colorsUnsubsribe();
+      resizeTypeUnsubscribe();
     };
     initialized = true;
     this.#update(abortSignal);
@@ -90,7 +92,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen', this.settings.resizeType.value));
 
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
@@ -143,6 +145,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
           this.#localSettings!.pool.splice(randomIndex, 1)[0],
           'screen',
           'screen',
+          this.settings.resizeType.value,
         );
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
@@ -150,7 +153,9 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
           return;
         }
 
-        this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen'));
+        this.setImage(
+          updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen', this.settings.resizeType.value),
+        );
       } catch (e) {
         log.warn(e);
       }

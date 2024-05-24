@@ -1,6 +1,6 @@
-import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$lib/background-settings';
+import { ImageBackgroundProviderSettingsBase } from '$backgrounds/common-image/settings-base';
+import type { BackgroundSettingsExtraInitial } from '$lib/background-settings';
 import { useObservable, type Observable } from '$lib/observable';
-import type { Filter } from '$stores/active-filters-store';
 
 export enum AnimeTopics {
   Any = 'any',
@@ -13,17 +13,13 @@ export enum AnimeTopics {
   Genshin = 'ys',
 }
 
-export class Settings extends BackgroundSettingsExtra {
+export class Settings extends ImageBackgroundProviderSettingsBase {
   constructor(initial: BackgroundSettingsExtraInitial<Settings>) {
-    super();
+    super(initial);
     this.topic = useObservable(initial.topic || AnimeTopics.Any);
     this.updateInterval = useObservable(initial.updateInterval || 60);
-    this.blur = useObservable(initial.blur || 0);
-    this.filter = useObservable(initial.filter);
   }
 
   readonly topic: Observable<AnimeTopics>;
   readonly updateInterval: Observable<number>;
-  readonly blur: Observable<number>;
-  readonly filter: Observable<Filter | undefined>;
 }

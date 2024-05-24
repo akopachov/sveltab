@@ -41,10 +41,12 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const localeUnsubscribe = this.settings.locale.subscribe(() => updateDeb());
     const screenResolutionUnsubscribe = observeScreenResolution(update1SecDeb);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     this.#unsubscribe = () => {
       localeUnsubscribe();
       screenResolutionUnsubscribe();
+      resizeTypeUnsubscribe();
     };
     updateDeb();
   }
@@ -59,7 +61,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (
       navigator.onLine &&
@@ -79,13 +81,20 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         }
         this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(response.url, 'screen', 'screen');
+        this.#localSettings!.lastUrl = await getImageCdnUrl(
+          response.url,
+          'screen',
+          'screen',
+          this.settings.resizeType.value,
+        );
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+        this.setImage(
+          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
+        );
       } catch (e) {
         log.warn(e);
       }

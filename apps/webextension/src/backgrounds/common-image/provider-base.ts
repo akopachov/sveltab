@@ -1,12 +1,11 @@
-import type { BackgroundSettingsExtra } from '$lib/background-settings';
-import type { Observable } from '$lib/observable';
-import type { Filter } from '$stores/active-filters-store';
+import { ImageResizeType } from '$lib/cdn';
 import { BackgroundProvider } from '$stores/background-catalog';
 import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
+import type { ImageBackgroundProviderSettingsBase } from './settings-base';
 
 export abstract class ImageBackgroundProviderBase<
-  T extends BackgroundSettingsExtra & { blur: Observable<number>; filter: Observable<Filter | undefined> },
+  T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
   #unsubscribeFilterChange!: () => void;
   #lastImageUrl: string | undefined | null;
@@ -32,9 +31,10 @@ export abstract class ImageBackgroundProviderBase<
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apply(abortSignal: AbortSignal) {
-    this.node.style.backgroundSize = 'cover';
+    abortSignal.throwIfAborted();
     this.node.style.backgroundPosition = 'center';
     this.node.style.transition = 'background-image 0.3s ease-in-out';
+    this.node.style.backgroundRepeat = 'no-repeat';
     this.#applyFilters();
   }
 
@@ -43,6 +43,7 @@ export abstract class ImageBackgroundProviderBase<
     this.node.style.backgroundImage = '';
     this.node.style.backgroundSize = '';
     this.node.style.backgroundPosition = '';
+    this.node.style.backgroundRepeat = '';
     this.node.style.transition = '';
     this.node.style.filter = '';
     this.node.style.inset = '';
@@ -57,9 +58,11 @@ export abstract class ImageBackgroundProviderBase<
 
     const blurUnsubscribe = this.settings.blur.subscribe(() => updateFiltersDeb());
     const filterUnsubscribe = this.settings.filter.subscribe(() => updateFiltersDeb());
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateFiltersDeb());
     this.#unsubscribeFilterChange = () => {
       blurUnsubscribe();
       filterUnsubscribe();
+      resizeTypeUnsubscribe();
     };
   }
 
@@ -67,6 +70,7 @@ export abstract class ImageBackgroundProviderBase<
     const {
       blur: { value: blur },
       filter: { value: filter },
+      resizeType: { value: resizeType },
     } = this.settings;
 
     const filters = [];
@@ -88,6 +92,14 @@ export abstract class ImageBackgroundProviderBase<
       this.node.style.width = '';
       this.node.style.height = '';
       this.node.style.position = '';
+    }
+
+    if (resizeType === ImageResizeType.Cover) {
+      this.node.style.backgroundSize = 'cover';
+    } else if (resizeType === ImageResizeType.Contain) {
+      this.node.style.backgroundSize = 'contain';
+    } else {
+      this.node.style.backgroundSize = 'cover';
     }
   }
 }

@@ -1,6 +1,6 @@
-import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$lib/background-settings';
+import { ImageBackgroundProviderSettingsBase } from '$backgrounds/common-image/settings-base';
+import type { BackgroundSettingsExtraInitial } from '$lib/background-settings';
 import { useObservable, type Observable } from '$lib/observable';
-import type { Filter } from '$stores/active-filters-store';
 
 type WallhavenPurityState = '1' | '0';
 export type WallhavenPurity =
@@ -41,16 +41,14 @@ export const WallhavenSearchColors = [
 
 export type WallhavenSearchColor = (typeof WallhavenSearchColors)[number];
 
-export class Settings extends BackgroundSettingsExtra {
+export class Settings extends ImageBackgroundProviderSettingsBase {
   constructor(initial: BackgroundSettingsExtraInitial<Settings>) {
-    super();
+    super(initial);
     this.searchTerms = useObservable(initial.searchTerms || '');
     this.apiKey = useObservable(initial.apiKey || '');
     this.colors = useObservable(initial.colors || []);
     this.purity = useObservable(initial.purity || '100');
     this.updateInterval = useObservable(initial.updateInterval || 60);
-    this.blur = useObservable(initial.blur || 0);
-    this.filter = useObservable(initial.filter);
   }
 
   readonly searchTerms: Observable<string>;
@@ -58,6 +56,4 @@ export class Settings extends BackgroundSettingsExtra {
   readonly colors: Observable<WallhavenSearchColor[]>;
   readonly purity: Observable<WallhavenPurity>;
   readonly updateInterval: Observable<number>;
-  readonly blur: Observable<number>;
-  readonly filter: Observable<Filter | undefined>;
 }

@@ -76,7 +76,8 @@
     "vite-plugin-run-generator": "workspace:*",
     "vite-plugin-tailwind-purgecss": "^0.3.3",
     "web-ext": "^7.11.0",
-    "webextension-polyfill": "^0.12.0"
+    "webextension-polyfill": "^0.12.0",
+    "is-wsl2": "workspace:*"
   },
   "type": "module"
 }

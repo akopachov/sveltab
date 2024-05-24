@@ -35,9 +35,11 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
       this.#update(abortSignal);
     }, secondsToMilliseconds(1));
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     this.#unsubscribe = () => {
       screenResolutionUnsubscribe();
+      resizeTypeUnsubscribe();
     };
 
     await this.#update(abortSignal);
@@ -53,7 +55,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
     const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
     if (navigator.onLine && hoursSinceLastChange > 12) {
       try {
@@ -64,13 +66,20 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(response.hdurl, 'screen', 'screen');
+        this.#localSettings!.lastUrl = await getImageCdnUrl(
+          response.hdurl,
+          'screen',
+          'screen',
+          this.settings.resizeType.value,
+        );
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+        this.setImage(
+          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
+        );
       } catch (e) {
         log.warn(e);
       }

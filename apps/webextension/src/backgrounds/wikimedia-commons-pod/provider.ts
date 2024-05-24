@@ -34,9 +34,11 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
       this.#update(abortSignal);
     }, secondsToMilliseconds(1));
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(updateDeb);
 
     this.#unsubscribe = () => {
       screenResolutionUnsubscribe();
+      resizeTypeUnsubscribe();
     };
 
     await this.#update(abortSignal);
@@ -51,7 +53,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
     if (navigator.onLine && !isToday(this.#localSettings!.lastChangedTime)) {
       try {
         const now = new Date();
@@ -67,13 +69,20 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = now.valueOf();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(response.image.image.source, 'screen', 'screen');
+        this.#localSettings!.lastUrl = await getImageCdnUrl(
+          response.image.image.source,
+          'screen',
+          'screen',
+          this.settings.resizeType.value,
+        );
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
         if (abortSignal.aborted) {
           return;
         }
 
-        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+        this.setImage(
+          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
+        );
       } catch (e) {
         log.warn(e);
       }

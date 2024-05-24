@@ -4,3 +4,4 @@ node_modules/
 !.env.example
 .nx/cache
 .DS_Store
+.pnpm-store/

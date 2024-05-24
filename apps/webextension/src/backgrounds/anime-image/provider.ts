@@ -40,6 +40,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const topicUnsubsribe = this.settings.topic.subscribe(() => updateDeb());
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
@@ -47,6 +48,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       clearInterval(interval);
       topicUnsubsribe();
       screenResolutionUnsubscribe();
+      resizeTypeUnsubscribe();
     };
     this.#update(abortSignal);
   }
@@ -61,7 +63,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
@@ -77,7 +79,13 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         if (!response?.url) {
           throw new Error('Unexpected response');
         }
-        this.#localSettings!.lastUrl = await getImageCdnUrl(response.url, 'screen', 'screen');
+
+        this.#localSettings!.lastUrl = await getImageCdnUrl(
+          response.url,
+          'screen',
+          'screen',
+          this.settings.resizeType.value,
+        );
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
@@ -85,7 +93,9 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen'));
+        this.setImage(
+          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
+        );
       } catch (e) {
         log.warn(e);
       }

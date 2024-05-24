@@ -1,0 +1,19 @@
+{
+  "name": "is-wsl2",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Alexander Kopachov (@akopachov)",
+  "keywords": [],
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.12",
+    "typescript": "^5.4.5"
+  },
+  "dependencies": {
+  }
+}

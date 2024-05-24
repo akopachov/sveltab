@@ -5,6 +5,7 @@ import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
 import { PUBLIC_PEXELS_API_KEY } from '$env/static/public';
+import { ImageResizeType } from '$lib/cdn';
 
 const LocalSettingsKey = 'PexelsBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Pexels', 'Provider'] });
@@ -17,12 +18,24 @@ interface LocalSettings {
   totalPages: number;
 }
 
-function pickBetterUrl(src: string | undefined | null, node: HTMLElement) {
+function pickBetterUrl(src: string | undefined | null, node: HTMLElement, resizeType: ImageResizeType) {
   if (!src) return '';
   const width = node.clientWidth;
   const height = node.clientHeight;
+  let resizeTypeArgValue: string;
+  switch (resizeType) {
+    case ImageResizeType.Contain:
+      resizeTypeArgValue = 'contain';
+      break;
+    case ImageResizeType.Cover:
+      resizeTypeArgValue = 'crop';
+      break;
+    default:
+      resizeTypeArgValue = 'crop';
+      break;
+  }
 
-  return `${src}?fit=crop&h=${height}&w=${width}`;
+  return `${src}?fit=${resizeTypeArgValue}&h=${height}&w=${width}`;
 }
 
 export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
@@ -66,6 +79,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     };
 
     const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const resizeObserver = new ResizeObserver(() => updateDeb());
     resizeObserver.observe(this.node);
@@ -73,6 +87,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     this.#unsubscribe = () => {
       clearInterval(interval);
       searchTermUnsubsribe();
+      resizeTypeUnsubscribe();
       resizeObserver.unobserve(this.node);
     };
     initialized = true;
@@ -89,7 +104,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       return;
     }
 
-    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
+    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node, this.settings.resizeType.value));
     const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
@@ -126,7 +141,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node));
+        this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node, this.settings.resizeType.value));
       } catch (e) {
         log.warn(e);
       }

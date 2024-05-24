@@ -1,0 +1,27 @@
+{
+  "image": "mcr.microsoft.com/devcontainers/base:debian",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {}
+  },
+  "customizations": {
+		"vscode": {
+			"extensions": [
+        "mikestead.dotenv",
+        "dbaeumer.vscode-eslint",
+        "EditorConfig.EditorConfig",
+        "github.vscode-github-actions",
+        "esbenp.prettier-vscode",
+        "svelte.svelte-vscode",
+        "jock.svg",
+        "bradlc.vscode-tailwindcss",
+        "inlang.vs-code-extension",
+        "csstools.postcss",
+        "DavidAnson.vscode-markdownlint"
+			]
+		}
+	},
+  "forwardPorts": [5173],
+  "postCreateCommand": "pnpm install -r",
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+}
