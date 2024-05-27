@@ -7,7 +7,7 @@ let isWslCached: boolean | undefined;
  * @returns A promise that resolves to a boolean indicating whether the environment is WSL2.
  */
 export async function isWsl2(): Promise<boolean> {
-  if (isWslCached !== undefined) {
+  if (isWslCached === undefined) {
     try {
       const osrelease = await fs.readFile('/proc/sys/kernel/osrelease', 'utf8');
       isWslCached = osrelease.includes('WSL');
@@ -16,5 +16,5 @@ export async function isWsl2(): Promise<boolean> {
     }
   }
 
-  return !!isWslCached;
+  return isWslCached;
 }
