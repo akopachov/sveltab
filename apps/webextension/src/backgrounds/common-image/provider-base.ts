@@ -3,12 +3,17 @@ import { BackgroundProvider } from '$stores/background-catalog';
 import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
 import type { ImageBackgroundProviderSettingsBase } from './settings-base';
+import { FastAverageColor } from 'fast-average-color';
+import { Lazy } from '$lib/lazy';
+
+const imageColor = new Lazy<FastAverageColor>(() => new FastAverageColor());
 
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
   #unsubscribeFilterChange!: () => void;
   #lastImageUrl: string | undefined | null;
+  #img: HTMLImageElement | undefined;
   constructor(node: HTMLElement, settings: T) {
     super(node, settings);
   }
@@ -18,12 +23,12 @@ export abstract class ImageBackgroundProviderBase<
       ResourcesToPreload.delete({ src: this.#lastImageUrl });
     }
 
-    this.node.style.backgroundImage = url ? `url("${url}")` : '';
+    this.#img!.src = url || '';
     if (url) {
-      this.node.style.backgroundImage = `url("${url}")`;
+      this.#img!.style.visibility = 'visible';
       ResourcesToPreload.add({ src: url, as: 'image' });
     } else {
-      this.node.style.backgroundImage = '';
+      this.#img!.style.visibility = 'hidden';
     }
 
     this.#lastImageUrl = url;
@@ -32,18 +37,34 @@ export abstract class ImageBackgroundProviderBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
-    this.node.style.backgroundPosition = 'center';
-    this.node.style.transition = 'background-image 0.3s ease-in-out';
-    this.node.style.backgroundRepeat = 'no-repeat';
+    this.#img = this.node.appendChild(document.createElement('img'));
+    this.#img.style.width = '100%';
+    this.#img.style.height = '100%';
+    this.#img.style.maxWidth = 'none';
+    this.#img.style.maxHeight = 'none';
+    this.#img.crossOrigin = 'anonymous';
+    this.#img.onload = () => {
+      if (this.settings.resizeType.value === ImageResizeType.Contain) {
+        this.node.style.backgroundColor = imageColor.value.getColor(this.#img!, {
+          algorithm: 'dominant',
+          mode: 'speed',
+          silent: true,
+        }).hex;
+      } else {
+        this.node.style.backgroundColor = '';
+      }
+    };
     this.#applyFilters();
   }
 
   destroy(): void {
     this.#unsubscribeFilterChange!();
+    this.#img?.remove();
     this.node.style.backgroundImage = '';
     this.node.style.backgroundSize = '';
     this.node.style.backgroundPosition = '';
     this.node.style.backgroundRepeat = '';
+    this.node.style.backgroundColor = '';
     this.node.style.transition = '';
     this.node.style.filter = '';
     this.node.style.inset = '';
@@ -95,11 +116,11 @@ export abstract class ImageBackgroundProviderBase<
     }
 
     if (resizeType === ImageResizeType.Cover) {
-      this.node.style.backgroundSize = 'cover';
+      this.#img!.style.objectFit = 'cover';
     } else if (resizeType === ImageResizeType.Contain) {
-      this.node.style.backgroundSize = 'contain';
+      this.#img!.style.objectFit = 'contain';
     } else {
-      this.node.style.backgroundSize = 'cover';
+      this.#img!.style.objectFit = 'cover';
     }
   }
 }

@@ -46,6 +46,7 @@
     "eslint": "^9.3.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-svelte": "^2.39.0",
+    "fast-average-color": "^9.4.0",
     "fast-json-patch": "^3.1.1",
     "flat-ui-colors-json": "^0.1.0",
     "hasha": "^6.0.0",
