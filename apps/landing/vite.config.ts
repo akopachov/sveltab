@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import { enhancedImages } from '@sveltejs/enhanced-img';
 import { isWsl2 } from 'is-wsl2';
 
-export default () => {
+export default async () => {
   return defineConfig({
     esbuild: {
       supported: {
@@ -12,7 +12,7 @@ export default () => {
     },
     server: {
       watch: {
-        usePolling: isWsl2(),
+        usePolling: await isWsl2(),
       },
     },
     plugins: [enhancedImages(), sveltekit()],

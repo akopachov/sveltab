@@ -5,8 +5,9 @@ import { paraglide } from '@inlang/paraglide-js-adapter-vite';
 import runGeneratorsPlugin from 'vite-plugin-run-generator';
 import { isWsl2 } from 'is-wsl2';
 
-export default ({ mode }: { mode: string }) => {
+export default async ({ mode }: { mode: string }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
+  const usePooling = await isWsl2();
   return defineConfig({
     esbuild: {
       supported: {
@@ -15,7 +16,8 @@ export default ({ mode }: { mode: string }) => {
     },
     server: {
       watch: {
-        usePolling: isWsl2(),
+        usePolling: usePooling,
+        interval: usePooling ? 1000 : undefined,
       },
     },
     plugins: [

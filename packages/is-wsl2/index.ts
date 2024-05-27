@@ -1,13 +1,20 @@
-import { execSync } from 'child_process';
+import fs from 'fs/promises';
+
+let isWslCached: boolean | undefined;
 
 /**
  * Checks if the current environment is Windows Subsystem for Linux 2 (WSL2).
- * @returns {boolean} Returns `true` if the environment is WSL2, `false` otherwise.
+ * @returns A promise that resolves to a boolean indicating whether the environment is WSL2.
  */
-export function isWsl2(): boolean {
-  try {
-    return execSync('uname -a').toString().includes('WSL2');
-  } catch {
-    return false;
+export async function isWsl2(): Promise<boolean> {
+  if (isWslCached !== undefined) {
+    try {
+      const osrelease = await fs.readFile('/proc/sys/kernel/osrelease', 'utf8');
+      isWslCached = osrelease.includes('WSL');
+    } catch {
+      isWslCached = false;
+    }
   }
+
+  return !!isWslCached;
 }
