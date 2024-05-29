@@ -63,7 +63,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -88,7 +88,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy() {
     super.destroy();

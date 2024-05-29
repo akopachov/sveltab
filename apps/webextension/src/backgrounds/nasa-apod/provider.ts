@@ -31,9 +31,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
       lastUrl: '',
     };
 
-    const updateDeb = pDebounce(() => {
-      this.#update(abortSignal);
-    }, secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
@@ -50,7 +48,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -84,7 +82,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy() {
     super.destroy();

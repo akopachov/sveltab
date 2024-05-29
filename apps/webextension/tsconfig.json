@@ -11,7 +11,7 @@
     "strict": true,
     "moduleResolution": "bundler",
     "inlineSourceMap": true,
-    "module": "ESNext"
+    "module": "ESNext",
   }
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //

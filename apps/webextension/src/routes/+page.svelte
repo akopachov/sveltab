@@ -16,7 +16,11 @@
   import WidgetSettingsComponent from '$shared-components/widget-settings.svelte';
   import { onDestroy, onMount } from 'svelte';
   import { BackgroundCatalog } from '$stores/background-catalog';
-  import { ActiveBackgroundProvider, dynamicBackground } from '$actions/dynamic-background';
+  import {
+    ActiveBackgroundProvider,
+    dynamicBackground,
+    type BackgroundCornerColorChangedEventArgs,
+  } from '$actions/dynamic-background';
   import * as m from '$i18n/messages';
   import type { WorkspaceInstance } from '$lib/workspace-instance';
   import type { WidgetInstance } from '$lib/widget-instance';
@@ -59,6 +63,8 @@
   let selectedWidgets = new Set<WidgetInstance>();
   let moveable: WidgetMoveController;
   let widgetSettingsVisible = false;
+  let menuButtonColor = '#fff';
+  let menuButtonBackgroundColor = 'transparent';
   $: workspaceLocked = workspace?.isLocked || useObservable(true);
   $: {
     if ($workspaceLocked) {
@@ -171,6 +177,11 @@
     if (selectedIndex >= 0) {
       await workspace.setBackground(BackgroundCatalog[selectedIndex].settings);
     }
+  }
+
+  function cornerColorChanged(e: CustomEvent<BackgroundCornerColorChangedEventArgs>) {
+    menuButtonColor = e.detail.isDark ? '#fff' : '#000';
+    menuButtonBackgroundColor = e.detail.color;
   }
 </script>
 
@@ -288,20 +299,25 @@
     on:drop={onWidgetCatalogItemDragDrop}
     on:dragover={onWidgetCatalogItemDragOver}
     bind:this={workspaceEl}>
-    <div class="w-full h-full -z-10" use:dynamicBackground={$background}></div>
+    <div class="w-full h-full -z-10" use:dynamicBackground={$background} on:cornerColorChanged={cornerColorChanged}>
+    </div>
     <div
       class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[129px]">
       <div class="w-max flex flex-row">
         <button
           type="button"
-          class="btn-icon bg-transparent hover:bg-surface-100-800-token main-menu-icon"
+          class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+          style:color={menuButtonColor}
+          style:--st-bg-color={menuButtonBackgroundColor}
           title={m.Core_MainMenu_Menu_Title()}
           on:click={openWidgetsMenu}>
           <span class="w-6 h-6 icon-[tdesign--menu-application]"></span>
         </button>
         <button
           type="button"
-          class="btn-icon bg-transparent hover:bg-surface-100-800-token main-menu-icon"
+          class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+          style:color={menuButtonColor}
+          style:--st-bg-color={menuButtonBackgroundColor}
           on:click={() => ($workspaceLocked = !$workspaceLocked)}
           title={$workspaceLocked
             ? m.Core_MainMenu_LockWorkspaceToggle_Title_Unlock()
@@ -311,7 +327,9 @@
         {#if $ActiveBackgroundProvider?.canGoNext}
           <button
             type="button"
-            class="btn-icon bg-transparent hover:bg-surface-100-800-token main-menu-icon"
+            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+            style:color={menuButtonColor}
+            style:--st-bg-color={menuButtonBackgroundColor}
             on:click={() => forceUpdateBackground()}
             title={m.Core_MainMenu_NextBackground_Title()}>
             <span class="w-7 h-7 icon-[heroicons--play]"></span>
@@ -351,17 +369,4 @@
 </AppShell>
 
 <style>
-  .main-menu-icon {
-    filter: drop-shadow(-1px -1px 4px rgb(255 255 255 / 0.4)) drop-shadow(1px -1px 4px rgb(255 255 255 / 0.4))
-      drop-shadow(1px 1px 4px rgb(255 255 255 / 0.4)) drop-shadow(-1px 1px 4px rgb(255 255 255 / 0.4));
-  }
-
-  .main-menu-icon:hover {
-    filter: none;
-  }
-
-  :global(.dark .main-menu-icon) {
-    filter: drop-shadow(-1px -1px 4px rgb(0 0 0 / 0.4)) drop-shadow(1px -1px 4px rgb(0 0 0 / 0.4))
-      drop-shadow(1px 1px 4px rgb(0 0 0 / 0.4)) drop-shadow(-1px 1px 4px rgb(0 0 0 / 0.4));
-  }
 </style>

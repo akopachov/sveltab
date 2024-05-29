@@ -67,9 +67,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       this.#localSettings!.lastChangedTime = 0;
     };
 
-    const updateDeb = pDebounce(() => {
-      this.#update(abortSignal);
-    }, secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
 
     const updateDebWithRefresh = () => {
       if (initialized) {
@@ -99,7 +97,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -146,7 +144,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy() {
     super.destroy();

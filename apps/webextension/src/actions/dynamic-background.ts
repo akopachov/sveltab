@@ -5,6 +5,8 @@ import { writable, type Readable } from 'svelte/store';
 
 const forceNewSubscribers = new Set<() => void>();
 
+export type BackgroundCornerColorChangedEventArgs = { color: string; isDark: boolean };
+
 export function forceUpdateBackground() {
   forceNewSubscribers.forEach(f => f());
 }
@@ -15,7 +17,10 @@ export const ActiveBackgroundProvider: Readable<IBackgroundProvider | undefined>
 export const dynamicBackground: Action<
   HTMLElement,
   BackgroundInstance | undefined | null,
-  { 'on:backgroundChanged': (e: CustomEvent) => void }
+  {
+    'on:backgroundChanged': (e: CustomEvent) => void;
+    'on:cornerColorChanged': (e: CustomEvent<BackgroundCornerColorChangedEventArgs>) => void;
+  }
 > = function (node: HTMLElement, background: BackgroundInstance | undefined | null) {
   let backgroundProviderDestroyPromise: Promise<() => void> | undefined;
   initializeNew(background);

@@ -21,7 +21,7 @@
 		}
 	},
   "forwardPorts": [5173],
-  "postCreateCommand": "pnpm install -r",
+  "postCreateCommand": ". ${NVM_DIR}/nvm.sh && nvm install && nvm use && corepack enable pnpm && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 pnpm install -r",
   "workspaceFolder": "/workspace",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
 }

@@ -50,9 +50,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       this.#update(abortSignal);
     }, minutesToMilliseconds(1));
 
-    const updateDeb = pDebounce(() => {
-      this.#update(abortSignal);
-    }, secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
 
     const updateDebWithRefresh = () => {
       if (initialized) {
@@ -87,7 +85,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -160,7 +158,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy() {
     super.destroy();

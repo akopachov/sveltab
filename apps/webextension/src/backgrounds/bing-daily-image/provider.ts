@@ -56,7 +56,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -99,7 +99,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy(): void {
     super.destroy();

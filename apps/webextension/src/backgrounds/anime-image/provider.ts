@@ -58,7 +58,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     this.#update(abortSignal);
   }
 
-  async #update(abortSignal: AbortSignal) {
+  readonly #update = pDebounce.promise(async (abortSignal: AbortSignal) => {
     if (abortSignal.aborted) {
       return;
     }
@@ -100,7 +100,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         log.warn(e);
       }
     }
-  }
+  });
 
   destroy() {
     super.destroy();

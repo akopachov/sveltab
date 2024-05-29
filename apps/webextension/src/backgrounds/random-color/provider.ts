@@ -2,6 +2,8 @@ import { BackgroundProvider } from '$stores/background-catalog';
 import debounce from 'debounce';
 import type { Settings } from './settings';
 import randomColor from 'randomcolor';
+import Color from 'color';
+import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
 
 export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> {
   #unsubscribe!: () => void;
@@ -22,10 +24,20 @@ export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> 
     this.forceUpdate();
   }
   forceUpdate(): void {
-    this.node.style.backgroundColor = randomColor({
-      luminosity: this.settings.luminosity.value,
-      hue: this.settings.hue.value,
-    });
+    const color = Color.rgb(
+      randomColor({
+        luminosity: this.settings.luminosity.value,
+        hue: this.settings.hue.value,
+        format: 'rgbArray',
+      }),
+    );
+    const hexColor = color.hex();
+    this.node.style.backgroundColor = hexColor;
+    this.node.dispatchEvent(
+      new CustomEvent<BackgroundCornerColorChangedEventArgs>('cornerColorChanged', {
+        detail: { color: hexColor, isDark: color.isDark() },
+      }),
+    );
   }
   destroy(): void {
     this.#unsubscribe();

@@ -3,10 +3,9 @@ import { BackgroundProvider } from '$stores/background-catalog';
 import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
 import type { ImageBackgroundProviderSettingsBase } from './settings-base';
-import { FastAverageColor } from 'fast-average-color';
-import { Lazy } from '$lib/lazy';
-
-const imageColor = new Lazy<FastAverageColor>(() => new FastAverageColor());
+import { FastAverageColorEx } from './fast-average-color-ex';
+import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
+import type { FastAverageColorResult } from 'fast-average-color';
 
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
@@ -14,6 +13,9 @@ export abstract class ImageBackgroundProviderBase<
   #unsubscribeFilterChange!: () => void;
   #lastImageUrl: string | undefined | null;
   #img: HTMLImageElement | undefined;
+  #dominantColor: FastAverageColorResult | undefined;
+  #imageColor: FastAverageColorEx | undefined;
+  #resizeObserver: ResizeObserver | undefined;
   constructor(node: HTMLElement, settings: T) {
     super(node, settings);
   }
@@ -34,9 +36,22 @@ export abstract class ImageBackgroundProviderBase<
     this.#lastImageUrl = url;
   }
 
+  #updateCornerColor() {
+    const cornerColorResult = this.#imageColor!.getCornerColor(this.#img!, 43) || this.#dominantColor!;
+
+    if (cornerColorResult) {
+      this.node.dispatchEvent(
+        new CustomEvent<BackgroundCornerColorChangedEventArgs>('cornerColorChanged', {
+          detail: { color: cornerColorResult.hex, isDark: cornerColorResult.isDark },
+        }),
+      );
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
+    this.#imageColor = new FastAverageColorEx();
     this.#img = this.node.appendChild(document.createElement('img'));
     this.#img.style.width = '100%';
     this.#img.style.height = '100%';
@@ -45,26 +60,33 @@ export abstract class ImageBackgroundProviderBase<
     this.#img.crossOrigin = 'anonymous';
     this.#img.onload = () => {
       if (this.settings.resizeType.value === ImageResizeType.Contain) {
-        this.node.style.backgroundColor = imageColor.value.getColor(this.#img!, {
-          algorithm: 'dominant',
-          mode: 'speed',
-          silent: true,
-        }).hex;
+        this.#dominantColor = this.#imageColor!.getDominantColor(this.#img!);
+        this.#img!.style.backgroundColor = this.#dominantColor.hex;
       } else {
-        this.node.style.backgroundColor = '';
+        this.#img!.style.backgroundColor = '';
       }
+
+      this.#updateCornerColor();
     };
+    this.#resizeObserver = new ResizeObserver(
+      debounce(() => {
+        this.#updateCornerColor();
+      }, 500),
+    );
+    this.#resizeObserver.observe(this.#img);
     this.#applyFilters();
   }
 
   destroy(): void {
     this.#unsubscribeFilterChange!();
+    this.#resizeObserver?.unobserve(this.#img!);
+    this.#resizeObserver?.disconnect();
+    this.#imageColor?.destroy();
     this.#img?.remove();
     this.node.style.backgroundImage = '';
     this.node.style.backgroundSize = '';
     this.node.style.backgroundPosition = '';
     this.node.style.backgroundRepeat = '';
-    this.node.style.backgroundColor = '';
     this.node.style.transition = '';
     this.node.style.filter = '';
     this.node.style.inset = '';

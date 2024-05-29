@@ -1,3 +1,5 @@
+import { PUBLIC_CLOUDIMG_TOKEN } from '$env/static/public';
+
 export enum ImageResizeType {
   Cover = 'cover',
   Contain = 'contain',
@@ -107,8 +109,8 @@ class ImageCDNApp extends ImageCDN {
   }
 }
 
-class TinyPictyresCDN extends ImageCDN {
-  #baseUrl = 'https://demo.tiny.pictures';
+class CloudImg extends ImageCDN {
+  #baseUrl = `https://${PUBLIC_CLOUDIMG_TOKEN}.cloudimg.io`;
 
   getUrl(
     src: string,
@@ -116,13 +118,8 @@ class TinyPictyresCDN extends ImageCDN {
     height?: number | 'document' | 'screen' | undefined,
     resizeType?: ImageResizeType | undefined,
   ): string {
-    const encodedUrl = encodeURIComponent(src);
-    return this.updateUrl(
-      `${this.#baseUrl}/?source=${encodedUrl}&format=auto&progressive=true&optimize=true`,
-      width,
-      height,
-      resizeType,
-    );
+    const url = src.replace(/^https?:\/\//, '');
+    return this.updateUrl(`${this.#baseUrl}/${url}?gravity=smart`, width, height, resizeType);
   }
 
   updateUrl(
@@ -134,16 +131,17 @@ class TinyPictyresCDN extends ImageCDN {
     let resizeTypeArg: string | undefined;
     switch (resizeType) {
       case ImageResizeType.Cover:
-        resizeTypeArg = 'cover';
+        resizeTypeArg = 'crop';
         break;
       case ImageResizeType.Contain:
-        resizeTypeArg = 'contain';
+        resizeTypeArg = 'bound';
         break;
       default:
-        resizeTypeArg = 'cover';
+        resizeTypeArg = 'crop';
         break;
     }
-    return this.updateUrlInternal(src, 'width', width, 'height', height, 'resizeType', resizeTypeArg);
+
+    return this.updateUrlInternal(src, 'width', width, 'height', height, 'func', resizeTypeArg);
   }
 
   isKnownUrl(src: string): boolean {
@@ -151,11 +149,12 @@ class TinyPictyresCDN extends ImageCDN {
   }
 }
 
-const ImageCDNs = [new ImageCDNApp(), new TinyPictyresCDN()];
+const ImageCDNs = [new ImageCDNApp(), new CloudImg()];
 
 function cdnCanHandle(src: string): Promise<boolean> {
   return new Promise(resolve => {
     const image = new Image();
+    image.crossOrigin = 'anonymous';
     image.onload = () => resolve(true);
     image.onerror = () => resolve(false);
     image.src = src;
