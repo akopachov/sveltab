@@ -1,0 +1,1965 @@
+{
+  "version": "6.0",
+  "nxVersion": "19.3.0",
+  "deps": {
+    "nx": "19.3.0"
+  },
+  "pathMappings": {},
+  "nxJsonPlugins": [],
+  "fileMap": {
+    "projectFileMap": {
+      "owm-redirect": [
+        {
+          "file": "apps/owm-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/owm-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/owm-redirect/package.json",
+          "hash": "17134678572050872525",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts"
+          ]
+        },
+        {
+          "file": "apps/owm-redirect/src/worker.ts",
+          "hash": "13031713532980002527"
+        },
+        {
+          "file": "apps/owm-redirect/wrangler.toml",
+          "hash": "16151197575438519813"
+        }
+      ],
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
+        }
+      ],
+      "iqair-redirect": [
+        {
+          "file": "apps/iqair-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/iqair-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/iqair-redirect/package.json",
+          "hash": "8964089113339022677",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/iqair-redirect/src/worker.ts",
+          "hash": "12279403779427720829"
+        },
+        {
+          "file": "apps/iqair-redirect/wrangler.toml",
+          "hash": "11886815432978647150"
+        }
+      ],
+      "vite-plugin-run-generator": [
+        {
+          "file": "packages/vite-plugin-run-generator/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/index.ts",
+          "hash": "13872569230268468798"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/package.json",
+          "hash": "14345511698286736727",
+          "deps": [
+            "npm:@types/ejs",
+            "npm:@types/node",
+            "npm:@types/picomatch",
+            "npm:typescript",
+            "npm:colorette",
+            "npm:ejs",
+            "npm:hasha",
+            "npm:picomatch@4.0.2",
+            "npm:slash@5.1.0",
+            "npm:tiny-glob",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "landing": [
+        {
+          "file": "apps/landing/.editorconfig",
+          "hash": "7656052162757445104"
+        },
+        {
+          "file": "apps/landing/.eslintignore",
+          "hash": "12866345277008372755"
+        },
+        {
+          "file": "apps/landing/.eslintrc.cjs",
+          "hash": "15647399974590712086"
+        },
+        {
+          "file": "apps/landing/.gitignore",
+          "hash": "2615793248884789625"
+        },
+        {
+          "file": "apps/landing/.npmrc",
+          "hash": "16306061729883149313"
+        },
+        {
+          "file": "apps/landing/.prettierignore",
+          "hash": "9861187265567348571"
+        },
+        {
+          "file": "apps/landing/.prettierrc",
+          "hash": "8590646213043532286"
+        },
+        {
+          "file": "apps/landing/netlify.toml",
+          "hash": "6484258719775923400"
+        },
+        {
+          "file": "apps/landing/package.json",
+          "hash": "16093046259696962312",
+          "deps": [
+            "npm:@fontsource/inter",
+            "npm:@iconify/json",
+            "npm:@iconify/tailwind",
+            "npm:@iconify/utils",
+            "npm:@neoconfetti/svelte",
+            "npm:@sveltejs/adapter-static",
+            "npm:@sveltejs/enhanced-img",
+            "npm:@sveltejs/kit",
+            "npm:@sveltejs/vite-plugin-svelte",
+            "npm:@tailwindcss/forms",
+            "npm:@types/aos",
+            "npm:@types/eslint",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:aos",
+            "npm:autoprefixer",
+            "npm:cssnano",
+            "npm:cssnano-preset-default",
+            "npm:cssnano-preset-lite",
+            "npm:daisyui",
+            "npm:embla-carousel-svelte",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-svelte",
+            "is-wsl2",
+            "npm:postcss",
+            "npm:postcss-load-config@6.0.1",
+            "npm:prettier",
+            "npm:prettier-plugin-svelte",
+            "npm:prettier-plugin-tailwindcss",
+            "npm:svelte",
+            "npm:svelte-body",
+            "npm:svelte-check",
+            "npm:tailwindcss",
+            "npm:tslib",
+            "npm:typescript",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "apps/landing/postcss.config.cjs",
+          "hash": "7910658628078544505"
+        },
+        {
+          "file": "apps/landing/src/app.d.ts",
+          "hash": "17522384083550949823"
+        },
+        {
+          "file": "apps/landing/src/app.html",
+          "hash": "17841630233698801912"
+        },
+        {
+          "file": "apps/landing/src/app.pcss",
+          "hash": "14810236820657831828"
+        },
+        {
+          "file": "apps/landing/src/components/features.svelte",
+          "hash": "7661422588996331189"
+        },
+        {
+          "file": "apps/landing/src/components/footer.svelte",
+          "hash": "13121746684541395301"
+        },
+        {
+          "file": "apps/landing/src/components/header.svelte",
+          "hash": "17934009167654308491"
+        },
+        {
+          "file": "apps/landing/src/components/navigation.svelte",
+          "hash": "14988055686807007102"
+        },
+        {
+          "file": "apps/landing/src/components/screenshots.svelte",
+          "hash": "13102879630609783136"
+        },
+        {
+          "file": "apps/landing/src/components/support.svelte",
+          "hash": "7310236108946124037"
+        },
+        {
+          "file": "apps/landing/src/components/welcome.svelte",
+          "hash": "718645630279054264"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/amo-button.svg",
+          "hash": "10638019120008779628"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/cwo-button.svg",
+          "hash": "18021027240333141996"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/edge-button.svg",
+          "hash": "14822606946037564973"
+        },
+        {
+          "file": "apps/landing/src/lib/css/theme.css",
+          "hash": "9028311825916970864"
+        },
+        {
+          "file": "apps/landing/src/lib/css/utility-patterns.css",
+          "hash": "12126172961868927401"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/0.jpeg",
+          "hash": "14185278729368134872"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/1.png",
+          "hash": "2305235227382566427"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/2.jpeg",
+          "hash": "9183676362714503382"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/3.jpeg",
+          "hash": "3962158966037601750"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/4.jpeg",
+          "hash": "9225345747745698130"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/5.png",
+          "hash": "6558862023349455654"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/6.jpeg",
+          "hash": "5392268130969410636"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/7.png",
+          "hash": "10289934768717743098"
+        },
+        {
+          "file": "apps/landing/src/routes/+error.svelte",
+          "hash": "11260399356154979818"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.svelte",
+          "hash": "11467319100262057112"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.ts",
+          "hash": "3656248653335203942"
+        },
+        {
+          "file": "apps/landing/src/routes/+page.svelte",
+          "hash": "4490183109275284451"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-192x192.png",
+          "hash": "17747222593322570913"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-512x512.png",
+          "hash": "10992519659870263635"
+        },
+        {
+          "file": "apps/landing/static/favicon/apple-touch-icon.png",
+          "hash": "8319709282744640903"
+        },
+        {
+          "file": "apps/landing/static/favicon/browserconfig.xml",
+          "hash": "9030448547662640771"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-128x128.png",
+          "hash": "3574285871798273089"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-16x16.png",
+          "hash": "1484907360946902538"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-32x32.png",
+          "hash": "12914832945126627537"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-48x48.png",
+          "hash": "16296114082698355954"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-96x96.png",
+          "hash": "15400891981776800899"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.ico",
+          "hash": "6080578060923793650"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.svg",
+          "hash": "16149112273573293908"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-144x144.png",
+          "hash": "17090102562471781642"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-150x150.png",
+          "hash": "2987547776851300371"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x150.png",
+          "hash": "8240165320902303268"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x310.png",
+          "hash": "11331575352337162409"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-70x70.png",
+          "hash": "4598816931621196495"
+        },
+        {
+          "file": "apps/landing/static/favicon/safari-pinned-tab.svg",
+          "hash": "12657718850154108143"
+        },
+        {
+          "file": "apps/landing/static/favicon/site.webmanifest.json",
+          "hash": "10433911047657634548"
+        },
+        {
+          "file": "apps/landing/static/robots.txt",
+          "hash": "2790380794362165217"
+        },
+        {
+          "file": "apps/landing/svelte.config.js",
+          "hash": "14256732300601504382"
+        },
+        {
+          "file": "apps/landing/tailwind.config.cjs",
+          "hash": "9821587412396646719"
+        },
+        {
+          "file": "apps/landing/tsconfig.json",
+          "hash": "14611439694374538873"
+        },
+        {
+          "file": "apps/landing/vite.config.ts",
+          "hash": "2155460198681927953"
+        }
+      ],
+      "preview": [
+        {
+          "file": "apps/preview/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/preview/.gitignore",
+          "hash": "9652840843145639605"
+        },
+        {
+          "file": "apps/preview/functions/iqair-redirect.ts",
+          "hash": "18300375636509497534"
+        },
+        {
+          "file": "apps/preview/functions/owm-redirect.ts",
+          "hash": "16288626628291305981"
+        },
+        {
+          "file": "apps/preview/netlify.toml",
+          "hash": "9624960390058560956"
+        },
+        {
+          "file": "apps/preview/package.json",
+          "hash": "10310058849226851313",
+          "deps": [
+            "npm:@types/unidecode",
+            "netlify-plugin-interpolate-env-variable",
+            "npm:typescript",
+            "webextension",
+            "npm:@netlify/functions",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/preview/tsconfig.json",
+          "hash": "15382321260039008176"
+        }
+      ],
+      "is-wsl2": [
+        {
+          "file": "packages/is-wsl2/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/is-wsl2/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/is-wsl2/index.ts",
+          "hash": "16532892570162354184"
+        },
+        {
+          "file": "packages/is-wsl2/package.json",
+          "hash": "15897186626988208170",
+          "deps": [
+            "npm:@types/node",
+            "npm:typescript"
+          ]
+        },
+        {
+          "file": "packages/is-wsl2/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "webextension": [
+        {
+          "file": "apps/webextension/.editorconfig",
+          "hash": "7656052162757445104"
+        },
+        {
+          "file": "apps/webextension/.env.example",
+          "hash": "8932302572274955511"
+        },
+        {
+          "file": "apps/webextension/.eslintignore",
+          "hash": "9451210289745971465"
+        },
+        {
+          "file": "apps/webextension/.eslintrc.cjs",
+          "hash": "9441495903870216301"
+        },
+        {
+          "file": "apps/webextension/.gitignore",
+          "hash": "3020465738901747607"
+        },
+        {
+          "file": "apps/webextension/.npmrc",
+          "hash": "16306061729883149313"
+        },
+        {
+          "file": "apps/webextension/.prettierignore",
+          "hash": "16366520027406302334"
+        },
+        {
+          "file": "apps/webextension/.prettierrc",
+          "hash": "8915423439504601473"
+        },
+        {
+          "file": "apps/webextension/README.md",
+          "hash": "2807707138063429326"
+        },
+        {
+          "file": "apps/webextension/generateManifest.js",
+          "hash": "18188600528282702283"
+        },
+        {
+          "file": "apps/webextension/manifest/manifest.base.json",
+          "hash": "618137593623234361"
+        },
+        {
+          "file": "apps/webextension/manifest/manifest.firefox.patch.json",
+          "hash": "264792430129573748"
+        },
+        {
+          "file": "apps/webextension/package.json",
+          "hash": "576870893724716401",
+          "deps": [
+            "npm:@floating-ui/core",
+            "npm:@floating-ui/dom",
+            "npm:@iconify/json",
+            "npm:@iconify/tailwind",
+            "npm:@iconify/utils",
+            "npm:@inlang/paraglide-js-adapter-vite",
+            "npm:@putout/minify",
+            "npm:@skeletonlabs/skeleton",
+            "npm:@skeletonlabs/tw-plugin",
+            "npm:@sveltejs/adapter-static",
+            "npm:@sveltejs/kit",
+            "npm:@sveltejs/vite-plugin-svelte",
+            "npm:@tailwindcss/container-queries",
+            "npm:@tailwindcss/forms",
+            "npm:@tailwindcss/typography",
+            "npm:@types/color",
+            "npm:@types/randomcolor",
+            "npm:@types/webextension-polyfill",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:autoprefixer",
+            "npm:browser-storage-polyfill",
+            "npm:chart.js",
+            "npm:color",
+            "npm:cssnano",
+            "npm:cssnano-preset-default",
+            "npm:cssnano-preset-lite",
+            "npm:date-fns",
+            "npm:debounce@2.1.0",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-svelte",
+            "npm:fast-average-color",
+            "npm:fast-json-patch",
+            "npm:fflate",
+            "npm:flat-ui-colors-json",
+            "npm:hasha",
+            "is-wsl2",
+            "npm:nanoid@5.0.7",
+            "npm:openmeteo",
+            "npm:p-debounce",
+            "npm:postcss",
+            "npm:prettier",
+            "npm:prettier-plugin-svelte",
+            "npm:prettier-plugin-tailwindcss",
+            "npm:randomcolor",
+            "npm:svelte",
+            "npm:svelte-chartjs",
+            "npm:svelte-check",
+            "npm:svelte-fast-dimension",
+            "npm:svelte-floating-ui",
+            "npm:svelte-moveable",
+            "npm:svelte-selecto",
+            "npm:svelte-use-debounce",
+            "npm:svelte-virtual-scroll-list",
+            "npm:tailwindcss",
+            "npm:tiny-glob",
+            "npm:tslib",
+            "npm:tslog",
+            "npm:typescript",
+            "npm:vanilla-colorful",
+            "npm:vite",
+            "vite-plugin-run-generator",
+            "npm:vite-plugin-tailwind-purgecss",
+            "npm:web-ext",
+            "npm:webextension-polyfill@0.12.0"
+          ]
+        },
+        {
+          "file": "apps/webextension/postcss.config.cjs",
+          "hash": "7910658628078544505"
+        },
+        {
+          "file": "apps/webextension/project.inlang/project_id",
+          "hash": "7652458219790518263"
+        },
+        {
+          "file": "apps/webextension/project.inlang/settings.json",
+          "hash": "9411526658937967477"
+        },
+        {
+          "file": "apps/webextension/removeInlineScript.js",
+          "hash": "4557409384486537273"
+        },
+        {
+          "file": "apps/webextension/src/actions/color-scheme.ts",
+          "hash": "344390624077721143"
+        },
+        {
+          "file": "apps/webextension/src/actions/custom-styles.ts",
+          "hash": "3117801202349263490"
+        },
+        {
+          "file": "apps/webextension/src/actions/dynamic-background.ts",
+          "hash": "14750585709038104481"
+        },
+        {
+          "file": "apps/webextension/src/actions/fontsource.ts",
+          "hash": "1325800335133223236"
+        },
+        {
+          "file": "apps/webextension/src/actions/img-src-ex.ts",
+          "hash": "7057227640979458610"
+        },
+        {
+          "file": "apps/webextension/src/actions/loading-placeholder.ts",
+          "hash": "17103693797393584542"
+        },
+        {
+          "file": "apps/webextension/src/actions/opfs-src.ts",
+          "hash": "12154547797249536985"
+        },
+        {
+          "file": "apps/webextension/src/app.d.ts",
+          "hash": "130674992098533438"
+        },
+        {
+          "file": "apps/webextension/src/app.html",
+          "hash": "10948713923048320323"
+        },
+        {
+          "file": "apps/webextension/src/app.pcss",
+          "hash": "4057728741475199286"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/anime-image/index.ts",
+          "hash": "5722383784349230293"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/anime-image/provider.ts",
+          "hash": "1603677178798699859"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/anime-image/settings.svelte",
+          "hash": "10530415771805638594"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/anime-image/settings.ts",
+          "hash": "9273219028265972971"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/bing-daily-image/index.ts",
+          "hash": "16294546199906339701"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/bing-daily-image/provider.ts",
+          "hash": "11610372430541667364"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/bing-daily-image/settings.svelte",
+          "hash": "10346012660276446749"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/bing-daily-image/settings.ts",
+          "hash": "9789984399408835178"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/common-image/fast-average-color-ex.ts",
+          "hash": "5595647781654115164"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/common-image/provider-base.ts",
+          "hash": "5552968420499727469"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/common-image/settings-base.svelte",
+          "hash": "4954821553067153210"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/common-image/settings-base.ts",
+          "hash": "2522621896485098606"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/nasa-apod/index.ts",
+          "hash": "5660507655094414943"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/nasa-apod/provider.ts",
+          "hash": "6037408140532344558"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/nasa-apod/settings.svelte",
+          "hash": "16991888825595481853"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/nasa-apod/settings.ts",
+          "hash": "5490863040131636592"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/pexels/index.ts",
+          "hash": "2951091894929876969"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/pexels/provider.ts",
+          "hash": "10629373807228719854"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/pexels/settings.svelte",
+          "hash": "9813276783677008165"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/pexels/settings.ts",
+          "hash": "8157457734084075446"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-color/index.ts",
+          "hash": "16812642261588232956"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-color/provider.ts",
+          "hash": "6345440440756412760"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-color/settings.svelte",
+          "hash": "15652341413376699754"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-color/settings.ts",
+          "hash": "4389406622088242947"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-image/index.ts",
+          "hash": "11586300578582360354"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-image/provider.ts",
+          "hash": "17433944644837507082"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-image/settings.svelte",
+          "hash": "7102796199786613926"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/random-image/settings.ts",
+          "hash": "8157457734084075446"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-color/index.ts",
+          "hash": "40234211009575928"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-color/provider.ts",
+          "hash": "2327190496172001312"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-color/settings.svelte",
+          "hash": "1490757769957726338"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-color/settings.ts",
+          "hash": "16621244398859969614"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-image/index.ts",
+          "hash": "7310002403082909289"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-image/provider.ts",
+          "hash": "16889363929472402360"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-image/settings.svelte",
+          "hash": "13058092317490727463"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/static-image/settings.ts",
+          "hash": "13543779227137376329"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wallhaven/index.ts",
+          "hash": "13142445026271570725"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wallhaven/provider.ts",
+          "hash": "843461584053152339"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wallhaven/settings.svelte",
+          "hash": "99630096857677326"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wallhaven/settings.ts",
+          "hash": "1386783123396166593"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wikimedia-commons-pod/index.ts",
+          "hash": "11479890139062146604"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wikimedia-commons-pod/provider.ts",
+          "hash": "13655031129391604042"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wikimedia-commons-pod/settings.svelte",
+          "hash": "4753529664122668495"
+        },
+        {
+          "file": "apps/webextension/src/backgrounds/wikimedia-commons-pod/settings.ts",
+          "hash": "5490863040131636592"
+        },
+        {
+          "file": "apps/webextension/src/hooks.server.ts",
+          "hash": "6845925988369427130"
+        },
+        {
+          "file": "apps/webextension/src/i18n/be.json",
+          "hash": "5385396433612357036"
+        },
+        {
+          "file": "apps/webextension/src/i18n/en.json",
+          "hash": "2230723405000877220"
+        },
+        {
+          "file": "apps/webextension/src/i18n/pl.json",
+          "hash": "14922141884505797964"
+        },
+        {
+          "file": "apps/webextension/src/lib/assets/default_workspace.json",
+          "hash": "8213700470040807882"
+        },
+        {
+          "file": "apps/webextension/src/lib/assets/image-fallback.svg",
+          "hash": "8389969912133984401"
+        },
+        {
+          "file": "apps/webextension/src/lib/assets/transparent-sm.png",
+          "hash": "4641568024857904950"
+        },
+        {
+          "file": "apps/webextension/src/lib/background-instance.ts",
+          "hash": "17608424200652575252"
+        },
+        {
+          "file": "apps/webextension/src/lib/background-settings.ts",
+          "hash": "18048495616173071684"
+        },
+        {
+          "file": "apps/webextension/src/lib/browsers-check.ts",
+          "hash": "1493256173575595948"
+        },
+        {
+          "file": "apps/webextension/src/lib/cdn.ts",
+          "hash": "7102373579109402580"
+        },
+        {
+          "file": "apps/webextension/src/lib/cors-bypass.tmpl.mjs",
+          "hash": "16194497201593012277"
+        },
+        {
+          "file": "apps/webextension/src/lib/favicon-provider.ts",
+          "hash": "7094832954079426034"
+        },
+        {
+          "file": "apps/webextension/src/lib/geolocation.ts",
+          "hash": "16062257925292494820"
+        },
+        {
+          "file": "apps/webextension/src/lib/ipapi-co.ts",
+          "hash": "10700020093425527244"
+        },
+        {
+          "file": "apps/webextension/src/lib/lazy.ts",
+          "hash": "4000553779556618847"
+        },
+        {
+          "file": "apps/webextension/src/lib/logger.ts",
+          "hash": "6009913670520118658"
+        },
+        {
+          "file": "apps/webextension/src/lib/observable.ts",
+          "hash": "6255498864556290987"
+        },
+        {
+          "file": "apps/webextension/src/lib/opfs.ts",
+          "hash": "9194253938630914193"
+        },
+        {
+          "file": "apps/webextension/src/lib/realfavicongenerator.ts",
+          "hash": "11111716706489868540"
+        },
+        {
+          "file": "apps/webextension/src/lib/screen-resolution-observer.ts",
+          "hash": "17460062142400098369"
+        },
+        {
+          "file": "apps/webextension/src/lib/service-mirrors.ts",
+          "hash": "1047367570514493794"
+        },
+        {
+          "file": "apps/webextension/src/lib/toast-facade.ts",
+          "hash": "7714981209561832028"
+        },
+        {
+          "file": "apps/webextension/src/lib/widget-instance.ts",
+          "hash": "9785005106840445881"
+        },
+        {
+          "file": "apps/webextension/src/lib/widget-settings.ts",
+          "hash": "6100371750316625984"
+        },
+        {
+          "file": "apps/webextension/src/lib/workspace-instance.ts",
+          "hash": "2830458991606592329"
+        },
+        {
+          "file": "apps/webextension/src/lib/workspace-settings.ts",
+          "hash": "17816243514338985876"
+        },
+        {
+          "file": "apps/webextension/src/routes/+layout.svelte",
+          "hash": "14774313972642166141"
+        },
+        {
+          "file": "apps/webextension/src/routes/+layout.ts",
+          "hash": "3656248653335203942"
+        },
+        {
+          "file": "apps/webextension/src/routes/+page.svelte",
+          "hash": "4750235616494612469"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/active-filters.svelte",
+          "hash": "11394731476655574917"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/color-picker-inner.svelte",
+          "hash": "10405010787322133761"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/color-picker.svelte",
+          "hash": "13223641386607846595"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/custom-styles.svelte",
+          "hash": "11046413025964373293"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/data-manage.svelte",
+          "hash": "16695300707681901948"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/dynamic-size-text.svelte",
+          "hash": "8874293963254469057"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/favicon-settings.svelte",
+          "hash": "8897140023456823192"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/favicon.svelte",
+          "hash": "6776986075589373273"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/filter-selector.svelte",
+          "hash": "7935310783998613992"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/font-selector.svelte",
+          "hash": "6471612814215574107"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/language-selector.svelte",
+          "hash": "8616131930865420278"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/lightswitch.svelte",
+          "hash": "608035701074652462"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/location-select.svelte",
+          "hash": "13599598919242472855"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/number-input.svelte",
+          "hash": "8089949819873525654"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/shadow-selector.svelte",
+          "hash": "16809669901369487489"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/widget-catalog-item-preview.svelte",
+          "hash": "640974810126392428"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/widget-factory.svelte",
+          "hash": "397400392625833359"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/widget-move-controller.svelte",
+          "hash": "980429015717330952"
+        },
+        {
+          "file": "apps/webextension/src/shared-components/widget-settings.svelte",
+          "hash": "6583230798865690594"
+        },
+        {
+          "file": "apps/webextension/src/stores/active-filters-store.ts",
+          "hash": "11452465909196392075"
+        },
+        {
+          "file": "apps/webextension/src/stores/background-catalog.ts",
+          "hash": "11541765401937479645"
+        },
+        {
+          "file": "apps/webextension/src/stores/cache.ts",
+          "hash": "9222593458145480210"
+        },
+        {
+          "file": "apps/webextension/src/stores/clock-store.ts",
+          "hash": "6069973597899279280"
+        },
+        {
+          "file": "apps/webextension/src/stores/color-scheme-store.ts",
+          "hash": "5147939757252022646"
+        },
+        {
+          "file": "apps/webextension/src/stores/debounce-store.ts",
+          "hash": "17569504335538255198"
+        },
+        {
+          "file": "apps/webextension/src/stores/locale.ts",
+          "hash": "1619360889054365911"
+        },
+        {
+          "file": "apps/webextension/src/stores/preload-resources.ts",
+          "hash": "3590927426740224564"
+        },
+        {
+          "file": "apps/webextension/src/stores/storage.ts",
+          "hash": "16010378245125646767"
+        },
+        {
+          "file": "apps/webextension/src/stores/widgets-catalog.ts",
+          "hash": "9661567172757475189"
+        },
+        {
+          "file": "apps/webextension/src/stores/workspace-index.ts",
+          "hash": "3022876713949979922"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/aqi-utils.ts",
+          "hash": "5402070365630961180"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/index.ts",
+          "hash": "15164223121797316285"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/iqair-redirect.tmpl.mjs",
+          "hash": "46790982790582460"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/preview.svelte",
+          "hash": "9023532898416039039"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/settings-tabs.ts",
+          "hash": "18333409115664463070"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/settings.svelte",
+          "hash": "6970225022214703030"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/settings.ts",
+          "hash": "6187559114487090940"
+        },
+        {
+          "file": "apps/webextension/src/widgets/air-quality/widget.svelte",
+          "hash": "6735129016528378981"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/index.ts",
+          "hash": "8947423276939315783"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/inline-svg.svelte",
+          "hash": "12285627926937225526"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/preview.svelte",
+          "hash": "11994069711554195024"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/settings-tabs.ts",
+          "hash": "12179752695855431204"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/settings.svelte",
+          "hash": "676897022206709562"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/settings.ts",
+          "hash": "17416488635936766987"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/watchfaces.ts",
+          "hash": "5291979940756022903"
+        },
+        {
+          "file": "apps/webextension/src/widgets/analogue-clock/widget.svelte",
+          "hash": "7097096204057315834"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/index.ts",
+          "hash": "6851514963676457263"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/preview.svelte",
+          "hash": "16007991575057574943"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/settings-tabs.ts",
+          "hash": "6343468264619137132"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/settings.svelte",
+          "hash": "16834751767282313491"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/settings.ts",
+          "hash": "5439914883183598799"
+        },
+        {
+          "file": "apps/webextension/src/widgets/clock/widget.svelte",
+          "hash": "11902966698475648794"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/asset-select.svelte",
+          "hash": "16346529798993556185"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/exchange-rate-store.ts",
+          "hash": "17690568279506205144"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/index.ts",
+          "hash": "10216744763090985139"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/preview.svelte",
+          "hash": "8869842010047108234"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/settings-tabs.ts",
+          "hash": "652527504352494811"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/settings.svelte",
+          "hash": "7297511565930134969"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/settings.ts",
+          "hash": "13570011393843892738"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/types/coincapio.ts",
+          "hash": "18311400588982442417"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/types/exchangerate.ts",
+          "hash": "4421035194313771049"
+        },
+        {
+          "file": "apps/webextension/src/widgets/crypto-assets-quotation/widget.svelte",
+          "hash": "7329350887504053270"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/index.ts",
+          "hash": "8643674881724388220"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/preview.svelte",
+          "hash": "15552351833270580508"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/settings-tabs.ts",
+          "hash": "4655453105349471774"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/settings.svelte",
+          "hash": "10255018499376623574"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/settings.ts",
+          "hash": "13202175691296762045"
+        },
+        {
+          "file": "apps/webextension/src/widgets/date/widget.svelte",
+          "hash": "9185705948017378401"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/flickr-src.ts",
+          "hash": "13364979009742316971"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/index.ts",
+          "hash": "5339107500119885582"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/preview.svelte",
+          "hash": "18293455266833375409"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/settings-tabs.ts",
+          "hash": "10669791189275732039"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/settings.svelte",
+          "hash": "14122107041307788598"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/settings.ts",
+          "hash": "2080236676244810060"
+        },
+        {
+          "file": "apps/webextension/src/widgets/flickr-image/widget.svelte",
+          "hash": "7427725972420638916"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/index.ts",
+          "hash": "16395344177568978554"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/preview.svelte",
+          "hash": "89893016583093138"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/settings-tabs.ts",
+          "hash": "11874156397720579511"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/settings.svelte",
+          "hash": "7118710717998678738"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/settings.ts",
+          "hash": "1143539830308893323"
+        },
+        {
+          "file": "apps/webextension/src/widgets/free-text/widget.svelte",
+          "hash": "13510599616471203100"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/index.ts",
+          "hash": "8199450895040618183"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/preview.svelte",
+          "hash": "9743324708560770588"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/settings-tabs.ts",
+          "hash": "2616910050676574599"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/settings.svelte",
+          "hash": "16083637832648490334"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/settings.ts",
+          "hash": "14823277841714975918"
+        },
+        {
+          "file": "apps/webextension/src/widgets/greeting/widget.svelte",
+          "hash": "4153432505175901185"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/index.ts",
+          "hash": "8246337781122532413"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/preview.svelte",
+          "hash": "8841110321703452454"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/settings-tabs.ts",
+          "hash": "2766760109219839807"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/settings.svelte",
+          "hash": "10629314930816118401"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/settings.ts",
+          "hash": "6809887948793257064"
+        },
+        {
+          "file": "apps/webextension/src/widgets/html/widget.svelte",
+          "hash": "17371217086081564381"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/index.ts",
+          "hash": "17414126003356471072"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/preview.svelte",
+          "hash": "2549313295129661874"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/settings-tabs.ts",
+          "hash": "5338153162802685169"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/settings.svelte",
+          "hash": "2189906675722991622"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/settings.ts",
+          "hash": "8762280454413105502"
+        },
+        {
+          "file": "apps/webextension/src/widgets/ip-info/widget.svelte",
+          "hash": "6654187550827990934"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/iconify-search.svelte",
+          "hash": "14583577129087807744"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/index.ts",
+          "hash": "12853716951953288258"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/preview.svelte",
+          "hash": "6222367100529262358"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/settings-tabs.ts",
+          "hash": "16511345862971500502"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/settings.svelte",
+          "hash": "2146726300643906623"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/settings.ts",
+          "hash": "5932226512915510529"
+        },
+        {
+          "file": "apps/webextension/src/widgets/link/widget.svelte",
+          "hash": "6548334757184278616"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/index.ts",
+          "hash": "16026652480094748396"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/preview.svelte",
+          "hash": "16981297406053486568"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/settings-tabs.ts",
+          "hash": "2616910050676574599"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/settings.svelte",
+          "hash": "13463850410243954829"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/settings.ts",
+          "hash": "4720447808404027849"
+        },
+        {
+          "file": "apps/webextension/src/widgets/quote/widget.svelte",
+          "hash": "4996380830538377260"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/index.ts",
+          "hash": "18358303343719249788"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/preview.svelte",
+          "hash": "11269876078014476439"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/bing.ts",
+          "hash": "13821682264616475982"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/brave.ts",
+          "hash": "4828437226739938397"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/duckduckgo.ts",
+          "hash": "9843907418063189654"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/google.ts",
+          "hash": "16848377991953079100"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/index.ts",
+          "hash": "2318286520842264627"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/search-provider.ts",
+          "hash": "6178822893274229849"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/providers/youtube.ts",
+          "hash": "3563789026995690671"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/settings-tabs.ts",
+          "hash": "5909444457264753250"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/settings.svelte",
+          "hash": "1492437250913277194"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/settings.ts",
+          "hash": "357087038590269192"
+        },
+        {
+          "file": "apps/webextension/src/widgets/search/widget.svelte",
+          "hash": "9980285193167831367"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/index.ts",
+          "hash": "16704349236156841535"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/preview.svelte",
+          "hash": "17879558767959311687"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/settings-tabs.ts",
+          "hash": "12307568850927806972"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/settings.svelte",
+          "hash": "8221831334989299183"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/settings.ts",
+          "hash": "7244032658967811055"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/top-sites-store.ts",
+          "hash": "7151818548601343006"
+        },
+        {
+          "file": "apps/webextension/src/widgets/top-sites/widget.svelte",
+          "hash": "7370765343150472180"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/asset-pack-base.ts",
+          "hash": "15719170141281758925"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/asset-packs.tmpl.mjs",
+          "hash": "14265891568843040437"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/degry.json",
+          "hash": "4914741692122152947"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/iconify.json",
+          "hash": "9896088172918968293"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/index.ts",
+          "hash": "13698853447965384859"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/asset-packs/modern.json",
+          "hash": "14150609010917454842"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/index.ts",
+          "hash": "11620949632277007097"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/owm-redirect.tmpl.mjs",
+          "hash": "3852886854167392205"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/preview.svelte",
+          "hash": "8780682343064561336"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/settings-tabs.ts",
+          "hash": "12946274845543736838"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/settings.svelte",
+          "hash": "4412949319608610029"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/settings.ts",
+          "hash": "15947274235729617355"
+        },
+        {
+          "file": "apps/webextension/src/widgets/weather/widget.svelte",
+          "hash": "1699691085783918540"
+        },
+        {
+          "file": "apps/webextension/static/favicon/android-chrome-192x192.png",
+          "hash": "17747222593322570913"
+        },
+        {
+          "file": "apps/webextension/static/favicon/android-chrome-512x512.png",
+          "hash": "10992519659870263635"
+        },
+        {
+          "file": "apps/webextension/static/favicon/apple-touch-icon.png",
+          "hash": "8319709282744640903"
+        },
+        {
+          "file": "apps/webextension/static/favicon/browserconfig.xml",
+          "hash": "9030448547662640771"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon-128x128.png",
+          "hash": "3574285871798273089"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon-16x16.png",
+          "hash": "1484907360946902538"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon-32x32.png",
+          "hash": "12914832945126627537"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon-48x48.png",
+          "hash": "16296114082698355954"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon-96x96.png",
+          "hash": "15400891981776800899"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon.ico",
+          "hash": "6080578060923793650"
+        },
+        {
+          "file": "apps/webextension/static/favicon/favicon.svg",
+          "hash": "16149112273573293908"
+        },
+        {
+          "file": "apps/webextension/static/favicon/mstile-144x144.png",
+          "hash": "17090102562471781642"
+        },
+        {
+          "file": "apps/webextension/static/favicon/mstile-150x150.png",
+          "hash": "2987547776851300371"
+        },
+        {
+          "file": "apps/webextension/static/favicon/mstile-310x150.png",
+          "hash": "8240165320902303268"
+        },
+        {
+          "file": "apps/webextension/static/favicon/mstile-310x310.png",
+          "hash": "11331575352337162409"
+        },
+        {
+          "file": "apps/webextension/static/favicon/mstile-70x70.png",
+          "hash": "4598816931621196495"
+        },
+        {
+          "file": "apps/webextension/static/favicon/safari-pinned-tab.svg",
+          "hash": "12657718850154108143"
+        },
+        {
+          "file": "apps/webextension/static/favicon/site.webmanifest.json",
+          "hash": "10433911047657634548"
+        },
+        {
+          "file": "apps/webextension/svelte.config.js",
+          "hash": "6852886641038529940"
+        },
+        {
+          "file": "apps/webextension/tailwind.config.cjs",
+          "hash": "8923680068350003414"
+        },
+        {
+          "file": "apps/webextension/tsconfig.json",
+          "hash": "1239849719523029168"
+        },
+        {
+          "file": "apps/webextension/vite.config.ts",
+          "hash": "15202531478258444856"
+        }
+      ]
+    },
+    "nonProjectFiles": [
+      {
+        "file": ".devcontainer/devcontainer.json",
+        "hash": "15604659842408308550"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "2906928922394933496"
+      },
+      {
+        "file": ".github/FUNDING.yml",
+        "hash": "13652996168090767445"
+      },
+      {
+        "file": ".github/release-body.md",
+        "hash": "3705098123120071849"
+      },
+      {
+        "file": ".github/workflows/create-new-release.yml",
+        "hash": "6716067362731647579"
+      },
+      {
+        "file": ".github/workflows/touch-google-token.yml",
+        "hash": "3602722109642298532"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "936621073352950337"
+      },
+      {
+        "file": ".nvmrc",
+        "hash": "20467680281893951"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "3087577618115493567"
+      },
+      {
+        "file": ".vscode/settings.json",
+        "hash": "12918857109807079136"
+      },
+      {
+        "file": "LICENSE",
+        "hash": "15553496959705771468"
+      },
+      {
+        "file": "PRIVACY.md",
+        "hash": "3159528601627434827"
+      },
+      {
+        "file": "README.md",
+        "hash": "6473560826434256649"
+      },
+      {
+        "file": "SECURITY.md",
+        "hash": "16645017386017783072"
+      },
+      {
+        "file": "TRANSLATING.md",
+        "hash": "9524669775853018001"
+      },
+      {
+        "file": "docs/icons/amo-button.svg",
+        "hash": "10638019120008779628"
+      },
+      {
+        "file": "docs/icons/cwo-button.svg",
+        "hash": "18021027240333141996"
+      },
+      {
+        "file": "docs/icons/edge-button.svg",
+        "hash": "14822606946037564973"
+      },
+      {
+        "file": "docs/screenshots/1.png",
+        "hash": "2305235227382566427"
+      },
+      {
+        "file": "docs/screenshots/1_preview.png",
+        "hash": "7442520698280158994"
+      },
+      {
+        "file": "docs/screenshots/2.png",
+        "hash": "9194999903248634440"
+      },
+      {
+        "file": "docs/screenshots/2_preview.png",
+        "hash": "2275177930302532901"
+      },
+      {
+        "file": "docs/screenshots/3.png",
+        "hash": "10289934768717743098"
+      },
+      {
+        "file": "docs/screenshots/3_preview.png",
+        "hash": "10527337317689853222"
+      },
+      {
+        "file": "docs/screenshots/4.png",
+        "hash": "6558862023349455654"
+      },
+      {
+        "file": "docs/screenshots/4_preview.png",
+        "hash": "1340719455687436402"
+      },
+      {
+        "file": "docs/screenshots/5.png",
+        "hash": "8290117611496057748"
+      },
+      {
+        "file": "docs/screenshots/5_preview.png",
+        "hash": "7513993367747118322"
+      },
+      {
+        "file": "external/assets/widgets/analogue-clock/faces/default.svg",
+        "hash": "14556598540093702797"
+      },
+      {
+        "file": "external/assets/widgets/analogue-clock/faces/variant-1.svg",
+        "hash": "7856294493103697805"
+      },
+      {
+        "file": "external/assets/widgets/analogue-clock/faces/variant-2.svg",
+        "hash": "7705318210190021571"
+      },
+      {
+        "file": "external/assets/widgets/analogue-clock/faces/variant-3.svg",
+        "hash": "2986177594810082892"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/angry_clouds.svg",
+        "hash": "5260870470822429581"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/cloudy.svg",
+        "hash": "17067969190503846192"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_clear.svg",
+        "hash": "78428203394222476"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_partial_cloud.svg",
+        "hash": "1365435618710221119"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_rain.svg",
+        "hash": "8637227548710735479"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_rain_thunder.svg",
+        "hash": "2774576774816761612"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_sleet.svg",
+        "hash": "15667151096275049742"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_snow.svg",
+        "hash": "4643888245296803610"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/day_snow_thunder.svg",
+        "hash": "2396513849915867483"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/fog.svg",
+        "hash": "32075152455422241"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/mist.svg",
+        "hash": "6544670587835360874"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_clear.svg",
+        "hash": "5171591043746516126"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_partial_cloud.svg",
+        "hash": "16293969208675310074"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_rain.svg",
+        "hash": "1068767860930144040"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_rain_thunder.svg",
+        "hash": "9658998104973525706"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_sleet.svg",
+        "hash": "14907958365899657085"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_snow.svg",
+        "hash": "8080971193891643855"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_full_moon_snow_thunder.svg",
+        "hash": "11220555355546561453"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_clear.svg",
+        "hash": "1468690808950859336"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_partial_cloud.svg",
+        "hash": "8350670597240508113"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_rain.svg",
+        "hash": "4875953928995107253"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_rain_thunder.svg",
+        "hash": "9232825328999023884"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_sleet.svg",
+        "hash": "4266923982104771251"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_snow.svg",
+        "hash": "4943959878337195549"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/night_half_moon_snow_thunder.svg",
+        "hash": "8416044841404980578"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/overcast.svg",
+        "hash": "8751209638615305910"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/rain.svg",
+        "hash": "12898394438272003742"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/rain_thunder.svg",
+        "hash": "17595001533449704617"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/sleet.svg",
+        "hash": "9761366068787157115"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/snow.svg",
+        "hash": "2704539237308259856"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/snow_thunder.svg",
+        "hash": "11742860344747960903"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/thunder.svg",
+        "hash": "422728214690873256"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/tornado.svg",
+        "hash": "8612985609659124767"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/default/wind.svg",
+        "hash": "171317287626904416"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/clear-day.svg",
+        "hash": "9267456285055931684"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/clear-night.svg",
+        "hash": "5951243306888028714"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/cloudy.svg",
+        "hash": "11039668491374696174"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/fog.svg",
+        "hash": "13505313133140777780"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/heavy-showers.svg",
+        "hash": "11426510625402105056"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/heavy-sleet.svg",
+        "hash": "6254548840707108375"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/heavy-snow.svg",
+        "hash": "17533822166349813007"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/overcast.svg",
+        "hash": "14787551590405239345"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/partly-cloudy-day.svg",
+        "hash": "12601660695559757374"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/partly-cloudy-night.svg",
+        "hash": "566964812997305936"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/showers.svg",
+        "hash": "7295438731284726761"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/sleet.svg",
+        "hash": "17036948364959878512"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/snow.svg",
+        "hash": "10937749784580344436"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/thunderstorm-showers.svg",
+        "hash": "8670973865914350852"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/thunderstorm-snow.svg",
+        "hash": "7206217802895020127"
+      },
+      {
+        "file": "external/assets/widgets/weather/asset-packs/degry/windy.svg",
+        "hash": "17577851126807103339"
+      },
+      {
+        "file": "nx.json",
+        "hash": "709735704393826854"
+      },
+      {
+        "file": "package.json",
+        "hash": "4126118610178685479"
+      },
+      {
+        "file": "pnpm-lock.yaml",
+        "hash": "14236755165168233538"
+      },
+      {
+        "file": "pnpm-workspace.yaml",
+        "hash": "12266180787670163957"
+      }
+    ]
+  }
+}

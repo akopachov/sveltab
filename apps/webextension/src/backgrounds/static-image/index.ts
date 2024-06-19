@@ -1,6 +1,7 @@
 import { WeakLazy } from '$lib/lazy';
 import type { BackgroundCatalogItem } from '$stores/background-catalog';
 import * as m from '$i18n/messages';
+import type { WorkspaceInstance } from '$lib/workspace-instance';
 
 export const Background: BackgroundCatalogItem = {
   name: m.Backgrounds_StaticImage_Name,
@@ -13,5 +14,8 @@ export const Background: BackgroundCatalogItem = {
   },
   settings: {
     type: 'static-image',
+  },
+  lifecycle: {
+    onRemove: async (workspace: WorkspaceInstance) => await import('./settings').then(r => r.onRemove(workspace)),
   },
 };

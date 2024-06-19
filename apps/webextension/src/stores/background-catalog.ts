@@ -15,6 +15,7 @@ import { Background as NasaApodBackground } from '../backgrounds/nasa-apod';
 import { Background as PexelsBackground } from '../backgrounds/pexels';
 import { Background as WikimediaCommonsPodBackground } from '../backgrounds/wikimedia-commons-pod';
 import { Background as WallhavenBackground } from '../backgrounds/wallhaven';
+import type { WorkspaceInstance } from '$lib/workspace-instance';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
@@ -48,6 +49,9 @@ export interface BackgroundCatalogItem {
   readonly name: () => string;
   readonly settings: CatalogBackgroundSettingsInitial;
   readonly components: BackgroundCatalogItemComponents;
+  readonly lifecycle?: {
+    readonly onRemove?: (workspace: WorkspaceInstance) => Promise<void> | void;
+  };
 }
 
 export interface BackgroundCatalogItemComponents {

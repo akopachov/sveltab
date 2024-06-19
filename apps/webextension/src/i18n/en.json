@@ -48,6 +48,7 @@
   "DataManage_Restore_Error_VersionMistmatch": "Version mistmatch",
   "DataManage_Restore_Error_MissingWorkspacesObject": "Missing workspaces object",
   "DataManage_Restore_Error_NothingToImport": "There is no workspaces to be imported",
+  "DataManage_Restore_Error_InvalidFileType": "Invalid file type",
   "DataManage_Restore_SuccessfullyDone": "{count} workspaces has been successfully imported",
   "DataManage_Backup": "Backup",
   "Backgrounds_ImageCommon_Settings_Blur": "Blur",

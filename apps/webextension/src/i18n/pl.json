@@ -48,6 +48,7 @@
 	"DataManage_Restore_Error_VersionMistmatch": "Niezgodność wersji",
 	"DataManage_Restore_Error_MissingWorkspacesObject": "Brakujący obiekt obszarów roboczych",
 	"DataManage_Restore_Error_NothingToImport": "Brak obszarów roboczych do zaimportowania",
+  "DataManage_Restore_Error_InvalidFileType": "Nieprawidłowy typ pliku",
 	"DataManage_Restore_SuccessfullyDone": "{count} obszarów roboczych zostało pomyślnie zaimportowane",
 	"DataManage_Backup": "Exportuj",
   "Backgrounds_ImageCommon_Settings_Blur": "Rozmycie",

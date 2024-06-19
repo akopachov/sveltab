@@ -119,6 +119,8 @@ export class WorkspaceInstance {
       if (this.#background.value.settings.extra?.filter?.value) {
         ActiveFilters.remove(this.#background.value.settings.extra.filter.value);
       }
+
+      await this.#background.value.lifecycle.onRemove(this);
     }
     this.#background.value = await BackgroundInstance.create(settings);
     this.#hasChanges.value = true;

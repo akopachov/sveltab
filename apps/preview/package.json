@@ -7,7 +7,7 @@
   "dependencies": {
     "@netlify/functions": "^2.7.0",
     "geo-position.ts": "^1.4.1",
-    "unidecode": "^1.0.1"
+    "unidecode": "^1.1.0"
   },
   "devDependencies": {
     "@types/unidecode": "^0.1.3",

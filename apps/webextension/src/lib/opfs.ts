@@ -22,9 +22,15 @@ export class OpfsManager {
   async save(opfsFileUrl: string, data: ArrayBufferLike | Blob) {
     const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl, true);
     const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
-    const writable = await fileHandle.createWritable();
+    const writable = await fileHandle.createWritable({ keepExistingData: false });
     await writable.write(data);
     await writable.close();
+  }
+
+  async createWritable(opfsFileUrl: string) {
+    const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl, true);
+    const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
+    return await fileHandle.createWritable({ keepExistingData: false });
   }
 
   async remove(opfsFileUrl: string) {

@@ -9,10 +9,12 @@ import {
   type BackgroundSettingsExtraInitial,
   type BackgroundSettingsInitial,
 } from './background-settings';
+import type { WorkspaceInstance } from './workspace-instance';
 
 const BackgroundCatalogIndex = new Map<string, BackgroundCatalogItem>(BackgroundCatalog.map(c => [c.settings.type, c]));
 
 export class BackgroundInstance {
+  #onRemove: ((instance: WorkspaceInstance) => Promise<void> | void) | undefined;
   private constructor(
     catalogItem: BackgroundCatalogItem,
     settings: BackgroundSettingsInitial,
@@ -20,6 +22,7 @@ export class BackgroundInstance {
   ) {
     this.settings = new BackgroundSettings(settings, extraConstructor);
     this.components = catalogItem.components;
+    this.#onRemove = catalogItem.lifecycle?.onRemove;
   }
 
   static async create(settings: BackgroundSettingsInitial) {
@@ -33,4 +36,11 @@ export class BackgroundInstance {
 
   readonly components: BackgroundCatalogItemComponents;
   readonly settings: BackgroundSettings;
+  readonly lifecycle = {
+    onRemove: async (instance: WorkspaceInstance) => {
+      if (this.#onRemove) {
+        await this.#onRemove(instance);
+      }
+    },
+  };
 }

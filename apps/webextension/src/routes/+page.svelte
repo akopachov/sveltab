@@ -229,7 +229,7 @@
             {#await $background.components.settings.component.value}
               <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
             {:then component}
-              <svelte:component this={component} settings={$background.settings.extra} />
+              <svelte:component this={component} settings={$background.settings.extra} {workspace} />
             {/await}
           {/if}
         </svelte:fragment>
