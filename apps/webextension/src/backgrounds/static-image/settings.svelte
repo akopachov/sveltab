@@ -44,10 +44,10 @@
 
 <RadioGroup display="flex" active="variant-filled-primary" hover="hover:variant-soft-primary">
   <RadioItem bind:group={$source} name="source_url" value={StaticImageSource.Url} on:change={onSourceTypeChange}>
-    Url
+    {m.Backgrounds_StaticImage_Settings_Source_Type_Url()}
   </RadioItem>
   <RadioItem bind:group={$source} name="source_local" value={StaticImageSource.Local} on:change={onSourceTypeChange}>
-    Local
+    {m.Backgrounds_StaticImage_Settings_Source_Type_Local()}
   </RadioItem>
 </RadioGroup>
 
@@ -58,9 +58,14 @@
   </label>
 {:else if $source === StaticImageSource.Local}
   <div class="mt-2 flex justify-center">
-    <FileButton bind:files={localFiles} name="localFile" button="btn variant-soft" on:change={onLocalFileChange}>
+    <FileButton
+      bind:files={localFiles}
+      name="localFile"
+      button="btn variant-soft"
+      on:change={onLocalFileChange}
+      accept="image/*">
       <div class="flex flex-row flex-nowrap gap-3 items-center">
-        <span>Select</span>
+        <span>{m.Backgrounds_StaticImage_Settings_Local_Select()}</span>
       </div>
     </FileButton>
   </div>
