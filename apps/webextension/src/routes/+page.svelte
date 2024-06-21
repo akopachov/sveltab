@@ -337,17 +337,19 @@
         {/if}
       </div>
     </div>
-    {#each $widgets as widget (widget.id)}
-      <WidgetFactorty
-        {widget}
-        {widgetSettingsPopupSettings}
-        on:delete={onWidgetDelete}
-        showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
-        class="widget widget_{widget.settings.type}"
-        controlsClassName="widget-control"
-        workspaceLocked={$workspaceLocked}
-        on:autosettingsupdate={saveWorkspaceChanges} />
-    {/each}
+    {#key workspace}
+      {#each $widgets as widget (widget.id)}
+        <WidgetFactorty
+          {widget}
+          {widgetSettingsPopupSettings}
+          on:delete={onWidgetDelete}
+          showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
+          class="widget widget_{widget.settings.type}"
+          controlsClassName="widget-control"
+          workspaceLocked={$workspaceLocked}
+          on:autosettingsupdate={saveWorkspaceChanges} />
+      {/each}
+    {/key}
     {#if !$workspaceLocked}
       <WidgetMoveController
         bind:this={moveable}

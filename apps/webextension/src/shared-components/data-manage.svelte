@@ -127,8 +127,8 @@
       await Workspaces.setDefault(importData!.defaultWorkspaceId || Workspaces.entries[0].id);
       ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
 
-      activeWorkspace = activeWorkspace;
       dispatch('dataImported');
+      activeWorkspace = activeWorkspace;
       toastFacade.show(
         m.DataManage_Restore_SuccessfullyDone({ count: Object.keys(importData!.workspaces!).length }),
         CommonToastType.Success,

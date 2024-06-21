@@ -1255,9 +1255,9 @@
       "type": "npm",
       "name": "npm:@mdn/browser-compat-data",
       "data": {
-        "version": "5.5.32",
+        "version": "5.5.34",
         "packageName": "@mdn/browser-compat-data",
-        "hash": "sha512-viN2VaUd1Hj2VpTDtKVT6LYfBnxzUgXJ+LSQfzuzaHa5mZBlvR3wSxMyUqbfywBbnIWHyKNwz6Yrcdpa4zEOZw=="
+        "hash": "sha512-e8k7+8r3jiJuP7FMH6AL1OnmfQqLyABhTM+NmRDvFeAbMgtFcNQLHpmT7uza5cBnxI01+CAU3aSsIgcKGRdEBQ=="
       }
     },
     "npm:@neoconfetti/svelte": {
@@ -2317,9 +2317,9 @@
       "type": "npm",
       "name": "npm:@types/node",
       "data": {
-        "version": "20.14.6",
+        "version": "20.14.7",
         "packageName": "@types/node",
-        "hash": "sha512-JbA0XIJPL1IiNnU7PFxDXyfAwcwVVrOoqyzzyQTyMeVhBzkJVMSkC1LlVsRQ2lpqiY4n6Bb9oCS6lzDKVQxbZw=="
+        "hash": "sha512-uTr2m2IbJJucF3KUxgnGOZvYbN0QgkGyWxG6973HCpMYFy2KfcgYuIwkJQMQkt1VbBMlvWRbpshFTLxnxCZjKQ=="
       }
     },
     "npm:@types/picomatch": {
@@ -2524,9 +2524,9 @@
       "type": "npm",
       "name": "npm:addons-linter",
       "data": {
-        "version": "6.29.0",
+        "version": "6.31.1",
         "packageName": "addons-linter",
-        "hash": "sha512-Ml4tmd5cnJBOaKY0mU5tWSDSf2q3nbAozwWcr5s5isuqFD8zJtF5/oHuBW/1thr0XTBSTgNCsGJ833Xv5BCYzg=="
+        "hash": "sha512-R9FCyVzqU/h5A2aB1t+jD8t4QKLuLxYqc1FjmjJ0nZrn1qNCna1jFOajt5R1T8pwt0H4WXgT+uwWSD2BdkBzqQ=="
       }
     },
     "npm:addons-moz-compare": {
@@ -2542,9 +2542,9 @@
       "type": "npm",
       "name": "npm:addons-scanner-utils",
       "data": {
-        "version": "9.10.1",
+        "version": "9.11.0",
         "packageName": "addons-scanner-utils",
-        "hash": "sha512-Tz9OUQx9Ja0TyQ+H2GakB9KlJ50myI6ESBGRlA8N80nHBzMjjPRFGm0APADSaCd5NP74SrFtEvL4TRpDwZXETA=="
+        "hash": "sha512-X95V8ymnue9EHmOLz3zJTGHvHDFlWKiavlH+kJKOlv2sJDWFvD3TWeJMHJgxS9GKOqT/545mOXvX3vuuGGum+g=="
       }
     },
     "npm:adm-zip": {
@@ -5040,15 +5040,6 @@
         "hash": "sha512-lkX1HJXwyMcprw/5YUZc2s7DrpAiHB21/V+E1rHUrVNokkvB6bqMzT0VfV6/86ZNabt1k14YOIaT7nDvOX3Iiw=="
       }
     },
-    "npm:glob@10.4.1": {
-      "type": "npm",
-      "name": "npm:glob@10.4.1",
-      "data": {
-        "version": "10.4.1",
-        "packageName": "glob",
-        "hash": "sha512-2jelhlq3E4ho74ZyVLN03oKdAZVUa6UDZzFLVH1H7dnoax+y9qyaq8zBkfDIggjniU19z0wU18y16jMB2eyVIw=="
-      }
-    },
     "npm:glob@10.4.2": {
       "type": "npm",
       "name": "npm:glob@10.4.2",
@@ -5485,9 +5476,9 @@
       "type": "npm",
       "name": "npm:is-core-module",
       "data": {
-        "version": "2.13.1",
+        "version": "2.14.0",
         "packageName": "is-core-module",
-        "hash": "sha512-hHrIjvZsftOsvKSn2TRYl63zvxsgE0K+0mYMoH6gD4omR5IWB2KynivBQczo3+wF1cCkjzvptnI9Q0sPU66ilw=="
+        "hash": "sha512-a5dFJih5ZLYlRtDc0dZWP7RiKr6xIKzmn/oAYCDvdLThadVgyJwlaoQPmRtMSpz+rk0OGAgIu+TcM9HUF0fk1A=="
       }
     },
     "npm:is-docker@2.2.1": {
@@ -5773,9 +5764,9 @@
       "type": "npm",
       "name": "npm:jose",
       "data": {
-        "version": "5.4.0",
+        "version": "5.4.1",
         "packageName": "jose",
-        "hash": "sha512-6rpxTHPAQyWMb9A35BroFl1Sp0ST3DpPcm5EVIxZxdH+e0Hv9fwhyB3XLKFUcHNpdSDnETmBfuPPTTlYz5+USw=="
+        "hash": "sha512-U6QajmpV/nhL9SyfAewo000fkiRQ+Yd2H0lBxJJ9apjpOgkOcBQJWOrMo917lxLptdS/n/o/xPzMkXhF46K8hQ=="
       }
     },
     "npm:js-tokens": {
@@ -6480,13 +6471,13 @@
         "hash": "sha512-FP+p8RB8OWpF3YZBCrP5gtADmtXApB5AMLn+vdyA+PyxCjrCs00mjyUozssO33cwDeT3wNGdLxJ5M//YqtHAJw=="
       }
     },
-    "npm:mkdirp@1.0.4": {
+    "npm:mkdirp@3.0.1": {
       "type": "npm",
-      "name": "npm:mkdirp@1.0.4",
+      "name": "npm:mkdirp@3.0.1",
       "data": {
-        "version": "1.0.4",
+        "version": "3.0.1",
         "packageName": "mkdirp",
-        "hash": "sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw=="
+        "hash": "sha512-+NsyUUAZDmo6YVHzL/stxSu3t9YS1iljliy3BSDrXJ/dkn1KYdmtZODGGjLcc9XLgVVpH4KshHB8XmZgMhaBXg=="
       }
     },
     "npm:mlly": {
@@ -9049,9 +9040,9 @@
       "type": "npm",
       "name": "npm:typescript",
       "data": {
-        "version": "5.4.5",
+        "version": "5.5.2",
         "packageName": "typescript",
-        "hash": "sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ=="
+        "hash": "sha512-NcRtPEOsPFFWjobJEtfihkLCZCXZt/os3zf8nTxjVH3RvTSxjrCamJpbExGvYOF+tFHc3pA65qpdwPbzjohhew=="
       }
     },
     "npm:ufo": {
@@ -9292,9 +9283,9 @@
       "type": "npm",
       "name": "npm:web-ext",
       "data": {
-        "version": "8.1.0",
+        "version": "8.2.0",
         "packageName": "web-ext",
-        "hash": "sha512-+FRV/ZOeDR6ybJUBp/tfZOz7eWC/+Mff5GXucqRl0ccUfXHGJLvc1Acq4FOVKeFBL/u+pS/LGHjQ4xFrv7EOuw=="
+        "hash": "sha512-krU7rmxaG96b3Q9Enbry9/pmE/5FUGkvajCGfJCD+J79rt7JFjhVpw1Dszz4BqQkTd3y8cG5wJ3p1uC6uyAwcA=="
       }
     },
     "npm:web-streams-polyfill": {
@@ -9459,18 +9450,9 @@
         "hash": "sha512-AvHcyZ5JnSfq3ioSyjrBkH9yW4m7Ayk8/9My/DD9onKeu/94fwrMocemO2QAJFAlnnDN+ZDS+ZjAR5ua1/PV/Q=="
       }
     },
-    "npm:ws@8.17.0": {
+    "npm:ws": {
       "type": "npm",
-      "name": "npm:ws@8.17.0",
-      "data": {
-        "version": "8.17.0",
-        "packageName": "ws",
-        "hash": "sha512-uJq6108EgZMAl20KagGkzCKfMEjxmKvZHG7Tlq0Z6nOky7YF7aq4mOx6xK8TJ/i1LeK4Qus7INktacctDgY8Ow=="
-      }
-    },
-    "npm:ws@8.17.1": {
-      "type": "npm",
-      "name": "npm:ws@8.17.1",
+      "name": "npm:ws",
       "data": {
         "version": "8.17.1",
         "packageName": "ws",
@@ -11752,7 +11734,7 @@
     },
     {
       "source": "npm:addons-linter",
-      "target": "npm:glob@10.4.1",
+      "target": "npm:glob@10.4.2",
       "type": "static"
     },
     {
@@ -14266,31 +14248,6 @@
       "type": "static"
     },
     {
-      "source": "npm:glob@10.4.1",
-      "target": "npm:foreground-child",
-      "type": "static"
-    },
-    {
-      "source": "npm:glob@10.4.1",
-      "target": "npm:jackspeak",
-      "type": "static"
-    },
-    {
-      "source": "npm:glob@10.4.1",
-      "target": "npm:minimatch@9.0.4",
-      "type": "static"
-    },
-    {
-      "source": "npm:glob@10.4.1",
-      "target": "npm:minipass",
-      "type": "static"
-    },
-    {
-      "source": "npm:glob@10.4.1",
-      "target": "npm:path-scurry",
-      "type": "static"
-    },
-    {
       "source": "npm:glob@10.4.2",
       "target": "npm:foreground-child",
       "type": "static"
@@ -14957,7 +14914,7 @@
     },
     {
       "source": "npm:miniflare",
-      "target": "npm:ws@8.17.1",
+      "target": "npm:ws",
       "type": "static"
     },
     {
@@ -18032,7 +17989,7 @@
     },
     {
       "source": "npm:web-ext",
-      "target": "npm:mkdirp@1.0.4",
+      "target": "npm:mkdirp@3.0.1",
       "type": "static"
     },
     {
@@ -18102,7 +18059,7 @@
     },
     {
       "source": "npm:web-ext",
-      "target": "npm:ws@8.17.0",
+      "target": "npm:ws",
       "type": "static"
     },
     {
