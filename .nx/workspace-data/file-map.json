@@ -8,38 +8,84 @@
   "nxJsonPlugins": [],
   "fileMap": {
     "projectFileMap": {
-      "is-wsl2": [
+      "preview": [
         {
-          "file": "packages/is-wsl2/.editorconfig",
-          "hash": "14168222967502131905"
+          "file": "apps/preview/.editorconfig",
+          "hash": "9035647012319884894"
         },
         {
-          "file": "packages/is-wsl2/.gitignore",
-          "hash": "6067757523401935360"
+          "file": "apps/preview/.gitignore",
+          "hash": "9652840843145639605"
         },
         {
-          "file": "packages/is-wsl2/.prettierignore",
-          "hash": "11530485554417286140"
+          "file": "apps/preview/functions/iqair-redirect.ts",
+          "hash": "18300375636509497534"
         },
         {
-          "file": "packages/is-wsl2/.prettierrc",
-          "hash": "8568038100117739746"
+          "file": "apps/preview/functions/owm-redirect.ts",
+          "hash": "16288626628291305981"
         },
         {
-          "file": "packages/is-wsl2/index.ts",
-          "hash": "16532892570162354184"
+          "file": "apps/preview/netlify.toml",
+          "hash": "9624960390058560956"
         },
         {
-          "file": "packages/is-wsl2/package.json",
-          "hash": "5368447590837365376",
+          "file": "apps/preview/package.json",
+          "hash": "15376385278742394363",
           "deps": [
-            "npm:@types/node",
-            "npm:typescript"
+            "npm:@types/unidecode",
+            "netlify-plugin-interpolate-env-variable",
+            "npm:typescript",
+            "webextension",
+            "npm:@netlify/functions",
+            "npm:geo-position.ts",
+            "npm:unidecode"
           ]
         },
         {
-          "file": "packages/is-wsl2/tsconfig.json",
-          "hash": "4336780397135653243"
+          "file": "apps/preview/tsconfig.json",
+          "hash": "15382321260039008176"
+        }
+      ],
+      "iqair-redirect": [
+        {
+          "file": "apps/iqair-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/iqair-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/iqair-redirect/package.json",
+          "hash": "8964089113339022677",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/iqair-redirect/src/worker.ts",
+          "hash": "12279403779427720829"
+        },
+        {
+          "file": "apps/iqair-redirect/wrangler.toml",
+          "hash": "11886815432978647150"
+        }
+      ],
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
         }
       ],
       "webextension": [
@@ -93,7 +139,7 @@
         },
         {
           "file": "apps/webextension/package.json",
-          "hash": "5465960025492251695",
+          "hash": "14393787081386559964",
           "deps": [
             "npm:@floating-ui/core",
             "npm:@floating-ui/dom",
@@ -257,7 +303,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/provider-base.ts",
-          "hash": "14493446672099302892"
+          "hash": "18119670110849824485"
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/settings-base.svelte",
@@ -357,7 +403,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/static-image/settings.svelte",
-          "hash": "14879015177981126784"
+          "hash": "13378902444648351308"
         },
         {
           "file": "apps/webextension/src/backgrounds/static-image/settings.ts",
@@ -401,15 +447,15 @@
         },
         {
           "file": "apps/webextension/src/i18n/be.json",
-          "hash": "930455478676809031"
+          "hash": "11927076939125773797"
         },
         {
           "file": "apps/webextension/src/i18n/en.json",
-          "hash": "8789272176483654167"
+          "hash": "1273604450526224654"
         },
         {
           "file": "apps/webextension/src/i18n/pl.json",
-          "hash": "15964795828910838875"
+          "hash": "1662811589523112768"
         },
         {
           "file": "apps/webextension/src/lib/assets/default_workspace.json",
@@ -469,7 +515,7 @@
         },
         {
           "file": "apps/webextension/src/lib/opfs.ts",
-          "hash": "9194253938630914193"
+          "hash": "3162271556104201093"
         },
         {
           "file": "apps/webextension/src/lib/realfavicongenerator.ts",
@@ -520,6 +566,10 @@
           "hash": "11394731476655574917"
         },
         {
+          "file": "apps/webextension/src/shared-components/browser-supports.svelte",
+          "hash": "15976296095147581520"
+        },
+        {
           "file": "apps/webextension/src/shared-components/color-picker-inner.svelte",
           "hash": "10405010787322133761"
         },
@@ -541,7 +591,7 @@
         },
         {
           "file": "apps/webextension/src/shared-components/favicon-settings.svelte",
-          "hash": "8897140023456823192"
+          "hash": "3381789670193248073"
         },
         {
           "file": "apps/webextension/src/shared-components/favicon.svelte",
@@ -1219,7 +1269,7 @@
         },
         {
           "file": "apps/landing/package.json",
-          "hash": "3712875329528442112",
+          "hash": "12284835370208474145",
           "deps": [
             "npm:@fontsource/inter",
             "npm:@iconify/json",
@@ -1465,6 +1515,32 @@
           "hash": "2155460198681927953"
         }
       ],
+      "owm-redirect": [
+        {
+          "file": "apps/owm-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/owm-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/owm-redirect/package.json",
+          "hash": "17134678572050872525",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts"
+          ]
+        },
+        {
+          "file": "apps/owm-redirect/src/worker.ts",
+          "hash": "13031713532980002527"
+        },
+        {
+          "file": "apps/owm-redirect/wrangler.toml",
+          "hash": "16151197575438519813"
+        }
+      ],
       "vite-plugin-run-generator": [
         {
           "file": "packages/vite-plugin-run-generator/.editorconfig",
@@ -1508,110 +1584,38 @@
           "hash": "4336780397135653243"
         }
       ],
-      "iqair-redirect": [
+      "is-wsl2": [
         {
-          "file": "apps/iqair-redirect/.editorconfig",
-          "hash": "9035647012319884894"
+          "file": "packages/is-wsl2/.editorconfig",
+          "hash": "14168222967502131905"
         },
         {
-          "file": "apps/iqair-redirect/.gitignore",
-          "hash": "10657848430346760040"
+          "file": "packages/is-wsl2/.gitignore",
+          "hash": "6067757523401935360"
         },
         {
-          "file": "apps/iqair-redirect/package.json",
-          "hash": "8964089113339022677",
+          "file": "packages/is-wsl2/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/is-wsl2/index.ts",
+          "hash": "16532892570162354184"
+        },
+        {
+          "file": "packages/is-wsl2/package.json",
+          "hash": "5368447590837365376",
           "deps": [
-            "npm:wrangler",
-            "npm:geo-position.ts",
-            "npm:unidecode"
+            "npm:@types/node",
+            "npm:typescript"
           ]
         },
         {
-          "file": "apps/iqair-redirect/src/worker.ts",
-          "hash": "12279403779427720829"
-        },
-        {
-          "file": "apps/iqair-redirect/wrangler.toml",
-          "hash": "11886815432978647150"
-        }
-      ],
-      "netlify-plugin-interpolate-env-variable": [
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
-        }
-      ],
-      "owm-redirect": [
-        {
-          "file": "apps/owm-redirect/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/owm-redirect/.gitignore",
-          "hash": "10657848430346760040"
-        },
-        {
-          "file": "apps/owm-redirect/package.json",
-          "hash": "17134678572050872525",
-          "deps": [
-            "npm:wrangler",
-            "npm:geo-position.ts"
-          ]
-        },
-        {
-          "file": "apps/owm-redirect/src/worker.ts",
-          "hash": "13031713532980002527"
-        },
-        {
-          "file": "apps/owm-redirect/wrangler.toml",
-          "hash": "16151197575438519813"
-        }
-      ],
-      "preview": [
-        {
-          "file": "apps/preview/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/preview/.gitignore",
-          "hash": "9652840843145639605"
-        },
-        {
-          "file": "apps/preview/functions/iqair-redirect.ts",
-          "hash": "18300375636509497534"
-        },
-        {
-          "file": "apps/preview/functions/owm-redirect.ts",
-          "hash": "16288626628291305981"
-        },
-        {
-          "file": "apps/preview/netlify.toml",
-          "hash": "9624960390058560956"
-        },
-        {
-          "file": "apps/preview/package.json",
-          "hash": "15376385278742394363",
-          "deps": [
-            "npm:@types/unidecode",
-            "netlify-plugin-interpolate-env-variable",
-            "npm:typescript",
-            "webextension",
-            "npm:@netlify/functions",
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/preview/tsconfig.json",
-          "hash": "15382321260039008176"
+          "file": "packages/is-wsl2/tsconfig.json",
+          "hash": "4336780397135653243"
         }
       ]
     },
@@ -1954,7 +1958,7 @@
       },
       {
         "file": "pnpm-lock.yaml",
-        "hash": "2417657624948925012"
+        "hash": "12845865531449383035"
       },
       {
         "file": "pnpm-workspace.yaml",

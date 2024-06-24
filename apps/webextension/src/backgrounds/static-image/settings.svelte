@@ -6,6 +6,7 @@
   import { FileButton, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
   import { OpfsSchema } from '$lib/opfs';
   import { nanoid } from 'nanoid/non-secure';
+  import BrowserSupports, { Constraints } from '$shared-components/browser-supports.svelte';
 
   export let settings: Settings;
   export let workspace: WorkspaceInstance;
@@ -57,18 +58,20 @@
     <input type="url" class="input" bind:value={$url} />
   </label>
 {:else if $source === StaticImageSource.Local}
-  <div class="mt-2 flex justify-center">
-    <FileButton
-      bind:files={localFiles}
-      name="localFile"
-      button="btn variant-soft"
-      on:change={onLocalFileChange}
-      accept="image/*">
-      <div class="flex flex-row flex-nowrap gap-3 items-center">
-        <span>{m.Backgrounds_StaticImage_Settings_Local_Select()}</span>
-      </div>
-    </FileButton>
-  </div>
+  <BrowserSupports constraint={Constraints.OPFS} class="!mt-4">
+    <div class="mt-2 flex justify-center">
+      <FileButton
+        bind:files={localFiles}
+        name="localFile"
+        button="btn variant-soft"
+        on:change={onLocalFileChange}
+        accept="image/*">
+        <div class="flex flex-row flex-nowrap gap-3 items-center">
+          <span>{m.Backgrounds_StaticImage_Settings_Local_Select()}</span>
+        </div>
+      </FileButton>
+    </div>
+  </BrowserSupports>
 {/if}
 
 <SettingsBase {settings} />

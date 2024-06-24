@@ -51,6 +51,7 @@
   "DataManage_Restore_Error_InvalidFileType": "Invalid file type",
   "DataManage_Restore_SuccessfullyDone": "{count} workspaces has been successfully imported",
   "DataManage_Backup": "Backup",
+  "BrowserSupports_NotSupported": "Not supported by your browser",
   "Backgrounds_ImageCommon_Settings_Blur": "Blur",
   "Backgrounds_ImageCommon_Settings_Filter": "Filter",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Content provided by",

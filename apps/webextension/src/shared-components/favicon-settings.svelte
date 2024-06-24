@@ -9,6 +9,7 @@
   import * as m from '$i18n/messages';
   import type { RealFaviconGenerator } from '$lib/realfavicongenerator';
   import { logger } from '$lib/logger';
+  import BrowserSupports, { Constraints } from './browser-supports.svelte';
 
   const log = logger.getSubLogger({ prefix: ['Favicon settings:'] });
 
@@ -140,35 +141,37 @@
   </RadioItem>
 </RadioGroup>
 {#if faviconType === FaviconType.Manual}
-  <div class="mt-2 flex justify-center">
-    <FileButton
-      bind:files={iconFileSources}
-      name="iconFile"
-      button="btn variant-soft"
-      on:change={onCustomIconFileChange}>
-      <div class="flex flex-row flex-nowrap gap-3 items-center">
-        {#if isLoading}
-          <ProgressRadial width="w-[32px]" />
-        {:else}
-          {#if $icon32}
-            <img
-              class="w-[32px] h-[32px] rounded-sm text-[0]"
-              use:opfsSrc={$icon32}
-              width="32"
-              height="32"
-              alt="32x32" />
+  <BrowserSupports constraint={Constraints.OPFS} class="mt-4">
+    <div class="mt-2 flex justify-center">
+      <FileButton
+        bind:files={iconFileSources}
+        name="iconFile"
+        button="btn variant-soft"
+        on:change={onCustomIconFileChange}>
+        <div class="flex flex-row flex-nowrap gap-3 items-center">
+          {#if isLoading}
+            <ProgressRadial width="w-[32px]" />
+          {:else}
+            {#if $icon32}
+              <img
+                class="w-[32px] h-[32px] rounded-sm text-[0]"
+                use:opfsSrc={$icon32}
+                width="32"
+                height="32"
+                alt="32x32" />
+            {/if}
+            {#if $icon16}
+              <img
+                class="w-[16px] h-[16px] rounded-sm text-[0]"
+                use:opfsSrc={$icon16}
+                width="16"
+                height="16"
+                alt="16x16" />
+            {/if}
           {/if}
-          {#if $icon16}
-            <img
-              class="w-[16px] h-[16px] rounded-sm text-[0]"
-              use:opfsSrc={$icon16}
-              width="16"
-              height="16"
-              alt="16x16" />
-          {/if}
-        {/if}
-        <span>{m.Favicon_Settings_UploadIcon()}</span>
-      </div>
-    </FileButton>
-  </div>
+          <span>{m.Favicon_Settings_UploadIcon()}</span>
+        </div>
+      </FileButton>
+    </div>
+  </BrowserSupports>
 {/if}

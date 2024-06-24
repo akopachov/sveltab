@@ -51,6 +51,7 @@
   "DataManage_Restore_Error_InvalidFileType": "Nieprawidłowy typ pliku",
 	"DataManage_Restore_SuccessfullyDone": "{count} obszarów roboczych zostało pomyślnie zaimportowane",
 	"DataManage_Backup": "Exportuj",
+  "BrowserSupports_NotSupported": "Twoja przeglądarka nie obsługuje tej funkcji",
   "Backgrounds_ImageCommon_Settings_Blur": "Rozmycie",
   "Backgrounds_ImageCommon_Settings_Filter": "Filtr",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Treść dostarczona przez",

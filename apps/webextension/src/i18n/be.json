@@ -51,6 +51,7 @@
   "DataManage_Restore_Error_InvalidFileType": "Няправільны тып файла",
 	"DataManage_Restore_SuccessfullyDone": "{count} працоўных вабласцей было паспяхова імпартавана",
 	"DataManage_Backup": "Рэзервовае капіраванне",
+  "BrowserSupports_NotSupported": "Ваш браўзер не падтрымлівае гэты функцыянал",
   "Backgrounds_ImageCommon_Settings_Blur": "Размыццё",
   "Backgrounds_ImageCommon_Settings_Filter": "Фільтр",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Змест прадастаўлены",

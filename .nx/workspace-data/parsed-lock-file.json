@@ -4585,9 +4585,9 @@
       "type": "npm",
       "name": "npm:eslint-plugin-svelte",
       "data": {
-        "version": "2.40.0",
+        "version": "2.41.0",
         "packageName": "eslint-plugin-svelte",
-        "hash": "sha512-JuOzmfVaMeEkBASL7smHu3tIU4D9rWkHuRNV+zm/5zgAwiZVvxrXM7TcfIOS+U7VXOr4uCZuE+kZTVTzS0IE+Q=="
+        "hash": "sha512-gjU9Q/psxbWG1VNwYbEb0Q6U4W5PBGaDpYmO2zlQ+zlAMVS3Qt0luAK0ACi/tMSwRK6JENiySvMyJbO0YWmXSg=="
       }
     },
     "npm:eslint-scope@7.2.2": {
@@ -6178,9 +6178,9 @@
       "type": "npm",
       "name": "npm:known-css-properties",
       "data": {
-        "version": "0.32.0",
+        "version": "0.34.0",
         "packageName": "known-css-properties",
-        "hash": "sha512-PXuex21brpp7qENI143ZL5cWQcMR4IZVeeZv9ew6dg+bZX2xRUu/NzGKudZJY5DO4APiMkNPYIF8VGIdY08Tdw=="
+        "hash": "sha512-tBECoUqNFbyAY4RrbqsBQqDFpGXAEbdD5QKr8kACx3+rnArmuuR22nKQWKazvp07N9yjTyDZaw/20UIH8tL9DQ=="
       }
     },
     "npm:kolorist": {
@@ -8950,9 +8950,9 @@
       "type": "npm",
       "name": "npm:svelte-check",
       "data": {
-        "version": "3.8.1",
+        "version": "3.8.2",
         "packageName": "svelte-check",
-        "hash": "sha512-KlQ0TRVe01mdvh49Ylkr9FQxO/UWbQOtaIrccl3gjgkvby1TxY41VkT7ijCl6i29FjaJPE4m6YGmhdqov0MfkA=="
+        "hash": "sha512-n6bVsE71RPuMXZz1CalD2fXO0RIyEDHn1YdGhcFEwZrwc/HoS5wWoEvEe+mcL9tivCTRtQIdbxLLStfIHFOX+Q=="
       }
     },
     "npm:svelte-eslint-parser": {
@@ -9130,9 +9130,9 @@
       "type": "npm",
       "name": "npm:throttle-debounce",
       "data": {
-        "version": "5.0.0",
+        "version": "5.0.2",
         "packageName": "throttle-debounce",
-        "hash": "sha512-2iQTSgkkc1Zyk0MeVrt/3BvuOXYPl/R8Z0U2xxo9rjwNciaHDG3R+Lm6dh4EeUci49DanvBnuqI6jshoQQRGEg=="
+        "hash": "sha512-B71/4oyj61iNH0KeCamLuE2rmKuTO5byTOSVwECM5FA7TiAiAW+UqTKZ9ERueC4qvgSttUhdmq1mXC3kJqGX7A=="
       }
     },
     "npm:through": {
@@ -17869,16 +17869,6 @@
     {
       "source": "npm:svelte-check",
       "target": "npm:chokidar",
-      "type": "static"
-    },
-    {
-      "source": "npm:svelte-check",
-      "target": "npm:fast-glob",
-      "type": "static"
-    },
-    {
-      "source": "npm:svelte-check",
-      "target": "npm:import-fresh",
       "type": "static"
     },
     {

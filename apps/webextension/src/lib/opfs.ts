@@ -19,6 +19,15 @@ export class OpfsManager {
     this.#opfsRoot = new WeakLazy(() => navigator.storage.getDirectory());
   }
 
+  async isAvailable() {
+    try {
+      const opfsRoot = await this.#opfsRoot.value;
+      return !!opfsRoot;
+    } catch {
+      return false;
+    }
+  }
+
   async save(opfsFileUrl: string, data: ArrayBufferLike | Blob) {
     const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl, true);
     const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
