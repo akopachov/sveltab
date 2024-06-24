@@ -6,11 +6,13 @@ import type { ImageBackgroundProviderSettingsBase } from './settings-base';
 import { FastAverageColorEx } from './fast-average-color-ex';
 import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
 import type { FastAverageColorResult } from 'fast-average-color';
+import { Opfs, OpfsSchema } from '$lib/opfs';
 
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
   #unsubscribeFilterChange!: () => void;
+  #unsubscribeResizeType!: () => void;
   #lastImageUrl: string | undefined | null;
   #img: HTMLImageElement | undefined;
   #dominantColor: FastAverageColorResult | undefined;
@@ -20,16 +22,25 @@ export abstract class ImageBackgroundProviderBase<
     super(node, settings);
   }
 
-  protected setImage(url: string | undefined | null): void {
-    if (this.#lastImageUrl) {
+  protected async setImage(url: string | undefined | null): Promise<void> {
+    this.#releaseBlob();
+
+    if (this.#lastImageUrl && !this.#lastImageUrl.startsWith('blob://')) {
       ResourcesToPreload.delete({ src: this.#lastImageUrl });
     }
 
-    this.#img!.src = url || '';
     if (url) {
+      if (url.startsWith(`${OpfsSchema}://`)) {
+        const blob = await Opfs.get(this.settings.url.value);
+        url = URL.createObjectURL(blob);
+      } else {
+        ResourcesToPreload.add({ src: url, as: 'image' });
+      }
+
+      this.#img!.src = url;
       this.#img!.style.visibility = 'visible';
-      ResourcesToPreload.add({ src: url, as: 'image' });
     } else {
+      this.#img!.src = '';
       this.#img!.style.visibility = 'hidden';
     }
 
@@ -48,6 +59,15 @@ export abstract class ImageBackgroundProviderBase<
     }
   }
 
+  #updateDominantColor() {
+    if (this.settings.resizeType.value === ImageResizeType.Contain) {
+      this.#dominantColor = this.#imageColor!.getDominantColor(this.#img!);
+      this.#img!.style.backgroundColor = this.#dominantColor.hex;
+    } else {
+      this.#img!.style.backgroundColor = '';
+    }
+  }
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
@@ -59,26 +79,23 @@ export abstract class ImageBackgroundProviderBase<
     this.#img.style.maxHeight = 'none';
     this.#img.crossOrigin = 'anonymous';
     this.#img.onload = () => {
-      if (this.settings.resizeType.value === ImageResizeType.Contain) {
-        this.#dominantColor = this.#imageColor!.getDominantColor(this.#img!);
-        this.#img!.style.backgroundColor = this.#dominantColor.hex;
-      } else {
-        this.#img!.style.backgroundColor = '';
-      }
-
+      this.#updateDominantColor();
       this.#updateCornerColor();
     };
-    this.#resizeObserver = new ResizeObserver(
-      debounce(() => {
-        this.#updateCornerColor();
-      }, 500),
-    );
+    const updateCornerColorDeb = debounce(() => {
+      this.#updateDominantColor();
+      this.#updateCornerColor();
+    }, 500);
+    this.#resizeObserver = new ResizeObserver(updateCornerColorDeb);
     this.#resizeObserver.observe(this.#img);
+    this.#unsubscribeResizeType = this.settings.resizeType.subscribe(updateCornerColorDeb);
     this.#applyFilters();
   }
 
   destroy(): void {
+    this.#releaseBlob();
     this.#unsubscribeFilterChange!();
+    this.#unsubscribeResizeType!();
     this.#resizeObserver?.unobserve(this.#img!);
     this.#resizeObserver?.disconnect();
     this.#imageColor?.destroy();
@@ -143,6 +160,12 @@ export abstract class ImageBackgroundProviderBase<
       this.#img!.style.objectFit = 'contain';
     } else {
       this.#img!.style.objectFit = 'cover';
+    }
+  }
+
+  #releaseBlob() {
+    if (this.#lastImageUrl?.startsWith('blob://')) {
+      URL.revokeObjectURL(this.#lastImageUrl);
     }
   }
 }
