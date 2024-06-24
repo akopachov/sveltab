@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@fontsource/inter": "^5.0.18",
-		"@iconify/json": "^2.2.221",
+		"@iconify/json": "^2.2.222",
 		"@iconify/tailwind": "^1.1.1",
 		"@iconify/utils": "^2.1.25",
 		"@neoconfetti/svelte": "^2.2.1",
@@ -30,7 +30,7 @@
 		"cssnano": "^7.0.3",
 		"cssnano-preset-default": "^7.0.3",
 		"cssnano-preset-lite": "^4.0.1",
-		"daisyui": "^4.12.2",
+		"daisyui": "^4.12.7",
 		"embla-carousel-svelte": "^8.1.5",
 		"eslint": "^9.5.0",
 		"eslint-config-prettier": "^9.1.0",

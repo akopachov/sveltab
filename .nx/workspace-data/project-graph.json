@@ -17,14 +17,14 @@
         },
         "sourceRoot": "packages/netlify-plugin-interpolate-env-variable",
         "name": "netlify-plugin-interpolate-env-variable",
-        "projectType": "library",
+        "tags": [
+          "npm:public"
+        ],
         "metadata": {
-          "targetGroups": {
-            "NPM Scripts": []
-          }
+          "targetGroups": {},
+          "description": ""
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "vite-plugin-run-generator": {
@@ -58,16 +58,18 @@
         },
         "sourceRoot": "packages/vite-plugin-run-generator",
         "name": "vite-plugin-run-generator",
-        "projectType": "library",
+        "tags": [
+          "npm:public"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
               "build"
             ]
-          }
+          },
+          "description": ""
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "iqair-redirect": {
@@ -115,7 +117,9 @@
         },
         "sourceRoot": "apps/iqair-redirect",
         "name": "iqair-redirect",
-        "projectType": "library",
+        "tags": [
+          "npm:private"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
@@ -125,8 +129,7 @@
             ]
           }
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "owm-redirect": {
@@ -174,7 +177,9 @@
         },
         "sourceRoot": "apps/owm-redirect",
         "name": "owm-redirect",
-        "projectType": "library",
+        "tags": [
+          "npm:private"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
@@ -184,8 +189,7 @@
             ]
           }
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "webextension": {
@@ -324,7 +328,9 @@
         },
         "sourceRoot": "apps/webextension",
         "name": "webextension",
-        "projectType": "library",
+        "tags": [
+          "npm:private"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
@@ -342,8 +348,7 @@
             ]
           }
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "is-wsl2": {
@@ -377,16 +382,18 @@
         },
         "sourceRoot": "packages/is-wsl2",
         "name": "is-wsl2",
-        "projectType": "library",
+        "tags": [
+          "npm:public"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
               "build"
             ]
-          }
+          },
+          "description": ""
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "landing": {
@@ -489,7 +496,9 @@
         },
         "sourceRoot": "apps/landing",
         "name": "landing",
-        "projectType": "library",
+        "tags": [
+          "npm:public"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
@@ -503,8 +512,7 @@
             ]
           }
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     },
     "preview": {
@@ -530,7 +538,9 @@
         },
         "sourceRoot": "apps/preview",
         "name": "preview",
-        "projectType": "library",
+        "tags": [
+          "npm:private"
+        ],
         "metadata": {
           "targetGroups": {
             "NPM Scripts": [
@@ -538,8 +548,7 @@
             ]
           }
         },
-        "implicitDependencies": [],
-        "tags": []
+        "implicitDependencies": []
       }
     }
   },
@@ -1309,6 +1318,24 @@
         "hash": "sha512-YCsoYPTcs713sI7tLtxaPrIhXAXvEetGg5Ry02ivA8qUOb3fQHojbK/X9HLD5OOKvFUNR2Ynkwb1kR1hVKQHpw=="
       }
     },
+    "npm:@grpc/grpc-js": {
+      "type": "npm",
+      "name": "npm:@grpc/grpc-js",
+      "data": {
+        "version": "1.10.9",
+        "packageName": "@grpc/grpc-js",
+        "hash": "sha512-5tcgUctCG0qoNyfChZifz2tJqbRbXVO9J7X6duFcOjY3HUNCxg5D0ZCK7EP9vIcZ0zRpLU9bWkyCqVCLZ46IbQ=="
+      }
+    },
+    "npm:@grpc/proto-loader": {
+      "type": "npm",
+      "name": "npm:@grpc/proto-loader",
+      "data": {
+        "version": "0.7.13",
+        "packageName": "@grpc/proto-loader",
+        "hash": "sha512-AiXO/bfe9bmxBjxxtYxFAXGZvMaN5s8kO+jBHAJCON8rJoB5YS/D6X7ZNc6XQkuHNmyl4CYaMI1fJ/Gn27RGGw=="
+      }
+    },
     "npm:@humanwhocodes/config-array": {
       "type": "npm",
       "name": "npm:@humanwhocodes/config-array",
@@ -1349,9 +1376,9 @@
       "type": "npm",
       "name": "npm:@iconify/json",
       "data": {
-        "version": "2.2.221",
+        "version": "2.2.222",
         "packageName": "@iconify/json",
-        "hash": "sha512-pCyE3Z3kOq2OmYm80nnyTrYdDzGKIyzNwM5+ABL1gguOTslhu4QBZUO+o5gMiolh3eywcOd8CgN00uBWVHbzyg=="
+        "hash": "sha512-7Q3wTaWCOk/npMrH1fyy37noARUBTb3B6daGr23+CiNCrTpV3byH+d5LEqPPVi+RT369IEKEcE8+s5MFN1hcOg=="
       }
     },
     "npm:@iconify/tailwind": {
@@ -1768,6 +1795,15 @@
         "hash": "sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ=="
       }
     },
+    "npm:@js-sdsl/ordered-map": {
+      "type": "npm",
+      "name": "npm:@js-sdsl/ordered-map",
+      "data": {
+        "version": "4.4.2",
+        "packageName": "@js-sdsl/ordered-map",
+        "hash": "sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw=="
+      }
+    },
     "npm:@kurkle/color": {
       "type": "npm",
       "name": "npm:@kurkle/color",
@@ -1817,9 +1853,9 @@
       "type": "npm",
       "name": "npm:@netlify/functions",
       "data": {
-        "version": "2.7.0",
+        "version": "2.8.0",
         "packageName": "@netlify/functions",
-        "hash": "sha512-4pXC/fuj3eGQ86wbgPiM4zY8+AsNrdz6vcv6FEdUJnZW+LqF8IWjQcY3S0d1hLeLKODYOqq4CkrzGyCpce63Nw=="
+        "hash": "sha512-kHInQKtMuFlqD7vxaJ8tjd7spv6DTrRuTovvWNDmvwTfkubVfF7KYiypsPR5wkKvSz76GHv86RBCLkjIxvwgDg=="
       }
     },
     "npm:@netlify/node-cookies": {
@@ -1835,9 +1871,9 @@
       "type": "npm",
       "name": "npm:@netlify/serverless-functions-api",
       "data": {
-        "version": "1.18.1",
+        "version": "1.18.4",
         "packageName": "@netlify/serverless-functions-api",
-        "hash": "sha512-DrSvivchuwsuQW03zbVPT3nxCQa5tn7m4aoPOsQKibuJXIuSbfxzCBxPLz0+LchU5ds7YyOaCc9872Y32ngYzg=="
+        "hash": "sha512-5R0kOKrOqhlFFrA7oduzJS+LQRjnX2CX8kJaYI9PQKIpNvzF18n+LNGWTS42YxPfIpAE64yaHbppeAigms2QTw=="
       }
     },
     "npm:@nodelib/fs.scandir": {
@@ -1871,99 +1907,99 @@
       "type": "npm",
       "name": "npm:@nrwl/tao",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nrwl/tao",
-        "hash": "sha512-MyGYeHbh9O4Tv9xmz3Du+/leY5sKUHaPy4ancfNyShHgYi21hemX0/YYjzzoYHi44D8GzSc1XG2rAuwba7Kilw=="
+        "hash": "sha512-K3VqTNwJ5/4vAaExIVmESWnQgO95MiJEgo+OzkmfkFvYTCOH2006OwvgCJFTQdjyONJ8Ao/lUPrHSDfsoevSeA=="
       }
     },
     "npm:@nx/nx-darwin-arm64": {
       "type": "npm",
       "name": "npm:@nx/nx-darwin-arm64",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-darwin-arm64",
-        "hash": "sha512-TMTxjrN7Y/UsKFjmz0YfhVItLTGWqvud8cmQchw5NEjdNakfjXk0mREufO5/5PwoiRIsen6MbThoTprLpjOUiQ=="
+        "hash": "sha512-B8kpnfBBJJE4YfSvpNPNdKLi63cyd41dZJRePkBrW/7Va/wUiHuKoyAEQZEI2WmH9ZM3RNmw7dp5vESr05Sw5g=="
       }
     },
     "npm:@nx/nx-darwin-x64": {
       "type": "npm",
       "name": "npm:@nx/nx-darwin-x64",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-darwin-x64",
-        "hash": "sha512-GH2L6ftnzdIs7JEdv7ZPCdbpAdB5sW6NijK07riYZSONzq5fEruD1yDWDkyZbYBb8RTxsparUWJnq8q1qxEPHQ=="
+        "hash": "sha512-XKY76oi7hLQAKZzGlEsqPxNWx7BOS8E801CA9k+hKNVqNJdD6Vz/1hkhzKo/TwBrPkyhdvrq+BqBMLS7ZDefKw=="
       }
     },
     "npm:@nx/nx-freebsd-x64": {
       "type": "npm",
       "name": "npm:@nx/nx-freebsd-x64",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-freebsd-x64",
-        "hash": "sha512-1ow7Xku1yyjHviCKsWiuHCAnTd3fD+5O5c+e4DXHVthT8wnadKSotvBIWf38DMbMthl7na82e72OzxcdSbrVqQ=="
+        "hash": "sha512-ZXDmzosPEq1DKC9r7UxPxF9I2GE11TmmYePcwN2xE1/you9+NUd14+SVW/jh/uH1j1n/41w0g35oNA6X0U+fGw=="
       }
     },
     "npm:@nx/nx-linux-arm-gnueabihf": {
       "type": "npm",
       "name": "npm:@nx/nx-linux-arm-gnueabihf",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-linux-arm-gnueabihf",
-        "hash": "sha512-mYQMIUvNr2gww8vbg766uk/C1RxoC1fwioeP87bmV5NRUKSzJ8WEJVxAsqc9RGhAOUaNXOgEuKYrMcVhKyIKJQ=="
+        "hash": "sha512-2Ls+08J14BmkHpkQ6DhHGdW97IcY3vvqmuwogTBrt5ATmJIim3o/O4Kp4Sq+uuotf0kae0NP986BuoFw/WW/xg=="
       }
     },
     "npm:@nx/nx-linux-arm64-gnu": {
       "type": "npm",
       "name": "npm:@nx/nx-linux-arm64-gnu",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-linux-arm64-gnu",
-        "hash": "sha512-rHL3eQ0RHkeAXnhHHu/NIyouN/ykiXvgyNU3TuCd50+2MZcAbjB+Xq3mwL0MwiP+BQuptiE+snTuxFUJp4ZH6A=="
+        "hash": "sha512-+UbThXaqKmctAavcwdYxmtZIjrojGLK4PJKdivR0awjPEJ9qXnxA0bOQk/GdbD8nse66LR2NnPeNDxxqfsh8tw=="
       }
     },
     "npm:@nx/nx-linux-arm64-musl": {
       "type": "npm",
       "name": "npm:@nx/nx-linux-arm64-musl",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-linux-arm64-musl",
-        "hash": "sha512-im0+OgOD6ShpTkI9ZRz7BjzxhQ/Lk3xjYmmCu+PFGmaybEnkNNDFwsgS0iEVKMdWZ/EQoQvJrqOYsX125iIBuQ=="
+        "hash": "sha512-JMuBbg2Zqdz4N7i+hiJGr2QdsDarDZ8vyzzeoevFq3b8nhZfqKh/lno7+Y0WkXNpH7aT05GHaUA1r1NXf/5BeQ=="
       }
     },
     "npm:@nx/nx-linux-x64-gnu": {
       "type": "npm",
       "name": "npm:@nx/nx-linux-x64-gnu",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-linux-x64-gnu",
-        "hash": "sha512-k8q/d6WBSXOeUpBq6Mw69yMKL4n9LaX3o4LBNwBkVCEZ8p6s0njwKefLtjwnKlai0g/k5f0NcilU2zTwP/Ex8g=="
+        "hash": "sha512-cVmDMtolaqK7PziWxvjus1nCyj2wMNM+N0/4+rBEjG4v47gTtBxlZJoxK02jApdV+XELehsTjd0Z/xVfO4Rl1Q=="
       }
     },
     "npm:@nx/nx-linux-x64-musl": {
       "type": "npm",
       "name": "npm:@nx/nx-linux-x64-musl",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-linux-x64-musl",
-        "hash": "sha512-sahEV99glBlpGKG1TIQ5PkJ0QvpHp69wWsBFK2DKtCETxOtsWqwvIjemxTCXRirTqeHiP7BiR6VWsf2YqqqBdw=="
+        "hash": "sha512-UGujK/TLMz9TNJ6+6HLhoOV7pdlgPVosSyeNZcoXCHOg/Mg9NGM7Hgk9jDodtcAY+TP6QMDJIMVGuXBsCE7NLQ=="
       }
     },
     "npm:@nx/nx-win32-arm64-msvc": {
       "type": "npm",
       "name": "npm:@nx/nx-win32-arm64-msvc",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-win32-arm64-msvc",
-        "hash": "sha512-w03gFwLijStmhUji70QJHYo/U16ovybNczxGO7+5TT330X8/y+ihw9FCGHiIcujAjTAE88h0DKGn05WlNqRmfg=="
+        "hash": "sha512-q+2aaRXarh/+HOOW/JXRwEnEEwPdGipsfzXBPDuDDJ7aOYKuyG7g1DlSERKdzI/aEBP+joneZbcbZHaDcEv2xw=="
       }
     },
     "npm:@nx/nx-win32-x64-msvc": {
       "type": "npm",
       "name": "npm:@nx/nx-win32-x64-msvc",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "@nx/nx-win32-x64-msvc",
-        "hash": "sha512-M7e2zXGfTjH8NLiwqKLdWC9VlfMSQDYlI4/SM4OSpPqhUTfPlRPa+wNKNTG7perKfDXxE9ei8yjocujknXJk/A=="
+        "hash": "sha512-TG4DP1lodTnIwY/CiSsc9Pk7o9/JZXgd1pP/xdHNTkrZYjE//z6TbSm+facBLuryuMhp6s/WlJaAlW241qva0Q=="
       }
     },
     "npm:@octokit/app": {
@@ -2240,9 +2276,9 @@
       "type": "npm",
       "name": "npm:@opentelemetry/api-logs",
       "data": {
-        "version": "0.50.0",
+        "version": "0.52.1",
         "packageName": "@opentelemetry/api-logs",
-        "hash": "sha512-JdZuKrhOYggqOpUljAq4WWNi5nB10PmgoF0y2CvedLGXd0kSawb/UBnWT8gg1ND3bHCNHStAIVT0ELlxJJRqrA=="
+        "hash": "sha512-qnSqB2DQ9TPP96dl8cDubDvrUyWc0/sK81xHTK8eSUspzDM3bsewX903qclQFvVhgStjRWdC5bLb3kQqMkfV5A=="
       }
     },
     "npm:@opentelemetry/api": {
@@ -2254,45 +2290,117 @@
         "hash": "sha512-3giAOQvZiH5F9bMlMiv8+GSPMeqg0dbaeo58/0SlA9sxSqZhnUtxzX9/2FzyhS9sWQf5S0GJE0AKBrFqjpeYcg=="
       }
     },
-    "npm:@opentelemetry/core@1.23.0": {
+    "npm:@opentelemetry/context-async-hooks": {
       "type": "npm",
-      "name": "npm:@opentelemetry/core@1.23.0",
+      "name": "npm:@opentelemetry/context-async-hooks",
       "data": {
-        "version": "1.23.0",
-        "packageName": "@opentelemetry/core",
-        "hash": "sha512-hdQ/a9TMzMQF/BO8Cz1juA43/L5YGtCSiKoOHmrTEf7VMDAZgy8ucpWx3eQTnQ3gBloRcWtzvcrMZABC3PTSKQ=="
+        "version": "1.25.1",
+        "packageName": "@opentelemetry/context-async-hooks",
+        "hash": "sha512-UW/ge9zjvAEmRWVapOP0qyCvPulWU6cQxGxDbWEFfGOj1VBBZAuOqTo3X6yWmDTD3Xe15ysCZChHncr2xFMIfQ=="
       }
     },
-    "npm:@opentelemetry/core@1.25.1": {
+    "npm:@opentelemetry/core": {
       "type": "npm",
-      "name": "npm:@opentelemetry/core@1.25.1",
+      "name": "npm:@opentelemetry/core",
       "data": {
         "version": "1.25.1",
         "packageName": "@opentelemetry/core",
         "hash": "sha512-GeT/l6rBYWVQ4XArluLVB6WWQ8flHbdb6r2FCHC3smtdOAbrJBIv35tpV/yp9bmYUJf+xmZpu9DRTIeJVhFbEQ=="
       }
     },
+    "npm:@opentelemetry/exporter-trace-otlp-grpc": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/exporter-trace-otlp-grpc",
+        "hash": "sha512-pVkSH20crBwMTqB3nIN4jpQKUEoB0Z94drIHpYyEqs7UBr+I0cpYyOR3bqjA/UasQUMROb3GX8ZX4/9cVRqGBQ=="
+      }
+    },
+    "npm:@opentelemetry/exporter-trace-otlp-http": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/exporter-trace-otlp-http",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/exporter-trace-otlp-http",
+        "hash": "sha512-05HcNizx0BxcFKKnS5rwOV+2GevLTVIRA0tRgWYyw4yCgR53Ic/xk83toYKts7kbzcI+dswInUg/4s8oyA+tqg=="
+      }
+    },
+    "npm:@opentelemetry/exporter-trace-otlp-proto": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/exporter-trace-otlp-proto",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/exporter-trace-otlp-proto",
+        "hash": "sha512-pt6uX0noTQReHXNeEslQv7x311/F1gJzMnp1HD2qgypLRPbXDeMzzeTngRTUaUbP6hqWNtPxuLr4DEoZG+TcEQ=="
+      }
+    },
+    "npm:@opentelemetry/exporter-zipkin": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/exporter-zipkin",
+      "data": {
+        "version": "1.25.1",
+        "packageName": "@opentelemetry/exporter-zipkin",
+        "hash": "sha512-RmOwSvkimg7ETwJbUOPTMhJm9A9bG1U8s7Zo3ajDh4zM7eYcycQ0dM7FbLD6NXWbI2yj7UY4q8BKinKYBQksyw=="
+      }
+    },
+    "npm:@opentelemetry/instrumentation": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/instrumentation",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/instrumentation",
+        "hash": "sha512-uXJbYU/5/MBHjMp1FqrILLRuiJCs3Ofk0MeRDk8g1S1gD47U8X3JnSwcMO1rtRo1x1a7zKaQHaoYu49p/4eSKw=="
+      }
+    },
+    "npm:@opentelemetry/otlp-exporter-base": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/otlp-exporter-base",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/otlp-exporter-base",
+        "hash": "sha512-z175NXOtX5ihdlshtYBe5RpGeBoTXVCKPPLiQlD6FHvpM4Ch+p2B0yWKYSrBfLH24H9zjJiBdTrtD+hLlfnXEQ=="
+      }
+    },
+    "npm:@opentelemetry/otlp-grpc-exporter-base": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/otlp-grpc-exporter-base",
+      "data": {
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/otlp-grpc-exporter-base",
+        "hash": "sha512-zo/YrSDmKMjG+vPeA9aBBrsQM9Q/f2zo6N04WMB3yNldJRsgpRBeLLwvAt/Ba7dpehDLOEFBd1i2JCoaFtpCoQ=="
+      }
+    },
     "npm:@opentelemetry/otlp-transformer": {
       "type": "npm",
       "name": "npm:@opentelemetry/otlp-transformer",
       "data": {
-        "version": "0.50.0",
+        "version": "0.52.1",
         "packageName": "@opentelemetry/otlp-transformer",
-        "hash": "sha512-s0sl1Yfqd5q1Kjrf6DqXPWzErL+XHhrXOfejh4Vc/SMTNqC902xDsC8JQxbjuramWt/+hibfguIvi7Ns8VLolA=="
+        "hash": "sha512-I88uCZSZZtVa0XniRqQWKbjAUm73I8tpEy/uJYPPYw5d7BRdVk0RfTBQw8kSUl01oVWEuqxLDa802222MYyWHg=="
       }
     },
-    "npm:@opentelemetry/resources@1.23.0": {
+    "npm:@opentelemetry/propagator-b3": {
       "type": "npm",
-      "name": "npm:@opentelemetry/resources@1.23.0",
+      "name": "npm:@opentelemetry/propagator-b3",
       "data": {
-        "version": "1.23.0",
-        "packageName": "@opentelemetry/resources",
-        "hash": "sha512-iPRLfVfcEQynYGo7e4Di+ti+YQTAY0h5mQEUJcHlU9JOqpb4x965O6PZ+wMcwYVY63G96KtdS86YCM1BF1vQZg=="
+        "version": "1.25.1",
+        "packageName": "@opentelemetry/propagator-b3",
+        "hash": "sha512-p6HFscpjrv7//kE+7L+3Vn00VEDUJB0n6ZrjkTYHrJ58QZ8B3ajSJhRbCcY6guQ3PDjTbxWklyvIN2ojVbIb1A=="
       }
     },
-    "npm:@opentelemetry/resources@1.25.1": {
+    "npm:@opentelemetry/propagator-jaeger": {
       "type": "npm",
-      "name": "npm:@opentelemetry/resources@1.25.1",
+      "name": "npm:@opentelemetry/propagator-jaeger",
+      "data": {
+        "version": "1.25.1",
+        "packageName": "@opentelemetry/propagator-jaeger",
+        "hash": "sha512-nBprRf0+jlgxks78G/xq72PipVK+4or9Ypntw0gVZYNTCSK8rg5SeaGV19tV920CMqBD/9UIOiFr23Li/Q8tiA=="
+      }
+    },
+    "npm:@opentelemetry/resources": {
+      "type": "npm",
+      "name": "npm:@opentelemetry/resources",
       "data": {
         "version": "1.25.1",
         "packageName": "@opentelemetry/resources",
@@ -2303,50 +2411,50 @@
       "type": "npm",
       "name": "npm:@opentelemetry/sdk-logs",
       "data": {
-        "version": "0.50.0",
+        "version": "0.52.1",
         "packageName": "@opentelemetry/sdk-logs",
-        "hash": "sha512-PeUEupBB29p9nlPNqXoa1PUWNLsZnxG0DCDj3sHqzae+8y76B/A5hvZjg03ulWdnvBLYpnJslqzylG9E0IL87g=="
+        "hash": "sha512-MBYh+WcPPsN8YpRHRmK1Hsca9pVlyyKd4BxOC4SsgHACnl/bPp4Cri9hWhVm5+2tiQ9Zf4qSc1Jshw9tOLGWQA=="
       }
     },
     "npm:@opentelemetry/sdk-metrics": {
       "type": "npm",
       "name": "npm:@opentelemetry/sdk-metrics",
       "data": {
-        "version": "1.23.0",
+        "version": "1.25.1",
         "packageName": "@opentelemetry/sdk-metrics",
-        "hash": "sha512-4OkvW6+wST4h6LFG23rXSTf6nmTf201h9dzq7bE0z5R9ESEVLERZz6WXwE7PSgg1gdjlaznm1jLJf8GttypFDg=="
+        "hash": "sha512-9Mb7q5ioFL4E4dDrc4wC/A3NTHDat44v4I3p2pLPSxRvqUbDIQyMVr9uK+EU69+HWhlET1VaSrRzwdckWqY15Q=="
       }
     },
-    "npm:@opentelemetry/sdk-trace-base@1.23.0": {
+    "npm:@opentelemetry/sdk-node": {
       "type": "npm",
-      "name": "npm:@opentelemetry/sdk-trace-base@1.23.0",
+      "name": "npm:@opentelemetry/sdk-node",
       "data": {
-        "version": "1.23.0",
-        "packageName": "@opentelemetry/sdk-trace-base",
-        "hash": "sha512-PzBmZM8hBomUqvCddF/5Olyyviayka44O5nDWq673np3ctnvwMOvNrsUORZjKja1zJbwEuD9niAGbnVrz3jwRQ=="
+        "version": "0.52.1",
+        "packageName": "@opentelemetry/sdk-node",
+        "hash": "sha512-uEG+gtEr6eKd8CVWeKMhH2olcCHM9dEK68pe0qE0be32BcCRsvYURhHaD1Srngh1SQcnQzZ4TP324euxqtBOJA=="
       }
     },
-    "npm:@opentelemetry/sdk-trace-base@1.25.1": {
+    "npm:@opentelemetry/sdk-trace-base": {
       "type": "npm",
-      "name": "npm:@opentelemetry/sdk-trace-base@1.25.1",
+      "name": "npm:@opentelemetry/sdk-trace-base",
       "data": {
         "version": "1.25.1",
         "packageName": "@opentelemetry/sdk-trace-base",
         "hash": "sha512-C8k4hnEbc5FamuZQ92nTOp8X/diCY56XUTnMiv9UTuJitCzaNNHAVsdm5+HLCdI8SLQsLWIrG38tddMxLVoftw=="
       }
     },
-    "npm:@opentelemetry/semantic-conventions@1.23.0": {
+    "npm:@opentelemetry/sdk-trace-node": {
       "type": "npm",
-      "name": "npm:@opentelemetry/semantic-conventions@1.23.0",
+      "name": "npm:@opentelemetry/sdk-trace-node",
       "data": {
-        "version": "1.23.0",
-        "packageName": "@opentelemetry/semantic-conventions",
-        "hash": "sha512-MiqFvfOzfR31t8cc74CTP1OZfz7MbqpAnLCra8NqQoaHJX6ncIRTdYOQYBDQ2uFISDq0WY8Y9dDTWvsgzzBYRg=="
+        "version": "1.25.1",
+        "packageName": "@opentelemetry/sdk-trace-node",
+        "hash": "sha512-nMcjFIKxnFqoez4gUmihdBrbpsEnAX/Xj16sGvZm+guceYE0NE00vLhpDVK6f3q8Q4VFI5xG8JjlXKMB/SkTTQ=="
       }
     },
-    "npm:@opentelemetry/semantic-conventions@1.25.1": {
+    "npm:@opentelemetry/semantic-conventions": {
       "type": "npm",
-      "name": "npm:@opentelemetry/semantic-conventions@1.25.1",
+      "name": "npm:@opentelemetry/semantic-conventions",
       "data": {
         "version": "1.25.1",
         "packageName": "@opentelemetry/semantic-conventions",
@@ -2396,6 +2504,96 @@
         "version": "1.0.0-next.25",
         "packageName": "@polka/url",
         "hash": "sha512-j7P6Rgr3mmtdkeDGTe0E/aYyWEWVtc5yFXtHCRHs28/jptDEWfaVOc5T7cblqy1XKPPfCxJc/8DwQ5YgLOZOVQ=="
+      }
+    },
+    "npm:@protobufjs/aspromise": {
+      "type": "npm",
+      "name": "npm:@protobufjs/aspromise",
+      "data": {
+        "version": "1.1.2",
+        "packageName": "@protobufjs/aspromise",
+        "hash": "sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ=="
+      }
+    },
+    "npm:@protobufjs/base64": {
+      "type": "npm",
+      "name": "npm:@protobufjs/base64",
+      "data": {
+        "version": "1.1.2",
+        "packageName": "@protobufjs/base64",
+        "hash": "sha512-AZkcAA5vnN/v4PDqKyMR5lx7hZttPDgClv83E//FMNhR2TMcLUhfRUBHCmSl0oi9zMgDDqRUJkSxO3wm85+XLg=="
+      }
+    },
+    "npm:@protobufjs/codegen": {
+      "type": "npm",
+      "name": "npm:@protobufjs/codegen",
+      "data": {
+        "version": "2.0.4",
+        "packageName": "@protobufjs/codegen",
+        "hash": "sha512-YyFaikqM5sH0ziFZCN3xDC7zeGaB/d0IUb9CATugHWbd1FRFwWwt4ld4OYMPWu5a3Xe01mGAULCdqhMlPl29Jg=="
+      }
+    },
+    "npm:@protobufjs/eventemitter": {
+      "type": "npm",
+      "name": "npm:@protobufjs/eventemitter",
+      "data": {
+        "version": "1.1.0",
+        "packageName": "@protobufjs/eventemitter",
+        "hash": "sha512-j9ednRT81vYJ9OfVuXG6ERSTdEL1xVsNgqpkxMsbIabzSo3goCjDIveeGv5d03om39ML71RdmrGNjG5SReBP/Q=="
+      }
+    },
+    "npm:@protobufjs/fetch": {
+      "type": "npm",
+      "name": "npm:@protobufjs/fetch",
+      "data": {
+        "version": "1.1.0",
+        "packageName": "@protobufjs/fetch",
+        "hash": "sha512-lljVXpqXebpsijW71PZaCYeIcE5on1w5DlQy5WH6GLbFryLUrBD4932W/E2BSpfRJWseIL4v/KPgBFxDOIdKpQ=="
+      }
+    },
+    "npm:@protobufjs/float": {
+      "type": "npm",
+      "name": "npm:@protobufjs/float",
+      "data": {
+        "version": "1.0.2",
+        "packageName": "@protobufjs/float",
+        "hash": "sha512-Ddb+kVXlXst9d+R9PfTIxh1EdNkgoRe5tOX6t01f1lYWOvJnSPDBlG241QLzcyPdoNTsblLUdujGSE4RzrTZGQ=="
+      }
+    },
+    "npm:@protobufjs/inquire": {
+      "type": "npm",
+      "name": "npm:@protobufjs/inquire",
+      "data": {
+        "version": "1.1.0",
+        "packageName": "@protobufjs/inquire",
+        "hash": "sha512-kdSefcPdruJiFMVSbn801t4vFK7KB/5gd2fYvrxhuJYg8ILrmn9SKSX2tZdV6V+ksulWqS7aXjBcRXl3wHoD9Q=="
+      }
+    },
+    "npm:@protobufjs/path": {
+      "type": "npm",
+      "name": "npm:@protobufjs/path",
+      "data": {
+        "version": "1.1.2",
+        "packageName": "@protobufjs/path",
+        "hash": "sha512-6JOcJ5Tm08dOHAbdR3GrvP+yUUfkjG5ePsHYczMFLq3ZmMkAD98cDgcT2iA1lJ9NVwFd4tH/iSSoe44YWkltEA=="
+      }
+    },
+    "npm:@protobufjs/pool": {
+      "type": "npm",
+      "name": "npm:@protobufjs/pool",
+      "data": {
+        "version": "1.1.0",
+        "packageName": "@protobufjs/pool",
+        "hash": "sha512-0kELaGSIDBKvcgS4zkjz1PeddatrjYcmMWOlAuAPwAeccUrPHdUqo/J6LiymHHEiJT5NrF1UVwxY14f+fy4WQw=="
+      }
+    },
+    "npm:@protobufjs/utf8": {
+      "type": "npm",
+      "name": "npm:@protobufjs/utf8",
+      "data": {
+        "version": "1.1.0",
+        "packageName": "@protobufjs/utf8",
+        "hash": "sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw=="
       }
     },
     "npm:@putout/minify": {
@@ -2861,9 +3059,9 @@
       "type": "npm",
       "name": "npm:@types/node",
       "data": {
-        "version": "20.14.7",
+        "version": "20.14.8",
         "packageName": "@types/node",
-        "hash": "sha512-uTr2m2IbJJucF3KUxgnGOZvYbN0QgkGyWxG6973HCpMYFy2KfcgYuIwkJQMQkt1VbBMlvWRbpshFTLxnxCZjKQ=="
+        "hash": "sha512-DO+2/jZinXfROG7j7WKFn/3C6nFwxy2lLpgLjEXJz+0XKphZlTLJ14mo8Vfg8X5BWN6XjyESXq+LcYdT7tR3bA=="
       }
     },
     "npm:@types/picomatch": {
@@ -2891,6 +3089,15 @@
         "version": "0.5.9",
         "packageName": "@types/randomcolor",
         "hash": "sha512-k58cfpkK15AKn1m+oRd9nh5BnuiowhbyvBBdAzcddtARMr3xRzP0VlFaAKovSG6N6Knx08EicjPlOMzDejerrQ=="
+      }
+    },
+    "npm:@types/shimmer": {
+      "type": "npm",
+      "name": "npm:@types/shimmer",
+      "data": {
+        "version": "1.0.5",
+        "packageName": "@types/shimmer",
+        "hash": "sha512-9Hp0ObzwwO57DpLFF0InUjUm/II8GmKAvzbefxQTihCb7KI6yc9yzf0nLc4mVdby5N4DRCgQM2wCup9KTieeww=="
       }
     },
     "npm:@types/unidecode": {
@@ -3035,6 +3242,15 @@
         "version": "3.0.0",
         "packageName": "abort-controller",
         "hash": "sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg=="
+      }
+    },
+    "npm:acorn-import-attributes": {
+      "type": "npm",
+      "name": "npm:acorn-import-attributes",
+      "data": {
+        "version": "1.9.5",
+        "packageName": "acorn-import-attributes",
+        "hash": "sha512-n02Vykv5uA3eHGM/Z2dQrcD56kL8TyDb2p1+0P83PClMnC/nc+anbQRhIOWnSq4Ke/KvDPrY3C9hDtC/A3eHnQ=="
       }
     },
     "npm:acorn-jsx": {
@@ -3775,6 +3991,15 @@
         "hash": "sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ=="
       }
     },
+    "npm:cjs-module-lexer": {
+      "type": "npm",
+      "name": "npm:cjs-module-lexer",
+      "data": {
+        "version": "1.3.1",
+        "packageName": "cjs-module-lexer",
+        "hash": "sha512-a3KdPAANPbNE4ZUv9h6LckSl9zLsYOP4MBmhIPkRaeyybt+r4UghLvq+xw/YwUcC1gqylCkL4rdVs3Lwupjm4Q=="
+      }
+    },
     "npm:classlist-polyfill": {
       "type": "npm",
       "name": "npm:classlist-polyfill",
@@ -4310,9 +4535,9 @@
       "type": "npm",
       "name": "npm:daisyui",
       "data": {
-        "version": "4.12.2",
+        "version": "4.12.7",
         "packageName": "daisyui",
-        "hash": "sha512-ed3EFwPRLN+9+/MYPRB1pYjk6plRCBMobfBdSeB3voAS81KdL2pCKtbwJfUUpDdOnJ0F8T6oRdVX02P6UCD0Hg=="
+        "hash": "sha512-KQN3BFs+c5eaDN6xNYbVX9ob7b830PiRF8o5m6os7e4WDTgMg8S3o21CZ/gDttNAfLS2zz1esass9oDP6pv2WA=="
       }
     },
     "npm:data-uri-to-buffer@2.0.2": {
@@ -4724,9 +4949,9 @@
       "type": "npm",
       "name": "npm:electron-to-chromium",
       "data": {
-        "version": "1.4.807",
+        "version": "1.4.810",
         "packageName": "electron-to-chromium",
-        "hash": "sha512-kSmJl2ZwhNf/bcIuCH/imtNOKlpkLDn2jqT5FJ+/0CXjhnFaOa9cOe9gHKKy71eM49izwuQjZhKk+lWQ1JxB7A=="
+        "hash": "sha512-Kaxhu4T7SJGpRQx99tq216gCq2nMxJo+uuT6uzz9l8TVN2stL7M06MIIXAtr9jsrLs2Glflgf2vMQRepxawOdQ=="
       }
     },
     "npm:embla-carousel-reactive-utils": {
@@ -5890,6 +6115,15 @@
         "hash": "sha512-veYYhQa+D1QBKznvhUHxb8faxlrwUnxseDAbAp457E0wLNio2bOSKnjYDhMj+YiAq61xrMGhQk9iXVk5FzgQMw=="
       }
     },
+    "npm:import-in-the-middle": {
+      "type": "npm",
+      "name": "npm:import-in-the-middle",
+      "data": {
+        "version": "1.8.1",
+        "packageName": "import-in-the-middle",
+        "hash": "sha512-yhRwoHtiLGvmSozNOALgjRPFI6uYsds60EoMqqnXyyv+JOIW/BrrLejuTGBt+bq0T5tLzOHrN0T7xYTm4Qt/ng=="
+      }
+    },
     "npm:import-lazy": {
       "type": "npm",
       "name": "npm:import-lazy",
@@ -6619,6 +6853,15 @@
         "hash": "sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw=="
       }
     },
+    "npm:lodash.camelcase": {
+      "type": "npm",
+      "name": "npm:lodash.camelcase",
+      "data": {
+        "version": "4.3.0",
+        "packageName": "lodash.camelcase",
+        "hash": "sha512-TwuEnCnxbc3rAvhf/LbG7tJUDzhqXyFnv3dtzLOPgCG/hODL7WFnsbwktkD7yUV0RrreP/l1PALq/YSg6VvjlA=="
+      }
+    },
     "npm:lodash.castarray": {
       "type": "npm",
       "name": "npm:lodash.castarray",
@@ -6743,6 +6986,15 @@
         "version": "4.1.0",
         "packageName": "log-symbols",
         "hash": "sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg=="
+      }
+    },
+    "npm:long": {
+      "type": "npm",
+      "name": "npm:long",
+      "data": {
+        "version": "5.2.3",
+        "packageName": "long",
+        "hash": "sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q=="
       }
     },
     "npm:lowercase-keys": {
@@ -7033,6 +7285,15 @@
         "hash": "sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA=="
       }
     },
+    "npm:module-details-from-path": {
+      "type": "npm",
+      "name": "npm:module-details-from-path",
+      "data": {
+        "version": "1.0.3",
+        "packageName": "module-details-from-path",
+        "hash": "sha512-ySViT69/76t8VhE1xXHK6Ch4NcDd26gx0MzKXLO+F7NOtnqH68d9zF94nT8ZWSxXh8ELOERsnJO/sWt1xZYw5A=="
+      }
+    },
     "npm:moment": {
       "type": "npm",
       "name": "npm:moment",
@@ -7307,9 +7568,9 @@
       "type": "npm",
       "name": "npm:nx",
       "data": {
-        "version": "19.3.0",
+        "version": "19.3.1",
         "packageName": "nx",
-        "hash": "sha512-WILWiROUkZWwuPJ12tP24Z0NULPEhxFN9i55/fECuVXYaFtkg6FvEne9C4d4bRqhZPcbrz6WhHnzE3NhdjH7XQ=="
+        "hash": "sha512-dDkhnXMpnDN5/ZJxJXz7wPlKA3pQwQmwNQ3YmTrCwucNbpwNRdwXiDgbLpjlGCtaeE9yZh2E/dAH1HNbgViJ6g=="
       }
     },
     "npm:object-assign": {
@@ -8212,6 +8473,15 @@
         "hash": "sha512-vtK/94akxsTMhe0/cbfpR+syPuszcuwhqVjJq26CuNDgFGj682oRBXOP5MJpv2r7JtE8MsiepGIqvvOTBwn2vA=="
       }
     },
+    "npm:protobufjs": {
+      "type": "npm",
+      "name": "npm:protobufjs",
+      "data": {
+        "version": "7.3.2",
+        "packageName": "protobufjs",
+        "hash": "sha512-RXyHaACeqXeqAKGLDl68rQKbmObRsTIn4TYVUUug1KfS47YWCo5MacGITEryugIgZqORCvJWEk4l449POg5Txg=="
+      }
+    },
     "npm:proxy-from-env": {
       "type": "npm",
       "name": "npm:proxy-from-env",
@@ -8462,6 +8732,15 @@
         "version": "2.0.2",
         "packageName": "require-from-string",
         "hash": "sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw=="
+      }
+    },
+    "npm:require-in-the-middle": {
+      "type": "npm",
+      "name": "npm:require-in-the-middle",
+      "data": {
+        "version": "7.3.0",
+        "packageName": "require-in-the-middle",
+        "hash": "sha512-nQFEv9gRw6SJAwWD2LrL0NmQvAcO7FBwJbwmr2ttPAacfy0xuiOjE5zt+zM4xDyuyvUaxBi/9gb2SoCyNEVJcw=="
       }
     },
     "npm:resolve-alpn": {
@@ -8795,6 +9074,15 @@
         "version": "0.1.1",
         "packageName": "shellwords",
         "hash": "sha512-vFwSUfQvqybiICwZY5+DAWIPLKsWO31Q91JSKl3UYv+K5c2QRPzn0qzec6QPu1Qc9eHYItiP3NdJqNVqetYAww=="
+      }
+    },
+    "npm:shimmer": {
+      "type": "npm",
+      "name": "npm:shimmer",
+      "data": {
+        "version": "1.2.1",
+        "packageName": "shimmer",
+        "hash": "sha512-sQTKC1Re/rM6XyFM6fIAGHRPVGvyXfgzIDvzoq608vM+jeyVD0Tu1E6Np0Kc2zAIFWIj963V2800iF/9LPieQw=="
       }
     },
     "npm:signal-exit@3.0.7": {
@@ -9224,9 +9512,9 @@
       "type": "npm",
       "name": "npm:svelte-eslint-parser",
       "data": {
-        "version": "0.39.1",
+        "version": "0.39.2",
         "packageName": "svelte-eslint-parser",
-        "hash": "sha512-0VR9gq2TOdSrJW94Qf2F3XrzXRQomXQtRZGFS3FEUr3G4J8DcpqXfBF1HJyOa3dACyGsKiBbOPF56pBgYaqXBA=="
+        "hash": "sha512-87UwLuWTtDIuzWOhOi1zBL5wYVd07M5BK1qZ57YmXJB5/UmjUNJqGy3XSOhPqjckY1dATNV9y+mx+nI0WH6HPA=="
       }
     },
     "npm:svelte-fast-dimension": {
@@ -11094,6 +11382,40 @@
         "type": "static"
       }
     ],
+    "npm:@grpc/grpc-js": [
+      {
+        "source": "npm:@grpc/grpc-js",
+        "target": "npm:@grpc/proto-loader",
+        "type": "static"
+      },
+      {
+        "source": "npm:@grpc/grpc-js",
+        "target": "npm:@js-sdsl/ordered-map",
+        "type": "static"
+      }
+    ],
+    "npm:@grpc/proto-loader": [
+      {
+        "source": "npm:@grpc/proto-loader",
+        "target": "npm:lodash.camelcase",
+        "type": "static"
+      },
+      {
+        "source": "npm:@grpc/proto-loader",
+        "target": "npm:long",
+        "type": "static"
+      },
+      {
+        "source": "npm:@grpc/proto-loader",
+        "target": "npm:protobufjs",
+        "type": "static"
+      },
+      {
+        "source": "npm:@grpc/proto-loader",
+        "target": "npm:yargs",
+        "type": "static"
+      }
+    ],
     "npm:@humanwhocodes/config-array": [
       {
         "source": "npm:@humanwhocodes/config-array",
@@ -11727,7 +12049,7 @@
       },
       {
         "source": "npm:@netlify/serverless-functions-api",
-        "target": "npm:@opentelemetry/core@1.25.1",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
@@ -11737,17 +12059,17 @@
       },
       {
         "source": "npm:@netlify/serverless-functions-api",
-        "target": "npm:@opentelemetry/resources@1.25.1",
+        "target": "npm:@opentelemetry/resources",
         "type": "static"
       },
       {
         "source": "npm:@netlify/serverless-functions-api",
-        "target": "npm:@opentelemetry/sdk-trace-base@1.25.1",
+        "target": "npm:@opentelemetry/sdk-node",
         "type": "static"
       },
       {
         "source": "npm:@netlify/serverless-functions-api",
-        "target": "npm:@opentelemetry/semantic-conventions@1.25.1",
+        "target": "npm:@opentelemetry/sdk-trace-node",
         "type": "static"
       },
       {
@@ -12280,27 +12602,231 @@
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/core@1.23.0": [
+    "npm:@opentelemetry/context-async-hooks": [
       {
-        "source": "npm:@opentelemetry/core@1.23.0",
+        "source": "npm:@opentelemetry/context-async-hooks",
         "target": "npm:@opentelemetry/api",
-        "type": "static"
-      },
-      {
-        "source": "npm:@opentelemetry/core@1.23.0",
-        "target": "npm:@opentelemetry/semantic-conventions@1.23.0",
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/core@1.25.1": [
+    "npm:@opentelemetry/core": [
       {
-        "source": "npm:@opentelemetry/core@1.25.1",
+        "source": "npm:@opentelemetry/core",
         "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/core@1.25.1",
-        "target": "npm:@opentelemetry/semantic-conventions@1.25.1",
+        "source": "npm:@opentelemetry/core",
+        "target": "npm:@opentelemetry/semantic-conventions",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/exporter-trace-otlp-grpc": [
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@grpc/grpc-js",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/otlp-transformer",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/resources",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/exporter-trace-otlp-http": [
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/otlp-exporter-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/otlp-transformer",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/resources",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/exporter-trace-otlp-proto": [
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/otlp-exporter-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/otlp-transformer",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/resources",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/exporter-zipkin": [
+      {
+        "source": "npm:@opentelemetry/exporter-zipkin",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-zipkin",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-zipkin",
+        "target": "npm:@opentelemetry/resources",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-zipkin",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/exporter-zipkin",
+        "target": "npm:@opentelemetry/semantic-conventions",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/instrumentation": [
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:@opentelemetry/api-logs",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:@types/shimmer",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:import-in-the-middle",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:require-in-the-middle",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:semver",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/instrumentation",
+        "target": "npm:shimmer",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/otlp-exporter-base": [
+      {
+        "source": "npm:@opentelemetry/otlp-exporter-base",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-exporter-base",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-exporter-base",
+        "target": "npm:@opentelemetry/otlp-transformer",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/otlp-grpc-exporter-base": [
+      {
+        "source": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "target": "npm:@grpc/grpc-js",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "target": "npm:@opentelemetry/otlp-exporter-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-grpc-exporter-base",
+        "target": "npm:@opentelemetry/otlp-transformer",
         "type": "static"
       }
     ],
@@ -12317,12 +12843,12 @@
       },
       {
         "source": "npm:@opentelemetry/otlp-transformer",
-        "target": "npm:@opentelemetry/core@1.23.0",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
         "source": "npm:@opentelemetry/otlp-transformer",
-        "target": "npm:@opentelemetry/resources@1.23.0",
+        "target": "npm:@opentelemetry/resources",
         "type": "static"
       },
       {
@@ -12337,41 +12863,53 @@
       },
       {
         "source": "npm:@opentelemetry/otlp-transformer",
-        "target": "npm:@opentelemetry/sdk-trace-base@1.23.0",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/otlp-transformer",
+        "target": "npm:protobufjs",
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/resources@1.23.0": [
+    "npm:@opentelemetry/propagator-b3": [
       {
-        "source": "npm:@opentelemetry/resources@1.23.0",
+        "source": "npm:@opentelemetry/propagator-b3",
         "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/resources@1.23.0",
-        "target": "npm:@opentelemetry/core@1.23.0",
-        "type": "static"
-      },
-      {
-        "source": "npm:@opentelemetry/resources@1.23.0",
-        "target": "npm:@opentelemetry/semantic-conventions@1.23.0",
+        "source": "npm:@opentelemetry/propagator-b3",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/resources@1.25.1": [
+    "npm:@opentelemetry/propagator-jaeger": [
       {
-        "source": "npm:@opentelemetry/resources@1.25.1",
+        "source": "npm:@opentelemetry/propagator-jaeger",
         "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/resources@1.25.1",
-        "target": "npm:@opentelemetry/core@1.25.1",
+        "source": "npm:@opentelemetry/propagator-jaeger",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/resources": [
+      {
+        "source": "npm:@opentelemetry/resources",
+        "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/resources@1.25.1",
-        "target": "npm:@opentelemetry/semantic-conventions@1.25.1",
+        "source": "npm:@opentelemetry/resources",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/resources",
+        "target": "npm:@opentelemetry/semantic-conventions",
         "type": "static"
       }
     ],
@@ -12388,12 +12926,12 @@
       },
       {
         "source": "npm:@opentelemetry/sdk-logs",
-        "target": "npm:@opentelemetry/core@1.23.0",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
         "source": "npm:@opentelemetry/sdk-logs",
-        "target": "npm:@opentelemetry/resources@1.23.0",
+        "target": "npm:@opentelemetry/resources",
         "type": "static"
       }
     ],
@@ -12405,12 +12943,12 @@
       },
       {
         "source": "npm:@opentelemetry/sdk-metrics",
-        "target": "npm:@opentelemetry/core@1.23.0",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
         "source": "npm:@opentelemetry/sdk-metrics",
-        "target": "npm:@opentelemetry/resources@1.23.0",
+        "target": "npm:@opentelemetry/resources",
         "type": "static"
       },
       {
@@ -12419,47 +12957,134 @@
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/sdk-trace-base@1.23.0": [
+    "npm:@opentelemetry/sdk-node": [
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.23.0",
+        "source": "npm:@opentelemetry/sdk-node",
         "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.23.0",
-        "target": "npm:@opentelemetry/core@1.23.0",
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/api-logs",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.23.0",
-        "target": "npm:@opentelemetry/resources@1.23.0",
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.23.0",
-        "target": "npm:@opentelemetry/semantic-conventions@1.23.0",
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/exporter-trace-otlp-grpc",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/exporter-trace-otlp-http",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/exporter-trace-otlp-proto",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/exporter-zipkin",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/instrumentation",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/resources",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/sdk-logs",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/sdk-metrics",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/sdk-trace-node",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-node",
+        "target": "npm:@opentelemetry/semantic-conventions",
         "type": "static"
       }
     ],
-    "npm:@opentelemetry/sdk-trace-base@1.25.1": [
+    "npm:@opentelemetry/sdk-trace-base": [
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.25.1",
+        "source": "npm:@opentelemetry/sdk-trace-base",
         "target": "npm:@opentelemetry/api",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.25.1",
-        "target": "npm:@opentelemetry/core@1.25.1",
+        "source": "npm:@opentelemetry/sdk-trace-base",
+        "target": "npm:@opentelemetry/core",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.25.1",
-        "target": "npm:@opentelemetry/resources@1.25.1",
+        "source": "npm:@opentelemetry/sdk-trace-base",
+        "target": "npm:@opentelemetry/resources",
         "type": "static"
       },
       {
-        "source": "npm:@opentelemetry/sdk-trace-base@1.25.1",
-        "target": "npm:@opentelemetry/semantic-conventions@1.25.1",
+        "source": "npm:@opentelemetry/sdk-trace-base",
+        "target": "npm:@opentelemetry/semantic-conventions",
+        "type": "static"
+      }
+    ],
+    "npm:@opentelemetry/sdk-trace-node": [
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/api",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/context-async-hooks",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/core",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/propagator-b3",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/propagator-jaeger",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:@opentelemetry/sdk-trace-base",
+        "type": "static"
+      },
+      {
+        "source": "npm:@opentelemetry/sdk-trace-node",
+        "target": "npm:semver",
         "type": "static"
       }
     ],
@@ -12484,6 +13109,18 @@
       {
         "source": "npm:@pnpm/npm-conf",
         "target": "npm:config-chain",
+        "type": "static"
+      }
+    ],
+    "npm:@protobufjs/fetch": [
+      {
+        "source": "npm:@protobufjs/fetch",
+        "target": "npm:@protobufjs/aspromise",
+        "type": "static"
+      },
+      {
+        "source": "npm:@protobufjs/fetch",
+        "target": "npm:@protobufjs/inquire",
         "type": "static"
       }
     ],
@@ -13083,6 +13720,13 @@
       {
         "source": "npm:abort-controller",
         "target": "npm:event-target-shim",
+        "type": "static"
+      }
+    ],
+    "npm:acorn-import-attributes": [
+      {
+        "source": "npm:acorn-import-attributes",
+        "target": "npm:acorn",
         "type": "static"
       }
     ],
@@ -16248,6 +16892,28 @@
         "type": "static"
       }
     ],
+    "npm:import-in-the-middle": [
+      {
+        "source": "npm:import-in-the-middle",
+        "target": "npm:acorn",
+        "type": "static"
+      },
+      {
+        "source": "npm:import-in-the-middle",
+        "target": "npm:acorn-import-attributes",
+        "type": "static"
+      },
+      {
+        "source": "npm:import-in-the-middle",
+        "target": "npm:cjs-module-lexer",
+        "type": "static"
+      },
+      {
+        "source": "npm:import-in-the-middle",
+        "target": "npm:module-details-from-path",
+        "type": "static"
+      }
+    ],
     "npm:inflight": [
       {
         "source": "npm:inflight",
@@ -18218,6 +18884,68 @@
         "type": "static"
       }
     ],
+    "npm:protobufjs": [
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/aspromise",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/base64",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/codegen",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/eventemitter",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/fetch",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/float",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/inquire",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/path",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/pool",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@protobufjs/utf8",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:@types/node",
+        "type": "static"
+      },
+      {
+        "source": "npm:protobufjs",
+        "target": "npm:long",
+        "type": "static"
+      }
+    ],
     "npm:pump": [
       {
         "source": "npm:pump",
@@ -18504,6 +19232,23 @@
       {
         "source": "npm:relaxed-json",
         "target": "npm:commander@2.20.3",
+        "type": "static"
+      }
+    ],
+    "npm:require-in-the-middle": [
+      {
+        "source": "npm:require-in-the-middle",
+        "target": "npm:debug@4.3.5",
+        "type": "static"
+      },
+      {
+        "source": "npm:require-in-the-middle",
+        "target": "npm:module-details-from-path",
+        "type": "static"
+      },
+      {
+        "source": "npm:require-in-the-middle",
+        "target": "npm:resolve",
         "type": "static"
       }
     ],

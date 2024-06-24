@@ -5,7 +5,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^2.7.0",
+    "@netlify/functions": "^2.8.0",
     "geo-position.ts": "^1.4.1",
     "unidecode": "^1.1.0"
   },
