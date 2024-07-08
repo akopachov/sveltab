@@ -9,7 +9,7 @@
   function inc() {
     let v = value || 0;
     v += step;
-    if (!max || v <= max) {
+    if (max === undefined || v <= max) {
       value = v;
     }
   }
@@ -17,7 +17,7 @@
   function dec() {
     let v = value || 0;
     v -= step;
-    if (!min || v >= min) {
+    if (min === undefined || v >= min) {
       value = v;
     }
   }

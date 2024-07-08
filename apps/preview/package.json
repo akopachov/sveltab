@@ -5,14 +5,14 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@netlify/functions": "^2.8.0",
+    "@netlify/functions": "^2.8.1",
     "geo-position.ts": "^1.4.1",
     "unidecode": "^1.1.0"
   },
   "devDependencies": {
     "@types/unidecode": "^0.1.3",
     "netlify-plugin-interpolate-env-variable": "workspace:*",
-    "typescript": "^5.5.2",
+    "typescript": "^5.5.3",
     "webextension": "workspace:*"
   },
   "type": "module"

@@ -1,0 +1,149 @@
+<script lang="ts">
+  import type { Settings } from './settings';
+  import { fontsource } from '$actions/fontsource';
+  import { locale, userPosssibleLocaleCharSubset } from '$stores/locale';
+  import { type HolidayInfo, getHolidayInfo } from './api';
+  import { onMount } from 'svelte';
+  import { storage } from '$stores/storage';
+  import { getClockStore } from '$stores/clock-store';
+  import { differenceInDays, minutesToMilliseconds } from 'date-fns';
+  import { online } from '$stores/online-store';
+
+  type CachedHoliday = Omit<HolidayInfo, 'date'> & { date: number };
+  type CachedHolidays = { lastUpdate: number; holidays: CachedHoliday[]; country: string; loadedYears: number[] };
+  let now = getClockStore(minutesToMilliseconds(10));
+
+  export let settings: Settings;
+  export let id: string;
+
+  const storageKey = `Widget_Holidays_${id}_CachedHolidays`;
+
+  $: shortDateFormat = new Intl.DateTimeFormat($locale, {
+    month: 'short',
+    day: 'numeric',
+  });
+  $: longDateFormat = new Intl.DateTimeFormat($locale, {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    weekday: 'long',
+  });
+
+  const {
+    country,
+    pastCount,
+    upcommingCount,
+    backgroundColor,
+    backgroundBlur,
+    textColor,
+    font: { id: fontId, weight: fontWeight },
+    textShadow: {
+      offsetX: textShadowOffsetX,
+      offsetY: textShadowOffsetY,
+      blur: textShadowBlur,
+      color: textShadowColor,
+    },
+  } = settings;
+
+  let cache: CachedHolidays;
+
+  $: closestHolidayIndex = cache ? getClosestHolidayIndex(cache.holidays, $now) : -1;
+  $: visibleHolidays = cache
+    ? cache.holidays.slice(
+        Math.max(0, closestHolidayIndex - $pastCount),
+        Math.min(closestHolidayIndex + $upcommingCount, cache.holidays.length - 1),
+      )
+    : [];
+
+  $: {
+    ($country || $upcommingCount || $pastCount || $now || $online) && updateIfNeeded();
+  }
+
+  onMount(async () => {
+    cache = <CachedHolidays>(await storage.local.get(storageKey))[storageKey] || {
+      lastUpdate: 0,
+      holidays: [],
+    };
+    updateIfNeeded();
+  });
+
+  async function updateIfNeeded() {
+    if (
+      !cache ||
+      cache.holidays.length === 0 ||
+      differenceInDays($now, cache.lastUpdate) > 0 ||
+      cache.country !== $country ||
+      closestHolidayIndex + $upcommingCount >= cache.holidays.length ||
+      closestHolidayIndex - $pastCount < 0
+    ) {
+      await loadNewHolidays();
+    }
+  }
+
+  async function loadNewHolidays() {
+    if (!navigator.onLine) {
+      return;
+    }
+
+    const now = new Date();
+    let holidays = await getHolidayInfo($country, now.getFullYear());
+    const closestCurrentIndex = getClosestHolidayIndex(holidays, now);
+    if (closestCurrentIndex - $pastCount < 0) {
+      const previousHolidays = await getHolidayInfo($country, now.getFullYear() - 1);
+      holidays = [...previousHolidays, ...holidays];
+    }
+    if (closestCurrentIndex + $upcommingCount >= holidays.length) {
+      const nextHolidays = await getHolidayInfo($country, now.getFullYear() + 1);
+      holidays.push(...nextHolidays);
+    }
+
+    cache.holidays = holidays.map(holiday => ({ ...holiday, date: new Date(holiday.date).getTime() }));
+    cache.lastUpdate = Date.now();
+    cache.country = $country;
+    cache = cache;
+    await storage.local.set({ [storageKey]: cache });
+  }
+
+  function getClosestHolidayIndex(holidays: (HolidayInfo | CachedHoliday)[], now: Date) {
+    let minDifference = Number.MAX_SAFE_INTEGER;
+
+    for (let i = 0; i < holidays.length; i++) {
+      const currentHoliday = holidays[i];
+      const difference = Math.abs(differenceInDays(currentHoliday.date, now));
+      if (difference > minDifference) {
+        return i - 1;
+      }
+
+      minDifference = difference;
+    }
+
+    return holidays.length - 1;
+  }
+</script>
+
+<div
+  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)]"
+  style:background-color={$backgroundColor}
+  style:color={$textColor}
+  style:font-weight={$fontWeight}
+  style:--st-blur="{$backgroundBlur}px"
+  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
+  {$textShadowColor}"
+  style:--st-font-size="{visibleHolidays.length > 0 ? 48 / visibleHolidays.length : 0}cqh"
+  use:fontsource={{
+    font: $fontId,
+    subsets: $userPosssibleLocaleCharSubset,
+    styles: ['normal'],
+    weights: [$fontWeight],
+  }}>
+  <ul class="list text-[length:var(--st-font-size)] leading-normal">
+    {#each visibleHolidays as holiday}
+      <li>
+        <time class="flex-auto" title={longDateFormat.format(holiday.date)}>
+          {shortDateFormat.format(holiday.date)}
+        </time>
+        <span class="flex-auto" title={holiday.types.join(',')}>{holiday.localName}</span>
+      </li>
+    {/each}
+  </ul>
+</div>

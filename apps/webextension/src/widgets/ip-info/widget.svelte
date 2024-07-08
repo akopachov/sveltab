@@ -1,24 +1,21 @@
-<script context="module" lang="ts">
-  declare global {
-    interface Navigator {
-      connection: EventTarget | undefined;
-    }
-  }
-</script>
-
 <script lang="ts">
   import { NetworkInfoVariables, type Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
   import { getGeoIpInfo, type IpApiCoResponse } from '$lib/ipapi-co';
   import { logger } from '$lib/logger';
-  import { onDestroy, onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  import { online } from '$stores/online-store';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Ip Info'] });
 
   export let settings: Settings;
 
   let ipInfo: IpApiCoResponse | null = null;
+
+  $: {
+    $online && updateIpInfo();
+  }
 
   const {
     backgroundColor,
@@ -49,19 +46,6 @@
 
   onMount(() => {
     updateIpInfo();
-    if (navigator.connection) {
-      navigator.connection.addEventListener('change', updateIpInfo);
-    } else {
-      window.addEventListener('online', updateIpInfo);
-    }
-  });
-
-  onDestroy(() => {
-    if (navigator.connection) {
-      navigator.connection.removeEventListener('change', updateIpInfo);
-    } else {
-      window.removeEventListener('online', updateIpInfo);
-    }
   });
 </script>
 

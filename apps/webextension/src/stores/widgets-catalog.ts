@@ -22,6 +22,7 @@ import { Widget as AnalogueClockWidget } from '$widgets/analogue-clock';
 import { Widget as CryptoAssetQuotationWidget } from '$widgets/crypto-assets-quotation';
 import { Widget as AirQualityWidget } from '$widgets/air-quality';
 import { Widget as IpInfoWidget } from '$widgets/ip-info';
+import { Widget as HolidaysWidget } from '$widgets/holidays';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
   position: Omit<WidgetPositionInitial, 'x' | 'y' | 'positionUnits' | 'sizeUnits'> &
@@ -63,4 +64,5 @@ export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   HtmlWidget,
   CryptoAssetQuotationWidget,
   IpInfoWidget,
+  HolidaysWidget,
 ];
