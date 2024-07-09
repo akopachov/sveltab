@@ -1,13 +1,25 @@
+<script lang="ts" context="module">
+  const TypeDisplayNameMap = {
+    [HolidayType.Public]: m.Widgets_Holidays_Settings_Types_Public,
+    [HolidayType.Bank]: m.Widgets_Holidays_Settings_Types_Bank,
+    [HolidayType.School]: m.Widgets_Holidays_Settings_Types_School,
+    [HolidayType.Optional]: m.Widgets_Holidays_Settings_Types_Optional,
+    [HolidayType.Authorities]: m.Widgets_Holidays_Settings_Types_Authorities,
+    [HolidayType.Observance]: m.Widgets_Holidays_Settings_Types_Observance,
+  };
+</script>
+
 <script lang="ts">
   import type { Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { locale, userPosssibleLocaleCharSubset } from '$stores/locale';
-  import { type HolidayInfo, getHolidayInfo } from './api';
+  import { type HolidayInfo, HolidayType, getHolidayInfo } from './api';
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { getClockStore } from '$stores/clock-store';
   import { differenceInDays, minutesToMilliseconds } from 'date-fns';
   import { online } from '$stores/online-store';
+  import * as m from '$i18n/messages';
 
   type CachedHoliday = Omit<HolidayInfo, 'date'> & { date: number };
   type CachedHolidays = { lastUpdate: number; holidays: CachedHoliday[]; country: string; loadedYears: number[] };
@@ -122,6 +134,16 @@
 
     return holidays.length - 1;
   }
+
+  function getHolidayHint(holiday: CachedHoliday) {
+    const types = holiday.types.map(m => TypeDisplayNameMap[m]()).join(', ');
+    if (holiday.counties && holiday.counties.length > 0) {
+      const counties = holiday.counties.join(', ');
+      return `${types} (${counties})`;
+    }
+
+    return types;
+  }
 </script>
 
 <div
@@ -145,7 +167,9 @@
         <time class="flex-auto" title={longDateFormat.format(holiday.date)}>
           {shortDateFormat.format(holiday.date)}
         </time>
-        <span class="flex-auto" title={holiday.types.join(',')}>{holiday.localName}</span>
+        <span class="flex-auto" title={getHolidayHint(holiday)}>
+          {holiday.localName}
+        </span>
       </li>
     {/each}
   </ul>

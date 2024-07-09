@@ -1,6 +1,6 @@
 <script lang="ts">
   import ColorPicker from '$shared-components/color-picker.svelte';
-  import { RangeSlider, SlideToggle } from '@skeletonlabs/skeleton';
+  import { RangeSlider } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import { TextTabId, BackgroundTabId, TypesTabId } from './settings-tabs';
   import FontSelector from '$shared-components/font-selector.svelte';
