@@ -5,6 +5,7 @@ import {
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
+import { HolidayType } from './api';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
@@ -17,6 +18,7 @@ export class Settings extends WidgetSettingsExtra {
     this.country = useObservable(initial.country || 'US');
     this.upcommingCount = useObservable(initial.upcommingCount || 5);
     this.pastCount = useObservable(initial.pastCount || 0);
+    this.typesOfInterest = useObservable(initial.typesOfInterest || [HolidayType.Public]);
   }
 
   readonly backgroundColor: Observable<string>;
@@ -27,4 +29,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly country: Observable<string>;
   readonly upcommingCount: Observable<number>;
   readonly pastCount: Observable<number>;
+  readonly typesOfInterest: Observable<HolidayType[]>;
 }

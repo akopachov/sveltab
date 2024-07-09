@@ -1,6 +1,13 @@
 const BASE_API_URL = 'https://date.nager.at';
 
-export type HolidayType = 'Public' | 'Bank' | 'School' | 'Authorities' | 'Optional' | 'Observance';
+export enum HolidayType {
+  Public = 'Public',
+  Bank = 'Bank',
+  School = 'School',
+  Authorities = 'Authorities',
+  Optional = 'Optional',
+  Observance = 'Observance',
+}
 
 export type HolidayInfo = {
   date: string;

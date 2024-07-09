@@ -2,19 +2,20 @@
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider, SlideToggle } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
+  import { TextTabId, BackgroundTabId, TypesTabId } from './settings-tabs';
   import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import NumberInput from '$shared-components/number-input.svelte';
   import { locale } from '$stores/locale';
-  import { getAvailableCountryCodes } from './api';
+  import { getAvailableCountryCodes, HolidayType } from './api';
 
   export let settings: Settings;
   export let tab: number;
 
-  const { font, textColor, backgroundColor, backgroundBlur, country, upcommingCount, pastCount } = settings;
+  const { font, textColor, backgroundColor, backgroundBlur, country, upcommingCount, pastCount, typesOfInterest } =
+    settings;
   $: countryDisplayNames = new Intl.DisplayNames([$locale], { type: 'region' });
   let availableCountries = [$country];
 
@@ -49,6 +50,31 @@
     <div>
       <NumberInput bind:value={$upcommingCount} min={0} />
     </div>
+  </label>
+{:else if tab === TypesTabId}
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.Public} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_Public()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.Bank} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_Bank()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.School} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_School()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.Authorities} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_Authorities()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.Optional} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_Optional()}</p>
+  </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input class="checkbox" type="checkbox" value={HolidayType.Observance} bind:group={$typesOfInterest} />
+    <p>{m.Widgets_Holidays_Settings_Types_Observance()}</p>
   </label>
 {:else if tab === TextTabId}
   <div>

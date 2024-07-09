@@ -36,6 +36,7 @@
     backgroundColor,
     backgroundBlur,
     textColor,
+    typesOfInterest,
     font: { id: fontId, weight: fontWeight },
     textShadow: {
       offsetX: textShadowOffsetX,
@@ -47,11 +48,13 @@
 
   let cache: CachedHolidays;
 
-  $: closestHolidayIndex = cache ? getClosestHolidayIndex(cache.holidays, $now) : -1;
+  $: typesOfInterestSet = new Set($typesOfInterest);
+  $: holidaysOfInterest = cache ? cache.holidays.filter(f => f.types.some(t => typesOfInterestSet.has(t))) : [];
+  $: closestHolidayIndex = cache ? getClosestHolidayIndex(holidaysOfInterest, $now) : -1;
   $: visibleHolidays = cache
-    ? cache.holidays.slice(
+    ? holidaysOfInterest.slice(
         Math.max(0, closestHolidayIndex - $pastCount),
-        Math.min(closestHolidayIndex + $upcommingCount, cache.holidays.length - 1),
+        Math.min(closestHolidayIndex + $upcommingCount, holidaysOfInterest.length - 1),
       )
     : [];
 
@@ -73,7 +76,7 @@
       cache.holidays.length === 0 ||
       differenceInDays($now, cache.lastUpdate) > 0 ||
       cache.country !== $country ||
-      closestHolidayIndex + $upcommingCount >= cache.holidays.length ||
+      closestHolidayIndex + $upcommingCount >= holidaysOfInterest.length ||
       closestHolidayIndex - $pastCount < 0
     ) {
       await loadNewHolidays();
