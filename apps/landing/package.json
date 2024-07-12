@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@fontsource/inter": "^5.0.19",
-		"@iconify/json": "^2.2.225",
+		"@iconify/json": "^2.2.226",
 		"@iconify/tailwind": "^1.1.1",
 		"@iconify/utils": "^2.1.25",
 		"@neoconfetti/svelte": "^2.2.1",
@@ -34,7 +34,7 @@
 		"embla-carousel-svelte": "^8.1.6",
 		"eslint": "^9.6.0",
 		"eslint-config-prettier": "^9.1.0",
-		"eslint-plugin-svelte": "^2.41.0",
+		"eslint-plugin-svelte": "^2.42.0",
 		"is-wsl2": "workspace:*",
 		"postcss": "^8.4.39",
 		"postcss-load-config": "^6.0.1",
