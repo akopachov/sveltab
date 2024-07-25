@@ -13,7 +13,9 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundColor = useObservable(initial.backgroundColor || '#fff');
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.textColor = useObservable(initial.textColor || '#000');
+    this.textColorToday = useObservable(initial.textColorToday || '#000');
     this.font = new FontSettings(initial.font || {});
+    this.fontToday = new FontSettings(initial.fontToday || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.country = useObservable(initial.country || 'US');
     this.upcommingCount = useObservable(initial.upcommingCount || 5);
@@ -24,7 +26,9 @@ export class Settings extends WidgetSettingsExtra {
   readonly backgroundColor: Observable<string>;
   readonly backgroundBlur: Observable<number>;
   readonly textColor: Observable<string>;
+  readonly textColorToday: Observable<string>;
   readonly font: FontSettings;
+  readonly fontToday: FontSettings;
   readonly textShadow: ShadowSettings;
   readonly country: Observable<string>;
   readonly upcommingCount: Observable<number>;

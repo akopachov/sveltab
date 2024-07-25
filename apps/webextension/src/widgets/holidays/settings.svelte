@@ -14,8 +14,18 @@
   export let settings: Settings;
   export let tab: number;
 
-  const { font, textColor, backgroundColor, backgroundBlur, country, upcommingCount, pastCount, typesOfInterest } =
-    settings;
+  const {
+    font,
+    fontToday,
+    textColor,
+    textColorToday,
+    backgroundColor,
+    backgroundBlur,
+    country,
+    upcommingCount,
+    pastCount,
+    typesOfInterest,
+  } = settings;
   $: countryDisplayNames = new Intl.DisplayNames([$locale], { type: 'region' });
   let availableCountries = [$country];
 
@@ -81,6 +91,10 @@
     <div class="label mb-2">
       <span>{m.Widgets_Holidays_Settings_Font()}</span>
       <FontSelector {font} bind:color={$textColor} />
+    </div>
+    <div class="label mb-2">
+      <span>{m.Widgets_Holidays_Settings_FontToday()}</span>
+      <FontSelector font={fontToday} bind:color={$textColorToday} />
     </div>
     <div>
       <h4>{m.Widgets_Holidays_Settings_Shadow()}</h4>

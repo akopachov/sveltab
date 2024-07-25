@@ -337,5 +337,24 @@
   "Widgets_IpInfo_Settings_Font": "Шрыфт",
   "Widgets_IpInfo_Settings_Shadow": "Цень",
   "Widgets_IpInfo_Settings_Color": "Колер",
-  "Widgets_IpInfo_Settings_Blur": "Размыццё"
+  "Widgets_IpInfo_Settings_Blur": "Размыццё",
+
+  "Widgets_Holidays_Name": "Святы",
+  "Widgets_Holidays_Settings_Tabs_Types": "Тып",
+  "Widgets_Holidays_Settings_Tabs_Text": "Тэкст",
+  "Widgets_Holidays_Settings_Tabs_Background": "Фон",
+  "Widgets_Holidays_Settings_Types_Public": "Публічны (Дзяржаўны свято, афісы і банкі зачыненыя)",
+  "Widgets_Holidays_Settings_Types_Bank": "Банк (Банкі зачыненыя)",
+  "Widgets_Holidays_Settings_Types_School": "Школа (Школы зачыненыя)",
+  "Widgets_Holidays_Settings_Types_Authorities": "Органы ўлады (органы ўлады зачыненыя)",
+  "Widgets_Holidays_Settings_Types_Optional": "Неабавязкова (большасць людзей бяруць выхадны)",
+  "Widgets_Holidays_Settings_Types_Observance": "Святкаванне (неабавязковае свята, не аплачваецца выхадны)",
+  "Widgets_Holidays_Settings_Font": "Шрыфт",
+  "Widgets_Holidays_Settings_FontToday": "Шрыфт для сённяшняга свята",
+  "Widgets_Holidays_Settings_Shadow": "Цень",
+  "Widgets_Holidays_Settings_Color": "Колер",
+  "Widgets_Holidays_Settings_Blur": "Размыццё",
+  "Widgets_Holidays_Settings_PastCount": "Колькасць мінулых святаў для паказу",
+  "Widgets_Holidays_Settings_UpcommingCount": "Колькасць будучых святаў для паказу",
+  "Widgets_Holidays_Settings_Country": "Краіна"
 }

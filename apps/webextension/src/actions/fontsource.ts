@@ -52,27 +52,26 @@ export type FontChangedEventDetails = { target: HTMLElement; fontFamily: string 
 
 export const fontsource: Action<
   HTMLElement,
-  FontSourceActionSettings,
+  FontSourceActionSettings | undefined | null,
   { 'on:fontChanged': (e: CustomEvent<FontChangedEventDetails>) => void }
-> = function (node: HTMLElement, settings: FontSourceActionSettings) {
+> = function (node: HTMLElement, settings: FontSourceActionSettings | undefined | null) {
   let currentFont: string | null = '';
   const currentSubsets: Set<FontSubset> = new Set<FontSubset>();
   const currentWeights: Set<FontWeight> = new Set<FontWeight>();
   const currentStyles: Set<FontStyle> = new Set<FontStyle>();
 
-  async function updateFont(s: FontSourceActionSettings) {
+  async function updateFont(s: FontSourceActionSettings | undefined | null) {
     if (
-      currentFont === s.font &&
+      currentFont === s?.font &&
       (!s.subsets || s.subsets.every(v => currentSubsets.has(v))) &&
       (!s.weights || s.weights.every(v => currentWeights.has(v))) &&
       (!s.styles || s.styles.every(v => currentStyles.has(v)))
     )
       return;
 
-    const fontId = s.font;
-
     const fontFacesToRemove = await removeCurrentFont();
-    if (fontId) {
+    if (s?.font) {
+      const fontId = s.font;
       let activeFontRefPromise = ActiveFonts.get(fontId);
       if (!activeFontRefPromise) {
         activeFontRefPromise = new Promise(resolve => {
@@ -145,7 +144,7 @@ export const fontsource: Action<
                 unicodeRange: unicodeRange,
               });
               fontFaceSources.set(fontFace, uri);
-              if (settings.noPreload !== true) {
+              if (settings?.noPreload !== true) {
                 ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
               }
               document.fonts.add(fontFace);
@@ -174,7 +173,7 @@ export const fontsource: Action<
       fontFacesToRemove.forEach(f => document.fonts.delete(f));
     }
 
-    currentFont = fontId;
+    currentFont = s?.font || null;
   }
 
   async function removeCurrentFont() {
@@ -199,7 +198,7 @@ export const fontsource: Action<
                   const uri = fontFaceSources.get(fontFace);
                   if (uri) {
                     fontFaceSources.delete(fontFace);
-                    if (settings.noPreload !== true) {
+                    if (settings?.noPreload !== true) {
                       ResourcesToPreload.delete({ src: uri });
                     }
                   }
@@ -221,7 +220,7 @@ export const fontsource: Action<
   updateFont(settings);
 
   return {
-    update(settings: FontSourceActionSettings) {
+    update(settings: FontSourceActionSettings | null | undefined) {
       updateFont(settings);
     },
     destroy() {

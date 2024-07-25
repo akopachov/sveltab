@@ -17,7 +17,7 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { getClockStore } from '$stores/clock-store';
-  import { differenceInDays, minutesToMilliseconds } from 'date-fns';
+  import { differenceInDays, minutesToMilliseconds, isToday, formatISO } from 'date-fns';
   import { online } from '$stores/online-store';
   import * as m from '$i18n/messages';
 
@@ -48,8 +48,10 @@
     backgroundColor,
     backgroundBlur,
     textColor,
+    textColorToday,
     typesOfInterest,
     font: { id: fontId, weight: fontWeight },
+    fontToday: { id: todayFontId, weight: todayFontWeight },
     textShadow: {
       offsetX: textShadowOffsetX,
       offsetY: textShadowOffsetY,
@@ -163,8 +165,18 @@
   }}>
   <ul class="list text-[length:var(--st-font-size)] leading-normal">
     {#each visibleHolidays as holiday}
-      <li>
-        <time class="flex-auto" title={longDateFormat.format(holiday.date)}>
+      <li
+        class:today={isToday(holiday.date)}
+        style:color={isToday(holiday.date) ? $textColorToday : ''}
+        use:fontsource={isToday(holiday.date)
+          ? {
+              font: $todayFontId,
+              subsets: $userPosssibleLocaleCharSubset,
+              styles: ['normal'],
+              weights: [$todayFontWeight],
+            }
+          : null}>
+        <time class="flex-auto" title={longDateFormat.format(holiday.date)} datetime={formatISO(holiday.date)}>
           {shortDateFormat.format(holiday.date)}
         </time>
         <span class="flex-auto" title={getHolidayHint(holiday)}>

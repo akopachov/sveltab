@@ -333,5 +333,24 @@
   "Widgets_IpInfo_Settings_Font": "Czcionka",
   "Widgets_IpInfo_Settings_Shadow": "Cień",
   "Widgets_IpInfo_Settings_Color": "Kolor",
-  "Widgets_IpInfo_Settings_Blur": "Rozmywanie"
+  "Widgets_IpInfo_Settings_Blur": "Rozmywanie",
+
+  "Widgets_Holidays_Name": "Święta",
+  "Widgets_Holidays_Settings_Tabs_Types": "Typy",
+  "Widgets_Holidays_Settings_Tabs_Text": "Tekst",
+  "Widgets_Holidays_Settings_Tabs_Background": "Tło",
+  "Widgets_Holidays_Settings_Types_Public": "Publiczne (Dni wolne od pracy)",
+  "Widgets_Holidays_Settings_Types_Bank": "Bankowe (Banki są zamknięte)",
+  "Widgets_Holidays_Settings_Types_School": "Szkolne (Szkoly są zamknięte)",
+  "Widgets_Holidays_Settings_Types_Authorities": "Władze (Urzędy są zamknięte)",
+  "Widgets_Holidays_Settings_Types_Optional": "Opcjonalne (Większość ludzi bierze dzień wolny)",
+  "Widgets_Holidays_Settings_Types_Observance": "Obserwacja (Opcjonalne święto, bez płatnego dnia wolnego)",
+  "Widgets_Holidays_Settings_Font": "Czcionka",
+  "Widgets_Holidays_Settings_FontToday": "Czcionka dzisiejszego święta",
+  "Widgets_Holidays_Settings_Shadow": "Cień",
+  "Widgets_Holidays_Settings_Color": "Kolor",
+  "Widgets_Holidays_Settings_Blur": "Rozmywanie",
+  "Widgets_Holidays_Settings_PastCount": "Ilość przeszłych świąt do pokazania",
+  "Widgets_Holidays_Settings_UpcommingCount": "Ilość nadchodzących świąt do pokazania",
+  "Widgets_Holidays_Settings_Country": "Kraj"
 }
