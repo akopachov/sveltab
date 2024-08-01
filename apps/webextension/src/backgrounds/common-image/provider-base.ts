@@ -5,8 +5,11 @@ import debounce from 'debounce';
 import type { ImageBackgroundProviderSettingsBase } from './settings-base';
 import { FastAverageColorEx } from './fast-average-color-ex';
 import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
-import type { FastAverageColorResult } from 'fast-average-color';
 import { Opfs, OpfsSchema } from '$lib/opfs';
+import { Lazy } from '$lib/lazy';
+import { storage } from '$stores/storage';
+
+const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
@@ -15,9 +18,13 @@ export abstract class ImageBackgroundProviderBase<
   #unsubscribeResizeType!: () => void;
   #lastImageUrl: string | undefined | null;
   #img: HTMLImageElement | undefined;
-  #dominantColor: FastAverageColorResult | undefined;
-  #imageColor: FastAverageColorEx | undefined;
+  #imageColor = new Lazy(() => new FastAverageColorEx());
   #resizeObserver: ResizeObserver | undefined;
+  #sharedMeta: {
+    url?: string;
+    dominant?: { color: string; isDark: boolean };
+    corner?: { x: number; y: number; color: string; isDark: boolean };
+  } = {};
   constructor(node: HTMLElement, settings: T) {
     super(node, settings);
   }
@@ -27,6 +34,11 @@ export abstract class ImageBackgroundProviderBase<
 
     if (this.#lastImageUrl && !this.#lastImageUrl.startsWith('blob://')) {
       ResourcesToPreload.delete({ src: this.#lastImageUrl });
+    }
+
+    if (this.#sharedMeta.url !== url) {
+      this.#sharedMeta = { url: url || '' };
+      this.#updateSharedMeta();
     }
 
     if (url) {
@@ -48,21 +60,63 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   #updateCornerColor() {
-    const cornerColorResult = this.#imageColor!.getCornerColor(this.#img!, 43) || this.#dominantColor!;
+    let updateCornerColor = false;
+    if (!this.#sharedMeta.corner?.color) {
+      updateCornerColor = true;
+    } else {
+      const { top, left } = this.#imageColor.value.getViewPort(this.#img!);
+      updateCornerColor = this.#sharedMeta.corner.x !== left || this.#sharedMeta.corner.y !== top;
+    }
 
-    if (cornerColorResult) {
+    if (updateCornerColor) {
+      const cornerColorResult = this.#imageColor.value.getCornerColor(this.#img!, 43);
+      if (cornerColorResult) {
+        this.#sharedMeta.corner = {
+          x: cornerColorResult.x,
+          y: cornerColorResult.y,
+          color: cornerColorResult.color.hex,
+          isDark: cornerColorResult.color.isDark,
+        };
+      }
+      this.#updateSharedMeta();
+    }
+
+    if (!this.#sharedMeta.corner?.color) {
+      if (!this.#sharedMeta.dominant?.color) {
+        const dominantColor = this.#imageColor.value.getDominantColor(this.#img!);
+        this.#sharedMeta.dominant = { color: dominantColor.hex, isDark: dominantColor.isDark };
+      }
+
+      this.#sharedMeta.corner = {
+        x: 0,
+        y: 0,
+        color: this.#sharedMeta.dominant.color,
+        isDark: this.#sharedMeta.dominant.isDark,
+      };
+      this.#updateSharedMeta();
+    }
+
+    if (this.#sharedMeta.corner) {
       this.node.dispatchEvent(
         new CustomEvent<BackgroundCornerColorChangedEventArgs>('cornerColorChanged', {
-          detail: { color: cornerColorResult.hex, isDark: cornerColorResult.isDark },
+          detail: { color: this.#sharedMeta.corner.color, isDark: this.#sharedMeta.corner.isDark },
         }),
       );
     }
   }
 
+  #updateSharedMeta() {
+    storage.local.set({ [IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY]: this.#sharedMeta });
+  }
+
   #updateDominantColor() {
     if (this.settings.resizeType.value === ImageResizeType.Contain) {
-      this.#dominantColor = this.#imageColor!.getDominantColor(this.#img!);
-      this.#img!.style.backgroundColor = this.#dominantColor.hex;
+      if (!this.#sharedMeta.dominant?.color) {
+        const dominantColor = this.#imageColor.value.getDominantColor(this.#img!);
+        this.#sharedMeta.dominant = { color: dominantColor.hex, isDark: dominantColor.isDark };
+        this.#updateSharedMeta();
+      }
+      this.#img!.style.backgroundColor = this.#sharedMeta.dominant.color;
     } else {
       this.#img!.style.backgroundColor = '';
     }
@@ -71,7 +125,9 @@ export abstract class ImageBackgroundProviderBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
-    this.#imageColor = new FastAverageColorEx();
+    storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY).then(result => {
+      this.#sharedMeta = result[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] || {};
+    });
     this.#img = this.node.appendChild(document.createElement('img'));
     this.#img.style.width = '100%';
     this.#img.style.height = '100%';
@@ -98,7 +154,9 @@ export abstract class ImageBackgroundProviderBase<
     this.#unsubscribeResizeType!();
     this.#resizeObserver?.unobserve(this.#img!);
     this.#resizeObserver?.disconnect();
-    this.#imageColor?.destroy();
+    if (this.#imageColor.isConstructed) {
+      this.#imageColor.value.destroy();
+    }
     this.#img?.remove();
     this.node.style.backgroundImage = '';
     this.node.style.backgroundSize = '';

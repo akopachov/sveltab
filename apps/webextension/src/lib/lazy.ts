@@ -19,6 +19,10 @@ export class Lazy<T> implements LazyLike<T> {
 
     return this.#value!;
   }
+
+  get isConstructed(): boolean {
+    return this.#valueConstructed;
+  }
 }
 
 type NonUndefined<T> = T extends undefined ? never : T;

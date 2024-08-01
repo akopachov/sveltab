@@ -3,7 +3,7 @@ import { FastAverageColor, type FastAverageColorOptions } from 'fast-average-col
 const DefaultStep = 2;
 
 export class FastAverageColorEx extends FastAverageColor {
-  #getViewPort(resource: HTMLImageElement) {
+  getViewPort(resource: HTMLImageElement) {
     const nAspect = resource.naturalWidth / resource.naturalHeight;
     const cAspect = resource.clientWidth / resource.clientHeight;
 
@@ -22,7 +22,7 @@ export class FastAverageColorEx extends FastAverageColor {
   }
 
   getDominantColor(resource: HTMLImageElement) {
-    const { top, left, width, height } = this.#getViewPort(resource);
+    const { top, left, width, height } = this.getViewPort(resource);
     let options: FastAverageColorOptions = {
       algorithm: 'dominant',
       mode: 'speed',
@@ -39,7 +39,7 @@ export class FastAverageColorEx extends FastAverageColor {
   }
 
   getCornerColor(resource: HTMLImageElement, cornerSize: number) {
-    const { left, top } = this.#getViewPort(resource);
+    const { left, top } = this.getViewPort(resource);
 
     if (resource.style.objectFit === 'contain' && (left > cornerSize || top > cornerSize)) {
       return null;
@@ -56,6 +56,6 @@ export class FastAverageColorEx extends FastAverageColor {
       step: DefaultStep,
     });
 
-    return cornerColorResult;
+    return { x: left, y: top, color: cornerColorResult };
   }
 }
