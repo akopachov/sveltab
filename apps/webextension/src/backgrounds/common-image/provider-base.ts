@@ -134,13 +134,13 @@ export abstract class ImageBackgroundProviderBase<
     this.#img.style.maxWidth = 'none';
     this.#img.style.maxHeight = 'none';
     this.#img.crossOrigin = 'anonymous';
-    this.#img.onload = () => {
-      this.#updateDominantColor();
-      this.#updateCornerColor();
+    this.#img.onload = async () => {
+      await this.#updateDominantColor();
+      await this.#updateCornerColor();
     };
-    const updateCornerColorDeb = debounce(() => {
-      this.#updateDominantColor();
-      this.#updateCornerColor();
+    const updateCornerColorDeb = debounce(async () => {
+      await this.#updateDominantColor();
+      await this.#updateCornerColor();
     }, 500);
     this.#resizeObserver = new ResizeObserver(updateCornerColorDeb);
     this.#resizeObserver.observe(this.#img);
