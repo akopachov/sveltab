@@ -20,9 +20,9 @@ import type { WorkspaceInstance } from '$lib/workspace-instance';
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
 
 export interface IBackgroundProvider {
-  apply(abortSignal: AbortSignal): void;
-  forceUpdate(abortSignal: AbortSignal): void;
-  destroy(): void;
+  apply(abortSignal: AbortSignal): Promise<void> | void;
+  forceUpdate(abortSignal: AbortSignal): Promise<void> | void;
+  destroy(): Promise<void> | void;
   get canGoNext(): boolean;
 }
 
@@ -39,9 +39,9 @@ export abstract class BackgroundProvider<T extends BackgroundSettingsExtra>
   protected node: HTMLElement;
   protected settings: T;
 
-  abstract apply(abortSignal: AbortSignal): void;
-  abstract forceUpdate(abortSignal: AbortSignal): void;
-  abstract destroy(): void;
+  abstract apply(abortSignal: AbortSignal): Promise<void> | void;
+  abstract forceUpdate(abortSignal: AbortSignal): Promise<void> | void;
+  abstract destroy(): Promise<void> | void;
   abstract get canGoNext(): boolean;
 }
 

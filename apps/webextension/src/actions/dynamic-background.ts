@@ -38,7 +38,7 @@ export const dynamicBackground: Action<
 
   async function initializeNew(background: BackgroundInstance | undefined | null) {
     if (background) {
-      backgroundProviderDestroyPromise = background.components.provider.value.then(providerClass => {
+      backgroundProviderDestroyPromise = background.components.provider.value.then(async providerClass => {
         const provider = new providerClass(node, background.settings.extra);
         const abortController = new AbortController();
         if (provider instanceof EventTarget) {
@@ -51,7 +51,7 @@ export const dynamicBackground: Action<
           }
         }
         forceNewSubscribers.add(forceNew);
-        provider.apply(abortController.signal);
+        await provider.apply(abortController.signal);
         _activeBackgroundProvider.set(provider);
         return () => {
           _activeBackgroundProvider.set(undefined);

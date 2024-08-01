@@ -26,7 +26,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
   }
 
   async apply(abortSignal: AbortSignal) {
-    super.apply(abortSignal);
+    await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,

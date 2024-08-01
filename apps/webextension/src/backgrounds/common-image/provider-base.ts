@@ -30,6 +30,8 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   protected async setImage(url: string | undefined | null): Promise<void> {
+    if (url === this.#lastImageUrl) return;
+
     this.#releaseBlob();
 
     if (this.#lastImageUrl && !this.#lastImageUrl.startsWith('blob://')) {
@@ -123,11 +125,11 @@ export abstract class ImageBackgroundProviderBase<
   }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  apply(abortSignal: AbortSignal) {
+  async apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
-    storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY).then(result => {
-      this.#sharedMeta = result[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] || {};
-    });
+    this.#sharedMeta =
+      (await storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY))[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] ||
+      {};
     this.#img = this.node.appendChild(document.createElement('img'));
     this.#img.style.width = '100%';
     this.#img.style.height = '100%';

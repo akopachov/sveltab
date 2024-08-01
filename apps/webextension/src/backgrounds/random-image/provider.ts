@@ -23,7 +23,7 @@ export class RandomImageBackgroundProvider extends ImageBackgroundProviderBase<S
 
   async apply(abortSignal: AbortSignal) {
     let initialized = false;
-    super.apply(abortSignal);
+    await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,

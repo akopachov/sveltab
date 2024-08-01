@@ -8,8 +8,8 @@ export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<S
   get canGoNext() {
     return false;
   }
-  apply(abortSignal: AbortSignal): void {
-    super.apply(abortSignal);
+  async apply(abortSignal: AbortSignal) {
+    await super.apply(abortSignal);
     const updateDeb = debounce(() => this.forceUpdate(), secondsToMilliseconds(1));
     this.#unsubscribe = this.settings.url.subscribe(() => updateDeb());
     this.forceUpdate();

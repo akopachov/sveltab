@@ -31,7 +31,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
   }
 
   async apply(abortSignal: AbortSignal) {
-    super.apply(abortSignal);
+    await super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
       lastUrl: '',
