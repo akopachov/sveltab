@@ -5,3 +5,9 @@
   command = "pnpm nx build landing"
   publish = "apps/landing/build"
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF apps/landing"
+
+[[plugins]]
+  package = "@netlify/plugin-lighthouse"
+
+  [plugins.inputs.settings]
+    preset = "desktop"
