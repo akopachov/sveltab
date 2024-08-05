@@ -26,9 +26,10 @@ export class BackgroundInstance {
   }
 
   static async create(settings: BackgroundSettingsInitial) {
-    const catalogItem = BackgroundCatalogIndex.get(settings.type);
+    let catalogItem = BackgroundCatalogIndex.get(settings.type);
     if (!catalogItem) {
-      throw new Error(`Unknown background type "${settings.type}"`);
+      catalogItem = BackgroundCatalog[0];
+      settings = { ...catalogItem.settings };
     }
     const extra = await catalogItem.components.settings.model.value;
     return new BackgroundInstance(catalogItem, settings, extra);
