@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
-import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
+import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
@@ -92,7 +92,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen', this.settings.resizeType.value));
 
-    const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
+    const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
         if (this.#localSettings!.pool.length <= 0) {

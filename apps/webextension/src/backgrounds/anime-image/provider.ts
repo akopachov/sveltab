@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import { AnimeTopics, type Settings } from './settings';
-import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
+import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
@@ -64,7 +64,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     }
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
-    const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
+    const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
       (timeSinceLastChange >= this.settings.updateInterval.value ||

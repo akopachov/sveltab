@@ -2,7 +2,7 @@ import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-
 import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
-import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
+import { differenceInHours, secondsToMilliseconds } from 'date-fns';
 import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
@@ -54,7 +54,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     }
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
-    const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
+    const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && hoursSinceLastChange > 12) {
       try {
         const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${PUBLIC_NASA_APOD_API_KEY}`, {

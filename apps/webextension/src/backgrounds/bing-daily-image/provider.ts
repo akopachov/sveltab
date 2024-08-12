@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
-import { hoursToMilliseconds, secondsToMilliseconds } from 'date-fns';
+import { differenceInHours, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 
@@ -62,7 +62,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     }
 
     this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
-    const hoursSinceLastChange = (Date.now() - this.#localSettings!.lastChangedTime) / hoursToMilliseconds(1);
+    const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
       (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale)

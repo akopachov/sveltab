@@ -3,7 +3,7 @@ import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
 import type { Settings } from './settings';
-import { minutesToMilliseconds, secondsToMilliseconds, millisecondsToSeconds } from 'date-fns';
+import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { PUBLIC_PEXELS_API_KEY } from '$env/static/public';
 import { ImageResizeType } from '$lib/cdn';
 
@@ -103,7 +103,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     }
 
     this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node, this.settings.resizeType.value));
-    const timeSinceLastChange = millisecondsToSeconds(Date.now() - this.#localSettings!.lastChangedTime);
+    const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
         if (this.#localSettings!.pool.length <= 0) {
