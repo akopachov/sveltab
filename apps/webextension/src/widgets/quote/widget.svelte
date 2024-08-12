@@ -5,7 +5,7 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
-  import { minutesToMilliseconds, millisecondsToSeconds } from 'date-fns';
+  import { minutesToMilliseconds, differenceInSeconds } from 'date-fns';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import { logger } from '$lib/logger';
   import { PUBLIC_THEQUOTEAPI_KEY } from '$env/static/public';
@@ -51,7 +51,7 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && millisecondsToSeconds(Date.now() - quote.lastUpdate) > $updateInterval && navigator.onLine) {
+    if (quote && differenceInSeconds(Date.now(), quote.lastUpdate) > $updateInterval && navigator.onLine) {
       await loadNewQuote();
     }
   }

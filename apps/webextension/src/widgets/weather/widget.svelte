@@ -13,7 +13,7 @@
   import * as m from '$i18n/messages';
   import { imgSrcEx } from '$actions/img-src-ex';
   import { debouncedDerived } from '$stores/debounce-store';
-  import { isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
+  import { differenceInMinutes, isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
   import { logger } from '$lib/logger';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import {
@@ -179,7 +179,7 @@
 
     if (
       !forecast ||
-      Date.now() - forecast.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes
+      differenceInMinutes(Date.now(), forecast.lastUpdate) > 15 || // Every 15 minutes
       forecast.latitude !== $latitude || // Or location change
       forecast.longitude !== $longitude
     ) {

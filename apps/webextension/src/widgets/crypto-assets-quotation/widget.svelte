@@ -5,7 +5,7 @@
   import pDebounce from 'p-debounce';
   import type { CoincapioAssetHistoryResponse, CoincapioAssetResponse } from './types/coincapio';
   import { storage } from '$stores/storage';
-  import { minutesToMilliseconds } from 'date-fns';
+  import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
   import { Line } from 'svelte-chartjs';
   import {
@@ -179,7 +179,7 @@
     }
     if (
       navigator.onLine &&
-      (!priceInfo || Date.now() - priceInfo.lastUpdate > minutesToMilliseconds(5) || priceInfo.asset.id !== $asset.id)
+      (!priceInfo || differenceInMinutes(Date.now(), priceInfo.lastUpdate) > 5 || priceInfo.asset.id !== $asset.id)
     ) {
       const promises = [
         fetch(`https://api.coincap.io/v2/assets/${$asset.id}`).then(r => r.json()),

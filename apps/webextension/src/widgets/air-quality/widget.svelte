@@ -7,7 +7,7 @@
   import { fetchWeatherApi } from 'openmeteo';
   import { localeCharSubset } from '$stores/locale';
   import pDebounce from 'p-debounce';
-  import { minutesToMilliseconds } from 'date-fns';
+  import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { logger } from '$lib/logger';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import {
@@ -132,7 +132,7 @@
 
     if (
       !latestInfo ||
-      Date.now() - latestInfo.lastUpdate > minutesToMilliseconds(15) || // Every 15 minutes
+      differenceInMinutes(Date.now(), latestInfo.lastUpdate) > 15 || // Every 15 minutes
       latestInfo.latitude !== $latitude || // Or location change
       latestInfo.longitude !== $longitude ||
       latestInfo.legislation !== $legislation

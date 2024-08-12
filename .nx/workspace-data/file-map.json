@@ -2,119 +2,12 @@
   "version": "6.0",
   "nxVersion": "19.5.7",
   "deps": {
-    "nx": "19.5.6"
+    "nx": "19.5.7"
   },
   "pathMappings": {},
   "nxJsonPlugins": [],
   "fileMap": {
     "projectFileMap": {
-      "iqair-redirect": [
-        {
-          "file": "apps/iqair-redirect/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/iqair-redirect/.gitignore",
-          "hash": "10657848430346760040"
-        },
-        {
-          "file": "apps/iqair-redirect/package.json",
-          "hash": "14896479183495044445",
-          "deps": [
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/iqair-redirect/src/worker.ts",
-          "hash": "12279403779427720829"
-        },
-        {
-          "file": "apps/iqair-redirect/wrangler.toml",
-          "hash": "11886815432978647150"
-        }
-      ],
-      "vite-plugin-run-generator": [
-        {
-          "file": "packages/vite-plugin-run-generator/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/index.ts",
-          "hash": "13872569230268468798"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/package.json",
-          "hash": "18231585615727074920",
-          "deps": [
-            "npm:@types/ejs",
-            "npm:@types/node",
-            "npm:@types/picomatch",
-            "npm:typescript@5.5.4",
-            "npm:colorette",
-            "npm:ejs",
-            "npm:hasha",
-            "npm:picomatch@4.0.2",
-            "npm:slash@5.1.0",
-            "npm:tiny-glob"
-          ]
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/tsconfig.json",
-          "hash": "4336780397135653243"
-        }
-      ],
-      "owm-redirect": [
-        {
-          "file": "apps/owm-redirect/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/owm-redirect/.gitignore",
-          "hash": "10657848430346760040"
-        },
-        {
-          "file": "apps/owm-redirect/package.json",
-          "hash": "109111358808065912",
-          "deps": [
-            "npm:geo-position.ts"
-          ]
-        },
-        {
-          "file": "apps/owm-redirect/src/worker.ts",
-          "hash": "13031713532980002527"
-        },
-        {
-          "file": "apps/owm-redirect/wrangler.toml",
-          "hash": "16151197575438519813"
-        }
-      ],
-      "netlify-plugin-interpolate-env-variable": [
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
-        }
-      ],
       "is-wsl2": [
         {
           "file": "packages/is-wsl2/.editorconfig",
@@ -138,7 +31,7 @@
         },
         {
           "file": "packages/is-wsl2/package.json",
-          "hash": "10238543408603315513",
+          "hash": "5139420211574130130",
           "deps": [
             "npm:@types/node",
             "npm:typescript@5.5.4"
@@ -147,6 +40,73 @@
         {
           "file": "packages/is-wsl2/tsconfig.json",
           "hash": "4336780397135653243"
+        }
+      ],
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
+        }
+      ],
+      "iqair-redirect": [
+        {
+          "file": "apps/iqair-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/iqair-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/iqair-redirect/package.json",
+          "hash": "8294214384695395753",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/iqair-redirect/src/worker.ts",
+          "hash": "12279403779427720829"
+        },
+        {
+          "file": "apps/iqair-redirect/wrangler.toml",
+          "hash": "11886815432978647150"
+        }
+      ],
+      "owm-redirect": [
+        {
+          "file": "apps/owm-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/owm-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/owm-redirect/package.json",
+          "hash": "17633480991936154167",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts"
+          ]
+        },
+        {
+          "file": "apps/owm-redirect/src/worker.ts",
+          "hash": "13031713532980002527"
+        },
+        {
+          "file": "apps/owm-redirect/wrangler.toml",
+          "hash": "16151197575438519813"
         }
       ],
       "preview": [
@@ -188,6 +148,49 @@
           "hash": "15382321260039008176"
         }
       ],
+      "vite-plugin-run-generator": [
+        {
+          "file": "packages/vite-plugin-run-generator/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/index.ts",
+          "hash": "13872569230268468798"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/package.json",
+          "hash": "2500679520088531277",
+          "deps": [
+            "npm:@types/ejs",
+            "npm:@types/node",
+            "npm:@types/picomatch",
+            "npm:typescript@5.5.4",
+            "npm:colorette",
+            "npm:ejs",
+            "npm:hasha",
+            "npm:picomatch@4.0.2",
+            "npm:slash@5.1.0",
+            "npm:tiny-glob",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
       "landing": [
         {
           "file": "apps/landing/.editorconfig",
@@ -223,9 +226,10 @@
         },
         {
           "file": "apps/landing/package.json",
-          "hash": "1620144061251974337",
+          "hash": "13117925120840813436",
           "deps": [
             "npm:@fontsource/inter",
+            "npm:@iconify/json",
             "npm:@iconify/tailwind",
             "npm:@iconify/utils",
             "npm:@neoconfetti/svelte",
@@ -257,8 +261,10 @@
             "npm:svelte@4.2.18",
             "npm:svelte-body",
             "npm:svelte-check",
+            "npm:tailwindcss",
             "npm:tslib",
-            "npm:typescript@5.5.4"
+            "npm:typescript@5.5.4",
+            "npm:vite"
           ]
         },
         {
@@ -517,8 +523,11 @@
         },
         {
           "file": "apps/webextension/package.json",
-          "hash": "14475303182002402637",
+          "hash": "15159075750097673447",
           "deps": [
+            "npm:@floating-ui/core",
+            "npm:@floating-ui/dom",
+            "npm:@iconify/json",
             "npm:@iconify/tailwind",
             "npm:@iconify/utils",
             "npm:@inlang/paraglide-js",
@@ -531,6 +540,7 @@
             "npm:@sveltejs/vite-plugin-svelte",
             "npm:@tailwindcss/container-queries",
             "npm:@tailwindcss/forms",
+            "npm:@tailwindcss/typography",
             "npm:@types/color",
             "npm:@types/randomcolor",
             "npm:@types/webextension-polyfill",
@@ -571,11 +581,13 @@
             "npm:svelte-selecto",
             "npm:svelte-use-debounce",
             "npm:svelte-virtual-scroll-list",
+            "npm:tailwindcss",
             "npm:tiny-glob",
             "npm:tslib",
             "npm:tslog",
             "npm:typescript@5.5.4",
             "npm:vanilla-colorful",
+            "npm:vite",
             "vite-plugin-run-generator",
             "npm:vite-plugin-tailwind-purgecss",
             "npm:web-ext",
@@ -1304,7 +1316,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/holidays/widget.svelte",
-          "hash": "12066415984414639244"
+          "hash": "12534531174888544694"
         },
         {
           "file": "apps/webextension/src/widgets/html/index.ts",
@@ -1963,11 +1975,11 @@
       },
       {
         "file": "package.json",
-        "hash": "6861143397500630879"
+        "hash": "9950010104049883395"
       },
       {
         "file": "pnpm-lock.yaml",
-        "hash": "6399258113554165266"
+        "hash": "6179024899258473379"
       },
       {
         "file": "pnpm-workspace.yaml",

@@ -5,7 +5,7 @@
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
   import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
-  import { minutesToMilliseconds, millisecondsToSeconds, secondsToMilliseconds } from 'date-fns';
+  import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import * as m from '$i18n/messages';
   import { type FlickrImageData, flickrSrc } from './flickr-src';
@@ -57,7 +57,7 @@
       navigator.onLine &&
       (!latestSearchResult.activeImage ||
         !latestSearchResult.activeImage.sources ||
-        millisecondsToSeconds(Date.now() - latestSearchResult.lastUpdate) >= $updateInterval ||
+        differenceInSeconds(Date.now(), latestSearchResult.lastUpdate) >= $updateInterval ||
         latestSearchResult.searchTerm !== $searchTopic)
     ) {
       latestSearchResult.lastUpdate = Date.now();

@@ -17,9 +17,10 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { getClockStore } from '$stores/clock-store';
-  import { differenceInDays, minutesToMilliseconds, isToday, formatISO } from 'date-fns';
+  import { differenceInDays, minutesToMilliseconds, isToday, formatISO, differenceInHours } from 'date-fns';
   import { online } from '$stores/online-store';
   import * as m from '$i18n/messages';
+  import pDebounce from 'p-debounce';
 
   type CachedHoliday = Omit<HolidayInfo, 'date'> & { date: number };
   type CachedHolidays = { lastUpdate: number; holidays: CachedHoliday[]; country: string; loadedYears: number[] };
@@ -73,7 +74,7 @@
     : [];
 
   $: {
-    ($country || $upcommingCount || $pastCount || $now || $online) && updateIfNeeded();
+    ($country || visibleHolidays || $online) && updateIfNeeded();
   }
 
   onMount(async () => {
@@ -84,18 +85,18 @@
     updateIfNeeded();
   });
 
-  async function updateIfNeeded() {
+  const updateIfNeeded = pDebounce(async () => {
     if (
-      !cache ||
-      cache.holidays.length === 0 ||
-      differenceInDays($now, cache.lastUpdate) > 0 ||
-      cache.country !== $country ||
-      closestHolidayIndex + $upcommingCount >= holidaysOfInterest.length ||
-      closestHolidayIndex - $pastCount < 0
+      cache &&
+      (cache.holidays.length === 0 ||
+        !isToday(cache.lastUpdate) ||
+        cache.country !== $country ||
+        closestHolidayIndex + $upcommingCount >= holidaysOfInterest.length ||
+        closestHolidayIndex - $pastCount < 0)
     ) {
       await loadNewHolidays();
     }
-  }
+  }, 500);
 
   async function loadNewHolidays() {
     if (!navigator.onLine) {
