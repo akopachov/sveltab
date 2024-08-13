@@ -42,20 +42,6 @@
           "hash": "4336780397135653243"
         }
       ],
-      "netlify-plugin-interpolate-env-variable": [
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
-        }
-      ],
       "iqair-redirect": [
         {
           "file": "apps/iqair-redirect/.editorconfig",
@@ -109,86 +95,18 @@
           "hash": "16151197575438519813"
         }
       ],
-      "preview": [
+      "netlify-plugin-interpolate-env-variable": [
         {
-          "file": "apps/preview/.editorconfig",
-          "hash": "9035647012319884894"
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
         },
         {
-          "file": "apps/preview/.gitignore",
-          "hash": "9652840843145639605"
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
         },
         {
-          "file": "apps/preview/functions/iqair-redirect.ts",
-          "hash": "18300375636509497534"
-        },
-        {
-          "file": "apps/preview/functions/owm-redirect.ts",
-          "hash": "16288626628291305981"
-        },
-        {
-          "file": "apps/preview/netlify.toml",
-          "hash": "1546573686693384885"
-        },
-        {
-          "file": "apps/preview/package.json",
-          "hash": "6108546777992698155",
-          "deps": [
-            "npm:@types/unidecode",
-            "netlify-plugin-interpolate-env-variable",
-            "npm:typescript@5.5.4",
-            "webextension",
-            "npm:@netlify/functions",
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/preview/tsconfig.json",
-          "hash": "15382321260039008176"
-        }
-      ],
-      "vite-plugin-run-generator": [
-        {
-          "file": "packages/vite-plugin-run-generator/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/index.ts",
-          "hash": "13872569230268468798"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/package.json",
-          "hash": "2500679520088531277",
-          "deps": [
-            "npm:@types/ejs",
-            "npm:@types/node",
-            "npm:@types/picomatch",
-            "npm:typescript@5.5.4",
-            "npm:colorette",
-            "npm:ejs",
-            "npm:hasha",
-            "npm:picomatch@4.0.2",
-            "npm:slash@5.1.0",
-            "npm:tiny-glob",
-            "npm:vite"
-          ]
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/tsconfig.json",
-          "hash": "4336780397135653243"
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
         }
       ],
       "landing": [
@@ -226,7 +144,7 @@
         },
         {
           "file": "apps/landing/package.json",
-          "hash": "13117925120840813436",
+          "hash": "13912328853013816896",
           "deps": [
             "npm:@fontsource/inter",
             "npm:@iconify/json",
@@ -523,7 +441,7 @@
         },
         {
           "file": "apps/webextension/package.json",
-          "hash": "15159075750097673447",
+          "hash": "3151999421443115290",
           "deps": [
             "npm:@floating-ui/core",
             "npm:@floating-ui/dom",
@@ -628,7 +546,7 @@
         },
         {
           "file": "apps/webextension/src/actions/fontsource.ts",
-          "hash": "6242066262486708831"
+          "hash": "18358446116061362462"
         },
         {
           "file": "apps/webextension/src/actions/img-src-ex.ts",
@@ -660,7 +578,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/anime-image/provider.ts",
-          "hash": "5061220387757746756"
+          "hash": "17585252881054799840"
         },
         {
           "file": "apps/webextension/src/backgrounds/anime-image/settings.svelte",
@@ -676,7 +594,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/bing-daily-image/provider.ts",
-          "hash": "16123614606984973795"
+          "hash": "10240088191434572447"
         },
         {
           "file": "apps/webextension/src/backgrounds/bing-daily-image/settings.svelte",
@@ -708,7 +626,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/nasa-apod/provider.ts",
-          "hash": "15129982623182319100"
+          "hash": "15026471929309482657"
         },
         {
           "file": "apps/webextension/src/backgrounds/nasa-apod/settings.svelte",
@@ -724,7 +642,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/pexels/provider.ts",
-          "hash": "15655783684609023432"
+          "hash": "14129993938680084593"
         },
         {
           "file": "apps/webextension/src/backgrounds/pexels/settings.svelte",
@@ -788,7 +706,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/wallhaven/provider.ts",
-          "hash": "1455143220394921819"
+          "hash": "15746035284108237668"
         },
         {
           "file": "apps/webextension/src/backgrounds/wallhaven/settings.svelte",
@@ -887,8 +805,12 @@
           "hash": "6255498864556290987"
         },
         {
+          "file": "apps/webextension/src/lib/opfs-cache.ts",
+          "hash": "8917051513198547606"
+        },
+        {
           "file": "apps/webextension/src/lib/opfs.ts",
-          "hash": "3162271556104201093"
+          "hash": "12608152432820904451"
         },
         {
           "file": "apps/webextension/src/lib/realfavicongenerator.ts",
@@ -1024,7 +946,7 @@
         },
         {
           "file": "apps/webextension/src/stores/cache.ts",
-          "hash": "9222593458145480210"
+          "hash": "9233168963811870080"
         },
         {
           "file": "apps/webextension/src/stores/clock-store.ts",
@@ -1092,7 +1014,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/air-quality/widget.svelte",
-          "hash": "6735129016528378981"
+          "hash": "5833731387772317803"
         },
         {
           "file": "apps/webextension/src/widgets/analogue-clock/index.ts",
@@ -1188,7 +1110,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/crypto-assets-quotation/widget.svelte",
-          "hash": "7329350887504053270"
+          "hash": "2443688608961297240"
         },
         {
           "file": "apps/webextension/src/widgets/date/index.ts",
@@ -1240,7 +1162,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/flickr-image/widget.svelte",
-          "hash": "7427725972420638916"
+          "hash": "1263344368616122223"
         },
         {
           "file": "apps/webextension/src/widgets/free-text/index.ts",
@@ -1316,7 +1238,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/holidays/widget.svelte",
-          "hash": "12534531174888544694"
+          "hash": "4715678362440309045"
         },
         {
           "file": "apps/webextension/src/widgets/html/index.ts",
@@ -1416,7 +1338,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/quote/widget.svelte",
-          "hash": "4996380830538377260"
+          "hash": "8508010852345519814"
         },
         {
           "file": "apps/webextension/src/widgets/search/index.ts",
@@ -1548,7 +1470,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/weather/widget.svelte",
-          "hash": "1699691085783918540"
+          "hash": "8635985646382733024"
         },
         {
           "file": "apps/webextension/static/favicon/android-chrome-192x192.png",
@@ -1637,6 +1559,88 @@
         {
           "file": "apps/webextension/vite.config.ts",
           "hash": "9570126959004692792"
+        }
+      ],
+      "vite-plugin-run-generator": [
+        {
+          "file": "packages/vite-plugin-run-generator/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/index.ts",
+          "hash": "13872569230268468798"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/package.json",
+          "hash": "2500679520088531277",
+          "deps": [
+            "npm:@types/ejs",
+            "npm:@types/node",
+            "npm:@types/picomatch",
+            "npm:typescript@5.5.4",
+            "npm:colorette",
+            "npm:ejs",
+            "npm:hasha",
+            "npm:picomatch@4.0.2",
+            "npm:slash@5.1.0",
+            "npm:tiny-glob",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "preview": [
+        {
+          "file": "apps/preview/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/preview/.gitignore",
+          "hash": "9652840843145639605"
+        },
+        {
+          "file": "apps/preview/functions/iqair-redirect.ts",
+          "hash": "18300375636509497534"
+        },
+        {
+          "file": "apps/preview/functions/owm-redirect.ts",
+          "hash": "16288626628291305981"
+        },
+        {
+          "file": "apps/preview/netlify.toml",
+          "hash": "1546573686693384885"
+        },
+        {
+          "file": "apps/preview/package.json",
+          "hash": "6108546777992698155",
+          "deps": [
+            "npm:@types/unidecode",
+            "netlify-plugin-interpolate-env-variable",
+            "npm:typescript@5.5.4",
+            "webextension",
+            "npm:@netlify/functions",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/preview/tsconfig.json",
+          "hash": "15382321260039008176"
         }
       ]
     },
@@ -1979,7 +1983,7 @@
       },
       {
         "file": "pnpm-lock.yaml",
-        "hash": "6179024899258473379"
+        "hash": "6540685652681007942"
       },
       {
         "file": "pnpm-workspace.yaml",
