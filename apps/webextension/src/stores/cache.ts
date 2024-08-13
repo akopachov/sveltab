@@ -33,7 +33,7 @@ export async function cache<T>(key: string, generator: () => Promise<T> | T, ttl
     });
   }
 
-  return data;
+  return <T>data;
 }
 
 export async function setupCacheHouseKeeping() {

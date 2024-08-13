@@ -29,7 +29,7 @@ export class OpfsManager {
   }
 
   async save(opfsFileUrl: string, data: ArrayBufferLike | Blob) {
-    const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl, true);
+    const [fileName, dirHandle] = await this.#parseOpfsUrl(opfsFileUrl, true);
     const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
     const writable = await fileHandle.createWritable({ keepExistingData: false });
     await writable.write(data);
@@ -37,14 +37,28 @@ export class OpfsManager {
   }
 
   async createWritable(opfsFileUrl: string) {
-    const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl, true);
+    const [fileName, dirHandle] = await this.#parseOpfsUrl(opfsFileUrl, true);
     const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
     return await fileHandle.createWritable({ keepExistingData: false });
   }
 
   async remove(opfsFileUrl: string) {
-    const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl);
-    await dirHandle.removeEntry(fileName, { recursive: true });
+    const [fileName, ...dirHandles] = await this.#parseOpfsUrl(opfsFileUrl);
+    await dirHandles[0].removeEntry(fileName, { recursive: true });
+    for (let i = 0; i < dirHandles.length - 1; i++) {
+      const dirHandle = dirHandles[i];
+      let isEmpty = true;
+      for await (let _ of dirHandle.keys()) {
+        isEmpty = false;
+        break;
+      }
+
+      if (isEmpty) {
+        dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: false });
+      } else {
+        break;
+      }
+    }
   }
 
   async wipe() {
@@ -55,11 +69,11 @@ export class OpfsManager {
   }
 
   async get(opfsFileUrl: string) {
-    const [dirHandle, fileName] = await this.#parseOpfsUrl(opfsFileUrl);
+    const [fileName, dirHandle] = await this.#parseOpfsUrl(opfsFileUrl);
     return await dirHandle.getFileHandle(fileName, { create: false }).then(h => h.getFile());
   }
 
-  async #parseOpfsUrl(opfsUrl: string, create?: boolean): Promise<[FileSystemDirectoryHandle, string]> {
+  async #parseOpfsUrl(opfsUrl: string, create?: boolean): Promise<[string, ...FileSystemDirectoryHandle[]]> {
     if (opfsUrl.startsWith(`${OpfsSchema}://`)) {
       opfsUrl = opfsUrl.substring(OpfsSchema.length + 3);
     }
@@ -67,11 +81,15 @@ export class OpfsManager {
     const parts = opfsUrl.split('/');
     const fileName = parts.pop()!;
     let dirHandle = await this.#opfsRoot.value;
+    const allDirHandles = [dirHandle];
     for (const part of parts) {
       dirHandle = await dirHandle.getDirectoryHandle(part, { create: create });
+      allDirHandles.push(dirHandle);
     }
 
-    return [dirHandle, fileName];
+    allDirHandles.reverse();
+
+    return [fileName, ...allDirHandles];
   }
 }
 
