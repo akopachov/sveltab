@@ -7,7 +7,7 @@
   import { nanoid } from 'nanoid/non-secure';
   import type { FontSettings } from '$lib/widget-settings';
   import { fontsource } from '$actions/fontsource';
-  import { FontWeight } from '$lib/fontsource';
+  import { FontWeight, type FontList } from '$lib/fontsource';
   import { onMount } from 'svelte';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
@@ -25,12 +25,12 @@
   }
 
   const fonts: Promise<FontInfo[]> = fetch('https://api.fontsource.org/v1/fonts')
-    .then(r => r.json())
+    .then<FontList>(r => r.json())
     .then(r =>
       r
-        .filter((f: any) => f.type !== 'icons')
+        .filter(f => f.type !== 'icons')
         .map(
-          (f: any) =>
+          f =>
             <FontInfo>{
               label: f.family,
               id: f.id,

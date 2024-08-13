@@ -40,16 +40,31 @@ export type FontSource = {
   type: string;
   variants: Record<
     `${FontWeight}`,
-    {
-      [style in FontStyle]?: {
-        [subset in FontSubset]?: {
-          url: {
-            woff2: string;
-            woff: string;
-            ttf: string;
+    | {
+        [style in FontStyle]?: {
+          [subset in FontSubset]?: {
+            url: {
+              woff2: string;
+              woff: string;
+              ttf: string;
+            };
           };
         };
-      };
-    } | undefined
+      }
+    | undefined
   >;
 };
+
+export type FontList = Array<{
+  id: string;
+  family: string;
+  subsets: FontSubset[];
+  weights: FontWeight[];
+  styles: FontStyle[];
+  defSubset: FontSubset;
+  variable: boolean;
+  lastModified: string;
+  category: string;
+  version: `v${number}`;
+  type: string;
+}>;
