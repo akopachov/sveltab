@@ -1,10 +1,7 @@
 import { logger } from '$lib/logger';
-import { cache } from '$stores/cache';
 import { ResourcesToPreload } from '$stores/preload-resources';
-import { hoursToMilliseconds } from 'date-fns';
 import type { Action } from 'svelte/action';
-import { cacheUrlToOpfs, dropCached } from '../lib/opfs-cache';
-import { type FontSubset, type FontStyle, FontWeight, type FontSource } from '../lib/fontsource';
+import { type FontSubset, type FontStyle, FontWeight, type FontSource } from '$lib/fontsource';
 
 const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
 
@@ -25,7 +22,7 @@ function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
   return `${subset}_${weight}_${style}`;
 }
 
-const fontFaceSources = new WeakMap<FontFace, { uri: string; opfs: string }>();
+const fontFaceSources = new WeakMap<FontFace, string>();
 
 export type FontChangedEventDetails = { target: HTMLElement; fontFamily: string };
 
@@ -54,11 +51,9 @@ export const fontsource: Action<
       let activeFontRefPromise = ActiveFonts.get(fontId);
       if (!activeFontRefPromise) {
         activeFontRefPromise = new Promise(resolve => {
-          cache(
-            `font_${fontId}`,
-            () => fetch(`https://api.fontsource.org/v1/fonts/${fontId}`).then(r => r.json()),
-            hoursToMilliseconds(24),
-          ).then(fontObj => resolve({ fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() }));
+          fetch(`https://api.fontsource.org/v1/fonts/${fontId}`)
+            .then(r => r.json())
+            .then(fontObj => resolve({ fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() }));
         });
         ActiveFonts.set(fontId, activeFontRefPromise);
       }
@@ -116,22 +111,16 @@ export const fontsource: Action<
               activeFontRef.fontSets.set(cacheKey, loadedFontSet);
               const fontObj = ((activeFontRef.raw.variants[`${weight}`] || {})[style] || {})[subset];
               if (!fontObj) continue;
-              let uri = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
+              const uri = fontObj.url.woff2 || fontObj.url.woff || fontObj.url.ttf;
               const format = fontObj.url.woff2 ? 'woff2' : fontObj.url.woff ? 'woff' : 'ttf';
-              let opfsPath = '';
-              if (settings?.noPreload !== true) {
-                opfsPath = `fonts/${fontId}/${cacheKey}.${format}`;
-                uri = await cacheUrlToOpfs(opfsPath, uri);
-              }
-
               const source = `url(${uri}) format(${format})`;
               const fontFace = new FontFace(activeFontRef.fontFamily, source, {
                 weight: String(weight),
                 style: style,
                 unicodeRange: unicodeRange,
               });
-              fontFaceSources.set(fontFace, { uri: uri, opfs: opfsPath });
-              if (settings?.noPreload !== true && !uri.startsWith('blob:')) {
+              fontFaceSources.set(fontFace, uri);
+              if (settings?.noPreload !== true) {
                 ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
               }
               document.fonts.add(fontFace);
@@ -182,19 +171,11 @@ export const fontsource: Action<
                 for (const fontFace of fontSet.fontSet) {
                   fontFacesToRemove.push(fontFace);
                   log.debug('Unloaded font', activeFontRef.fontFamily, weight, style, subset);
-                  const uriAndOpfs = fontFaceSources.get(fontFace);
-                  if (uriAndOpfs) {
+                  const uri = fontFaceSources.get(fontFace);
+                  if (uri) {
                     fontFaceSources.delete(fontFace);
-                    if (uriAndOpfs.uri.startsWith('blob:')) {
-                      URL.revokeObjectURL(uriAndOpfs.uri);
-                    }
-
                     if (settings?.noPreload !== true) {
-                      ResourcesToPreload.delete({ src: uriAndOpfs.uri });
-                    }
-
-                    if (uriAndOpfs.opfs) {
-                      dropCached(uriAndOpfs.opfs);
+                      ResourcesToPreload.delete({ src: uri });
                     }
                   }
                 }
