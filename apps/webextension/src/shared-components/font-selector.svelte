@@ -6,7 +6,8 @@
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
   import type { FontSettings } from '$lib/widget-settings';
-  import { FontWeight, fontsource } from '$actions/fontsource';
+  import { fontsource } from '$actions/fontsource';
+  import { FontWeight } from '$lib/fontsource';
   import { onMount } from 'svelte';
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
