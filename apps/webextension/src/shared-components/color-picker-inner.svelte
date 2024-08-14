@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
-  import FlatUIColorPallets from 'flat-ui-colors-json/palettes.json';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
 
@@ -13,6 +12,12 @@
   }
 
   let currentTab: Tabs = Tabs.Picker;
+  let flatUIColorPalletsPromise: Promise<any[]> | null = null;
+  $: {
+    if (currentTab === Tabs.Pallet && !flatUIColorPalletsPromise) {
+      flatUIColorPalletsPromise = import('flat-ui-colors-json/palettes.json').then(m => m.default);
+    }
+  }
 
   function onColorChanged(event: CustomEvent<{ value: string }>) {
     color = event.detail.value;
@@ -40,24 +45,28 @@
     {:else if currentTab === Tabs.Pallet}
       <div class="w-72">
         <Accordion autocollapse>
-          {#each FlatUIColorPallets as pallet}
-            <AccordionItem>
-              <svelte:fragment slot="lead">{pallet.emoji}</svelte:fragment>
-              <svelte:fragment slot="summary">{pallet.name}</svelte:fragment>
-              <svelte:fragment slot="content">
-                <div class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(1.8rem,1fr))] w-full">
-                  {#each pallet.colors as c}
-                    <label
-                      style:--sv-outline-color={c.hex}
-                      class="[&>input:checked_~_span]:outline-[var(--sv-outline-color)] [&>input:checked~span]:outline-3 [&>input:checked~span]:outline aspect-square">
-                      <input type="radio" class="hidden" value={c.hex} bind:group={color} />
-                      <span style:background-color={c.hex} class="block w-full h-full cursor-pointer"></span>
-                    </label>
-                  {/each}
-                </div>
-              </svelte:fragment>
-            </AccordionItem>
-          {/each}
+          {#await flatUIColorPalletsPromise then flatUIColorPallets}
+            {#if flatUIColorPallets}
+              {#each flatUIColorPallets as pallet}
+                <AccordionItem>
+                  <svelte:fragment slot="lead">{pallet.emoji}</svelte:fragment>
+                  <svelte:fragment slot="summary">{pallet.name}</svelte:fragment>
+                  <svelte:fragment slot="content">
+                    <div class="grid gap-2 grid-cols-[repeat(auto-fill,minmax(1.8rem,1fr))] w-full">
+                      {#each pallet.colors as c}
+                        <label
+                          style:--sv-outline-color={c.hex}
+                          class="[&>input:checked_~_span]:outline-[var(--sv-outline-color)] [&>input:checked~span]:outline-3 [&>input:checked~span]:outline aspect-square">
+                          <input type="radio" class="hidden" value={c.hex} bind:group={color} />
+                          <span style:background-color={c.hex} class="block w-full h-full cursor-pointer"></span>
+                        </label>
+                      {/each}
+                    </div>
+                  </svelte:fragment>
+                </AccordionItem>
+              {/each}
+            {/if}
+          {/await}
         </Accordion>
       </div>
     {/if}
