@@ -60,7 +60,14 @@ export class WorkspaceIndex {
 
   async get(id: string) {
     const settings = await this.getInitialSettings(id);
-    return await WorkspaceInstance.create(settings);
+    const workspace = await WorkspaceInstance.create(settings);
+    workspace.background.value.components.settings.model.preHeat();
+    workspace.background.value.components.provider.preHeat();
+    workspace.widgets.value.forEach(w => {
+      w.components.settings.model.preHeat();
+      w.components.widget.preHeat();
+    });
+    return workspace;
   }
 
   async getDefault() {

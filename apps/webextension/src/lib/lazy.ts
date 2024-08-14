@@ -1,5 +1,6 @@
 export interface LazyLike<T> {
   get value(): T;
+  preHeat(): void;
 }
 
 export class Lazy<T> implements LazyLike<T> {
@@ -12,12 +13,15 @@ export class Lazy<T> implements LazyLike<T> {
   }
 
   get value(): T {
+    this.preHeat();
+    return this.#value!;
+  }
+
+  preHeat(): void {
     if (!this.#valueConstructed) {
       this.#value = this.#factory();
       this.#valueConstructed = true;
     }
-
-    return this.#value!;
   }
 
   get isConstructed(): boolean {
@@ -43,5 +47,13 @@ export class WeakLazy<T extends WeakKey> implements LazyLike<T> {
     }
 
     return value!;
+  }
+
+  preHeat(): void {
+    let value: T | undefined;
+    if (!this.#value || (value = this.#value.deref()) === undefined) {
+      value = this.#factory();
+      this.#value = new WeakRef(value);
+    }
   }
 }
