@@ -52,6 +52,11 @@
 	"DataManage_Restore_SuccessfullyDone": "{count} працоўных вабласцей было паспяхова імпартавана",
 	"DataManage_Backup": "Рэзервовае капіраванне",
   "BrowserSupports_NotSupported": "Ваш браўзер не падтрымлівае гэты функцыянал",
+  "TextSettings_Font": "Шрыфт",
+  "TextSettings_Shadow": "Цень",
+  "TextSettings_Stroke": "Абводка",
+  "TextStrokeSelector_Size": "Памер",
+  "TextStrokeSelector_Color": "Колер",
   "Backgrounds_ImageCommon_Settings_Blur": "Размыццё",
   "Backgrounds_ImageCommon_Settings_Filter": "Фільтр",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Змест прадастаўлены",
@@ -142,30 +147,30 @@
 	"Widgets_Clock_Settings_Format": "Фармат",
 	"Widgets_Clock_Settings_Format_12Hrs": "12-гадзін",
 	"Widgets_Clock_Settings_Format_24Hrs": "24-гадзіны",
-	"Widgets_Clock_Settings_Font": "Шрыфт",
-	"Widgets_Clock_Settings_Shadow": "Цень",
+
+
 	"Widgets_Clock_Settings_Color": "Колер",
 	"Widgets_Clock_Settings_Blur": "Размыццё",
 	"Widgets_Date_Name": "Дата",
 	"Widgets_Date_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Date_Settings_Tabs_Background": "Фон",
-	"Widgets_Date_Settings_Font": "Шрыфт",
-	"Widgets_Date_Settings_Shadow": "Цень",
+
+
 	"Widgets_Date_Settings_Color": "Колер",
 	"Widgets_Date_Settings_Blur": "Размыццё",
 	"Widgets_Quote_Name": "Цытата",
 	"Widgets_Quote_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Quote_Settings_Tabs_Background": "Фон",
 	"Widgets_Quote_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
-	"Widgets_Quote_Settings_Font": "Шрыфт",
-	"Widgets_Quote_Settings_Shadow": "Цень",
+
+
 	"Widgets_Quote_Settings_Color": "Колер",
 	"Widgets_Quote_Settings_Blur": "Размыццё",
 	"Widgets_Search_Name": "Пошук",
 	"Widgets_Search_Placeholder": "Пошук...",
 	"Widgets_Search_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Search_Settings_Tabs_Background": "Фон",
-	"Widgets_Search_Settings_Font": "Шрыфт",
+
 	"Widgets_Search_Settings_Color": "Колер",
 	"Widgets_Search_Settings_Blur": "Размыццё",
 	"Widgets_Search_Settings_SearchProvider": "Правайдэр пошуку",
@@ -182,8 +187,8 @@
 	"Widgets_Greeting_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Greeting_Settings_Tabs_Background": "Фон",
 	"Widgets_Greeting_Settings_Name": "Імя",
-	"Widgets_Greeting_Settings_Font": "Шрыфт",
-	"Widgets_Greeting_Settings_Shadow": "Цень",
+
+
 	"Widgets_Greeting_Settings_Color": "Колер",
 	"Widgets_Greeting_Settings_Blur": "Размыццё",
 	"Widgets_FlickrImage_Name": "Flickr",
@@ -212,8 +217,8 @@
 	"Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
 	"Widgets_Link_Settings_Background_Color": "Колер",
 	"Widgets_Link_Settings_Background_Blur": "Размыццё",
-	"Widgets_Link_Settings_Font": "Шрыфт",
-	"Widgets_Link_Settings_Shadow": "Цень",
+
+
 	"Widgets_Weather_Name": "Надвор'е",
 	"Widgets_Weather_Forecast_Hourly": "Штогадзіны",
 	"Widgets_Weather_Forecast_Daily": "Штодня",
@@ -227,10 +232,10 @@
 	"Widgets_Weather_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Weather_Settings_Tabs_Layout": "Макет",
 	"Widgets_Weather_Settings_Tabs_Background": "Фон",
-	"Widgets_Weather_Settings_Font": "Шрыфт",
+
 	"Widgets_Weather_Settings_Color": "Колер",
 	"Widgets_Weather_Settings_Blur": "Размыццё",
-	"Widgets_Weather_Settings_Shadow": "Цень",
+
 	"Widgets_Weather_Settings_Location_QueryBrowser": "Запытаць месцазнаходжанне з браўзера",
 	"Widgets_Weather_Settings_MeasurementUnits": "Адзінкі",
 	"Widgets_Weather_Settings_MeasurementUnits_Metric": "Метрычная",
@@ -249,10 +254,10 @@
 	"Widgets_AirQuality_Settings_Tabs_Text": "Тэкст",
 	"Widgets_AirQuality_Settings_Tabs_Variables": "Значэнні",
 	"Widgets_AirQuality_Settings_Tabs_Background": "Фон",
-	"Widgets_AirQuality_Settings_Font": "Шрыфт",
+
 	"Widgets_AirQuality_Settings_Color": "Колер",
 	"Widgets_AirQuality_Settings_Blur": "Размыццё",
-	"Widgets_AirQuality_Settings_Shadow": "Цень",
+
 	"Widgets_AirQuality_Settings_Location_QueryBrowser": "Запытаць месцазнаходжанне з браўзера",
 	"Widgets_AirQuality_Settings_Legislation": "Нарматыў iндэкса якасці паветра",
 	"Widgets_AirQuality_Settings_Legislation_European": "Еўрапейскі",
@@ -274,8 +279,8 @@
 	"Widgets_FreeText_Settings_Tabs_Background": "Фон",
 	"Widgets_FreeText_Settings_Text": "Тэкст",
 	"Widgets_FreeText_Settings_Align": "Выраўнаваць",
-	"Widgets_FreeText_Settings_Font": "Шрыфт",
-	"Widgets_FreeText_Settings_Shadow": "Цень",
+
+
 	"Widgets_FreeText_Settings_Color": "Колер",
 	"Widgets_FreeText_Settings_Blur": "Размыццё",
 	"Widgets_Html_Name": "HTML",
@@ -286,15 +291,15 @@
 	"Widgets_TopSites_Settings_Tabs_Background": "Фон",
 	"Widgets_TopSites_Settings_Background_Color": "Колер",
 	"Widgets_TopSites_Settings_Background_Blur": "Размыццё",
-	"Widgets_TopSites_Settings_Font": "Шрыфт",
-	"Widgets_TopSites_Settings_Shadow": "Цень",
+
+
 	"Widgets_TopSites_Settings_ItemsPerRow": "Элементаў у радку",
 	"Widgets_TopSites_Settings_RowCount": "Колькасць радкоў",
 	"Widgets_TopSites_Settings_ShowTitle": "Паказаць назвы",
 	"Widgets_AnalogueClock_Name": "Аналагавы гадзіннік",
 	"Widgets_AnalogueClock_Settings_Tabs_Watchface": "Цыферблат",
 	"Widgets_AnalogueClock_Settings_Tabs_Background": "Фон",
-	"Widgets_AnalogueClock_Settings_Shadow": "Цень",
+
 	"Widgets_AnalogueClock_Settings_Background_Color": "Колер",
 	"Widgets_AnalogueClock_Settings_Watchface": "Цыферблат",
 	"Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Па змаўчанні",
@@ -313,8 +318,8 @@
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Дыяграма",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Тэкст",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Фон",
-	"Widgets_CryptoAssetQuotation_Settings_Font": "Шрыфт",
-	"Widgets_CryptoAssetQuotation_Settings_Shadow": "Цень",
+
+
 	"Widgets_CryptoAssetQuotation_Settings_Color": "Колер",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Колер лініі",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Колер восі",
@@ -334,8 +339,8 @@
   "Widgets_IpInfo_Settings_Tabs_Background": "Фон",
   "Widgets_IpInfo_Settings_Tabs_Variables": "Значэнні",
   "Widgets_IpInfo_Settings_Tabs_Text": "Тэкст",
-  "Widgets_IpInfo_Settings_Font": "Шрыфт",
-  "Widgets_IpInfo_Settings_Shadow": "Цень",
+
+
   "Widgets_IpInfo_Settings_Color": "Колер",
   "Widgets_IpInfo_Settings_Blur": "Размыццё",
 
@@ -349,9 +354,9 @@
   "Widgets_Holidays_Settings_Types_Authorities": "Органы ўлады (органы ўлады зачыненыя)",
   "Widgets_Holidays_Settings_Types_Optional": "Неабавязкова (большасць людзей бяруць выхадны)",
   "Widgets_Holidays_Settings_Types_Observance": "Святкаванне (неабавязковае свята, не аплачваецца выхадны)",
-  "Widgets_Holidays_Settings_Font": "Шрыфт",
+
   "Widgets_Holidays_Settings_FontToday": "Шрыфт для сённяшняга свята",
-  "Widgets_Holidays_Settings_Shadow": "Цень",
+
   "Widgets_Holidays_Settings_Color": "Колер",
   "Widgets_Holidays_Settings_Blur": "Размыццё",
   "Widgets_Holidays_Settings_PastCount": "Колькасць мінулых святаў для паказу",

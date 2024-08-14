@@ -52,6 +52,13 @@
   "DataManage_Restore_SuccessfullyDone": "{count} workspaces has been successfully imported",
   "DataManage_Backup": "Backup",
   "BrowserSupports_NotSupported": "Not supported by your browser",
+
+  "TextSettings_Font": "Font",
+  "TextSettings_Shadow": "Shadow",
+  "TextSettings_Stroke": "Stroke",
+  "TextStrokeSelector_Size": "Size",
+  "TextStrokeSelector_Color": "Color",
+
   "Backgrounds_ImageCommon_Settings_Blur": "Blur",
   "Backgrounds_ImageCommon_Settings_Filter": "Filter",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Content provided by",
@@ -143,30 +150,30 @@
   "Widgets_Clock_Settings_Format": "Format",
   "Widgets_Clock_Settings_Format_12Hrs": "12-Hours",
   "Widgets_Clock_Settings_Format_24Hrs": "24-Hours",
-  "Widgets_Clock_Settings_Font": "Font",
-  "Widgets_Clock_Settings_Shadow": "Shadow",
+
+
   "Widgets_Clock_Settings_Color": "Color",
   "Widgets_Clock_Settings_Blur": "Blur",
   "Widgets_Date_Name": "Date",
   "Widgets_Date_Settings_Tabs_Text": "Text",
   "Widgets_Date_Settings_Tabs_Background": "Background",
-  "Widgets_Date_Settings_Font": "Font",
-  "Widgets_Date_Settings_Shadow": "Shadow",
+
+
   "Widgets_Date_Settings_Color": "Color",
   "Widgets_Date_Settings_Blur": "Blur",
   "Widgets_Quote_Name": "Quote",
   "Widgets_Quote_Settings_Tabs_Text": "Text",
   "Widgets_Quote_Settings_Tabs_Background": "Background",
   "Widgets_Quote_Settings_UpdateInterval": "Update interval (minutes)",
-  "Widgets_Quote_Settings_Font": "Font",
-  "Widgets_Quote_Settings_Shadow": "Shadow",
+
+
   "Widgets_Quote_Settings_Color": "Color",
   "Widgets_Quote_Settings_Blur": "Blur",
   "Widgets_Search_Name": "Search",
   "Widgets_Search_Placeholder": "Search...",
   "Widgets_Search_Settings_Tabs_Text": "Text",
   "Widgets_Search_Settings_Tabs_Background": "Background",
-  "Widgets_Search_Settings_Font": "Font",
+
   "Widgets_Search_Settings_Color": "Color",
   "Widgets_Search_Settings_Blur": "Blur",
   "Widgets_Search_Settings_SearchProvider": "Search provider",
@@ -183,8 +190,8 @@
   "Widgets_Greeting_Settings_Tabs_Text": "Text",
   "Widgets_Greeting_Settings_Tabs_Background": "Background",
   "Widgets_Greeting_Settings_Name": "Name",
-  "Widgets_Greeting_Settings_Font": "Font",
-  "Widgets_Greeting_Settings_Shadow": "Shadow",
+
+
   "Widgets_Greeting_Settings_Color": "Color",
   "Widgets_Greeting_Settings_Blur": "Blur",
   "Widgets_FlickrImage_Name": "Flickr",
@@ -213,8 +220,8 @@
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
   "Widgets_Link_Settings_Background_Color": "Color",
   "Widgets_Link_Settings_Background_Blur": "Blur",
-  "Widgets_Link_Settings_Font": "Font",
-  "Widgets_Link_Settings_Shadow": "Shadow",
+
+
   "Widgets_Weather_Name": "Weather",
   "Widgets_Weather_Forecast_Hourly": "Hourly",
   "Widgets_Weather_Forecast_Daily": "Daily",
@@ -228,10 +235,10 @@
   "Widgets_Weather_Settings_Tabs_Text": "Text",
   "Widgets_Weather_Settings_Tabs_Layout": "Layout",
   "Widgets_Weather_Settings_Tabs_Background": "Background",
-  "Widgets_Weather_Settings_Font": "Font",
+
   "Widgets_Weather_Settings_Color": "Color",
   "Widgets_Weather_Settings_Blur": "Blur",
-  "Widgets_Weather_Settings_Shadow": "Shadow",
+
   "Widgets_Weather_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
   "Widgets_Weather_Settings_MeasurementUnits_Metric": "Metric",
@@ -250,10 +257,10 @@
   "Widgets_AirQuality_Settings_Tabs_Text": "Text",
   "Widgets_AirQuality_Settings_Tabs_Variables": "Variables",
   "Widgets_AirQuality_Settings_Tabs_Background": "Background",
-  "Widgets_AirQuality_Settings_Font": "Font",
+
   "Widgets_AirQuality_Settings_Color": "Color",
   "Widgets_AirQuality_Settings_Blur": "Blur",
-  "Widgets_AirQuality_Settings_Shadow": "Shadow",
+
   "Widgets_AirQuality_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_AirQuality_Settings_Legislation": "Air Quality Legislation",
   "Widgets_AirQuality_Settings_Legislation_European": "European AQI",
@@ -275,8 +282,8 @@
   "Widgets_FreeText_Settings_Tabs_Background": "Background",
   "Widgets_FreeText_Settings_Text": "Text",
   "Widgets_FreeText_Settings_Align": "Align",
-  "Widgets_FreeText_Settings_Font": "Font",
-  "Widgets_FreeText_Settings_Shadow": "Shadow",
+
+
   "Widgets_FreeText_Settings_Color": "Color",
   "Widgets_FreeText_Settings_Blur": "Blur",
   "Widgets_Html_Name": "HTML",
@@ -287,15 +294,15 @@
   "Widgets_TopSites_Settings_Tabs_Background": "Background",
   "Widgets_TopSites_Settings_Background_Color": "Color",
   "Widgets_TopSites_Settings_Background_Blur": "Blur",
-  "Widgets_TopSites_Settings_Font": "Font",
-  "Widgets_TopSites_Settings_Shadow": "Shadow",
+
+
   "Widgets_TopSites_Settings_ItemsPerRow": "Items per row",
   "Widgets_TopSites_Settings_RowCount": "Row count",
   "Widgets_TopSites_Settings_ShowTitle": "Show titles",
   "Widgets_AnalogueClock_Name": "Analogue clock",
   "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Tabs_Background": "Background",
-  "Widgets_AnalogueClock_Settings_Shadow": "Shadow",
+
   "Widgets_AnalogueClock_Settings_Background_Color": "Color",
   "Widgets_AnalogueClock_Settings_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Default",
@@ -314,8 +321,8 @@
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Chart",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Text",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Background",
-  "Widgets_CryptoAssetQuotation_Settings_Font": "Font",
-  "Widgets_CryptoAssetQuotation_Settings_Shadow": "Shadow",
+
+
   "Widgets_CryptoAssetQuotation_Settings_Color": "Color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Line color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Axis color",
@@ -335,8 +342,8 @@
   "Widgets_IpInfo_Settings_Tabs_Background": "Background",
   "Widgets_IpInfo_Settings_Tabs_Variables": "Variables",
   "Widgets_IpInfo_Settings_Tabs_Text": "Text",
-  "Widgets_IpInfo_Settings_Font": "Font",
-  "Widgets_IpInfo_Settings_Shadow": "Shadow",
+
+
   "Widgets_IpInfo_Settings_Color": "Color",
   "Widgets_IpInfo_Settings_Blur": "Blur",
 
@@ -350,9 +357,9 @@
   "Widgets_Holidays_Settings_Types_Authorities": "Authorities (Authorities are closed)",
   "Widgets_Holidays_Settings_Types_Optional": "Optional (Majority of people take a day off)",
   "Widgets_Holidays_Settings_Types_Observance": "Observance (Optional festivity, no paid day off)",
-  "Widgets_Holidays_Settings_Font": "Font",
+
   "Widgets_Holidays_Settings_FontToday": "Today's holiday font",
-  "Widgets_Holidays_Settings_Shadow": "Shadow",
+
   "Widgets_Holidays_Settings_Color": "Color",
   "Widgets_Holidays_Settings_Blur": "Blur",
   "Widgets_Holidays_Settings_PastCount": "Past holidays count to show",

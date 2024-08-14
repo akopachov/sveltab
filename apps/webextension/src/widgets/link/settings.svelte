@@ -6,8 +6,7 @@
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import IconifySearch from './iconify-search.svelte';
-  import FontSelector from '$shared-components/font-selector.svelte';
-  import ShadowSelector from '$shared-components/shadow-selector.svelte';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -51,18 +50,7 @@
     <IconifySearch bind:icon={$icon} bind:color={$iconColor} />
   {/if}
 {:else if tab === TextTabId}
-  <div>
-    <div class="label mb-2">
-      <span>{m.Widgets_Link_Settings_Font()}</span>
-      <FontSelector {font} bind:color={$textColor} />
-    </div>
-    <div>
-      <h4>{m.Widgets_Link_Settings_Shadow()}</h4>
-      <div class="px-4">
-        <ShadowSelector shadowSettings={textShadow} />
-      </div>
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} shadow={textShadow} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Link_Settings_Background_Color()}</span>

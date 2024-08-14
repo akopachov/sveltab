@@ -3,9 +3,8 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { type Settings, NetworkInfoVariables } from './settings';
   import { TextTabId, VariablesTabId, BackgroundTabId } from './settings-tabs';
-  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
-  import ShadowSelector from '$shared-components/shadow-selector.svelte';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -14,18 +13,7 @@
 </script>
 
 {#if tab === TextTabId}
-  <div>
-    <div class="label mb-2">
-      <span>{m.Widgets_IpInfo_Settings_Font()}</span>
-      <FontSelector {font} bind:color={$textColor} />
-    </div>
-    <div>
-      <h4>{m.Widgets_IpInfo_Settings_Shadow()}</h4>
-      <div class="pl-4 pr-4">
-        <ShadowSelector shadowSettings={settings.textShadow} />
-      </div>
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
 {:else if tab === VariablesTabId}
   <label class="flex items-center space-x-2 w-full mb-2">
     <input class="checkbox" type="checkbox" value={NetworkInfoVariables.IP} bind:group={$showVariables} />

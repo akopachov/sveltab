@@ -22,6 +22,7 @@
     backgroundBlur,
     textColor,
     backgroundColor,
+    textStroke,
   } = settings;
 
   $: intlFormat = new Intl.DateTimeFormat($locale, {
@@ -55,5 +56,9 @@
     weights: [$fontWeight],
   }}
   on:fontChanged={redrawAll}>
-  <DynamicSizeText bind:this={dateDisplay} text={date} class="max-h-[100cqh] max-w-[100cqw] cursor-default" />
+  <DynamicSizeText
+    bind:this={dateDisplay}
+    text={date}
+    class="max-h-[100cqh] max-w-[100cqw] cursor-default"
+    stroke={textStroke} />
 </div>

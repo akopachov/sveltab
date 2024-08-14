@@ -1,8 +1,11 @@
 <script lang="ts">
+  import type { TextStrokeSettings } from '$lib/widget-settings';
   import { onDestroy, onMount } from 'svelte';
   import { writable } from 'svelte/store';
+  import { textStroke } from '$actions/text-stroke';
 
   export let text: string;
+  export let stroke: TextStrokeSettings | null | undefined = null;
   export function refresh() {
     updateWHRatio();
     updateFontSize();
@@ -50,7 +53,10 @@
 </script>
 
 <div bind:this={container} class="w-full h-full flex justify-center items-center {exClass || ''}" {...otherProps}>
-  <span style:font-size="{$fontSize}px" class="leading-none whitespace-nowrap">
+  <span
+    style:font-size="{$fontSize}px"
+    class="leading-none whitespace-nowrap [-webkit-text-stroke:var(--sv-text-stroke)]"
+    use:textStroke={stroke}>
     {text}
   </span>
 </div>

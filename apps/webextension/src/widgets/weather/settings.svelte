@@ -3,12 +3,11 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { MeasurementUnits, type Settings } from './settings';
   import { TextTabId, BackgroundTabId, LayoutTabId } from './settings-tabs';
-  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
-  import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import LocationSelect from '$shared-components/location-select.svelte';
   import { AssetsPacks } from './asset-packs';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -76,16 +75,7 @@
     <p>{m.Widgets_Weather_Settings_Layout_ShowCurrentIcon()}</p>
   </label>
 {:else if tab === TextTabId}
-  <div class="label mb-2">
-    <span>{m.Widgets_Weather_Settings_Font()}</span>
-    <FontSelector {font} bind:color={$textColor} />
-  </div>
-  <div class="mt-2">
-    <h4>{m.Widgets_Weather_Settings_Shadow()}</h4>
-    <div class="pl-4 pr-4">
-      <ShadowSelector shadowSettings={settings.textShadow} />
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Weather_Settings_Color()}</span>

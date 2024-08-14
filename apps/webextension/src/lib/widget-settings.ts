@@ -207,3 +207,14 @@ export class ShadowSettings {
   readonly blur: Observable<number>;
   readonly color: Observable<string>;
 }
+
+export type TextStrokeSettingsInitial = Partial<Unobserved<TextStrokeSettings>>;
+export class TextStrokeSettings {
+  constructor(initial: TextStrokeSettingsInitial) {
+    this.size = useObservable(initial.size || 0);
+    this.color = useObservable(initial.color || '#000');
+  }
+
+  readonly size: Observable<number>;
+  readonly color: Observable<string>;
+}

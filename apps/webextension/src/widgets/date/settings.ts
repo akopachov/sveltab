@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -14,6 +15,7 @@ export class Settings extends WidgetSettingsExtra {
     this.textColor = useObservable(initial.textColor || '#000');
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -21,4 +23,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly textColor: Observable<string>;
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
+  readonly textStroke: TextStrokeSettings;
 }

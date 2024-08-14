@@ -3,16 +3,24 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import { AirQualityLegislation, AirQualityVariables, type Settings } from './settings';
   import { TextTabId, BackgroundTabId, VariablesTabId } from './settings-tabs';
-  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
-  import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import LocationSelect from '$shared-components/location-select.svelte';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
 
-  const { legislation, font, textColor, backgroundBlur, backgroundColor, queryUserLocation, showVariables } = settings;
+  const {
+    legislation,
+    font,
+    textColor,
+    backgroundBlur,
+    backgroundColor,
+    queryUserLocation,
+    showVariables,
+    textStroke,
+  } = settings;
 </script>
 
 {#if tab === GeneralTabId}
@@ -73,16 +81,7 @@
     </p>
   </label>
 {:else if tab === TextTabId}
-  <div class="label mb-2">
-    <span>{m.Widgets_AirQuality_Settings_Font()}</span>
-    <FontSelector {font} bind:color={$textColor} />
-  </div>
-  <div class="mt-2">
-    <h4>{m.Widgets_AirQuality_Settings_Shadow()}</h4>
-    <div class="pl-4 pr-4">
-      <ShadowSelector shadowSettings={settings.textShadow} />
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_AirQuality_Settings_Color()}</span>

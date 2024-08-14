@@ -52,6 +52,11 @@
 	"DataManage_Restore_SuccessfullyDone": "{count} obszarów roboczych zostało pomyślnie zaimportowane",
 	"DataManage_Backup": "Exportuj",
   "BrowserSupports_NotSupported": "Twoja przeglądarka nie obsługuje tej funkcji",
+  "TextSettings_Font": "Czcionka",
+  "TextSettings_Shadow": "Cień",
+  "TextSettings_Stroke": "Obrys",
+  "TextStrokeSelector_Size": "Rozmiar",
+  "TextStrokeSelector_Color": "Kolor",
   "Backgrounds_ImageCommon_Settings_Blur": "Rozmycie",
   "Backgrounds_ImageCommon_Settings_Filter": "Filtr",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Treść dostarczona przez",
@@ -140,29 +145,29 @@
 	"Widgets_Clock_Settings_Format": "Format",
 	"Widgets_Clock_Settings_Format_12Hrs": "12 godzin",
 	"Widgets_Clock_Settings_Format_24Hrs": "24 godziny",
-	"Widgets_Clock_Settings_Font": "Czcionka",
-	"Widgets_Clock_Settings_Shadow": "Cień",
+
+
 	"Widgets_Clock_Settings_Color": "Kolor",
 	"Widgets_Date_Name": "Data",
 	"Widgets_Date_Settings_Tabs_Text": "Tekst",
 	"Widgets_Date_Settings_Tabs_Background": "Tło",
-	"Widgets_Date_Settings_Font": "Czcionka",
-	"Widgets_Date_Settings_Shadow": "Cień",
+
+
 	"Widgets_Date_Settings_Color": "Kolor",
 	"Widgets_Date_Settings_Blur": "Rozmywanie",
 	"Widgets_Quote_Name": "Cytat",
 	"Widgets_Quote_Settings_Tabs_Text": "Tekst",
 	"Widgets_Quote_Settings_Tabs_Background": "Tło",
 	"Widgets_Quote_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-	"Widgets_Quote_Settings_Font": "Czcionka",
-	"Widgets_Quote_Settings_Shadow": "Cień",
+
+
 	"Widgets_Quote_Settings_Color": "Kolor",
 	"Widgets_Quote_Settings_Blur": "Rozmywanie",
 	"Widgets_Search_Name": "Odzysk",
 	"Widgets_Search_Placeholder": "Szukaj...",
 	"Widgets_Search_Settings_Tabs_Text": "Tekst",
 	"Widgets_Search_Settings_Tabs_Background": "Tło",
-	"Widgets_Search_Settings_Font": "Czcionka",
+
 	"Widgets_Search_Settings_Color": "Kolor",
 	"Widgets_Search_Settings_SearchProvider": "Dostawca wyszukiwania",
 	"Widgets_Search_Settings_SearchSuggestionsEnabled": "Sugestie wyszukiwania",
@@ -178,8 +183,8 @@
 	"Widgets_Greeting_Settings_Tabs_Text": "Tekst",
 	"Widgets_Greeting_Settings_Tabs_Background": "Tło",
 	"Widgets_Greeting_Settings_Name": "Imię",
-	"Widgets_Greeting_Settings_Font": "Czcionka",
-	"Widgets_Greeting_Settings_Shadow": "Cień",
+
+
 	"Widgets_Greeting_Settings_Color": "Kolor",
 	"Widgets_Greeting_Settings_Blur": "Rozmywanie",
 	"Widgets_FlickrImage_Name": "Flickr",
@@ -208,8 +213,8 @@
 	"Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
 	"Widgets_Link_Settings_Background_Color": "Kolor",
 	"Widgets_Link_Settings_Background_Blur": "Rozmywanie",
-	"Widgets_Link_Settings_Font": "Czcionka",
-	"Widgets_Link_Settings_Shadow": "Cień",
+
+
 	"Widgets_Weather_Name": "Pogoda",
 	"Widgets_Weather_Forecast_Hourly": "Godzinowa",
 	"Widgets_Weather_Forecast_Daily": "Dzienna",
@@ -223,10 +228,10 @@
 	"Widgets_Weather_Settings_Tabs_Text": "Tekst",
 	"Widgets_Weather_Settings_Tabs_Layout": "Układ",
 	"Widgets_Weather_Settings_Tabs_Background": "Tło",
-	"Widgets_Weather_Settings_Font": "Czcionka",
+
 	"Widgets_Weather_Settings_Color": "Kolor",
 	"Widgets_Weather_Settings_Blur": "Rozmywanie",
-	"Widgets_Weather_Settings_Shadow": "Cień",
+
 	"Widgets_Weather_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
 	"Widgets_Weather_Settings_MeasurementUnits": "Jednostki miary",
 	"Widgets_Weather_Settings_MeasurementUnits_Metric": "Metryczne",
@@ -245,10 +250,10 @@
 	"Widgets_AirQuality_Settings_Tabs_Text": "Tekst",
 	"Widgets_AirQuality_Settings_Tabs_Variables": "Zmienne",
 	"Widgets_AirQuality_Settings_Tabs_Background": "Tło",
-	"Widgets_AirQuality_Settings_Font": "Czcionka",
+
 	"Widgets_AirQuality_Settings_Color": "Kolor",
 	"Widgets_AirQuality_Settings_Blur": "Rozmywanie",
-	"Widgets_AirQuality_Settings_Shadow": "Cień",
+
 	"Widgets_AirQuality_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
 	"Widgets_AirQuality_Settings_Legislation": "Przepisy dotyczące jakości powietrza",
 	"Widgets_AirQuality_Settings_Legislation_European": "Europa",
@@ -270,8 +275,8 @@
 	"Widgets_FreeText_Settings_Tabs_Background": "Tło",
 	"Widgets_FreeText_Settings_Text": "Tekst",
 	"Widgets_FreeText_Settings_Align": "Wyrównywanie",
-	"Widgets_FreeText_Settings_Font": "Czcionka",
-	"Widgets_FreeText_Settings_Shadow": "Cień",
+
+
 	"Widgets_FreeText_Settings_Color": "Kolor",
 	"Widgets_FreeText_Settings_Blur": "Rozmywanie",
 	"Widgets_Html_Name": "HTML",
@@ -282,15 +287,15 @@
 	"Widgets_TopSites_Settings_Tabs_Background": "Tło",
 	"Widgets_TopSites_Settings_Background_Color": "Kolor",
 	"Widgets_TopSites_Settings_Background_Blur": "Rozmywanie",
-	"Widgets_TopSites_Settings_Font": "Czcionka",
-	"Widgets_TopSites_Settings_Shadow": "Cień",
+
+
 	"Widgets_TopSites_Settings_ItemsPerRow": "Elementy w rzędzie",
 	"Widgets_TopSites_Settings_RowCount": "Liczba wierszy",
 	"Widgets_TopSites_Settings_ShowTitle": "Pokaż tytuły",
 	"Widgets_AnalogueClock_Name": "Zegar analogowy",
 	"Widgets_AnalogueClock_Settings_Tabs_Watchface": "Tarcza zegara",
 	"Widgets_AnalogueClock_Settings_Tabs_Background": "Tło",
-	"Widgets_AnalogueClock_Settings_Shadow": "Cień",
+
 	"Widgets_AnalogueClock_Settings_Background_Color": "Kolor",
 	"Widgets_AnalogueClock_Settings_Watchface": "Tarcza zegara",
 	"Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Domyślna",
@@ -309,8 +314,8 @@
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Wykres",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Tekst",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Tło",
-	"Widgets_CryptoAssetQuotation_Settings_Font": "Czcionka",
-	"Widgets_CryptoAssetQuotation_Settings_Shadow": "Cień",
+
+
 	"Widgets_CryptoAssetQuotation_Settings_Color": "Kolor",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Kolor linii",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Kolor osi",
@@ -330,8 +335,8 @@
   "Widgets_IpInfo_Settings_Tabs_Background": "Tło",
   "Widgets_IpInfo_Settings_Tabs_Variables": "Zmienne",
   "Widgets_IpInfo_Settings_Tabs_Text": "Tekst",
-  "Widgets_IpInfo_Settings_Font": "Czcionka",
-  "Widgets_IpInfo_Settings_Shadow": "Cień",
+
+
   "Widgets_IpInfo_Settings_Color": "Kolor",
   "Widgets_IpInfo_Settings_Blur": "Rozmywanie",
 
@@ -345,9 +350,9 @@
   "Widgets_Holidays_Settings_Types_Authorities": "Władze (Urzędy są zamknięte)",
   "Widgets_Holidays_Settings_Types_Optional": "Opcjonalne (Większość ludzi bierze dzień wolny)",
   "Widgets_Holidays_Settings_Types_Observance": "Obserwacja (Opcjonalne święto, bez płatnego dnia wolnego)",
-  "Widgets_Holidays_Settings_Font": "Czcionka",
+
   "Widgets_Holidays_Settings_FontToday": "Czcionka dzisiejszego święta",
-  "Widgets_Holidays_Settings_Shadow": "Cień",
+
   "Widgets_Holidays_Settings_Color": "Kolor",
   "Widgets_Holidays_Settings_Blur": "Rozmywanie",
   "Widgets_Holidays_Settings_PastCount": "Ilość przeszłych świąt do pokazania",

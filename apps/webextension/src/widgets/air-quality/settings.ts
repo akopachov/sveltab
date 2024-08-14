@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -27,6 +28,7 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundColor = useObservable(initial.backgroundColor || '#fff');
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.textColor = useObservable(initial.textColor || '#000');
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
     this.legislation = useObservable(initial.legislation || AirQualityLegislation.European);
     this.queryUserLocation = useObservable(initial.queryUserLocation ?? false);
     this.location = new GeoLocation(initial.location || {});
@@ -44,6 +46,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly backgroundColor: Observable<string>;
   readonly backgroundBlur: Observable<number>;
   readonly textColor: Observable<string>;
+  readonly textStroke: TextStrokeSettings;
   readonly legislation: Observable<AirQualityLegislation>;
   readonly queryUserLocation: Observable<boolean>;
 

@@ -3,10 +3,10 @@
   import { RangeSlider, SlideToggle } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
   import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import FontSelector from '$shared-components/font-selector.svelte';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import { SearchProviders } from './providers';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -30,12 +30,7 @@
     </div>
   </div>
 {:else if tab === TextTabId}
-  <div>
-    <div class="label">
-      <span>{m.Widgets_Search_Settings_Font()}</span>
-      <FontSelector {font} bind:color={$textColor} />
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Search_Settings_Color()}</span>

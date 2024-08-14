@@ -5,9 +5,8 @@
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { RangeSlider, SlideToggle } from '@skeletonlabs/skeleton';
-  import FontSelector from '$shared-components/font-selector.svelte';
-  import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import NumberInput from '$shared-components/number-input.svelte';
+  import TextSettings from '$shared-components/text-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -35,18 +34,7 @@
     </div>
   </div>
 {:else if tab === TextTabId}
-  <div>
-    <div class="label mb-2">
-      <span>{m.Widgets_TopSites_Settings_Font()}</span>
-      <FontSelector {font} bind:color={$textColor} />
-    </div>
-    <div>
-      <h4>{m.Widgets_TopSites_Settings_Shadow()}</h4>
-      <div class="px-4">
-        <ShadowSelector shadowSettings={textShadow} />
-      </div>
-    </div>
-  </div>
+  <TextSettings {font} bind:color={$textColor} shadow={textShadow} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_TopSites_Settings_Background_Color()}</span>

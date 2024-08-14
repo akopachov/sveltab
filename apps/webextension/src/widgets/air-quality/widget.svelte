@@ -21,6 +21,7 @@
   import { getAirQualityIndexDescription, getAirQualityIndexMaxValue } from './aqi-utils';
   import { ProgressRadial } from '@skeletonlabs/skeleton';
   import { getRedirectUrl } from './iqair-redirect.gen';
+  import { textStroke } from '$actions/text-stroke';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Air Quality'] });
   const dispatch = createEventDispatcher();
@@ -61,6 +62,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   const storageKey = `Widget_AirQuality_${id}_Latest`;
@@ -199,7 +201,7 @@
 </script>
 
 <div
-  class="w-full h-full select-none flex justify-center content-center flex-col p-[5cqmin] text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit]"
+  class="w-full h-full select-none flex justify-center content-center flex-col p-[5cqmin] text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
   style:background-color={$backgroundColor}
   style:--st--text-color={$textColor}
   style:font-weight={$fontWeight}
@@ -212,7 +214,8 @@
     subsets: $localeCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
+  }}
+  use:textStroke={textStrokeSettings}>
   {#if latestInfo?.lastUpdate > 0}
     <div class="flex flex-row max-h-[calc(100cqh-10cqmin)] h-full">
       <div class="flex flex-col flex-auto">
