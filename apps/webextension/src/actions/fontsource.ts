@@ -1,14 +1,18 @@
 import { logger } from '$lib/logger';
 import { ResourcesToPreload } from '$stores/preload-resources';
+import { cache, getCached, forceDropCache } from '$stores/cache';
 import type { Action } from 'svelte/action';
 import { type FontSubset, type FontStyle, FontWeight, type FontSource } from '$lib/fontsource';
+import { hoursToMilliseconds } from 'date-fns';
 
 const log = logger.getSubLogger({ prefix: ['FontSource Loader:'] });
 
-const ActiveFonts = new Map<
-  string,
-  Promise<{ fontFamily: string; fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>; raw: FontSource }>
->();
+type ActiveFontRef = {
+  fontFamily: string;
+  fontSets: Map<string, { fontSet: Set<FontFace>; usage: number }>;
+  raw: FontSource;
+};
+const ActiveFonts = new Map<string, Promise<ActiveFontRef> | ActiveFontRef>();
 
 export type FontSourceActionSettings = {
   font: string;
@@ -20,6 +24,14 @@ export type FontSourceActionSettings = {
 
 function getKey(subset: FontSubset, weight: FontWeight, style: FontStyle) {
   return `${subset}_${weight}_${style}`;
+}
+
+function getCacheKey(key: string) {
+  return `font_${key}`;
+}
+
+function loadFontSource(fontId: string) {
+  return fetch(`https://api.fontsource.org/v1/fonts/${fontId}`).then<FontSource>(r => r.json());
 }
 
 const fontFaceSources = new WeakMap<FontFace, string>();
@@ -50,11 +62,42 @@ export const fontsource: Action<
       const fontId = s.font;
       let activeFontRefPromise = ActiveFonts.get(fontId);
       if (!activeFontRefPromise) {
-        activeFontRefPromise = new Promise(resolve => {
-          fetch(`https://api.fontsource.org/v1/fonts/${fontId}`)
-            .then(r => r.json())
-            .then(fontObj => resolve({ fontFamily: fontObj.family, raw: fontObj, fontSets: new Map() }));
-        });
+        const cachedFoontSourceResponse = getCached<FontSource>(getCacheKey(fontId));
+        if (cachedFoontSourceResponse) {
+          activeFontRefPromise = {
+            fontFamily: cachedFoontSourceResponse.family,
+            raw: cachedFoontSourceResponse,
+            fontSets: new Map(),
+          };
+        } else {
+          if (s.noPreload === true) {
+            activeFontRefPromise = loadFontSource(fontId).then<ActiveFontRef>(fontObj => ({
+              fontFamily: fontObj.family,
+              raw: fontObj,
+              fontSets: new Map(),
+            }));
+          } else {
+            const cachedFoontSourceResponse = cache(
+              getCacheKey(fontId),
+              () => loadFontSource(fontId),
+              hoursToMilliseconds(24 * 7),
+            );
+            if (cachedFoontSourceResponse instanceof Promise) {
+              activeFontRefPromise = cachedFoontSourceResponse.then<ActiveFontRef>(fontObj => ({
+                fontFamily: fontObj.family,
+                raw: fontObj,
+                fontSets: new Map(),
+              }));
+            } else {
+              activeFontRefPromise = {
+                fontFamily: cachedFoontSourceResponse.family,
+                raw: cachedFoontSourceResponse,
+                fontSets: new Map(),
+              };
+            }
+          }
+        }
+
         ActiveFonts.set(fontId, activeFontRefPromise);
       }
 
@@ -94,6 +137,7 @@ export const fontsource: Action<
       }
 
       const promisesToWait = [];
+      node.style.fontFamily = `"${activeFontRef!.fontFamily}", ${activeFontRef.raw.category}`;
 
       for (const subset of subsets) {
         const unicodeRange = activeFontRef.raw.unicodeRange[subset];
@@ -124,6 +168,7 @@ export const fontsource: Action<
                 ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
               }
               document.fonts.add(fontFace);
+              document.fonts;
               loadedFontSet!.fontSet.add(fontFace);
               promisesToWait.push(fontFace.load());
               log.debug('Loaded font', activeFontRef.fontFamily, weight, style, subset);
@@ -133,7 +178,6 @@ export const fontsource: Action<
       }
 
       Promise.allSettled(promisesToWait).then(() => {
-        node.style.fontFamily = `"${activeFontRef!.fontFamily}", ${activeFontRef.raw.category}`;
         node.dispatchEvent(
           new CustomEvent<FontChangedEventDetails>('fontChanged', {
             detail: { target: node, fontFamily: activeFontRef!.fontFamily },
@@ -183,6 +227,11 @@ export const fontsource: Action<
             }
           }
         }
+      }
+
+      if (activeFontRef.fontSets.size === 0) {
+        ActiveFonts.delete(currentFont);
+        forceDropCache(getCacheKey(currentFont));
       }
     }
 

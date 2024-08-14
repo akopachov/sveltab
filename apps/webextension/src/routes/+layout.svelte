@@ -8,10 +8,10 @@
   import * as m from '$i18n/messages';
   import { browser } from '$app/environment';
 
+  setupCacheHouseKeeping();
   storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
   initializeStores();
   initLocaleStore();
-  setupCacheHouseKeeping();
 
   $: {
     if (browser) {
