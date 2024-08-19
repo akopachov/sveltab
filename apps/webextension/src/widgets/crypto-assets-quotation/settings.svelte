@@ -45,7 +45,7 @@
     </div>
   </div>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_Color()}</span>

@@ -23,6 +23,7 @@
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
   import { exchangeRates } from './exchange-rate-store';
+  import { textStroke } from '$actions/text-stroke';
 
   ChartJS.register(LineElement, LinearScale, CategoryScale, PointElement, Tooltip, Legend);
 
@@ -69,6 +70,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   $: currencyFormatter = new Intl.NumberFormat(
@@ -172,7 +174,7 @@
 
   async function update() {
     if (!priceInfo) {
-      priceInfo = (await storage.local.get(storageKey))[storageKey];
+      priceInfo = <PriceInfo>(await storage.local.get(storageKey))[storageKey];
     }
     if (!$asset) {
       return;
@@ -237,7 +239,7 @@
 </script>
 
 <div
-  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[9cqmin] [&>*]:drop-shadow-[var(--st-shadow)]"
+  class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[9cqmin] [&>*]:drop-shadow-[var(--st-shadow)] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
   style:background-color={$backgroundColor}
   style:font-weight={$fontWeight}
   style:--st-blur="{$backgroundBlur}px"
@@ -250,7 +252,8 @@
     subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
+  }}
+  use:textStroke={textStrokeSettings}>
   {#if priceInfo}
     <p class="mb-1 text-[max(0.5em,12px)]">
       {priceInfo.asset.name} ({priceInfo.asset.code}):&nbsp;

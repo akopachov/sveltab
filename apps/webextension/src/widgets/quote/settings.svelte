@@ -25,7 +25,11 @@
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
 {:else if tab === TextTabId}
-  <TextSettings font={settings.font} bind:color={$textColor} shadow={settings.textShadow} />
+  <TextSettings
+    font={settings.font}
+    bind:color={$textColor}
+    shadow={settings.textShadow}
+    stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Quote_Settings_Color()}</span>

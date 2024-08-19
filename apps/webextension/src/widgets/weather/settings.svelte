@@ -75,7 +75,7 @@
     <p>{m.Widgets_Weather_Settings_Layout_ShowCurrentIcon()}</p>
   </label>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Weather_Settings_Color()}</span>

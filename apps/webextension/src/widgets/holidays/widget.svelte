@@ -21,6 +21,7 @@
   import { online } from '$stores/online-store';
   import * as m from '$i18n/messages';
   import pDebounce from 'p-debounce';
+  import { textStroke } from '$actions/text-stroke';
 
   type CachedHoliday = Omit<HolidayInfo, 'date'> & { date: number };
   type CachedHolidays = { lastUpdate: number; holidays: CachedHoliday[]; country: string; loadedYears: number[] };
@@ -59,6 +60,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   let cache: CachedHolidays;
@@ -163,8 +165,9 @@
     subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
-  <ul class="list text-[length:var(--st-font-size)] leading-normal">
+  }}
+  use:textStroke={textStrokeSettings}>
+  <ul class="list text-[length:var(--st-font-size)] leading-normal [-webkit-text-stroke:var(--sv-text-stroke)]">
     {#each visibleHolidays as holiday}
       <li
         class:today={isToday(holiday.date)}

@@ -92,7 +92,7 @@
       <span>{m.Widgets_Holidays_Settings_FontToday()}</span>
       <FontSelector font={fontToday} bind:color={$textColorToday} />
     </div>
-    <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
+    <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">

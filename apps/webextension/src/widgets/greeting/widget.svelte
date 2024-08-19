@@ -6,6 +6,7 @@
   import { derived, type Readable } from 'svelte/store';
   import { locale, localeCharSubset } from '$stores/locale';
   import { minutesToMilliseconds } from 'date-fns';
+  import { textStroke } from '$actions/text-stroke';
 
   export let settings: Settings;
 
@@ -21,6 +22,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   enum PartOfDay {
@@ -100,6 +102,9 @@
     subsets: $localeCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
-  <p class="text-[calc(85cqh-1rem)] text-center leading-tight">{getGreeting(greetingTemplate, $name)}</p>
+  }}
+  use:textStroke={textStrokeSettings}>
+  <p class="text-[calc(85cqh-1rem)] text-center leading-tight [-webkit-text-stroke:var(--sv-text-stroke)]">
+    {getGreeting(greetingTemplate, $name)}
+  </p>
 </div>

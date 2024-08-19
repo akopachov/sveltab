@@ -13,7 +13,7 @@
 </script>
 
 {#if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
+  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
 {:else if tab === VariablesTabId}
   <label class="flex items-center space-x-2 w-full mb-2">
     <input class="checkbox" type="checkbox" value={NetworkInfoVariables.IP} bind:group={$showVariables} />

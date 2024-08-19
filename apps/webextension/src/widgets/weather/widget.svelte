@@ -25,6 +25,7 @@
     reverseGeocode,
   } from '$lib/geolocation';
   import { getRedirectUrl } from './owm-redirect.gen';
+  import { textStroke } from '$actions/text-stroke';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
   const dispatch = createEventDispatcher();
@@ -80,6 +81,7 @@
     showAdminArea1,
     showCountry,
     showCurrentIcon,
+    textStroke: textStrokeSettings,
   } = settings;
 
   const storageKey = `Widget_Weather_${id}_LatestForecast`;
@@ -295,7 +297,7 @@
 <div
   class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] {$showDetails
     ? 'pb-[1cqmin]'
-    : 'pb-[5cqmin]'} text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit]"
+    : 'pb-[5cqmin]'} text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
   style:background-color={$backgroundColor}
   style:--st--text-color={$textColor}
   style:font-weight={$fontWeight}
@@ -308,7 +310,8 @@
     subsets: $localeCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
+  }}
+  use:textStroke={textStrokeSettings}>
   {#if forecast?.lastUpdate > 0}
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">

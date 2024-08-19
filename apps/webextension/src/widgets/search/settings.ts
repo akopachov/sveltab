@@ -1,5 +1,10 @@
 import { useObservable, type Observable } from '$lib/observable';
-import { FontSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
+import {
+  FontSettings,
+  TextStrokeSettings,
+  WidgetSettingsExtra,
+  type WidgetSettingsExtraInitial,
+} from '$lib/widget-settings';
 
 export type SearchProviderName = 'google' | 'duckduckgo' | 'bing' | 'youtube' | 'brave';
 
@@ -12,6 +17,7 @@ export class Settings extends WidgetSettingsExtra {
     this.searchProvider = useObservable(initial.searchProvider || 'duckduckgo');
     this.searchSuggestionEnabled = useObservable(initial.searchSuggestionEnabled ?? true);
     this.font = new FontSettings(initial.font || {});
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -20,4 +26,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly searchProvider: Observable<SearchProviderName>;
   readonly searchSuggestionEnabled: Observable<boolean>;
   readonly font: FontSettings;
+  readonly textStroke: TextStrokeSettings;
 }

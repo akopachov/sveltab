@@ -6,6 +6,7 @@
   import { logger } from '$lib/logger';
   import { onMount } from 'svelte';
   import { online } from '$stores/online-store';
+  import { textStroke } from '$actions/text-stroke';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Ip Info'] });
 
@@ -29,6 +30,7 @@
       color: textShadowColor,
     },
     showVariables,
+    textStroke: textStrokeSettings,
   } = settings;
 
   async function updateIpInfo() {
@@ -63,9 +65,10 @@
     subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
+  }}
+  use:textStroke={textStrokeSettings}>
   <div
-    class="grid grid-cols-[auto_1fr] w-full leading-normal text-[length:var(--st-font-size)]"
+    class="grid grid-cols-[auto_1fr] w-full leading-normal text-[length:var(--st-font-size)] [-webkit-text-stroke:var(--sv-text-stroke)]"
     style:grid-template-rows="repeat({$showVariables.length}, {100 / $showVariables.length}%)">
     {#if $showVariables.includes(NetworkInfoVariables.IP)}
       <div class="whitespace-nowrap pr-2 content-center">IP:</div>

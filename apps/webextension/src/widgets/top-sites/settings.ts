@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -17,6 +18,7 @@ export class Settings extends WidgetSettingsExtra {
     this.itemsPerRow = useObservable(initial.itemsPerRow || 10);
     this.rowsCount = useObservable(initial.rowsCount || 1);
     this.showTitle = useObservable(initial.showTitle ?? true);
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -27,4 +29,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly itemsPerRow: Observable<number>;
   readonly rowsCount: Observable<number>;
   readonly showTitle: Observable<boolean>;
+  readonly textStroke: TextStrokeSettings;
 }

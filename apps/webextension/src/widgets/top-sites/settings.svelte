@@ -34,7 +34,7 @@
     </div>
   </div>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={textShadow} />
+  <TextSettings {font} bind:color={$textColor} shadow={textShadow} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_TopSites_Settings_Background_Color()}</span>

@@ -7,6 +7,7 @@
   import { imgSrcEx } from '$actions/img-src-ex';
   import * as m from '$i18n/messages';
   import { isFirefox } from '$lib/browsers-check';
+  import { textStroke } from '$actions/text-stroke';
 
   export let settings: Settings;
   export const overrideBorder = true;
@@ -35,6 +36,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 </script>
 
@@ -44,14 +46,15 @@
       class="max-w-full max-h-full grid gap-1"
       style:grid-template-columns="repeat({Math.min($itemsPerRow, list.length)}, minmax(0, 1fr))"
       style:grid-template-rows="repeat({Math.min($rowsCount, Math.max(1, Math.floor(list.length / $itemsPerRow)))},
-      minmax(0, 1fr))">
+      minmax(0, 1fr))"
+      use:textStroke={textStrokeSettings}>
       {#each list as item (item.url)}
         <!-- svelte-ignore a11y-missing-attribute -->
         <a
           href={item.url}
           rel="noreferrer"
           referrerpolicy="no-referrer"
-          class="btn min-h-0 min-w-0 rounded-[var(--st-border-radius)] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] overflow-hidden border-[color:var(--st-border-color)] [border-width:var(--st-border-size)]"
+          class="btn min-h-0 min-w-0 rounded-[var(--st-border-radius)] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] overflow-hidden border-[color:var(--st-border-color)] [border-width:var(--st-border-size)] [-webkit-text-stroke:var(--sv-text-stroke)]"
           style:padding="{5 / Math.min($rowsCount, $itemsPerRow)}cqmin"
           style:background-color={$backgroundColor}
           style:--st-blur="{$backgroundBlur}px"
@@ -83,6 +86,10 @@
       {/each}
     </div>
   {:else}
-    <h4 class="h-4 w-full leading-[100cqh] text-center">{m.Widgets_TopSites_NoMostVisitedSites()}</h4>
+    <h4
+      class="h-4 w-full leading-[100cqh] text-center [-webkit-text-stroke:var(--sv-text-stroke)]"
+      use:textStroke={textStrokeSettings}>
+      {m.Widgets_TopSites_NoMostVisitedSites()}
+    </h4>
   {/if}
 {/await}

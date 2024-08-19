@@ -36,7 +36,7 @@
         </RadioGroup>
       </div>
     </div>
-    <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} />
+    <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
   </div>
 {:else if tab === BackgroundTabId}
   <div class="label">

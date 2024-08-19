@@ -30,7 +30,7 @@
     </div>
   </div>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} />
+  <TextSettings {font} bind:color={$textColor} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
   <div class="label">
     <span>{m.Widgets_Search_Settings_Color()}</span>

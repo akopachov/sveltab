@@ -8,6 +8,7 @@
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
   import { getFavIconUrl } from '$lib/favicon-provider';
+  import { textStroke } from '$actions/text-stroke';
 
   export let settings: Settings;
 
@@ -29,6 +30,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   $: {
@@ -86,7 +88,7 @@
   {/if}
   {#if $title}
     <div
-      class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal !m-0"
+      class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal !m-0 [-webkit-text-stroke:var(--sv-text-stroke)]"
       style:color={$textColor}
       style:font-weight={$fontWeight}
       use:fontsource={{
@@ -94,7 +96,8 @@
         subsets: $userPosssibleLocaleCharSubset,
         styles: ['normal'],
         weights: [$fontWeight],
-      }}>
+      }}
+      use:textStroke={textStrokeSettings}>
       {$title}
     </div>
   {/if}

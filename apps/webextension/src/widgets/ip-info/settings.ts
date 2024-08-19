@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -23,6 +24,7 @@ export class Settings extends WidgetSettingsExtra {
     this.showVariables = useObservable(
       initial.showVariables || [NetworkInfoVariables.IP, NetworkInfoVariables.Network, NetworkInfoVariables.ISP],
     );
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -31,4 +33,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
   readonly showVariables: Observable<NetworkInfoVariables[]>;
+  readonly textStroke: TextStrokeSettings;
 }

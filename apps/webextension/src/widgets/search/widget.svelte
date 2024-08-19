@@ -6,6 +6,7 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import { SearchProviders } from './providers';
+  import { textStroke } from '$actions/text-stroke';
 
   export let settings: Settings;
   export let id: string;
@@ -17,6 +18,7 @@
     textColor,
     font: { id: fontId, weight: fontWeight },
     searchSuggestionEnabled,
+    textStroke: textStrokeSettings,
   } = settings;
 
   const popupSettings: PopupSettings = {
@@ -90,7 +92,8 @@
       subsets: $userPosssibleLocaleCharSubset,
       styles: ['normal'],
       weights: [$fontWeight],
-    }}>
+    }}
+    use:textStroke={textStrokeSettings}>
     <div class="input-group-shim h-full w-auto !p-[calc(15cqh-var(--st-border-size)/2)] aspect-square bg-transparent">
       <span class="w-full h-full {searchProviderAdapter?.iconClass || ''}"></span>
     </div>
@@ -98,7 +101,7 @@
       <input
         type="search"
         name="searchQuery"
-        class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-var(--st-border-size)/2-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50"
+        class="pl-0 pt-0 pb-0 text-[max(calc(75cqh-var(--st-border-size)/2-1rem),10px)] w-full h-full placeholder:text-[var(--st-text-color)] placeholder:opacity-50 [-webkit-text-stroke:var(--sv-text-stroke)]"
         placeholder={m.Widgets_Search_Placeholder()}
         enterkeyhint="search"
         bind:value={searchTerm}
@@ -112,7 +115,7 @@
     style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <nav
-      class="list-nav text-[calc(70cqh-1rem)]"
+      class="list-nav text-[calc(70cqh-1rem)] [-webkit-text-stroke:var(--sv-text-stroke)]"
       on:keydown={onSuggestionKeyDown}
       bind:this={searchSuggestionContainerEl}>
       <ul>

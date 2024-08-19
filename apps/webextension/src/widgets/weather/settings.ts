@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -29,6 +30,7 @@ export class Settings extends WidgetSettingsExtra {
     this.showAdminArea1 = useObservable(initial.showAdminArea1 ?? true);
     this.showCity = useObservable(initial.showCity ?? true);
     this.showCurrentIcon = useObservable(initial.showCurrentIcon ?? true);
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -46,4 +48,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly showAdminArea1: Observable<boolean>;
   readonly showCity: Observable<boolean>;
   readonly showCurrentIcon: Observable<boolean>;
+  readonly textStroke: TextStrokeSettings;
 }

@@ -9,6 +9,7 @@
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import { logger } from '$lib/logger';
   import { PUBLIC_THEQUOTEAPI_KEY } from '$env/static/public';
+  import { textStroke } from '$actions/text-stroke';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Quote'] });
 
@@ -31,6 +32,7 @@
       blur: textShadowBlur,
       color: textShadowColor,
     },
+    textStroke: textStrokeSettings,
   } = settings;
 
   export async function onDelete() {
@@ -77,7 +79,7 @@
 </script>
 
 <div
-  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)]"
+  class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] [-webkit-text-stroke:var(--sv-text-stroke)]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
@@ -91,7 +93,8 @@
     subsets: ['latin'],
     styles: ['normal'],
     weights: [$fontWeight],
-  }}>
+  }}
+  use:textStroke={textStrokeSettings}>
   <figure>
     <blockquote>"{quote?.quote || ''}"</blockquote>
     <figcaption class="text-right mt-2">&mdash;&nbsp;{quote?.author || ''}</figcaption>

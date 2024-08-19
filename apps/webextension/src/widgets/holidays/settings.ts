@@ -2,6 +2,7 @@ import { useObservable, type Observable } from '$lib/observable';
 import {
   FontSettings,
   ShadowSettings,
+  TextStrokeSettings,
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
@@ -21,6 +22,7 @@ export class Settings extends WidgetSettingsExtra {
     this.upcommingCount = useObservable(initial.upcommingCount || 5);
     this.pastCount = useObservable(initial.pastCount || 0);
     this.typesOfInterest = useObservable(initial.typesOfInterest || [HolidayType.Public]);
+    this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
   readonly backgroundColor: Observable<string>;
@@ -34,4 +36,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly upcommingCount: Observable<number>;
   readonly pastCount: Observable<number>;
   readonly typesOfInterest: Observable<HolidayType[]>;
+  readonly textStroke: TextStrokeSettings;
 }
