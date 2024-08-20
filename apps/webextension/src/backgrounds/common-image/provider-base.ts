@@ -11,6 +11,14 @@ import { storage } from '$stores/storage';
 
 const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 
+const BaseNodeClassList = [
+  'top-[calc(0px-var(--sv-blur))]',
+  'left-[calc(0px-var(--sv-blur))]',
+  'w-[calc(100%+var(--sv-blur)*2)]',
+  'h-[calc(100%+var(--sv-blur)*2)]',
+  '[filter:blur(var(--sv-blur))_var(--sv-filter-url)]',
+];
+
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
@@ -131,11 +139,9 @@ export abstract class ImageBackgroundProviderBase<
       (await storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY))[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] ||
       {};
     this.#img = this.node.appendChild(document.createElement('img'));
-    this.#img.style.width = '100%';
-    this.#img.style.height = '100%';
-    this.#img.style.maxWidth = 'none';
-    this.#img.style.maxHeight = 'none';
     this.#img.crossOrigin = 'anonymous';
+    this.#img.classList.add('w-full', 'h-full', 'max-w-none', 'max-h-none', 'select-none');
+    this.#img.draggable = false;
     this.#img.onload = async () => {
       await this.#updateDominantColor();
       await this.#updateCornerColor();
@@ -160,19 +166,14 @@ export abstract class ImageBackgroundProviderBase<
       this.#imageColor.value.destroy();
     }
     this.#img?.remove();
-    this.node.style.backgroundImage = '';
-    this.node.style.backgroundSize = '';
-    this.node.style.backgroundPosition = '';
-    this.node.style.backgroundRepeat = '';
-    this.node.style.transition = '';
-    this.node.style.filter = '';
-    this.node.style.inset = '';
-    this.node.style.width = '';
-    this.node.style.height = '';
-    this.node.style.position = '';
+    this.node.classList.remove(...BaseNodeClassList);
+    this.node.style.removeProperty('--sv-blur');
+    this.node.style.removeProperty('--sv-filter-url');
   }
 
   #applyFilters() {
+    this.node.classList.add(...BaseNodeClassList);
+
     this.#updateFilters();
     const updateFiltersDeb = debounce(() => this.#updateFilters(), 0);
 
@@ -193,26 +194,8 @@ export abstract class ImageBackgroundProviderBase<
       resizeType: { value: resizeType },
     } = this.settings;
 
-    const filters = [];
-    if (blur) {
-      filters.push(`blur(${blur}px)`);
-    }
-    if (filter) {
-      filters.push(`url("#${filter}")`);
-    }
-
-    this.node.style.filter = filters.join(' ');
-    if (blur > 0) {
-      this.node.style.position = 'absolute';
-      this.node.style.inset = `-${blur}px ${blur}px ${blur}px -${blur}px`;
-      this.node.style.width = `calc(100% + ${blur * 2}px)`;
-      this.node.style.height = `calc(100% + ${blur * 2}px)`;
-    } else {
-      this.node.style.inset = '';
-      this.node.style.width = '';
-      this.node.style.height = '';
-      this.node.style.position = '';
-    }
+    this.node.style.setProperty('--sv-blur', `${blur}px`);
+    this.node.style.setProperty('--sv-filter-url', filter ? `url("#${filter}")` : ' ');
 
     if (resizeType === ImageResizeType.Cover) {
       this.#img!.style.objectFit = 'cover';

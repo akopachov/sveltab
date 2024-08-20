@@ -1,61 +1,13 @@
 {
   "version": "6.0",
-  "nxVersion": "19.6.0",
+  "nxVersion": "19.6.1",
   "deps": {
-    "nx": "19.6.0"
+    "nx": "19.6.1"
   },
   "pathMappings": {},
   "nxJsonPlugins": [],
   "fileMap": {
     "projectFileMap": {
-      "is-wsl2": [
-        {
-          "file": "packages/is-wsl2/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/is-wsl2/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/is-wsl2/index.ts",
-          "hash": "16532892570162354184"
-        },
-        {
-          "file": "packages/is-wsl2/package.json",
-          "hash": "10732316900750854299",
-          "deps": [
-            "npm:@types/node",
-            "npm:typescript@5.5.4"
-          ]
-        },
-        {
-          "file": "packages/is-wsl2/tsconfig.json",
-          "hash": "4336780397135653243"
-        }
-      ],
-      "netlify-plugin-interpolate-env-variable": [
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
-        }
-      ],
       "owm-redirect": [
         {
           "file": "apps/owm-redirect/.editorconfig",
@@ -80,49 +32,6 @@
         {
           "file": "apps/owm-redirect/wrangler.toml",
           "hash": "16151197575438519813"
-        }
-      ],
-      "vite-plugin-run-generator": [
-        {
-          "file": "packages/vite-plugin-run-generator/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/index.ts",
-          "hash": "13872569230268468798"
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/package.json",
-          "hash": "2796222498067339420",
-          "deps": [
-            "npm:@types/ejs",
-            "npm:@types/node",
-            "npm:@types/picomatch",
-            "npm:typescript@5.5.4",
-            "npm:colorette",
-            "npm:ejs",
-            "npm:hasha",
-            "npm:picomatch@4.0.2",
-            "npm:slash@5.1.0",
-            "npm:tiny-glob",
-            "npm:vite"
-          ]
-        },
-        {
-          "file": "packages/vite-plugin-run-generator/tsconfig.json",
-          "hash": "4336780397135653243"
         }
       ],
       "iqair-redirect": [
@@ -150,287 +59,6 @@
         {
           "file": "apps/iqair-redirect/wrangler.toml",
           "hash": "11886815432978647150"
-        }
-      ],
-      "landing": [
-        {
-          "file": "apps/landing/.editorconfig",
-          "hash": "7656052162757445104"
-        },
-        {
-          "file": "apps/landing/.eslintignore",
-          "hash": "12866345277008372755"
-        },
-        {
-          "file": "apps/landing/.eslintrc.cjs",
-          "hash": "15647399974590712086"
-        },
-        {
-          "file": "apps/landing/.gitignore",
-          "hash": "2615793248884789625"
-        },
-        {
-          "file": "apps/landing/.npmrc",
-          "hash": "16306061729883149313"
-        },
-        {
-          "file": "apps/landing/.prettierignore",
-          "hash": "9861187265567348571"
-        },
-        {
-          "file": "apps/landing/.prettierrc",
-          "hash": "8590646213043532286"
-        },
-        {
-          "file": "apps/landing/netlify.toml",
-          "hash": "4054770132038844011"
-        },
-        {
-          "file": "apps/landing/package.json",
-          "hash": "2804487137757428137",
-          "deps": [
-            "npm:@fontsource/inter",
-            "npm:@iconify/json",
-            "npm:@iconify/tailwind",
-            "npm:@iconify/utils",
-            "npm:@neoconfetti/svelte",
-            "npm:@sveltejs/adapter-static",
-            "npm:@sveltejs/enhanced-img",
-            "npm:@sveltejs/kit",
-            "npm:@sveltejs/vite-plugin-svelte",
-            "npm:@tailwindcss/forms",
-            "npm:@types/aos",
-            "npm:@types/eslint",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:aos",
-            "npm:autoprefixer",
-            "npm:cssnano",
-            "npm:cssnano-preset-default",
-            "npm:cssnano-preset-lite",
-            "npm:daisyui",
-            "npm:embla-carousel-svelte",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:eslint-plugin-svelte",
-            "is-wsl2",
-            "npm:postcss",
-            "npm:postcss-load-config@6.0.1",
-            "npm:prettier",
-            "npm:prettier-plugin-svelte",
-            "npm:prettier-plugin-tailwindcss",
-            "npm:svelte@4.2.18",
-            "npm:svelte-body",
-            "npm:svelte-check",
-            "npm:tailwindcss",
-            "npm:tslib",
-            "npm:typescript@5.5.4",
-            "npm:vite"
-          ]
-        },
-        {
-          "file": "apps/landing/postcss.config.cjs",
-          "hash": "7910658628078544505"
-        },
-        {
-          "file": "apps/landing/src/app.d.ts",
-          "hash": "17522384083550949823"
-        },
-        {
-          "file": "apps/landing/src/app.html",
-          "hash": "17841630233698801912"
-        },
-        {
-          "file": "apps/landing/src/app.pcss",
-          "hash": "14810236820657831828"
-        },
-        {
-          "file": "apps/landing/src/components/features.svelte",
-          "hash": "7661422588996331189"
-        },
-        {
-          "file": "apps/landing/src/components/footer.svelte",
-          "hash": "13121746684541395301"
-        },
-        {
-          "file": "apps/landing/src/components/header.svelte",
-          "hash": "17934009167654308491"
-        },
-        {
-          "file": "apps/landing/src/components/navigation.svelte",
-          "hash": "14988055686807007102"
-        },
-        {
-          "file": "apps/landing/src/components/screenshots.svelte",
-          "hash": "13102879630609783136"
-        },
-        {
-          "file": "apps/landing/src/components/support.svelte",
-          "hash": "7310236108946124037"
-        },
-        {
-          "file": "apps/landing/src/components/welcome.svelte",
-          "hash": "718645630279054264"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/amo-button.svg",
-          "hash": "10638019120008779628"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/cwo-button.svg",
-          "hash": "18021027240333141996"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/edge-button.svg",
-          "hash": "14822606946037564973"
-        },
-        {
-          "file": "apps/landing/src/lib/css/theme.css",
-          "hash": "9028311825916970864"
-        },
-        {
-          "file": "apps/landing/src/lib/css/utility-patterns.css",
-          "hash": "12126172961868927401"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/0.jpeg",
-          "hash": "14185278729368134872"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/1.png",
-          "hash": "2305235227382566427"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/2.jpeg",
-          "hash": "9183676362714503382"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/3.jpeg",
-          "hash": "3962158966037601750"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/4.jpeg",
-          "hash": "9225345747745698130"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/5.png",
-          "hash": "6558862023349455654"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/6.jpeg",
-          "hash": "5392268130969410636"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/7.png",
-          "hash": "10289934768717743098"
-        },
-        {
-          "file": "apps/landing/src/routes/+error.svelte",
-          "hash": "11260399356154979818"
-        },
-        {
-          "file": "apps/landing/src/routes/+layout.svelte",
-          "hash": "11467319100262057112"
-        },
-        {
-          "file": "apps/landing/src/routes/+layout.ts",
-          "hash": "3656248653335203942"
-        },
-        {
-          "file": "apps/landing/src/routes/+page.svelte",
-          "hash": "4490183109275284451"
-        },
-        {
-          "file": "apps/landing/static/favicon/android-chrome-192x192.png",
-          "hash": "17747222593322570913"
-        },
-        {
-          "file": "apps/landing/static/favicon/android-chrome-512x512.png",
-          "hash": "10992519659870263635"
-        },
-        {
-          "file": "apps/landing/static/favicon/apple-touch-icon.png",
-          "hash": "8319709282744640903"
-        },
-        {
-          "file": "apps/landing/static/favicon/browserconfig.xml",
-          "hash": "9030448547662640771"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-128x128.png",
-          "hash": "3574285871798273089"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-16x16.png",
-          "hash": "1484907360946902538"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-32x32.png",
-          "hash": "12914832945126627537"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-48x48.png",
-          "hash": "16296114082698355954"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-96x96.png",
-          "hash": "15400891981776800899"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon.ico",
-          "hash": "6080578060923793650"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon.svg",
-          "hash": "16149112273573293908"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-144x144.png",
-          "hash": "17090102562471781642"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-150x150.png",
-          "hash": "2987547776851300371"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-310x150.png",
-          "hash": "8240165320902303268"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-310x310.png",
-          "hash": "11331575352337162409"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-70x70.png",
-          "hash": "4598816931621196495"
-        },
-        {
-          "file": "apps/landing/static/favicon/safari-pinned-tab.svg",
-          "hash": "12657718850154108143"
-        },
-        {
-          "file": "apps/landing/static/favicon/site.webmanifest.json",
-          "hash": "10433911047657634548"
-        },
-        {
-          "file": "apps/landing/static/robots.txt",
-          "hash": "2790380794362165217"
-        },
-        {
-          "file": "apps/landing/svelte.config.js",
-          "hash": "14256732300601504382"
-        },
-        {
-          "file": "apps/landing/tailwind.config.cjs",
-          "hash": "9821587412396646719"
-        },
-        {
-          "file": "apps/landing/tsconfig.json",
-          "hash": "14611439694374538873"
-        },
-        {
-          "file": "apps/landing/vite.config.ts",
-          "hash": "2155460198681927953"
         }
       ],
       "preview": [
@@ -523,7 +151,7 @@
         },
         {
           "file": "apps/webextension/package.json",
-          "hash": "8054490149145500461",
+          "hash": "9220944678375399618",
           "deps": [
             "npm:@floating-ui/core",
             "npm:@floating-ui/dom",
@@ -696,7 +324,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/provider-base.ts",
-          "hash": "14885683308924451571"
+          "hash": "3848643736337959190"
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/settings-base.svelte",
@@ -1272,15 +900,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/free-text/settings.svelte",
-          "hash": "1663831602195572187"
+          "hash": "12832688405429260060"
         },
         {
           "file": "apps/webextension/src/widgets/free-text/settings.ts",
-          "hash": "1143539830308893323"
+          "hash": "4082851898549887767"
         },
         {
           "file": "apps/webextension/src/widgets/free-text/widget.svelte",
-          "hash": "13510599616471203100"
+          "hash": "1610195530900566947"
         },
         {
           "file": "apps/webextension/src/widgets/greeting/index.ts",
@@ -1296,15 +924,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/greeting/settings.svelte",
-          "hash": "3059908954401843476"
+          "hash": "7202072912084092071"
         },
         {
           "file": "apps/webextension/src/widgets/greeting/settings.ts",
-          "hash": "14823277841714975918"
+          "hash": "15203194538185776978"
         },
         {
           "file": "apps/webextension/src/widgets/greeting/widget.svelte",
-          "hash": "4153432505175901185"
+          "hash": "12299109394527327082"
         },
         {
           "file": "apps/webextension/src/widgets/holidays/api.ts",
@@ -1324,15 +952,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/holidays/settings.svelte",
-          "hash": "2978935906504469360"
+          "hash": "14700613266755136143"
         },
         {
           "file": "apps/webextension/src/widgets/holidays/settings.ts",
-          "hash": "17955382222931798742"
+          "hash": "10253994157118334386"
         },
         {
           "file": "apps/webextension/src/widgets/holidays/widget.svelte",
-          "hash": "4715678362440309045"
+          "hash": "17612198181389135458"
         },
         {
           "file": "apps/webextension/src/widgets/html/index.ts",
@@ -1372,15 +1000,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/ip-info/settings.svelte",
-          "hash": "3091013010952510974"
+          "hash": "12863649549999556323"
         },
         {
           "file": "apps/webextension/src/widgets/ip-info/settings.ts",
-          "hash": "8762280454413105502"
+          "hash": "10435134234779980011"
         },
         {
           "file": "apps/webextension/src/widgets/ip-info/widget.svelte",
-          "hash": "15539269737111400835"
+          "hash": "17667014761569666559"
         },
         {
           "file": "apps/webextension/src/widgets/link/iconify-search.svelte",
@@ -1400,15 +1028,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/link/settings.svelte",
-          "hash": "3626635765127325062"
+          "hash": "4255611984863434388"
         },
         {
           "file": "apps/webextension/src/widgets/link/settings.ts",
-          "hash": "5932226512915510529"
+          "hash": "107630068455584446"
         },
         {
           "file": "apps/webextension/src/widgets/link/widget.svelte",
-          "hash": "6548334757184278616"
+          "hash": "11375487697432937703"
         },
         {
           "file": "apps/webextension/src/widgets/quote/index.ts",
@@ -1424,15 +1052,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/quote/settings.svelte",
-          "hash": "15904544930773631526"
+          "hash": "309273893624083636"
         },
         {
           "file": "apps/webextension/src/widgets/quote/settings.ts",
-          "hash": "4720447808404027849"
+          "hash": "1323796056432734447"
         },
         {
           "file": "apps/webextension/src/widgets/quote/widget.svelte",
-          "hash": "8508010852345519814"
+          "hash": "17756178948825112259"
         },
         {
           "file": "apps/webextension/src/widgets/search/index.ts",
@@ -1476,15 +1104,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/search/settings.svelte",
-          "hash": "14172051919446686013"
+          "hash": "4757578145919508073"
         },
         {
           "file": "apps/webextension/src/widgets/search/settings.ts",
-          "hash": "357087038590269192"
+          "hash": "8129313389909043078"
         },
         {
           "file": "apps/webextension/src/widgets/search/widget.svelte",
-          "hash": "9980285193167831367"
+          "hash": "17681586080427361932"
         },
         {
           "file": "apps/webextension/src/widgets/top-sites/index.ts",
@@ -1500,11 +1128,11 @@
         },
         {
           "file": "apps/webextension/src/widgets/top-sites/settings.svelte",
-          "hash": "9204024779663092521"
+          "hash": "17617225347062857009"
         },
         {
           "file": "apps/webextension/src/widgets/top-sites/settings.ts",
-          "hash": "7244032658967811055"
+          "hash": "7862507878545903865"
         },
         {
           "file": "apps/webextension/src/widgets/top-sites/top-sites-store.ts",
@@ -1512,7 +1140,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/top-sites/widget.svelte",
-          "hash": "7370765343150472180"
+          "hash": "12053083724058858221"
         },
         {
           "file": "apps/webextension/src/widgets/weather/asset-packs/asset-pack-base.ts",
@@ -1556,15 +1184,15 @@
         },
         {
           "file": "apps/webextension/src/widgets/weather/settings.svelte",
-          "hash": "17816738756992949867"
+          "hash": "3678425243873841461"
         },
         {
           "file": "apps/webextension/src/widgets/weather/settings.ts",
-          "hash": "15947274235729617355"
+          "hash": "2484022134501068859"
         },
         {
           "file": "apps/webextension/src/widgets/weather/widget.svelte",
-          "hash": "8635985646382733024"
+          "hash": "6345864773455287266"
         },
         {
           "file": "apps/webextension/static/favicon/android-chrome-192x192.png",
@@ -1653,6 +1281,378 @@
         {
           "file": "apps/webextension/vite.config.ts",
           "hash": "9570126959004692792"
+        }
+      ],
+      "landing": [
+        {
+          "file": "apps/landing/.editorconfig",
+          "hash": "7656052162757445104"
+        },
+        {
+          "file": "apps/landing/.eslintignore",
+          "hash": "12866345277008372755"
+        },
+        {
+          "file": "apps/landing/.eslintrc.cjs",
+          "hash": "15647399974590712086"
+        },
+        {
+          "file": "apps/landing/.gitignore",
+          "hash": "2615793248884789625"
+        },
+        {
+          "file": "apps/landing/.npmrc",
+          "hash": "16306061729883149313"
+        },
+        {
+          "file": "apps/landing/.prettierignore",
+          "hash": "9861187265567348571"
+        },
+        {
+          "file": "apps/landing/.prettierrc",
+          "hash": "8590646213043532286"
+        },
+        {
+          "file": "apps/landing/netlify.toml",
+          "hash": "4054770132038844011"
+        },
+        {
+          "file": "apps/landing/package.json",
+          "hash": "6540751614931606708",
+          "deps": [
+            "npm:@fontsource/inter",
+            "npm:@iconify/json",
+            "npm:@iconify/tailwind",
+            "npm:@iconify/utils",
+            "npm:@neoconfetti/svelte",
+            "npm:@sveltejs/adapter-static",
+            "npm:@sveltejs/enhanced-img",
+            "npm:@sveltejs/kit",
+            "npm:@sveltejs/vite-plugin-svelte",
+            "npm:@tailwindcss/forms",
+            "npm:@types/aos",
+            "npm:@types/eslint",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:aos",
+            "npm:autoprefixer",
+            "npm:cssnano",
+            "npm:cssnano-preset-default",
+            "npm:cssnano-preset-lite",
+            "npm:daisyui",
+            "npm:embla-carousel-svelte",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-svelte",
+            "is-wsl2",
+            "npm:postcss",
+            "npm:postcss-load-config@6.0.1",
+            "npm:prettier",
+            "npm:prettier-plugin-svelte",
+            "npm:prettier-plugin-tailwindcss",
+            "npm:svelte@4.2.18",
+            "npm:svelte-body",
+            "npm:svelte-check",
+            "npm:tailwindcss",
+            "npm:tslib",
+            "npm:typescript@5.5.4",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "apps/landing/postcss.config.cjs",
+          "hash": "7910658628078544505"
+        },
+        {
+          "file": "apps/landing/src/app.d.ts",
+          "hash": "17522384083550949823"
+        },
+        {
+          "file": "apps/landing/src/app.html",
+          "hash": "17841630233698801912"
+        },
+        {
+          "file": "apps/landing/src/app.pcss",
+          "hash": "14810236820657831828"
+        },
+        {
+          "file": "apps/landing/src/components/features.svelte",
+          "hash": "7661422588996331189"
+        },
+        {
+          "file": "apps/landing/src/components/footer.svelte",
+          "hash": "13121746684541395301"
+        },
+        {
+          "file": "apps/landing/src/components/header.svelte",
+          "hash": "17934009167654308491"
+        },
+        {
+          "file": "apps/landing/src/components/navigation.svelte",
+          "hash": "14988055686807007102"
+        },
+        {
+          "file": "apps/landing/src/components/screenshots.svelte",
+          "hash": "13102879630609783136"
+        },
+        {
+          "file": "apps/landing/src/components/support.svelte",
+          "hash": "7310236108946124037"
+        },
+        {
+          "file": "apps/landing/src/components/welcome.svelte",
+          "hash": "718645630279054264"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/amo-button.svg",
+          "hash": "10638019120008779628"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/cwo-button.svg",
+          "hash": "18021027240333141996"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/edge-button.svg",
+          "hash": "14822606946037564973"
+        },
+        {
+          "file": "apps/landing/src/lib/css/theme.css",
+          "hash": "9028311825916970864"
+        },
+        {
+          "file": "apps/landing/src/lib/css/utility-patterns.css",
+          "hash": "12126172961868927401"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/0.jpeg",
+          "hash": "14185278729368134872"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/1.png",
+          "hash": "2305235227382566427"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/2.jpeg",
+          "hash": "9183676362714503382"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/3.jpeg",
+          "hash": "3962158966037601750"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/4.jpeg",
+          "hash": "9225345747745698130"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/5.png",
+          "hash": "6558862023349455654"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/6.jpeg",
+          "hash": "5392268130969410636"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/7.png",
+          "hash": "10289934768717743098"
+        },
+        {
+          "file": "apps/landing/src/routes/+error.svelte",
+          "hash": "11260399356154979818"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.svelte",
+          "hash": "11467319100262057112"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.ts",
+          "hash": "3656248653335203942"
+        },
+        {
+          "file": "apps/landing/src/routes/+page.svelte",
+          "hash": "4490183109275284451"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-192x192.png",
+          "hash": "17747222593322570913"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-512x512.png",
+          "hash": "10992519659870263635"
+        },
+        {
+          "file": "apps/landing/static/favicon/apple-touch-icon.png",
+          "hash": "8319709282744640903"
+        },
+        {
+          "file": "apps/landing/static/favicon/browserconfig.xml",
+          "hash": "9030448547662640771"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-128x128.png",
+          "hash": "3574285871798273089"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-16x16.png",
+          "hash": "1484907360946902538"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-32x32.png",
+          "hash": "12914832945126627537"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-48x48.png",
+          "hash": "16296114082698355954"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-96x96.png",
+          "hash": "15400891981776800899"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.ico",
+          "hash": "6080578060923793650"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.svg",
+          "hash": "16149112273573293908"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-144x144.png",
+          "hash": "17090102562471781642"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-150x150.png",
+          "hash": "2987547776851300371"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x150.png",
+          "hash": "8240165320902303268"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x310.png",
+          "hash": "11331575352337162409"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-70x70.png",
+          "hash": "4598816931621196495"
+        },
+        {
+          "file": "apps/landing/static/favicon/safari-pinned-tab.svg",
+          "hash": "12657718850154108143"
+        },
+        {
+          "file": "apps/landing/static/favicon/site.webmanifest.json",
+          "hash": "10433911047657634548"
+        },
+        {
+          "file": "apps/landing/static/robots.txt",
+          "hash": "2790380794362165217"
+        },
+        {
+          "file": "apps/landing/svelte.config.js",
+          "hash": "14256732300601504382"
+        },
+        {
+          "file": "apps/landing/tailwind.config.cjs",
+          "hash": "9821587412396646719"
+        },
+        {
+          "file": "apps/landing/tsconfig.json",
+          "hash": "14611439694374538873"
+        },
+        {
+          "file": "apps/landing/vite.config.ts",
+          "hash": "2155460198681927953"
+        }
+      ],
+      "is-wsl2": [
+        {
+          "file": "packages/is-wsl2/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/is-wsl2/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/is-wsl2/index.ts",
+          "hash": "16532892570162354184"
+        },
+        {
+          "file": "packages/is-wsl2/package.json",
+          "hash": "10732316900750854299",
+          "deps": [
+            "npm:@types/node",
+            "npm:typescript@5.5.4"
+          ]
+        },
+        {
+          "file": "packages/is-wsl2/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "vite-plugin-run-generator": [
+        {
+          "file": "packages/vite-plugin-run-generator/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/index.ts",
+          "hash": "13872569230268468798"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/package.json",
+          "hash": "2796222498067339420",
+          "deps": [
+            "npm:@types/ejs",
+            "npm:@types/node",
+            "npm:@types/picomatch",
+            "npm:typescript@5.5.4",
+            "npm:colorette",
+            "npm:ejs",
+            "npm:hasha",
+            "npm:picomatch@4.0.2",
+            "npm:slash@5.1.0",
+            "npm:tiny-glob",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
         }
       ]
     },
@@ -1991,11 +1991,11 @@
       },
       {
         "file": "package.json",
-        "hash": "396979919847715574"
+        "hash": "14411049981992315406"
       },
       {
         "file": "pnpm-lock.yaml",
-        "hash": "3882825440443532318"
+        "hash": "802557460619562627"
       },
       {
         "file": "pnpm-workspace.yaml",
