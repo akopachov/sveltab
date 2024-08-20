@@ -300,7 +300,7 @@
     on:dragover={onWidgetCatalogItemDragOver}
     bind:this={workspaceEl}>
     <div
-      class="fixed w-full h-full -z-10"
+      class="absolute w-full h-full -z-10"
       use:dynamicBackground={$background}
       on:cornerColorChanged={cornerColorChanged}>
     </div>
