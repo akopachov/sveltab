@@ -17,7 +17,7 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { getClockStore } from '$stores/clock-store';
-  import { differenceInDays, minutesToMilliseconds, isToday, formatISO, differenceInHours } from 'date-fns';
+  import { differenceInDays, minutesToMilliseconds, isToday, formatISO, isBefore } from 'date-fns';
   import { online } from '$stores/online-store';
   import * as m from '$i18n/messages';
   import pDebounce from 'p-debounce';
@@ -67,7 +67,7 @@
 
   $: typesOfInterestSet = new Set($typesOfInterest);
   $: holidaysOfInterest = cache ? cache.holidays.filter(f => f.types.some(t => typesOfInterestSet.has(t))) : [];
-  $: closestHolidayIndex = cache ? getClosestHolidayIndex(holidaysOfInterest, $now) : -1;
+  $: closestHolidayIndex = cache ? getClosestUpcommingHolidayIndex(holidaysOfInterest, $now) : -1;
   $: visibleHolidays = cache
     ? holidaysOfInterest.slice(
         Math.max(0, closestHolidayIndex - $pastCount),
@@ -107,7 +107,7 @@
 
     const now = new Date();
     let holidays = await getHolidayInfo($country, now.getFullYear());
-    const closestCurrentIndex = getClosestHolidayIndex(holidays, now);
+    const closestCurrentIndex = getClosestUpcommingHolidayIndex(holidays, now);
     if (closestCurrentIndex - $pastCount < 0) {
       const previousHolidays = await getHolidayInfo($country, now.getFullYear() - 1);
       holidays = [...previousHolidays, ...holidays];
@@ -124,11 +124,14 @@
     await storage.local.set({ [storageKey]: cache });
   }
 
-  function getClosestHolidayIndex(holidays: (HolidayInfo | CachedHoliday)[], now: Date) {
+  function getClosestUpcommingHolidayIndex(holidays: (HolidayInfo | CachedHoliday)[], now: Date) {
     let minDifference = Number.MAX_SAFE_INTEGER;
 
     for (let i = 0; i < holidays.length; i++) {
       const currentHoliday = holidays[i];
+      if (isBefore(currentHoliday.date, now)) {
+        continue;
+      }
       const difference = Math.abs(differenceInDays(currentHoliday.date, now));
       if (difference > minDifference) {
         return i - 1;

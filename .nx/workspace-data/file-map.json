@@ -8,6 +8,54 @@
   "nxJsonPlugins": [],
   "fileMap": {
     "projectFileMap": {
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
+        }
+      ],
+      "is-wsl2": [
+        {
+          "file": "packages/is-wsl2/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/is-wsl2/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/is-wsl2/index.ts",
+          "hash": "16532892570162354184"
+        },
+        {
+          "file": "packages/is-wsl2/package.json",
+          "hash": "10732316900750854299",
+          "deps": [
+            "npm:@types/node",
+            "npm:typescript@5.5.4"
+          ]
+        },
+        {
+          "file": "packages/is-wsl2/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
       "owm-redirect": [
         {
           "file": "apps/owm-redirect/.editorconfig",
@@ -34,47 +82,43 @@
           "hash": "16151197575438519813"
         }
       ],
-      "vite-plugin-run-generator": [
+      "preview": [
         {
-          "file": "packages/vite-plugin-run-generator/.editorconfig",
-          "hash": "14168222967502131905"
+          "file": "apps/preview/.editorconfig",
+          "hash": "9035647012319884894"
         },
         {
-          "file": "packages/vite-plugin-run-generator/.gitignore",
-          "hash": "6067757523401935360"
+          "file": "apps/preview/.gitignore",
+          "hash": "9652840843145639605"
         },
         {
-          "file": "packages/vite-plugin-run-generator/.prettierignore",
-          "hash": "11530485554417286140"
+          "file": "apps/preview/functions/iqair-redirect.ts",
+          "hash": "18300375636509497534"
         },
         {
-          "file": "packages/vite-plugin-run-generator/.prettierrc",
-          "hash": "8568038100117739746"
+          "file": "apps/preview/functions/owm-redirect.ts",
+          "hash": "16288626628291305981"
         },
         {
-          "file": "packages/vite-plugin-run-generator/index.ts",
-          "hash": "13872569230268468798"
+          "file": "apps/preview/netlify.toml",
+          "hash": "1546573686693384885"
         },
         {
-          "file": "packages/vite-plugin-run-generator/package.json",
-          "hash": "2796222498067339420",
+          "file": "apps/preview/package.json",
+          "hash": "6108546777992698155",
           "deps": [
-            "npm:@types/ejs",
-            "npm:@types/node",
-            "npm:@types/picomatch",
+            "npm:@types/unidecode",
+            "netlify-plugin-interpolate-env-variable",
             "npm:typescript@5.5.4",
-            "npm:colorette",
-            "npm:ejs",
-            "npm:hasha",
-            "npm:picomatch@4.0.2",
-            "npm:slash@5.1.0",
-            "npm:tiny-glob",
-            "npm:vite"
+            "webextension",
+            "npm:@netlify/functions",
+            "npm:geo-position.ts",
+            "npm:unidecode"
           ]
         },
         {
-          "file": "packages/vite-plugin-run-generator/tsconfig.json",
-          "hash": "4336780397135653243"
+          "file": "apps/preview/tsconfig.json",
+          "hash": "15382321260039008176"
         }
       ],
       "webextension": [
@@ -937,7 +981,7 @@
         },
         {
           "file": "apps/webextension/src/widgets/holidays/widget.svelte",
-          "hash": "17612198181389135458"
+          "hash": "8012371412747203335"
         },
         {
           "file": "apps/webextension/src/widgets/html/index.ts",
@@ -1264,40 +1308,6 @@
           "hash": "9570126959004692792"
         }
       ],
-      "is-wsl2": [
-        {
-          "file": "packages/is-wsl2/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/is-wsl2/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/is-wsl2/index.ts",
-          "hash": "16532892570162354184"
-        },
-        {
-          "file": "packages/is-wsl2/package.json",
-          "hash": "10732316900750854299",
-          "deps": [
-            "npm:@types/node",
-            "npm:typescript@5.5.4"
-          ]
-        },
-        {
-          "file": "packages/is-wsl2/tsconfig.json",
-          "hash": "4336780397135653243"
-        }
-      ],
       "iqair-redirect": [
         {
           "file": "apps/iqair-redirect/.editorconfig",
@@ -1325,18 +1335,47 @@
           "hash": "11886815432978647150"
         }
       ],
-      "netlify-plugin-interpolate-env-variable": [
+      "vite-plugin-run-generator": [
         {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
+          "file": "packages/vite-plugin-run-generator/.editorconfig",
+          "hash": "14168222967502131905"
         },
         {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
+          "file": "packages/vite-plugin-run-generator/.gitignore",
+          "hash": "6067757523401935360"
         },
         {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
+          "file": "packages/vite-plugin-run-generator/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/index.ts",
+          "hash": "13872569230268468798"
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/package.json",
+          "hash": "2796222498067339420",
+          "deps": [
+            "npm:@types/ejs",
+            "npm:@types/node",
+            "npm:@types/picomatch",
+            "npm:typescript@5.5.4",
+            "npm:colorette",
+            "npm:ejs",
+            "npm:hasha",
+            "npm:picomatch@4.0.2",
+            "npm:slash@5.1.0",
+            "npm:tiny-glob",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "packages/vite-plugin-run-generator/tsconfig.json",
+          "hash": "4336780397135653243"
         }
       ],
       "landing": [
@@ -1618,45 +1657,6 @@
         {
           "file": "apps/landing/vite.config.ts",
           "hash": "2155460198681927953"
-        }
-      ],
-      "preview": [
-        {
-          "file": "apps/preview/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/preview/.gitignore",
-          "hash": "9652840843145639605"
-        },
-        {
-          "file": "apps/preview/functions/iqair-redirect.ts",
-          "hash": "18300375636509497534"
-        },
-        {
-          "file": "apps/preview/functions/owm-redirect.ts",
-          "hash": "16288626628291305981"
-        },
-        {
-          "file": "apps/preview/netlify.toml",
-          "hash": "1546573686693384885"
-        },
-        {
-          "file": "apps/preview/package.json",
-          "hash": "6108546777992698155",
-          "deps": [
-            "npm:@types/unidecode",
-            "netlify-plugin-interpolate-env-variable",
-            "npm:typescript@5.5.4",
-            "webextension",
-            "npm:@netlify/functions",
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/preview/tsconfig.json",
-          "hash": "15382321260039008176"
         }
       ]
     },
