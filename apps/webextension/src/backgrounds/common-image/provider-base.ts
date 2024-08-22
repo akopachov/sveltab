@@ -140,6 +140,7 @@ export abstract class ImageBackgroundProviderBase<
       {};
     this.#img = this.node.appendChild(document.createElement('img'));
     this.#img.crossOrigin = 'anonymous';
+    this.#img.alt = '';
     this.#img.classList.add('w-full', 'h-full', 'max-w-none', 'max-h-none', 'select-none');
     this.#img.draggable = false;
     this.#img.onload = async () => {
