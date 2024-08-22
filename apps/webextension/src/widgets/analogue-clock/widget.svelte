@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { AnalogueClockSettings } from './settings';
-  import { getClockStore } from '$stores/clock-store';
+  import { getPreciselyAlignedClockStore } from '$stores/clock-store';
   import { secondsToMilliseconds } from 'date-fns';
   import InlineSvg from './inline-svg.svelte';
   import { Watchfaces } from './watchfaces';
   import { derived } from 'svelte/store';
 
-  let clockStore = getClockStore(secondsToMilliseconds(1));
+  let clockStore = getPreciselyAlignedClockStore(secondsToMilliseconds(1));
 
   export let settings: AnalogueClockSettings;
 

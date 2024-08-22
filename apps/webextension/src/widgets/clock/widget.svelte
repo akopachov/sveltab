@@ -1,13 +1,13 @@
 <script lang="ts">
   import DynamicSizeText from '$shared-components/dynamic-size-text.svelte';
   import { ClockFormat, type Settings } from './settings';
-  import { getClockStore } from '$stores/clock-store';
+  import { getPreciselyAlignedClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
   import { locale } from '$stores/locale';
-  import { secondsToMilliseconds } from 'date-fns';
+  import { minutesToMilliseconds } from 'date-fns';
   import { isChromium } from '$lib/browsers-check';
 
-  let clockStore = getClockStore(secondsToMilliseconds(1));
+  let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
   let timeDisplay: DynamicSizeText | null;
 
   export let settings: Settings;

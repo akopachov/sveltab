@@ -8,427 +8,6 @@
   "nxJsonPlugins": [],
   "fileMap": {
     "projectFileMap": {
-      "owm-redirect": [
-        {
-          "file": "apps/owm-redirect/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/owm-redirect/.gitignore",
-          "hash": "10657848430346760040"
-        },
-        {
-          "file": "apps/owm-redirect/package.json",
-          "hash": "6712145711394760761",
-          "deps": [
-            "npm:wrangler",
-            "npm:geo-position.ts"
-          ]
-        },
-        {
-          "file": "apps/owm-redirect/src/worker.ts",
-          "hash": "13031713532980002527"
-        },
-        {
-          "file": "apps/owm-redirect/wrangler.toml",
-          "hash": "16151197575438519813"
-        }
-      ],
-      "is-wsl2": [
-        {
-          "file": "packages/is-wsl2/.editorconfig",
-          "hash": "14168222967502131905"
-        },
-        {
-          "file": "packages/is-wsl2/.gitignore",
-          "hash": "6067757523401935360"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierignore",
-          "hash": "11530485554417286140"
-        },
-        {
-          "file": "packages/is-wsl2/.prettierrc",
-          "hash": "8568038100117739746"
-        },
-        {
-          "file": "packages/is-wsl2/index.ts",
-          "hash": "16532892570162354184"
-        },
-        {
-          "file": "packages/is-wsl2/package.json",
-          "hash": "1469546625516869088",
-          "deps": [
-            "npm:@types/node",
-            "npm:typescript@5.5.4"
-          ]
-        },
-        {
-          "file": "packages/is-wsl2/tsconfig.json",
-          "hash": "4336780397135653243"
-        }
-      ],
-      "netlify-plugin-interpolate-env-variable": [
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
-          "hash": "12263524539317784777"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
-          "hash": "7842152911503634365"
-        },
-        {
-          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
-          "hash": "3398827628914074956"
-        }
-      ],
-      "landing": [
-        {
-          "file": "apps/landing/.editorconfig",
-          "hash": "7656052162757445104"
-        },
-        {
-          "file": "apps/landing/.eslintignore",
-          "hash": "12866345277008372755"
-        },
-        {
-          "file": "apps/landing/.eslintrc.cjs",
-          "hash": "15647399974590712086"
-        },
-        {
-          "file": "apps/landing/.gitignore",
-          "hash": "2615793248884789625"
-        },
-        {
-          "file": "apps/landing/.npmrc",
-          "hash": "16306061729883149313"
-        },
-        {
-          "file": "apps/landing/.prettierignore",
-          "hash": "9861187265567348571"
-        },
-        {
-          "file": "apps/landing/.prettierrc",
-          "hash": "8590646213043532286"
-        },
-        {
-          "file": "apps/landing/netlify.toml",
-          "hash": "4054770132038844011"
-        },
-        {
-          "file": "apps/landing/package.json",
-          "hash": "4632469750582420985",
-          "deps": [
-            "npm:@fontsource/inter",
-            "npm:@iconify/json",
-            "npm:@iconify/tailwind",
-            "npm:@iconify/utils",
-            "npm:@neoconfetti/svelte",
-            "npm:@sveltejs/adapter-static",
-            "npm:@sveltejs/enhanced-img",
-            "npm:@sveltejs/kit",
-            "npm:@sveltejs/vite-plugin-svelte",
-            "npm:@tailwindcss/forms",
-            "npm:@types/aos",
-            "npm:@types/eslint",
-            "npm:@typescript-eslint/eslint-plugin",
-            "npm:@typescript-eslint/parser",
-            "npm:aos",
-            "npm:autoprefixer",
-            "npm:cssnano",
-            "npm:cssnano-preset-default",
-            "npm:cssnano-preset-lite",
-            "npm:daisyui",
-            "npm:embla-carousel-svelte",
-            "npm:eslint",
-            "npm:eslint-config-prettier",
-            "npm:eslint-plugin-svelte",
-            "is-wsl2",
-            "npm:postcss",
-            "npm:postcss-load-config@6.0.1",
-            "npm:prettier",
-            "npm:prettier-plugin-svelte",
-            "npm:prettier-plugin-tailwindcss",
-            "npm:svelte@4.2.18",
-            "npm:svelte-body",
-            "npm:svelte-check",
-            "npm:tailwindcss",
-            "npm:tslib",
-            "npm:typescript@5.5.4",
-            "npm:vite"
-          ]
-        },
-        {
-          "file": "apps/landing/postcss.config.cjs",
-          "hash": "7910658628078544505"
-        },
-        {
-          "file": "apps/landing/src/app.d.ts",
-          "hash": "17522384083550949823"
-        },
-        {
-          "file": "apps/landing/src/app.html",
-          "hash": "17841630233698801912"
-        },
-        {
-          "file": "apps/landing/src/app.pcss",
-          "hash": "14810236820657831828"
-        },
-        {
-          "file": "apps/landing/src/components/features.svelte",
-          "hash": "7661422588996331189"
-        },
-        {
-          "file": "apps/landing/src/components/footer.svelte",
-          "hash": "13121746684541395301"
-        },
-        {
-          "file": "apps/landing/src/components/header.svelte",
-          "hash": "17934009167654308491"
-        },
-        {
-          "file": "apps/landing/src/components/navigation.svelte",
-          "hash": "14988055686807007102"
-        },
-        {
-          "file": "apps/landing/src/components/screenshots.svelte",
-          "hash": "13102879630609783136"
-        },
-        {
-          "file": "apps/landing/src/components/support.svelte",
-          "hash": "7310236108946124037"
-        },
-        {
-          "file": "apps/landing/src/components/welcome.svelte",
-          "hash": "718645630279054264"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/amo-button.svg",
-          "hash": "10638019120008779628"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/cwo-button.svg",
-          "hash": "18021027240333141996"
-        },
-        {
-          "file": "apps/landing/src/lib/assets/edge-button.svg",
-          "hash": "14822606946037564973"
-        },
-        {
-          "file": "apps/landing/src/lib/css/theme.css",
-          "hash": "9028311825916970864"
-        },
-        {
-          "file": "apps/landing/src/lib/css/utility-patterns.css",
-          "hash": "12126172961868927401"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/0.jpeg",
-          "hash": "14185278729368134872"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/1.png",
-          "hash": "2305235227382566427"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/2.jpeg",
-          "hash": "9183676362714503382"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/3.jpeg",
-          "hash": "3962158966037601750"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/4.jpeg",
-          "hash": "9225345747745698130"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/5.png",
-          "hash": "6558862023349455654"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/6.jpeg",
-          "hash": "5392268130969410636"
-        },
-        {
-          "file": "apps/landing/src/lib/screenshots/7.png",
-          "hash": "10289934768717743098"
-        },
-        {
-          "file": "apps/landing/src/routes/+error.svelte",
-          "hash": "11260399356154979818"
-        },
-        {
-          "file": "apps/landing/src/routes/+layout.svelte",
-          "hash": "11467319100262057112"
-        },
-        {
-          "file": "apps/landing/src/routes/+layout.ts",
-          "hash": "3656248653335203942"
-        },
-        {
-          "file": "apps/landing/src/routes/+page.svelte",
-          "hash": "4490183109275284451"
-        },
-        {
-          "file": "apps/landing/static/favicon/android-chrome-192x192.png",
-          "hash": "17747222593322570913"
-        },
-        {
-          "file": "apps/landing/static/favicon/android-chrome-512x512.png",
-          "hash": "10992519659870263635"
-        },
-        {
-          "file": "apps/landing/static/favicon/apple-touch-icon.png",
-          "hash": "8319709282744640903"
-        },
-        {
-          "file": "apps/landing/static/favicon/browserconfig.xml",
-          "hash": "9030448547662640771"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-128x128.png",
-          "hash": "3574285871798273089"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-16x16.png",
-          "hash": "1484907360946902538"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-32x32.png",
-          "hash": "12914832945126627537"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-48x48.png",
-          "hash": "16296114082698355954"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon-96x96.png",
-          "hash": "15400891981776800899"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon.ico",
-          "hash": "6080578060923793650"
-        },
-        {
-          "file": "apps/landing/static/favicon/favicon.svg",
-          "hash": "16149112273573293908"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-144x144.png",
-          "hash": "17090102562471781642"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-150x150.png",
-          "hash": "2987547776851300371"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-310x150.png",
-          "hash": "8240165320902303268"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-310x310.png",
-          "hash": "11331575352337162409"
-        },
-        {
-          "file": "apps/landing/static/favicon/mstile-70x70.png",
-          "hash": "4598816931621196495"
-        },
-        {
-          "file": "apps/landing/static/favicon/safari-pinned-tab.svg",
-          "hash": "12657718850154108143"
-        },
-        {
-          "file": "apps/landing/static/favicon/site.webmanifest.json",
-          "hash": "10433911047657634548"
-        },
-        {
-          "file": "apps/landing/static/robots.txt",
-          "hash": "2790380794362165217"
-        },
-        {
-          "file": "apps/landing/svelte.config.js",
-          "hash": "14256732300601504382"
-        },
-        {
-          "file": "apps/landing/tailwind.config.cjs",
-          "hash": "9821587412396646719"
-        },
-        {
-          "file": "apps/landing/tsconfig.json",
-          "hash": "14611439694374538873"
-        },
-        {
-          "file": "apps/landing/vite.config.ts",
-          "hash": "2155460198681927953"
-        }
-      ],
-      "preview": [
-        {
-          "file": "apps/preview/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/preview/.gitignore",
-          "hash": "9652840843145639605"
-        },
-        {
-          "file": "apps/preview/functions/iqair-redirect.ts",
-          "hash": "18300375636509497534"
-        },
-        {
-          "file": "apps/preview/functions/owm-redirect.ts",
-          "hash": "16288626628291305981"
-        },
-        {
-          "file": "apps/preview/netlify.toml",
-          "hash": "1546573686693384885"
-        },
-        {
-          "file": "apps/preview/package.json",
-          "hash": "6108546777992698155",
-          "deps": [
-            "npm:@types/unidecode",
-            "netlify-plugin-interpolate-env-variable",
-            "npm:typescript@5.5.4",
-            "webextension",
-            "npm:@netlify/functions",
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/preview/tsconfig.json",
-          "hash": "15382321260039008176"
-        }
-      ],
-      "iqair-redirect": [
-        {
-          "file": "apps/iqair-redirect/.editorconfig",
-          "hash": "9035647012319884894"
-        },
-        {
-          "file": "apps/iqair-redirect/.gitignore",
-          "hash": "10657848430346760040"
-        },
-        {
-          "file": "apps/iqair-redirect/package.json",
-          "hash": "15794412886571441044",
-          "deps": [
-            "npm:wrangler",
-            "npm:geo-position.ts",
-            "npm:unidecode"
-          ]
-        },
-        {
-          "file": "apps/iqair-redirect/src/worker.ts",
-          "hash": "12279403779427720829"
-        },
-        {
-          "file": "apps/iqair-redirect/wrangler.toml",
-          "hash": "11886815432978647150"
-        }
-      ],
       "webextension": [
         {
           "file": "apps/webextension/.editorconfig",
@@ -653,7 +232,7 @@
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/provider-base.ts",
-          "hash": "17128129425958428739"
+          "hash": "13771303244270647590"
         },
         {
           "file": "apps/webextension/src/backgrounds/common-image/settings-base.svelte",
@@ -785,7 +364,7 @@
         },
         {
           "file": "apps/webextension/src/i18n/en.json",
-          "hash": "7686317863669611365"
+          "hash": "2173488272447882180"
         },
         {
           "file": "apps/webextension/src/i18n/pl.json",
@@ -905,7 +484,7 @@
         },
         {
           "file": "apps/webextension/src/shared-components/background-settings.svelte",
-          "hash": "12834018811006063686"
+          "hash": "13484185093235467482"
         },
         {
           "file": "apps/webextension/src/shared-components/browser-supports.svelte",
@@ -1033,7 +612,7 @@
         },
         {
           "file": "apps/webextension/src/stores/widgets-catalog.ts",
-          "hash": "3843399811649973890"
+          "hash": "5442613036355773252"
         },
         {
           "file": "apps/webextension/src/stores/workspace-index.ts",
@@ -1372,6 +951,30 @@
           "hash": "11375487697432937703"
         },
         {
+          "file": "apps/webextension/src/widgets/literature-clock/index.ts",
+          "hash": "14360462291828848412"
+        },
+        {
+          "file": "apps/webextension/src/widgets/literature-clock/preview.svelte",
+          "hash": "14055969578857533375"
+        },
+        {
+          "file": "apps/webextension/src/widgets/literature-clock/settings-tabs.ts",
+          "hash": "12858212895617771823"
+        },
+        {
+          "file": "apps/webextension/src/widgets/literature-clock/settings.svelte",
+          "hash": "572472189252500904"
+        },
+        {
+          "file": "apps/webextension/src/widgets/literature-clock/settings.ts",
+          "hash": "8945877517024397404"
+        },
+        {
+          "file": "apps/webextension/src/widgets/literature-clock/widget.svelte",
+          "hash": "9527579144894046693"
+        },
+        {
           "file": "apps/webextension/src/widgets/quote/index.ts",
           "hash": "16026652480094748396"
         },
@@ -1620,6 +1223,79 @@
           "hash": "9570126959004692792"
         }
       ],
+      "is-wsl2": [
+        {
+          "file": "packages/is-wsl2/.editorconfig",
+          "hash": "14168222967502131905"
+        },
+        {
+          "file": "packages/is-wsl2/.gitignore",
+          "hash": "6067757523401935360"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierignore",
+          "hash": "11530485554417286140"
+        },
+        {
+          "file": "packages/is-wsl2/.prettierrc",
+          "hash": "8568038100117739746"
+        },
+        {
+          "file": "packages/is-wsl2/index.ts",
+          "hash": "16532892570162354184"
+        },
+        {
+          "file": "packages/is-wsl2/package.json",
+          "hash": "1469546625516869088",
+          "deps": [
+            "npm:@types/node",
+            "npm:typescript@5.5.4"
+          ]
+        },
+        {
+          "file": "packages/is-wsl2/tsconfig.json",
+          "hash": "4336780397135653243"
+        }
+      ],
+      "preview": [
+        {
+          "file": "apps/preview/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/preview/.gitignore",
+          "hash": "9652840843145639605"
+        },
+        {
+          "file": "apps/preview/functions/iqair-redirect.ts",
+          "hash": "18300375636509497534"
+        },
+        {
+          "file": "apps/preview/functions/owm-redirect.ts",
+          "hash": "16288626628291305981"
+        },
+        {
+          "file": "apps/preview/netlify.toml",
+          "hash": "1546573686693384885"
+        },
+        {
+          "file": "apps/preview/package.json",
+          "hash": "6108546777992698155",
+          "deps": [
+            "npm:@types/unidecode",
+            "netlify-plugin-interpolate-env-variable",
+            "npm:typescript@5.5.4",
+            "webextension",
+            "npm:@netlify/functions",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/preview/tsconfig.json",
+          "hash": "15382321260039008176"
+        }
+      ],
       "vite-plugin-run-generator": [
         {
           "file": "packages/vite-plugin-run-generator/.editorconfig",
@@ -1661,6 +1337,354 @@
         {
           "file": "packages/vite-plugin-run-generator/tsconfig.json",
           "hash": "4336780397135653243"
+        }
+      ],
+      "owm-redirect": [
+        {
+          "file": "apps/owm-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/owm-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/owm-redirect/package.json",
+          "hash": "6712145711394760761",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts"
+          ]
+        },
+        {
+          "file": "apps/owm-redirect/src/worker.ts",
+          "hash": "13031713532980002527"
+        },
+        {
+          "file": "apps/owm-redirect/wrangler.toml",
+          "hash": "16151197575438519813"
+        }
+      ],
+      "netlify-plugin-interpolate-env-variable": [
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/index.js",
+          "hash": "12263524539317784777"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/manifest.yml",
+          "hash": "7842152911503634365"
+        },
+        {
+          "file": "packages/netlify-plugin-interpolate-env-variable/package.json",
+          "hash": "3398827628914074956"
+        }
+      ],
+      "iqair-redirect": [
+        {
+          "file": "apps/iqair-redirect/.editorconfig",
+          "hash": "9035647012319884894"
+        },
+        {
+          "file": "apps/iqair-redirect/.gitignore",
+          "hash": "10657848430346760040"
+        },
+        {
+          "file": "apps/iqair-redirect/package.json",
+          "hash": "15794412886571441044",
+          "deps": [
+            "npm:wrangler",
+            "npm:geo-position.ts",
+            "npm:unidecode"
+          ]
+        },
+        {
+          "file": "apps/iqair-redirect/src/worker.ts",
+          "hash": "12279403779427720829"
+        },
+        {
+          "file": "apps/iqair-redirect/wrangler.toml",
+          "hash": "11886815432978647150"
+        }
+      ],
+      "landing": [
+        {
+          "file": "apps/landing/.editorconfig",
+          "hash": "7656052162757445104"
+        },
+        {
+          "file": "apps/landing/.eslintignore",
+          "hash": "12866345277008372755"
+        },
+        {
+          "file": "apps/landing/.eslintrc.cjs",
+          "hash": "15647399974590712086"
+        },
+        {
+          "file": "apps/landing/.gitignore",
+          "hash": "2615793248884789625"
+        },
+        {
+          "file": "apps/landing/.npmrc",
+          "hash": "16306061729883149313"
+        },
+        {
+          "file": "apps/landing/.prettierignore",
+          "hash": "9861187265567348571"
+        },
+        {
+          "file": "apps/landing/.prettierrc",
+          "hash": "8590646213043532286"
+        },
+        {
+          "file": "apps/landing/netlify.toml",
+          "hash": "4054770132038844011"
+        },
+        {
+          "file": "apps/landing/package.json",
+          "hash": "4632469750582420985",
+          "deps": [
+            "npm:@fontsource/inter",
+            "npm:@iconify/json",
+            "npm:@iconify/tailwind",
+            "npm:@iconify/utils",
+            "npm:@neoconfetti/svelte",
+            "npm:@sveltejs/adapter-static",
+            "npm:@sveltejs/enhanced-img",
+            "npm:@sveltejs/kit",
+            "npm:@sveltejs/vite-plugin-svelte",
+            "npm:@tailwindcss/forms",
+            "npm:@types/aos",
+            "npm:@types/eslint",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:aos",
+            "npm:autoprefixer",
+            "npm:cssnano",
+            "npm:cssnano-preset-default",
+            "npm:cssnano-preset-lite",
+            "npm:daisyui",
+            "npm:embla-carousel-svelte",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-svelte",
+            "is-wsl2",
+            "npm:postcss",
+            "npm:postcss-load-config@6.0.1",
+            "npm:prettier",
+            "npm:prettier-plugin-svelte",
+            "npm:prettier-plugin-tailwindcss",
+            "npm:svelte@4.2.18",
+            "npm:svelte-body",
+            "npm:svelte-check",
+            "npm:tailwindcss",
+            "npm:tslib",
+            "npm:typescript@5.5.4",
+            "npm:vite"
+          ]
+        },
+        {
+          "file": "apps/landing/postcss.config.cjs",
+          "hash": "7910658628078544505"
+        },
+        {
+          "file": "apps/landing/src/app.d.ts",
+          "hash": "17522384083550949823"
+        },
+        {
+          "file": "apps/landing/src/app.html",
+          "hash": "17841630233698801912"
+        },
+        {
+          "file": "apps/landing/src/app.pcss",
+          "hash": "14810236820657831828"
+        },
+        {
+          "file": "apps/landing/src/components/features.svelte",
+          "hash": "7661422588996331189"
+        },
+        {
+          "file": "apps/landing/src/components/footer.svelte",
+          "hash": "13121746684541395301"
+        },
+        {
+          "file": "apps/landing/src/components/header.svelte",
+          "hash": "17934009167654308491"
+        },
+        {
+          "file": "apps/landing/src/components/navigation.svelte",
+          "hash": "14988055686807007102"
+        },
+        {
+          "file": "apps/landing/src/components/screenshots.svelte",
+          "hash": "13102879630609783136"
+        },
+        {
+          "file": "apps/landing/src/components/support.svelte",
+          "hash": "7310236108946124037"
+        },
+        {
+          "file": "apps/landing/src/components/welcome.svelte",
+          "hash": "718645630279054264"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/amo-button.svg",
+          "hash": "10638019120008779628"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/cwo-button.svg",
+          "hash": "18021027240333141996"
+        },
+        {
+          "file": "apps/landing/src/lib/assets/edge-button.svg",
+          "hash": "14822606946037564973"
+        },
+        {
+          "file": "apps/landing/src/lib/css/theme.css",
+          "hash": "9028311825916970864"
+        },
+        {
+          "file": "apps/landing/src/lib/css/utility-patterns.css",
+          "hash": "12126172961868927401"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/0.jpeg",
+          "hash": "14185278729368134872"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/1.png",
+          "hash": "2305235227382566427"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/2.jpeg",
+          "hash": "9183676362714503382"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/3.jpeg",
+          "hash": "3962158966037601750"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/4.jpeg",
+          "hash": "9225345747745698130"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/5.png",
+          "hash": "6558862023349455654"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/6.jpeg",
+          "hash": "5392268130969410636"
+        },
+        {
+          "file": "apps/landing/src/lib/screenshots/7.png",
+          "hash": "10289934768717743098"
+        },
+        {
+          "file": "apps/landing/src/routes/+error.svelte",
+          "hash": "11260399356154979818"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.svelte",
+          "hash": "11467319100262057112"
+        },
+        {
+          "file": "apps/landing/src/routes/+layout.ts",
+          "hash": "3656248653335203942"
+        },
+        {
+          "file": "apps/landing/src/routes/+page.svelte",
+          "hash": "4490183109275284451"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-192x192.png",
+          "hash": "17747222593322570913"
+        },
+        {
+          "file": "apps/landing/static/favicon/android-chrome-512x512.png",
+          "hash": "10992519659870263635"
+        },
+        {
+          "file": "apps/landing/static/favicon/apple-touch-icon.png",
+          "hash": "8319709282744640903"
+        },
+        {
+          "file": "apps/landing/static/favicon/browserconfig.xml",
+          "hash": "9030448547662640771"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-128x128.png",
+          "hash": "3574285871798273089"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-16x16.png",
+          "hash": "1484907360946902538"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-32x32.png",
+          "hash": "12914832945126627537"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-48x48.png",
+          "hash": "16296114082698355954"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon-96x96.png",
+          "hash": "15400891981776800899"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.ico",
+          "hash": "6080578060923793650"
+        },
+        {
+          "file": "apps/landing/static/favicon/favicon.svg",
+          "hash": "16149112273573293908"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-144x144.png",
+          "hash": "17090102562471781642"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-150x150.png",
+          "hash": "2987547776851300371"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x150.png",
+          "hash": "8240165320902303268"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-310x310.png",
+          "hash": "11331575352337162409"
+        },
+        {
+          "file": "apps/landing/static/favicon/mstile-70x70.png",
+          "hash": "4598816931621196495"
+        },
+        {
+          "file": "apps/landing/static/favicon/safari-pinned-tab.svg",
+          "hash": "12657718850154108143"
+        },
+        {
+          "file": "apps/landing/static/favicon/site.webmanifest.json",
+          "hash": "10433911047657634548"
+        },
+        {
+          "file": "apps/landing/static/robots.txt",
+          "hash": "2790380794362165217"
+        },
+        {
+          "file": "apps/landing/svelte.config.js",
+          "hash": "14256732300601504382"
+        },
+        {
+          "file": "apps/landing/tailwind.config.cjs",
+          "hash": "9821587412396646719"
+        },
+        {
+          "file": "apps/landing/tsconfig.json",
+          "hash": "14611439694374538873"
+        },
+        {
+          "file": "apps/landing/vite.config.ts",
+          "hash": "2155460198681927953"
         }
       ]
     },

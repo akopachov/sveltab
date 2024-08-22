@@ -339,5 +339,10 @@
 
   "Widgets_Holidays_Settings_PastCount": "Past holidays count to show",
   "Widgets_Holidays_Settings_UpcommingCount": "Upcomming holidays count to show",
-  "Widgets_Holidays_Settings_Country": "Country"
+  "Widgets_Holidays_Settings_Country": "Country",
+
+  "Widgets_LiteratureClock_Name": "Literature Clock",
+  "Widgets_LiteratureClock_Settings_Tabs_Text": "Text",
+  "Widgets_LiteratureClock_Settings_Tabs_Time": "Time",
+  "Widgets_LiteratureClock_Settings_Tabs_Background": "Background"
 }

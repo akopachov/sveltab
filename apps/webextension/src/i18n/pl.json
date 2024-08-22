@@ -333,5 +333,10 @@
 
   "Widgets_Holidays_Settings_PastCount": "Ilość przeszłych świąt do pokazania",
   "Widgets_Holidays_Settings_UpcommingCount": "Ilość nadchodzących świąt do pokazania",
-  "Widgets_Holidays_Settings_Country": "Kraj"
+  "Widgets_Holidays_Settings_Country": "Kraj",
+
+  "Widgets_LiteratureClock_Name": "Zegar literacki",
+  "Widgets_LiteratureClock_Settings_Tabs_Text": "Tekst",
+  "Widgets_LiteratureClock_Settings_Tabs_Time": "Czas",
+  "Widgets_LiteratureClock_Settings_Tabs_Background": "Tło"
 }
