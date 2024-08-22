@@ -57,6 +57,8 @@
   "TextSettings_Stroke": "Obrys",
   "TextStrokeSelector_Size": "Rozmiar",
   "TextStrokeSelector_Color": "Kolor",
+  "Widgets_Common_Settings_Background_Color": "Kolor",
+  "Widgets_Common_Settings_Background_Blur": "Rozmycie",
   "Backgrounds_ImageCommon_Settings_Blur": "Rozmycie",
   "Backgrounds_ImageCommon_Settings_Filter": "Filtr",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Treść dostarczona przez",
@@ -147,28 +149,22 @@
 	"Widgets_Clock_Settings_Format_24Hrs": "24 godziny",
 
 
-	"Widgets_Clock_Settings_Color": "Kolor",
 	"Widgets_Date_Name": "Data",
 	"Widgets_Date_Settings_Tabs_Text": "Tekst",
 	"Widgets_Date_Settings_Tabs_Background": "Tło",
 
 
-	"Widgets_Date_Settings_Color": "Kolor",
-	"Widgets_Date_Settings_Blur": "Rozmywanie",
 	"Widgets_Quote_Name": "Cytat",
 	"Widgets_Quote_Settings_Tabs_Text": "Tekst",
 	"Widgets_Quote_Settings_Tabs_Background": "Tło",
 	"Widgets_Quote_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
 
 
-	"Widgets_Quote_Settings_Color": "Kolor",
-	"Widgets_Quote_Settings_Blur": "Rozmywanie",
 	"Widgets_Search_Name": "Odzysk",
 	"Widgets_Search_Placeholder": "Szukaj...",
 	"Widgets_Search_Settings_Tabs_Text": "Tekst",
 	"Widgets_Search_Settings_Tabs_Background": "Tło",
 
-	"Widgets_Search_Settings_Color": "Kolor",
 	"Widgets_Search_Settings_SearchProvider": "Dostawca wyszukiwania",
 	"Widgets_Search_Settings_SearchSuggestionsEnabled": "Sugestie wyszukiwania",
 	"Widgets_Greeting_Name": "Powitanie",
@@ -185,8 +181,6 @@
 	"Widgets_Greeting_Settings_Name": "Imię",
 
 
-	"Widgets_Greeting_Settings_Color": "Kolor",
-	"Widgets_Greeting_Settings_Blur": "Rozmywanie",
 	"Widgets_FlickrImage_Name": "Flickr",
 	"Widgets_FlickrImage_Image_Alt": "Obraz",
 	"Widgets_FlickrImage_Settings_Tabs_Image": "Obraz",
@@ -211,8 +205,6 @@
 	"Widgets_Link_Settings_IconSource_Direct": "Ręcznie",
 	"Widgets_Link_Settings_IconSource_Direct_Label": "Adres URL znaczka",
 	"Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
-	"Widgets_Link_Settings_Background_Color": "Kolor",
-	"Widgets_Link_Settings_Background_Blur": "Rozmywanie",
 
 
 	"Widgets_Weather_Name": "Pogoda",
@@ -229,8 +221,6 @@
 	"Widgets_Weather_Settings_Tabs_Layout": "Układ",
 	"Widgets_Weather_Settings_Tabs_Background": "Tło",
 
-	"Widgets_Weather_Settings_Color": "Kolor",
-	"Widgets_Weather_Settings_Blur": "Rozmywanie",
 
 	"Widgets_Weather_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
 	"Widgets_Weather_Settings_MeasurementUnits": "Jednostki miary",
@@ -251,8 +241,6 @@
 	"Widgets_AirQuality_Settings_Tabs_Variables": "Zmienne",
 	"Widgets_AirQuality_Settings_Tabs_Background": "Tło",
 
-	"Widgets_AirQuality_Settings_Color": "Kolor",
-	"Widgets_AirQuality_Settings_Blur": "Rozmywanie",
 
 	"Widgets_AirQuality_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
 	"Widgets_AirQuality_Settings_Legislation": "Przepisy dotyczące jakości powietrza",
@@ -277,16 +265,12 @@
 	"Widgets_FreeText_Settings_Align": "Wyrównywanie",
 
 
-	"Widgets_FreeText_Settings_Color": "Kolor",
-	"Widgets_FreeText_Settings_Blur": "Rozmywanie",
 	"Widgets_Html_Name": "HTML",
 	"Widgets_Html_Settings_Html": "HTML",
 	"Widgets_TopSites_Name": "Najpopularniejsze strony",
 	"Widgets_TopSites_NoMostVisitedSites": "Brak dostępnych najczęściej odwiedzanych stron",
 	"Widgets_TopSites_Settings_Tabs_Text": "Tekst",
 	"Widgets_TopSites_Settings_Tabs_Background": "Tło",
-	"Widgets_TopSites_Settings_Background_Color": "Kolor",
-	"Widgets_TopSites_Settings_Background_Blur": "Rozmywanie",
 
 
 	"Widgets_TopSites_Settings_ItemsPerRow": "Elementy w rzędzie",
@@ -296,7 +280,6 @@
 	"Widgets_AnalogueClock_Settings_Tabs_Watchface": "Tarcza zegara",
 	"Widgets_AnalogueClock_Settings_Tabs_Background": "Tło",
 
-	"Widgets_AnalogueClock_Settings_Background_Color": "Kolor",
 	"Widgets_AnalogueClock_Settings_Watchface": "Tarcza zegara",
 	"Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Domyślna",
 	"Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Wariant 1",
@@ -304,7 +287,6 @@
 	"Widgets_AnalogueClock_Settings_Watchface_Variant3_Name": "Wariant 3",
 	"Widgets_AnalogueClock_Settings_Watchface_Color": "Kolor tarczy",
 	"Widgets_AnalogueClock_Settings_Watchface_BackgroundColor": "Kolor tła tarczy",
-	"Widgets_AnalogueClock_Settings_Blur": "Rozmywanie",
 	"Widgets_AnalogueClock_Settings_SecondsArm_Visible": "Wyświetl sekundy",
 	"Widgets_AnalogueClock_Settings_SecondsArm_Color": "Kolor sekund",
 	"Widgets_AnalogueClock_Settings_MinutesArm_Color": "Kolor minut",
@@ -316,10 +298,8 @@
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Tło",
 
 
-	"Widgets_CryptoAssetQuotation_Settings_Color": "Kolor",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Kolor linii",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Kolor osi",
-	"Widgets_CryptoAssetQuotation_Settings_Blur": "Rozmywanie",
 	"Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Aktywa kryptograficzna",
 	"Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
 	"Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Waluta wyświetlana",
@@ -337,8 +317,6 @@
   "Widgets_IpInfo_Settings_Tabs_Text": "Tekst",
 
 
-  "Widgets_IpInfo_Settings_Color": "Kolor",
-  "Widgets_IpInfo_Settings_Blur": "Rozmywanie",
 
   "Widgets_Holidays_Name": "Święta",
   "Widgets_Holidays_Settings_Tabs_Types": "Typy",
@@ -353,8 +331,6 @@
 
   "Widgets_Holidays_Settings_FontToday": "Czcionka dzisiejszego święta",
 
-  "Widgets_Holidays_Settings_Color": "Kolor",
-  "Widgets_Holidays_Settings_Blur": "Rozmywanie",
   "Widgets_Holidays_Settings_PastCount": "Ilość przeszłych świąt do pokazania",
   "Widgets_Holidays_Settings_UpcommingCount": "Ilość nadchodzących świąt do pokazania",
   "Widgets_Holidays_Settings_Country": "Kraj"

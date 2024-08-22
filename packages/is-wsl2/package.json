@@ -11,7 +11,7 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^22.4.2",
+    "@types/node": "^22.5.0",
     "typescript": "^5.5.4"
   }
 }

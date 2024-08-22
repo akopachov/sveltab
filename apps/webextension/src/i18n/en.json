@@ -59,6 +59,9 @@
   "TextStrokeSelector_Size": "Size",
   "TextStrokeSelector_Color": "Color",
 
+  "Widgets_Common_Settings_Background_Color": "Color",
+  "Widgets_Common_Settings_Background_Blur": "Blur",
+
   "Backgrounds_ImageCommon_Settings_Blur": "Blur",
   "Backgrounds_ImageCommon_Settings_Filter": "Filter",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Content provided by",
@@ -152,30 +155,22 @@
   "Widgets_Clock_Settings_Format_24Hrs": "24-Hours",
 
 
-  "Widgets_Clock_Settings_Color": "Color",
-  "Widgets_Clock_Settings_Blur": "Blur",
   "Widgets_Date_Name": "Date",
   "Widgets_Date_Settings_Tabs_Text": "Text",
   "Widgets_Date_Settings_Tabs_Background": "Background",
 
 
-  "Widgets_Date_Settings_Color": "Color",
-  "Widgets_Date_Settings_Blur": "Blur",
   "Widgets_Quote_Name": "Quote",
   "Widgets_Quote_Settings_Tabs_Text": "Text",
   "Widgets_Quote_Settings_Tabs_Background": "Background",
   "Widgets_Quote_Settings_UpdateInterval": "Update interval (minutes)",
 
 
-  "Widgets_Quote_Settings_Color": "Color",
-  "Widgets_Quote_Settings_Blur": "Blur",
   "Widgets_Search_Name": "Search",
   "Widgets_Search_Placeholder": "Search...",
   "Widgets_Search_Settings_Tabs_Text": "Text",
   "Widgets_Search_Settings_Tabs_Background": "Background",
 
-  "Widgets_Search_Settings_Color": "Color",
-  "Widgets_Search_Settings_Blur": "Blur",
   "Widgets_Search_Settings_SearchProvider": "Search provider",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Search suggestions",
   "Widgets_Greeting_Name": "Greeting",
@@ -192,8 +187,6 @@
   "Widgets_Greeting_Settings_Name": "Name",
 
 
-  "Widgets_Greeting_Settings_Color": "Color",
-  "Widgets_Greeting_Settings_Blur": "Blur",
   "Widgets_FlickrImage_Name": "Flickr",
   "Widgets_FlickrImage_Image_Alt": "Image",
   "Widgets_FlickrImage_Settings_Tabs_Image": "Image",
@@ -218,8 +211,6 @@
   "Widgets_Link_Settings_IconSource_Direct": "Manual",
   "Widgets_Link_Settings_IconSource_Direct_Label": "Icon url",
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
-  "Widgets_Link_Settings_Background_Color": "Color",
-  "Widgets_Link_Settings_Background_Blur": "Blur",
 
 
   "Widgets_Weather_Name": "Weather",
@@ -236,8 +227,6 @@
   "Widgets_Weather_Settings_Tabs_Layout": "Layout",
   "Widgets_Weather_Settings_Tabs_Background": "Background",
 
-  "Widgets_Weather_Settings_Color": "Color",
-  "Widgets_Weather_Settings_Blur": "Blur",
 
   "Widgets_Weather_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
@@ -258,8 +247,6 @@
   "Widgets_AirQuality_Settings_Tabs_Variables": "Variables",
   "Widgets_AirQuality_Settings_Tabs_Background": "Background",
 
-  "Widgets_AirQuality_Settings_Color": "Color",
-  "Widgets_AirQuality_Settings_Blur": "Blur",
 
   "Widgets_AirQuality_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_AirQuality_Settings_Legislation": "Air Quality Legislation",
@@ -284,16 +271,12 @@
   "Widgets_FreeText_Settings_Align": "Align",
 
 
-  "Widgets_FreeText_Settings_Color": "Color",
-  "Widgets_FreeText_Settings_Blur": "Blur",
   "Widgets_Html_Name": "HTML",
   "Widgets_Html_Settings_Html": "HTML",
   "Widgets_TopSites_Name": "Top sites",
   "Widgets_TopSites_NoMostVisitedSites": "No most visited sites available",
   "Widgets_TopSites_Settings_Tabs_Text": "Text",
   "Widgets_TopSites_Settings_Tabs_Background": "Background",
-  "Widgets_TopSites_Settings_Background_Color": "Color",
-  "Widgets_TopSites_Settings_Background_Blur": "Blur",
 
 
   "Widgets_TopSites_Settings_ItemsPerRow": "Items per row",
@@ -303,7 +286,6 @@
   "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Tabs_Background": "Background",
 
-  "Widgets_AnalogueClock_Settings_Background_Color": "Color",
   "Widgets_AnalogueClock_Settings_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Default",
   "Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Variant 1",
@@ -311,7 +293,6 @@
   "Widgets_AnalogueClock_Settings_Watchface_Variant3_Name": "Variant 3",
   "Widgets_AnalogueClock_Settings_Watchface_Color": "Watchface color",
   "Widgets_AnalogueClock_Settings_Watchface_BackgroundColor": "Watchface background color",
-  "Widgets_AnalogueClock_Settings_Blur": "Blur",
   "Widgets_AnalogueClock_Settings_SecondsArm_Visible": "Display seconds",
   "Widgets_AnalogueClock_Settings_SecondsArm_Color": "Seconds color",
   "Widgets_AnalogueClock_Settings_MinutesArm_Color": "Minutes color",
@@ -323,10 +304,8 @@
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Background",
 
 
-  "Widgets_CryptoAssetQuotation_Settings_Color": "Color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Line color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Axis color",
-  "Widgets_CryptoAssetQuotation_Settings_Blur": "Blur",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Crypto asset",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
   "Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Display currency",
@@ -344,8 +323,6 @@
   "Widgets_IpInfo_Settings_Tabs_Text": "Text",
 
 
-  "Widgets_IpInfo_Settings_Color": "Color",
-  "Widgets_IpInfo_Settings_Blur": "Blur",
 
   "Widgets_Holidays_Name": "Holidays",
   "Widgets_Holidays_Settings_Tabs_Types": "Types",
@@ -360,8 +337,6 @@
 
   "Widgets_Holidays_Settings_FontToday": "Today's holiday font",
 
-  "Widgets_Holidays_Settings_Color": "Color",
-  "Widgets_Holidays_Settings_Blur": "Blur",
   "Widgets_Holidays_Settings_PastCount": "Past holidays count to show",
   "Widgets_Holidays_Settings_UpcommingCount": "Upcomming holidays count to show",
   "Widgets_Holidays_Settings_Country": "Country"

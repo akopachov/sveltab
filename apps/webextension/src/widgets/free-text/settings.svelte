@@ -1,11 +1,11 @@
 <script lang="ts">
-  import ColorPicker from '$shared-components/color-picker.svelte';
-  import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
+  import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
   import { TextAlign, type Settings } from './settings';
   import { TextTabId, BackgroundTabId } from './settings-tabs';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
+  import BackgroundSettings from '$shared-components/background-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
@@ -39,15 +39,5 @@
     <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
   </div>
 {:else if tab === BackgroundTabId}
-  <div class="label">
-    <span>{m.Widgets_FreeText_Settings_Color()}</span>
-    <div>
-      <ColorPicker bind:color={$backgroundColor} />
-    </div>
-  </div>
-  <!-- svelte-ignore a11y-label-has-associated-control -->
-  <label class="label mb-2">
-    <span>{m.Widgets_FreeText_Settings_Blur()}</span>
-    <RangeSlider name="blurSlider" bind:value={$backgroundBlur} min={0} max={15} step={0.1} />
-  </label>
+  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
 {/if}

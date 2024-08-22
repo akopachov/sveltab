@@ -57,6 +57,8 @@
   "TextSettings_Stroke": "Абводка",
   "TextStrokeSelector_Size": "Памер",
   "TextStrokeSelector_Color": "Колер",
+  "Widgets_Common_Settings_Background_Color": "Колер",
+  "Widgets_Common_Settings_Background_Blur": "Размыццё",
   "Backgrounds_ImageCommon_Settings_Blur": "Размыццё",
   "Backgrounds_ImageCommon_Settings_Filter": "Фільтр",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Змест прадастаўлены",
@@ -149,30 +151,22 @@
 	"Widgets_Clock_Settings_Format_24Hrs": "24-гадзіны",
 
 
-	"Widgets_Clock_Settings_Color": "Колер",
-	"Widgets_Clock_Settings_Blur": "Размыццё",
 	"Widgets_Date_Name": "Дата",
 	"Widgets_Date_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Date_Settings_Tabs_Background": "Фон",
 
 
-	"Widgets_Date_Settings_Color": "Колер",
-	"Widgets_Date_Settings_Blur": "Размыццё",
 	"Widgets_Quote_Name": "Цытата",
 	"Widgets_Quote_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Quote_Settings_Tabs_Background": "Фон",
 	"Widgets_Quote_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
 
 
-	"Widgets_Quote_Settings_Color": "Колер",
-	"Widgets_Quote_Settings_Blur": "Размыццё",
 	"Widgets_Search_Name": "Пошук",
 	"Widgets_Search_Placeholder": "Пошук...",
 	"Widgets_Search_Settings_Tabs_Text": "Тэкст",
 	"Widgets_Search_Settings_Tabs_Background": "Фон",
 
-	"Widgets_Search_Settings_Color": "Колер",
-	"Widgets_Search_Settings_Blur": "Размыццё",
 	"Widgets_Search_Settings_SearchProvider": "Правайдэр пошуку",
 	"Widgets_Search_Settings_SearchSuggestionsEnabled": "Пошукавыя прапановы",
 	"Widgets_Greeting_Name": "Прывітанне",
@@ -189,8 +183,6 @@
 	"Widgets_Greeting_Settings_Name": "Імя",
 
 
-	"Widgets_Greeting_Settings_Color": "Колер",
-	"Widgets_Greeting_Settings_Blur": "Размыццё",
 	"Widgets_FlickrImage_Name": "Flickr",
 	"Widgets_FlickrImage_Image_Alt": "Малюнак",
 	"Widgets_FlickrImage_Settings_Tabs_Image": "Малюнак",
@@ -215,8 +207,6 @@
 	"Widgets_Link_Settings_IconSource_Direct": "Уручную",
 	"Widgets_Link_Settings_IconSource_Direct_Label": "URL значка",
 	"Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
-	"Widgets_Link_Settings_Background_Color": "Колер",
-	"Widgets_Link_Settings_Background_Blur": "Размыццё",
 
 
 	"Widgets_Weather_Name": "Надвор'е",
@@ -233,8 +223,6 @@
 	"Widgets_Weather_Settings_Tabs_Layout": "Макет",
 	"Widgets_Weather_Settings_Tabs_Background": "Фон",
 
-	"Widgets_Weather_Settings_Color": "Колер",
-	"Widgets_Weather_Settings_Blur": "Размыццё",
 
 	"Widgets_Weather_Settings_Location_QueryBrowser": "Запытаць месцазнаходжанне з браўзера",
 	"Widgets_Weather_Settings_MeasurementUnits": "Адзінкі",
@@ -255,8 +243,6 @@
 	"Widgets_AirQuality_Settings_Tabs_Variables": "Значэнні",
 	"Widgets_AirQuality_Settings_Tabs_Background": "Фон",
 
-	"Widgets_AirQuality_Settings_Color": "Колер",
-	"Widgets_AirQuality_Settings_Blur": "Размыццё",
 
 	"Widgets_AirQuality_Settings_Location_QueryBrowser": "Запытаць месцазнаходжанне з браўзера",
 	"Widgets_AirQuality_Settings_Legislation": "Нарматыў iндэкса якасці паветра",
@@ -281,16 +267,12 @@
 	"Widgets_FreeText_Settings_Align": "Выраўнаваць",
 
 
-	"Widgets_FreeText_Settings_Color": "Колер",
-	"Widgets_FreeText_Settings_Blur": "Размыццё",
 	"Widgets_Html_Name": "HTML",
 	"Widgets_Html_Settings_Html": "HTML",
 	"Widgets_TopSites_Name": "Топ сайтаў",
 	"Widgets_TopSites_NoMostVisitedSites": "Няма даступных самых наведвальных сайтаў",
 	"Widgets_TopSites_Settings_Tabs_Text": "Тэкст",
 	"Widgets_TopSites_Settings_Tabs_Background": "Фон",
-	"Widgets_TopSites_Settings_Background_Color": "Колер",
-	"Widgets_TopSites_Settings_Background_Blur": "Размыццё",
 
 
 	"Widgets_TopSites_Settings_ItemsPerRow": "Элементаў у радку",
@@ -300,7 +282,6 @@
 	"Widgets_AnalogueClock_Settings_Tabs_Watchface": "Цыферблат",
 	"Widgets_AnalogueClock_Settings_Tabs_Background": "Фон",
 
-	"Widgets_AnalogueClock_Settings_Background_Color": "Колер",
 	"Widgets_AnalogueClock_Settings_Watchface": "Цыферблат",
 	"Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Па змаўчанні",
 	"Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Варыянт 1",
@@ -308,7 +289,6 @@
 	"Widgets_AnalogueClock_Settings_Watchface_Variant3_Name": "Варыянт 3",
 	"Widgets_AnalogueClock_Settings_Watchface_Color": "Колер цыферблата",
 	"Widgets_AnalogueClock_Settings_Watchface_BackgroundColor": "Колер фону цыферблата",
-	"Widgets_AnalogueClock_Settings_Blur": "Размыццё",
 	"Widgets_AnalogueClock_Settings_SecondsArm_Visible": "Паказваць секунды",
 	"Widgets_AnalogueClock_Settings_SecondsArm_Color": "Колер секунд",
 	"Widgets_AnalogueClock_Settings_MinutesArm_Color": "Колер хвілін",
@@ -320,10 +300,8 @@
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Фон",
 
 
-	"Widgets_CryptoAssetQuotation_Settings_Color": "Колер",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Колер лініі",
 	"Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Колер восі",
-	"Widgets_CryptoAssetQuotation_Settings_Blur": "Размыццё",
 	"Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Крыптаактыў",
 	"Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
 	"Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Валюта адлюстравання",
@@ -341,8 +319,6 @@
   "Widgets_IpInfo_Settings_Tabs_Text": "Тэкст",
 
 
-  "Widgets_IpInfo_Settings_Color": "Колер",
-  "Widgets_IpInfo_Settings_Blur": "Размыццё",
 
   "Widgets_Holidays_Name": "Святы",
   "Widgets_Holidays_Settings_Tabs_Types": "Тып",
@@ -357,8 +333,6 @@
 
   "Widgets_Holidays_Settings_FontToday": "Шрыфт для сённяшняга свята",
 
-  "Widgets_Holidays_Settings_Color": "Колер",
-  "Widgets_Holidays_Settings_Blur": "Размыццё",
   "Widgets_Holidays_Settings_PastCount": "Колькасць мінулых святаў для паказу",
   "Widgets_Holidays_Settings_UpcommingCount": "Колькасць будучых святаў для паказу",
   "Widgets_Holidays_Settings_Country": "Краіна"
