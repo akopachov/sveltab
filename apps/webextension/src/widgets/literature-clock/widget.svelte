@@ -27,7 +27,6 @@
     quote_last: string;
     title: string;
     author: string;
-    sfw: 'yes' | 'no';
   };
 
   const {
@@ -58,7 +57,7 @@
   async function updateTimeQuote(time: Date) {
     const hours = getHours(time);
     const minutes = getMinutes(time);
-    const fileName = `${String(hours).padStart(2, '0')}_${String(minutes).padStart(2, '0')}.json`;
+    const fileName = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}.json`;
     let quotes: TimeQuote[] = [];
     let lastUpdatedTime: number = 0;
     try {
@@ -70,7 +69,7 @@
     if (quotes.length <= 0 || differenceInDays(time, lastUpdatedTime) > 30) {
       try {
         const response = await fetch(
-          `https://cdn.jsdelivr.net/gh/JohannesNE/literature-clock@master/docs/times/${fileName}`,
+          `https://cdn.jsdelivr.net/gh/lbngoc/literature-clock@master/docs/times/${fileName}`,
         );
         const blob = await response.blob();
         quotes = JSON.parse(await blob.text());
@@ -106,6 +105,7 @@
           use:fontsource={{
             font: $fontId,
             styles: ['normal'],
+            subsets: ['latin'],
             weights: [$fontWeight],
           }}
           use:textStroke={textStrokeSettings}>{@html currentQuote.quote_first}</span><span
@@ -118,6 +118,7 @@
           use:fontsource={{
             font: $timeFontId,
             styles: ['normal'],
+            subsets: ['latin'],
             weights: [$timeFontWeight],
           }}
           use:textStroke={timeTextStrokeSettings}>{@html currentQuote.quote_time_case}</span><span
@@ -130,6 +131,7 @@
           use:fontsource={{
             font: $fontId,
             styles: ['normal'],
+            subsets: ['latin'],
             weights: [$fontWeight],
           }}
           use:textStroke={textStrokeSettings}>{@html currentQuote.quote_last}</span>
@@ -145,6 +147,7 @@
         use:fontsource={{
           font: $fontId,
           styles: ['normal'],
+          subsets: ['latin'],
           weights: [$fontWeight],
         }}
         use:textStroke={textStrokeSettings}>
