@@ -52,6 +52,7 @@ export interface WidgetCatalogItemComponents {
 export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   ClockWidget,
   AnalogueClockWidget,
+  LiteratureClockWidget,
   DateWidget,
   LinkWidget,
   SearchWidget,
@@ -66,5 +67,4 @@ export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
   CryptoAssetQuotationWidget,
   IpInfoWidget,
   HolidaysWidget,
-  LiteratureClockWidget,
 ];
