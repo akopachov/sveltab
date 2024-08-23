@@ -122,7 +122,7 @@
         {#each searchSuggestions as suggestion, index}
           <li>
             <a
-              class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)]"
+              class="!pt-0 !pb-0 leading-relaxed text-[max(1em,10px)] focus:!text-inherit"
               rel="noreferrer"
               tabindex={index}
               href={searchProviderAdapter?.searchUrl(suggestion)}>
