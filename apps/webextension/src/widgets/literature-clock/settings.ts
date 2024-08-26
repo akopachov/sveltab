@@ -14,8 +14,8 @@ export class Settings extends WidgetSettingsExtra {
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.textColor = useObservable(initial.textColor || '#000');
     this.timeTextColor = useObservable(initial.timeTextColor || '#000');
-    this.font = new FontSettings(initial.font || { size: 15 });
-    this.timeFont = new FontSettings(initial.timeFont || { size: 15, weight: 800 });
+    this.font = new FontSettings(initial.font || { size: 7 });
+    this.timeFont = new FontSettings(initial.timeFont || { size: 8, weight: 800 });
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
     this.timeTextStroke = new TextStrokeSettings(initial.timeTextStroke || {});

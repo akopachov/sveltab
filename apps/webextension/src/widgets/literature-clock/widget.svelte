@@ -94,7 +94,7 @@
   {#if currentQuote}
     <figure>
       <!-- prettier-ignore -->
-      <blockquote>
+      <blockquote class="leading-tight">
         <span
           class="drop-shadow-[var(--st-shadow)] [-webkit-text-stroke:var(--sv-text-stroke)]"
           style:color={$textColor}
