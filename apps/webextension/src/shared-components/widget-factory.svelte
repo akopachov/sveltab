@@ -82,7 +82,7 @@
   style:--relative-offset-x="{$offsetX}cqw"
   style:--relative-origin-y={$offsetY / 100}
   style:--relative-origin-x={$offsetX / 100}
-  style:transform="rotate({$rotation}deg)"
+  style:--st-rotation="rotate({$rotation}deg)"
   style:--st-border-radius="{$borderRadius}cqmin"
   style:--st-border-color={$borderColor}
   style:--st-border-size="{$borderSize}cqmin">
@@ -137,9 +137,13 @@
 {/if}
 
 <style>
-  .relative-position {
-    left: calc(var(--relative-offset-x) + var(--relative-x) - (var(--relative-width) * var(--relative-origin-x)));
-    top: calc(var(--relative-offset-y) + var(--relative-y) - (var(--relative-height) * var(--relative-origin-y)));
+  .relative-position:not(.selected) {
+    transform: translate3d(
+        calc(var(--relative-offset-x) + var(--relative-x) - (var(--relative-width) * var(--relative-origin-x))),
+        calc(var(--relative-offset-y) + var(--relative-y) - (var(--relative-height) * var(--relative-origin-y))),
+        0
+      )
+      var(--st-rotation);
     width: var(--relative-width);
     height: var(--relative-height);
   }
