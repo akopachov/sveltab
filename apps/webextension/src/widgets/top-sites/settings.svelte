@@ -1,7 +1,23 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const BackgroundTabId = 2;
+
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_TopSites_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_TopSites_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import { type Settings } from './settings';
-  import * as m from '$i18n/messages';
-  import { BackgroundTabId, TextTabId } from './settings-tabs';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import NumberInput from '$shared-components/number-input.svelte';
@@ -10,6 +26,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { backgroundColor, backgroundBlur, textColor, font, textShadow, rowsCount, itemsPerRow, showTitle } = settings;
 </script>

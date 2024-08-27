@@ -1,15 +1,31 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const WatchfaceTabId = 1;
+  const BackgroundTabId = 2;
+  const Tabs = [
+    {
+      id: WatchfaceTabId,
+      title: () => m.Widgets_AnalogueClock_Settings_Tabs_Watchface(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_AnalogueClock_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import ColorPicker from '$shared-components/color-picker.svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import type { AnalogueClockSettings } from './settings';
-  import { WatchfaceTabId, BackgroundTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import { Watchfaces } from './watchfaces';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
 
   export let settings: AnalogueClockSettings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const {
     backgroundColor,

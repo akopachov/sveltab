@@ -1,15 +1,30 @@
-<script lang="ts">
-  import ColorPicker from '$shared-components/color-picker.svelte';
-  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
-  import { RadioGroup, RadioItem, RangeSlider } from '@skeletonlabs/skeleton';
-  import { ClockFormat, type Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
+<script context="module" lang="ts">
   import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const BackgroundTabId = 2;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_Clock_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_Clock_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
+<script lang="ts">
+  import { GeneralTabId } from '$shared-components/widget-settings.svelte';
+  import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
+  import { ClockFormat, type Settings } from './settings';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { clockFormat, textColor, backgroundColor, backgroundBlur, font: fontSettings } = settings;
 </script>

@@ -1,8 +1,28 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const ChartTabId = 1;
+  const TextTabId = 2;
+  const BackgroundTabId = 3;
+  const Tabs = [
+    {
+      id: ChartTabId,
+      title: () => m.Widgets_CryptoAssetQuotation_Settings_Tabs_Chart(),
+    },
+    {
+      id: TextTabId,
+      title: () => m.Widgets_CryptoAssetQuotation_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_CryptoAssetQuotation_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import ColorPicker from '$shared-components/color-picker.svelte';
   import type { Settings } from './settings';
-  import { TextTabId, BackgroundTabId, ChartTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import AssetSelect from './asset-select.svelte';
   import { ExchangerateApiSupportedCurrencies } from './types/exchangerate';
@@ -12,6 +32,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor, displayCurrency, chartAxisColor } =
     settings;

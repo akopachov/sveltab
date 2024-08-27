@@ -9,7 +9,6 @@ export const Widget: WidgetCatalogItem = {
     preview: new WeakLazy(() => import('./preview.svelte').then(r => r.default)),
     settings: {
       component: new WeakLazy(() => import('./settings.svelte').then(r => r.default)),
-      tabs: new WeakLazy(() => import('./settings-tabs').then(r => r.Tabs)),
       model: new WeakLazy(() => import('./settings').then(r => r.AnalogueClockSettings)),
     },
   },

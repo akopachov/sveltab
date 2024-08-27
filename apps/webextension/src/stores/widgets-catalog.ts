@@ -43,7 +43,6 @@ export interface WidgetCatalogItemComponents {
   readonly widget: LazyLike<Promise<ComponentType<SvelteComponent>>>;
   readonly preview: LazyLike<Promise<ComponentType<SvelteComponent>>>;
   readonly settings: {
-    readonly tabs: LazyLike<Promise<{ id: number | string; title: () => string }[]>>;
     readonly component: LazyLike<Promise<ComponentType<SvelteComponent>>>;
     readonly model: LazyLike<Promise<new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra>>;
   };

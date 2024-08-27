@@ -294,6 +294,7 @@
 	"Widgets_AnalogueClock_Settings_MinutesArm_Color": "Колер хвілін",
 	"Widgets_AnalogueClock_Settings_HoursArm_Color": "Колер гадзін",
 	"Widgets_AnalogueClock_Settings_HourMarks_Color": "Колер пазнак",
+  "Widgets_AnalogueClock_Settings_Shadow": "Цень",
 	"Widgets_CryptoAssetQuotation_Name": "Крыптаактывы",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Дыяграма",
 	"Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Тэкст",

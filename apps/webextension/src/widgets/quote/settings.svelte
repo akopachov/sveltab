@@ -1,20 +1,37 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const BackgroundTabId = 2;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_Quote_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_Quote_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import type { Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import NumberInput from '$shared-components/number-input.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { minutesToSeconds, secondsToMinutes } from 'date-fns';
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { updateInterval: updateIntervalObs, font, textColor, backgroundColor, backgroundBlur } = settings;
 
-  let updateInterval = $updateIntervalObs / 60;
+  let updateInterval = secondsToMinutes($updateIntervalObs);
   $: {
-    $updateIntervalObs = Math.max(updateInterval, 1) * 60;
+    $updateIntervalObs = minutesToSeconds(Math.max(updateInterval, 1));
   }
 </script>
 

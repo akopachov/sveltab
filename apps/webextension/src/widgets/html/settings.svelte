@@ -1,3 +1,7 @@
+<script context="module" lang="ts">
+  const Tabs: never[] = [];
+</script>
+
 <script lang="ts">
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
@@ -5,6 +9,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { html } = settings;
 </script>

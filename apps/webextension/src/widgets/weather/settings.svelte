@@ -1,7 +1,27 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const LayoutTabId = 2;
+  const BackgroundTabId = 3;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_Weather_Settings_Tabs_Text(),
+    },
+    {
+      id: LayoutTabId,
+      title: () => m.Widgets_Weather_Settings_Tabs_Layout(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_Weather_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import { MeasurementUnits, type Settings } from './settings';
-  import { TextTabId, BackgroundTabId, LayoutTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import LocationSelect from '$shared-components/location-select.svelte';
   import { AssetsPacks } from './asset-packs';
@@ -10,6 +30,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const {
     measurementUnits,

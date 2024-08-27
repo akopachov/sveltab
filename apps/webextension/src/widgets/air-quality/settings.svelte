@@ -1,7 +1,27 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const VariablesTabId = 2;
+  const BackgroundTabId = 3;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_AirQuality_Settings_Tabs_Text(),
+    },
+    {
+      id: VariablesTabId,
+      title: () => m.Widgets_AirQuality_Settings_Tabs_Variables(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_AirQuality_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import { AirQualityLegislation, AirQualityVariables, type Settings } from './settings';
-  import { TextTabId, BackgroundTabId, VariablesTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import LocationSelect from '$shared-components/location-select.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
@@ -9,6 +29,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { legislation, font, textColor, backgroundBlur, backgroundColor, queryUserLocation, showVariables } = settings;
 </script>

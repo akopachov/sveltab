@@ -1,18 +1,31 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const ImageTabId = 1;
+
+  const Tabs = [
+    {
+      id: ImageTabId,
+      title: () => m.Widgets_FlickrImage_Settings_Tabs_Image(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import type { Settings } from './settings';
-  import * as m from '$i18n/messages';
   import NumberInput from '$shared-components/number-input.svelte';
-  import { ImageTabId } from './settings-tabs';
+  import { minutesToSeconds, secondsToMinutes } from 'date-fns';
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { updateInterval: updateIntervalObs, searchTopic } = settings;
 
-  let updateInterval = $updateIntervalObs / 60;
+  let updateInterval = secondsToMinutes($updateIntervalObs);
 
   $: {
-    $updateIntervalObs = Math.max(updateInterval, 1) * 60;
+    $updateIntervalObs = minutesToSeconds(Math.max(updateInterval, 1));
   }
 </script>
 

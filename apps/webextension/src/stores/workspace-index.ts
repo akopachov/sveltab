@@ -32,7 +32,7 @@ export class WorkspaceIndex {
     const storageKey = getStorageKey(id);
     let storageRecord: WorkspaceSettingsInitial | undefined;
     try {
-      storageRecord = (await storage.local.get(storageKey))[storageKey];
+      storageRecord = <WorkspaceSettingsInitial>(await storage.local.get(storageKey))[storageKey];
     } catch (e) {
       log.warn('An error occurred during loading workspace settings', { id }, e);
     }
@@ -124,7 +124,7 @@ export class WorkspaceIndex {
     let indexData: { default: string; entries: WorkspaceInfo[] } | undefined;
     if (browser) {
       try {
-        indexData = (await storage.local.get(workspaceIndexStorageKey))[workspaceIndexStorageKey];
+        indexData = <any>(await storage.local.get(workspaceIndexStorageKey))[workspaceIndexStorageKey];
       } catch (e) {
         log.warn('An error occurred during loading workspaces info list', e);
       }

@@ -1,14 +1,30 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const BackgroundTabId = 2;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_FreeText_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_FreeText_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import { RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
   import { TextAlign, type Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { font, textColor, backgroundColor, backgroundBlur, text, textAlign } = settings;
 </script>

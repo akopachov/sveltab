@@ -298,6 +298,7 @@
   "Widgets_AnalogueClock_Settings_MinutesArm_Color": "Minutes color",
   "Widgets_AnalogueClock_Settings_HoursArm_Color": "Hours color",
   "Widgets_AnalogueClock_Settings_HourMarks_Color": "Hour marks color",
+  "Widgets_AnalogueClock_Settings_Shadow": "Shadow",
   "Widgets_CryptoAssetQuotation_Name": "Crypto assets",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Chart",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Text",

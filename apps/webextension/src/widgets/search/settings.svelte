@@ -1,8 +1,23 @@
+<script context="module" lang="ts">
+  import * as m from '$i18n/messages';
+
+  const TextTabId = 1;
+  const BackgroundTabId = 2;
+  const Tabs = [
+    {
+      id: TextTabId,
+      title: () => m.Widgets_Search_Settings_Tabs_Text(),
+    },
+    {
+      id: BackgroundTabId,
+      title: () => m.Widgets_Search_Settings_Tabs_Background(),
+    },
+  ];
+</script>
+
 <script lang="ts">
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import type { Settings } from './settings';
-  import { TextTabId, BackgroundTabId } from './settings-tabs';
-  import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import { SearchProviders } from './providers';
   import TextSettings from '$shared-components/text-settings.svelte';
@@ -10,6 +25,7 @@
 
   export let settings: Settings;
   export let tab: number;
+  export const tabs = Tabs;
 
   const { searchProvider, font, textColor, backgroundBlur, backgroundColor, searchSuggestionEnabled } = settings;
 </script>

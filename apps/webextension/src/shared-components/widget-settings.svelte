@@ -27,7 +27,8 @@
   $: borderColor = widgetSettings.borderColor;
   $: zIndex = widgetSettings.zIndex;
   $: filter = widgetSettings.filter;
-  $: tabs = widget.components.settings.tabs;
+
+  let tabs: { id: number; title: () => string }[] = [];
 
   function setAnchor(offsetX: number, offsetY: number) {
     widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
@@ -46,17 +47,15 @@
 <TabGroup>
   <Tab bind:group={currentTabId} name="tabCommon" value={GeneralTabId}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
   <Tab bind:group={currentTabId} name="tabCommon" value={BorderTabId}>{m.Widgets_Common_Settings_Tabs_Border()}</Tab>
-  {#await tabs.value then resolvedTabs}
-    {#each resolvedTabs as tab (tab.id)}
-      <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title()}</Tab>
-    {/each}
-  {/await}
+  {#each tabs as tab (tab.id)}
+    <Tab bind:group={currentTabId} name="tabCommon" value={tab.id}>{tab.title()}</Tab>
+  {/each}
   <svelte:fragment slot="panel">
     <div class="overflow-auto max-h-[calc(100cqh-92px)]">
       {#await widget.components.settings.component.value}
         <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
       {:then component}
-        <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} />
+        <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} bind:tabs />
       {/await}
       {#if currentTabId === GeneralTabId}
         <div class="flex flex-row gap-4 content-center">
