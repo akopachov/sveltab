@@ -1,7 +1,7 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
 import { purgeCss } from 'vite-plugin-tailwind-purgecss';
-import { paraglide } from "@inlang/paraglide-sveltekit/vite"
+import { paraglide } from '@inlang/paraglide-sveltekit/vite';
 import runGeneratorsPlugin from 'vite-plugin-run-generator';
 import { isWsl2 } from 'is-wsl2';
 
@@ -12,6 +12,18 @@ export default async ({ mode }: { mode: string }) => {
     esbuild: {
       supported: {
         'top-level-await': true,
+      },
+    },
+    build: {
+      target: 'esnext',
+      modulePreload: {
+        polyfill: false,
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: manualChunks,
+          minifyInternalExports: true,
+        },
       },
     },
     server: {
@@ -31,3 +43,21 @@ export default async ({ mode }: { mode: string }) => {
     ],
   });
 };
+
+function manualChunks(id: string) {
+  const nodeModuleMatch = /\/node_modules\/(?!\.pnpm\/)([^\/]+)\//gi.exec(id);
+  const vendorBundle = [
+    '@sveltejs',
+    'svelte',
+    '@skeletonlabs',
+    '@floating-ui',
+    '@tailwindcss',
+    'tailwindcss',
+    'debounce',
+    'nanoid',
+    'p-debounce',
+  ];
+  if (nodeModuleMatch && vendorBundle.includes(nodeModuleMatch[1])) {
+    return 'coreapp';
+  }
+}
