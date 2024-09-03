@@ -12,11 +12,11 @@ import { storage } from '$stores/storage';
 const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 
 const BaseNodeClassList = [
-  'top-[calc(0px-var(--sv-blur))]',
-  'left-[calc(0px-var(--sv-blur))]',
-  'w-[calc(100%+var(--sv-blur)*2)]',
-  'h-[calc(100%+var(--sv-blur)*2)]',
-  '[filter:blur(var(--sv-blur))_var(--sv-filter-url)]',
+  'top-[calc(0px-var(--st-blur))]',
+  'left-[calc(0px-var(--st-blur))]',
+  'w-[calc(100%+var(--st-blur)*2)]',
+  'h-[calc(100%+var(--st-blur)*2)]',
+  '[filter:blur(var(--st-blur))_var(--st-filter-url)]',
 ];
 
 export abstract class ImageBackgroundProviderBase<
@@ -168,8 +168,8 @@ export abstract class ImageBackgroundProviderBase<
     }
     this.#img?.remove();
     this.node.classList.remove(...BaseNodeClassList);
-    this.node.style.removeProperty('--sv-blur');
-    this.node.style.removeProperty('--sv-filter-url');
+    this.node.style.removeProperty('--st-blur');
+    this.node.style.removeProperty('--st-filter-url');
   }
 
   #applyFilters() {
@@ -195,8 +195,8 @@ export abstract class ImageBackgroundProviderBase<
       resizeType: { value: resizeType },
     } = this.settings;
 
-    this.node.style.setProperty('--sv-blur', `${blur}px`);
-    this.node.style.setProperty('--sv-filter-url', filter ? `url("#${filter}")` : ' ');
+    this.node.style.setProperty('--st-blur', `${blur}px`);
+    this.node.style.setProperty('--st-filter-url', filter ? `url("#${filter}")` : ' ');
 
     if (resizeType === ImageResizeType.Cover) {
       this.#img!.style.objectFit = 'cover';
