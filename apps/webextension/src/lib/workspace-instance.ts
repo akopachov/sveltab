@@ -183,8 +183,10 @@ export class WorkspaceInstance {
   }
 
   static async create(settings: WorkspaceSettingsInitial) {
-    const background = await BackgroundInstance.create(settings.background || { type: 'static-color' });
-    const widgets = await Promise.all((settings.widgets || []).map(m => WidgetInstance.create(m)));
+    const [background, ...widgets] = await Promise.all([
+      BackgroundInstance.create(settings.background || { type: 'static-color' }),
+      ...(settings.widgets || []).map(m => WidgetInstance.create(m)),
+    ]);
     return new WorkspaceInstance(
       settings.name || '',
       widgets,
