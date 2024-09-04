@@ -37,14 +37,22 @@
   }
 
   function updateFontSize() {
-    if (!container || !text || whRatio <= 0) return;
+    if (!container || !text || whRatio <= 0) {
+      return;
+    }
     const containerHeight = container.clientHeight;
     const containerWidth = container.clientWidth;
-    fontSize = Math.min(containerHeight, containerWidth / whRatio);
+    const newFontSize = Math.min(containerHeight, containerWidth / whRatio);
+    if (Math.abs(newFontSize - fontSize) < 0.1) {
+      return;
+    }
+    fontSize = newFontSize;
+    console.log('fontSize', fontSize);
   }
 
   onMount(() => {
     updateWHRatio();
+    updateFontSize();
     resizeObserver.observe(container);
   });
 
