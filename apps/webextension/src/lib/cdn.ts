@@ -118,9 +118,9 @@ class CloudImg extends ImageCDN {
     height?: number | 'document' | 'screen' | undefined,
     resizeType?: ImageResizeType | undefined,
   ): string {
-    const imgKey = src.replace(/^https?:\/\//, '');
-    const url = new URL(imgKey, this.#baseUrl);
+    const url = new URL(encodeURIComponent(src), this.#baseUrl);
     url.searchParams.set('gravity', 'smart');
+    url.searchParams.set('ci_url_encoded', '1');
     return this.updateUrl(url, width, height, resizeType);
   }
 
