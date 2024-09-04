@@ -5,7 +5,7 @@
 
 <script lang="ts">
   import type { WidgetInstance } from '$lib/widget-instance';
-  import { ListBox, ListBoxItem, ProgressRadial, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
+  import { ListBox, ListBoxItem, RangeSlider, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import NumberInput from './number-input.svelte';
   import * as m from '$i18n/messages';
   import { WidgetMeasurementUnits } from '$lib/widget-settings';
@@ -52,9 +52,7 @@
   {/each}
   <svelte:fragment slot="panel">
     <div class="overflow-auto max-h-[calc(100cqh-92px)]">
-      {#await widget.components.settings.component.value}
-        <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
-      {:then component}
+      {#await widget.components.settings.component.value then component}
         <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} bind:tabs />
       {/await}
       {#if currentTabId === GeneralTabId}

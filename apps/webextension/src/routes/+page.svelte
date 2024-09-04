@@ -8,7 +8,6 @@
     getDrawerStore,
     SlideToggle,
     type PopupSettings,
-    ProgressRadial,
   } from '@skeletonlabs/skeleton';
   import WidgetFactorty from '$shared-components/widget-factory.svelte';
   import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
@@ -226,9 +225,7 @@
           </select>
           <hr />
           {#if $background}
-            {#await $background.components.settings.component.value}
-              <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
-            {:then component}
+            {#await $background.components.settings.component.value then component}
               <svelte:component this={component} settings={$background.settings.extra} {workspace} />
             {/await}
           {/if}
