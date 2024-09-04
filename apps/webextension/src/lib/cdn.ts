@@ -21,7 +21,7 @@ abstract class ImageCDN {
   ): string;
 
   protected updateUrlInternal(
-    src: string,
+    src: string | URL,
     widthArg: string,
     width: number | 'document' | 'screen' | undefined,
     heightArg: string,
@@ -30,7 +30,7 @@ abstract class ImageCDN {
     resizeTypeArgValue: string | undefined,
   ): string {
     ({ width, height } = this.getAbsoluteDimension(width, height));
-    const imgUrlObj = new URL(src);
+    const imgUrlObj = src instanceof URL ? src : new URL(src);
 
     if (width) {
       imgUrlObj.searchParams.set(widthArg, width.toFixed(0));
@@ -118,12 +118,14 @@ class CloudImg extends ImageCDN {
     height?: number | 'document' | 'screen' | undefined,
     resizeType?: ImageResizeType | undefined,
   ): string {
-    const url = src.replace(/^https?:\/\//, '');
-    return this.updateUrl(`${this.#baseUrl}/${url}?gravity=smart`, width, height, resizeType);
+    const imgKey = src.replace(/^https?:\/\//, '');
+    const url = new URL(imgKey, this.#baseUrl);
+    url.searchParams.set('gravity', 'smart');
+    return this.updateUrl(url, width, height, resizeType);
   }
 
   updateUrl(
-    src: string,
+    src: string | URL,
     width?: number | 'document' | 'screen' | undefined,
     height?: number | 'document' | 'screen' | undefined,
     resizeType?: ImageResizeType | undefined,
