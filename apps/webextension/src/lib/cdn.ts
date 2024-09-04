@@ -149,7 +149,7 @@ class CloudImg extends ImageCDN {
   }
 }
 
-const ImageCDNs = [new ImageCDNApp(), new CloudImg()];
+const ImageCDNs = [new CloudImg(), new ImageCDNApp()];
 
 function cdnCanHandle(src: string): Promise<boolean> {
   return new Promise(resolve => {
