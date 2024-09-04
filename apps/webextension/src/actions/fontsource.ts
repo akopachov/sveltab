@@ -243,6 +243,7 @@ export const fontsource: Action<
   }
 
   updateFont(settings);
+  node.classList.add('[font-display:swap]');
 
   return {
     update(settings: FontSourceActionSettings | null | undefined) {
@@ -251,6 +252,7 @@ export const fontsource: Action<
     destroy() {
       removeCurrentFont().then(ff => ff.forEach(f => document.fonts.delete(f)));
       node.style.fontFamily = '';
+      node.classList.remove('[font-display:swap]');
     },
   };
 };
