@@ -47,7 +47,6 @@
       return;
     }
     fontSize = newFontSize;
-    console.log('fontSize', fontSize);
   }
 
   onMount(() => {
