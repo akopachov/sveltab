@@ -48,7 +48,7 @@ export interface WidgetCatalogItemComponents {
   };
 }
 
-export const WidgetsCatalog: Readonly<WidgetCatalogItem[]> = [
+export const WidgetsCatalog: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
   AnalogueClockWidget,
   LiteratureClockWidget,

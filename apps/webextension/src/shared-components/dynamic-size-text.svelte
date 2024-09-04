@@ -1,7 +1,6 @@
 <script lang="ts">
   import type { TextStrokeSettings } from '$lib/widget-settings';
   import { onDestroy, onMount } from 'svelte';
-  import { writable } from 'svelte/store';
   import { textStroke } from '$actions/text-stroke';
 
   export let text: string;
@@ -21,7 +20,7 @@
   const canvas = new OffscreenCanvas(1, 1);
   const canvasCtx = canvas.getContext('2d', { alpha: false })!;
   let container: HTMLElement;
-  const fontSize = writable(0);
+  let fontSize: number = 0;
   let whRatio: number;
   const resizeObserver = new ResizeObserver(() => {
     updateFontSize();
@@ -41,7 +40,7 @@
     if (!container || !text || whRatio <= 0) return;
     const containerHeight = container.clientHeight;
     const containerWidth = container.clientWidth;
-    $fontSize = Math.min(containerHeight, containerWidth / whRatio);
+    fontSize = Math.min(containerHeight, containerWidth / whRatio);
   }
 
   onMount(() => {
@@ -54,7 +53,7 @@
 
 <div bind:this={container} class="w-full h-full flex justify-center items-center {exClass || ''}" {...otherProps}>
   <span
-    style:font-size="{$fontSize}px"
+    style:font-size="{fontSize}px"
     class="leading-none whitespace-nowrap [-webkit-text-stroke:var(--sv-text-stroke)]"
     use:textStroke={stroke}>
     {text}

@@ -5,7 +5,6 @@
   import { fontsource } from '$actions/fontsource';
   import { locale } from '$stores/locale';
   import { minutesToMilliseconds } from 'date-fns';
-  import { isChromium } from '$lib/browsers-check';
 
   let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
   let timeDisplay: DynamicSizeText | null;
@@ -36,14 +35,11 @@
 
   function redrawAll() {
     timeDisplay?.refresh();
-    if (isChromium) {
-      setTimeout(() => timeDisplay?.refresh(), 100);
-    }
   }
 </script>
 
 <div
-  class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
+  class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] [font-display:swap]"
   style:background-color={$backgroundColor}
   style:color={$textColor}
   style:font-weight={$fontWeight}
