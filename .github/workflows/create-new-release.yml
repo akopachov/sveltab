@@ -107,8 +107,8 @@ jobs:
       - name: Build
         run: |
           pnpm nx build webextension
-          pnpm nx build:web-ext:firefox webextension
-          pnpm nx build:web-ext:chromium webextension
+          VITE_TARGET_BROWSER=firefox pnpm nx build:web-ext:firefox webextension
+          VITE_TARGET_BROWSER=chromium pnpm nx build:web-ext:chromium webextension
           rename 's/sveltab-/sveltab-chromium-/' ./apps/webextension/build-web-ext/chromium/sveltab-*.zip
           rename 's/sveltab-/sveltab-firefox-/' ./apps/webextension/build-web-ext/firefox/sveltab-*.zip
           find ./apps/webextension/build-web-ext -type f -mindepth 1 -exec cp '{}' ./apps/webextension/build-web-ext \;

@@ -6,18 +6,17 @@
   import { getFavIconUrl } from '$lib/favicon-provider';
   import { imgSrcEx } from '$actions/img-src-ex';
   import * as m from '$i18n/messages';
-  import { isFirefox } from '$lib/browsers-check';
   import { textStroke } from '$actions/text-stroke';
 
   export let settings: Settings;
   export const overrideBorder = true;
 
   function getTopSites(limit: number) {
-    if (isFirefox) {
+    if (import.meta.env.VITE_TARGET_BROWSER === 'firefox') {
       return topSites.get({ limit: Math.min(limit, 100) });
+    } else {
+      return topSites.get().then(r => r.slice(0, limit));
     }
-
-    return topSites.get().then(r => r.slice(0, limit));
   }
 
   $: listPromise = getTopSites($rowsCount * $itemsPerRow);

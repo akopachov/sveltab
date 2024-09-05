@@ -3,26 +3,26 @@ import type { TopSites } from 'webextension-polyfill';
 let module;
 
 if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
-  module = import('webextension-polyfill');
+  if (import.meta.env.VITE_TARGET_BROWSER === 'firefox') {
+    module = Promise.resolve(browser.topSites);
+  } else {
+    module = import('webextension-polyfill').then(b => b.default.topSites);
+  }
 } else {
   module = Promise.resolve({
-    default: {
-      topSites: {
-        get(): Promise<MostVisitedURL[]> {
-          return Promise.resolve([
-            {
-              url: 'https://duckduckgo.com',
-              title: 'DuckDuckGo',
-            },
-            {
-              url: 'https://www.mozilla.org',
-            },
-          ]);
+    get(): Promise<MostVisitedURL[]> {
+      return Promise.resolve([
+        {
+          url: 'https://duckduckgo.com',
+          title: 'DuckDuckGo',
         },
-      },
+        {
+          url: 'https://www.mozilla.org',
+        },
+      ]);
     },
   });
 }
 
-export const topSites = (await module).default.topSites;
+export const topSites = await module;
 export type MostVisitedURL = TopSites.MostVisitedURL;
