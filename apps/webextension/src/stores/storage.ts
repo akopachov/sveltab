@@ -1,9 +1,9 @@
-let $$storage: typeof browser.storage | null = null;
+let module;
 
 if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
-  $$storage = browser.storage;
+  module = import('webextension-polyfill');
 } else {
-  $$storage = <typeof browser.storage>(await import('browser-storage-polyfill/index')).default;
+  module = import('browser-storage-polyfill/index');
 }
 
-export const storage = $$storage!;
+export const storage = (await module).default;

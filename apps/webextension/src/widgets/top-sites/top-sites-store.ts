@@ -1,22 +1,28 @@
-let $$provider: typeof browser.topSites | null = null;
+import type { TopSites } from 'webextension-polyfill';
+
+let module;
 
 if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
-  $$provider = browser.topSites;
+  module = import('webextension-polyfill');
 } else {
-  $$provider = {
-    get(): Promise<browser.topSites.MostVisitedURL[]> {
-      return Promise.resolve([
-        {
-          url: 'https://duckduckgo.com',
-          title: 'DuckDuckGo',
+  module = Promise.resolve({
+    default: {
+      topSites: {
+        get(): Promise<MostVisitedURL[]> {
+          return Promise.resolve([
+            {
+              url: 'https://duckduckgo.com',
+              title: 'DuckDuckGo',
+            },
+            {
+              url: 'https://www.mozilla.org',
+            },
+          ]);
         },
-        {
-          url: 'https://www.mozilla.org',
-        },
-      ]);
+      },
     },
-  };
+  });
 }
 
-export const topSites = $$provider!;
-export type MostVisitedURL = browser.topSites.MostVisitedURL;
+export const topSites = (await module).default.topSites;
+export type MostVisitedURL = TopSites.MostVisitedURL;
