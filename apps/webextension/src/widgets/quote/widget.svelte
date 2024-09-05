@@ -6,7 +6,6 @@
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
   import { minutesToMilliseconds, differenceInSeconds } from 'date-fns';
-  import { loadingPlaceholder } from '$actions/loading-placeholder';
   import { logger } from '$lib/logger';
   import { PUBLIC_THEQUOTEAPI_KEY } from '$env/static/public';
   import { textStroke } from '$actions/text-stroke';
@@ -87,7 +86,6 @@
   style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
   style:font-size="{$fontSize}cqmin"
-  use:loadingPlaceholder={quote?.lastUpdate > 0}
   use:fontsource={{
     font: $fontId,
     subsets: ['latin'],
@@ -95,8 +93,10 @@
     weights: [$fontWeight],
   }}
   use:textStroke={textStrokeSettings}>
-  <figure>
-    <blockquote>"{quote?.quote || ''}"</blockquote>
-    <figcaption class="text-right mt-2">&mdash;&nbsp;{quote?.author || ''}</figcaption>
-  </figure>
+  {#if quote}
+    <figure>
+      <blockquote>"{quote.quote}"</blockquote>
+      <figcaption class="text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
+    </figure>
+  {/if}
 </div>

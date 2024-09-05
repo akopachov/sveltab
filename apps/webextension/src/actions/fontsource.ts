@@ -169,7 +169,6 @@ export const fontsource: Action<
                 ResourcesToPreload.add({ src: uri, type: `font/${format}`, as: 'font' });
               }
               document.fonts.add(fontFace);
-              document.fonts;
               loadedFontSet!.fontSet.add(fontFace);
               promisesToWait.push(fontFace.load());
               log.debug('Loaded font', activeFontRef.fontFamily, weight, style, subset);
