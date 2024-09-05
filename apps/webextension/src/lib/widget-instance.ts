@@ -4,9 +4,10 @@ import {
   type WidgetSettingsExtraInitial,
   type WidgetSettingsInitial,
 } from './widget-settings';
-import { WidgetsCatalog, type WidgetCatalogItem, type WidgetCatalogItemComponents } from '$stores/widgets-catalog';
+import type { WidgetCatalogItem, WidgetCatalogItemComponents } from '$widgets/types';
+import { Widgets } from '$widgets/index';
 
-const WidgetsCatalogIndex = new Map<string, WidgetCatalogItem>(WidgetsCatalog.map(c => [c.settings.type, c]));
+const WidgetsIndex = new Map<string, WidgetCatalogItem>(Widgets.map(c => [c.settings.type, c]));
 
 export class WidgetInstance {
   private constructor(
@@ -19,7 +20,7 @@ export class WidgetInstance {
   }
 
   static async create(settings: WidgetSettingsInitial) {
-    const catalogItem = WidgetsCatalogIndex.get(settings.type);
+    const catalogItem = WidgetsIndex.get(settings.type);
     if (!catalogItem) {
       throw new Error(`Unknown widget type "${settings.type}"`);
     }

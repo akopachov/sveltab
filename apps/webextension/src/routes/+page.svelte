@@ -10,11 +10,12 @@
     type PopupSettings,
   } from '@skeletonlabs/skeleton';
   import WidgetFactorty from '$shared-components/widget-factory.svelte';
-  import { WidgetsCatalog, type CatalogWidgetSettingsInitial, type WidgetCatalogItem } from '$stores/widgets-catalog';
+  import type { CatalogWidgetSettingsInitial, WidgetCatalogItem } from '$widgets/types';
+  import { Widgets } from '$widgets/index';
   import WidgetCatalogItemPreview from '$shared-components/widget-catalog-item-preview.svelte';
   import WidgetSettingsComponent from '$shared-components/widget-settings.svelte';
   import { onDestroy, onMount } from 'svelte';
-  import { BackgroundCatalog } from '$stores/background-catalog';
+  import { Backgrounds } from '$backgrounds/index';
   import {
     ActiveBackgroundProvider,
     dynamicBackground,
@@ -174,7 +175,7 @@
     if (!workspace) return;
     const selectedIndex = Number((<HTMLSelectElement>e.target).selectedOptions[0].value);
     if (selectedIndex >= 0) {
-      await workspace.setBackground(BackgroundCatalog[selectedIndex].settings);
+      await workspace.setBackground(Backgrounds[selectedIndex].settings);
     }
   }
 
@@ -201,7 +202,7 @@
         <svelte:fragment slot="summary">{m.Core_Sidebar_NewWidget()}</svelte:fragment>
         <svelte:fragment slot="content">
           <div class="flex flex-col gap-1 p-2 list">
-            {#each WidgetsCatalog as item (item.settings.type)}
+            {#each Widgets as item (item.settings.type)}
               <WidgetCatalogItemPreview
                 widgetCatalogItem={item}
                 class="aspect-square"
@@ -219,7 +220,7 @@
         <svelte:fragment slot="summary">{m.Core_Sidebar_Background()}</svelte:fragment>
         <svelte:fragment slot="content">
           <select class="select" on:change={onBackgroundTypeChanged}>
-            {#each BackgroundCatalog as item, index (item.settings.type)}
+            {#each Backgrounds as item, index (item.settings.type)}
               <option value={index} selected={$background?.settings?.type === item.settings.type}>{item.name()}</option>
             {/each}
           </select>

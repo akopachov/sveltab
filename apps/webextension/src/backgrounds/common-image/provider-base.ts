@@ -1,5 +1,5 @@
 import { ImageResizeType } from '$lib/cdn';
-import { BackgroundProvider } from '$stores/background-catalog';
+import { BackgroundProvider } from '../types';
 import { ResourcesToPreload } from '$stores/preload-resources';
 import debounce from 'debounce';
 import type { ImageBackgroundProviderSettingsBase } from './settings-base';

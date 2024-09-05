@@ -1,23 +1,9 @@
-import type { Storage } from 'webextension-polyfill';
+let $$storage: typeof browser.storage | null = null;
 
-let $$storage: Storage.Static | null = null;
-
-async function usePolyfill() {
-  $$storage = <Storage.Static>(await import('browser-storage-polyfill/index')).default;
-}
-
-async function useWebExt() {
-  $$storage = (await import('webextension-polyfill')).default.storage;
-}
-
-if (import.meta.env.DEV || import.meta.env.SSR) {
-  await usePolyfill();
+if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
+  $$storage = browser.storage;
 } else {
-  try {
-    await useWebExt();
-  } catch {
-    await usePolyfill();
-  }
+  $$storage = <typeof browser.storage>(await import('browser-storage-polyfill/index')).default;
 }
 
 export const storage = $$storage!;

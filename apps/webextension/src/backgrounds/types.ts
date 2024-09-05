@@ -5,15 +5,6 @@ import {
   type BackgroundSettingsExtraInitial,
   type BackgroundSettingsInitial,
 } from '$lib/background-settings';
-import { Background as StaticColorBackground } from '../backgrounds/static-color';
-import { Background as RandomColorBackground } from '../backgrounds/random-color';
-import { Background as StaticImageBackground } from '../backgrounds/static-image';
-import { Background as BingDailyImageBackground } from '../backgrounds/bing-daily-image';
-import { Background as AnimeImageBackground } from '../backgrounds/anime-image';
-import { Background as NasaApodBackground } from '../backgrounds/nasa-apod';
-import { Background as PexelsBackground } from '../backgrounds/pexels';
-import { Background as WikimediaCommonsPodBackground } from '../backgrounds/wikimedia-commons-pod';
-import { Background as WallhavenBackground } from '../backgrounds/wallhaven';
 import type { WorkspaceInstance } from '$lib/workspace-instance';
 
 export type CatalogBackgroundSettingsInitial = BackgroundSettingsInitial;
@@ -60,15 +51,3 @@ export interface BackgroundCatalogItemComponents {
     readonly model: LazyLike<Promise<new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra>>;
   };
 }
-
-export const BackgroundCatalog: Readonly<BackgroundCatalogItem[]> = [
-  StaticColorBackground,
-  RandomColorBackground,
-  StaticImageBackground,
-  BingDailyImageBackground,
-  AnimeImageBackground,
-  NasaApodBackground,
-  PexelsBackground,
-  WikimediaCommonsPodBackground,
-  WallhavenBackground,
-];

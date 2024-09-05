@@ -25,7 +25,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
 
   async apply(abortSignal: AbortSignal) {
     await super.apply(abortSignal);
-    this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
+    this.#localSettings = <LocalSettings>(await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
       lastUrl: '',
     };

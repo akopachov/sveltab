@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { WidgetCatalogItem } from '$stores/widgets-catalog';
+  import type { WidgetCatalogItem } from '$widgets/types';
 
   export let widgetCatalogItem: WidgetCatalogItem;
 

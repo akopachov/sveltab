@@ -1,4 +1,4 @@
-import { BackgroundProvider } from '$stores/background-catalog';
+import { BackgroundProvider } from '../types';
 import debounce from 'debounce';
 import type { Settings } from './settings';
 import randomColor from 'randomcolor';

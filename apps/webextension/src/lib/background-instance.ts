@@ -1,8 +1,5 @@
-import {
-  BackgroundCatalog,
-  type BackgroundCatalogItem,
-  type BackgroundCatalogItemComponents,
-} from '$stores/background-catalog';
+import type { BackgroundCatalogItem, BackgroundCatalogItemComponents } from '$backgrounds/types';
+import { Backgrounds } from '$backgrounds/index';
 import {
   BackgroundSettings,
   type BackgroundSettingsExtra,
@@ -11,7 +8,7 @@ import {
 } from './background-settings';
 import type { WorkspaceInstance } from './workspace-instance';
 
-const BackgroundCatalogIndex = new Map<string, BackgroundCatalogItem>(BackgroundCatalog.map(c => [c.settings.type, c]));
+const BackgroundIndex = new Map<string, BackgroundCatalogItem>(Backgrounds.map(c => [c.settings.type, c]));
 
 export class BackgroundInstance {
   #onRemove: ((instance: WorkspaceInstance) => Promise<void> | void) | undefined;
@@ -26,9 +23,9 @@ export class BackgroundInstance {
   }
 
   static async create(settings: BackgroundSettingsInitial) {
-    let catalogItem = BackgroundCatalogIndex.get(settings.type);
+    let catalogItem = BackgroundIndex.get(settings.type);
     if (!catalogItem) {
-      catalogItem = BackgroundCatalog[0];
+      catalogItem = Backgrounds[0];
       settings = { ...catalogItem.settings };
     }
     const extra = await catalogItem.components.settings.model.value;

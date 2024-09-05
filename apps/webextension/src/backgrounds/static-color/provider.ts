@@ -1,5 +1,5 @@
 import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
-import { BackgroundProvider } from '$stores/background-catalog';
+import { BackgroundProvider } from '../types';
 import type { Settings } from './settings';
 import Color from 'color';
 

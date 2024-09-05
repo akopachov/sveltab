@@ -1,5 +1,5 @@
 import { WeakLazy } from '$lib/lazy';
-import type { BackgroundCatalogItem } from '$stores/background-catalog';
+import type { BackgroundCatalogItem } from '../types';
 import * as m from '$i18n/messages';
 import type { WorkspaceInstance } from '$lib/workspace-instance';
 

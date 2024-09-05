@@ -77,6 +77,7 @@ jobs:
       VITE_CORS_BYPASS: ${{secrets.VITE_CORS_BYPASS}}
       PUBLIC_REALFAVICON_API_KEY: ${{secrets.PUBLIC_REALFAVICON_API_KEY}}
       PUBLIC_CLOUDIMG_TOKEN: ${{secrets.PUBLIC_CLOUDIMG_TOKEN}}
+      VITE_BUILD_FOR: webextension
     
     steps:
       - uses: actions/checkout@v4

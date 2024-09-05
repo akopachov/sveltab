@@ -1,4 +1,4 @@
-import type { WidgetCatalogItem } from '$stores/widgets-catalog';
+import type { WidgetCatalogItem } from '../types';
 import { WeakLazy } from '$lib/lazy';
 import * as m from '$i18n/messages';
 

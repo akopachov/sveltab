@@ -1,10 +1,10 @@
-import type { TopSites } from 'webextension-polyfill';
+let $$provider: typeof browser.topSites | null = null;
 
-let $$provider: TopSites.Static | null = null;
-
-async function usePolyfill() {
+if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
+  $$provider = browser.topSites;
+} else {
   $$provider = {
-    get(): Promise<TopSites.MostVisitedURL[]> {
+    get(): Promise<browser.topSites.MostVisitedURL[]> {
       return Promise.resolve([
         {
           url: 'https://duckduckgo.com',
@@ -18,19 +18,5 @@ async function usePolyfill() {
   };
 }
 
-async function useWebExt() {
-  $$provider = (await import('webextension-polyfill')).default.topSites;
-}
-
-if (import.meta.env.DEV || import.meta.env.SSR) {
-  await usePolyfill();
-} else {
-  try {
-    await useWebExt();
-  } catch {
-    await usePolyfill();
-  }
-}
-
 export const topSites = $$provider!;
-export type MostVisitedURL = TopSites.MostVisitedURL;
+export type MostVisitedURL = browser.topSites.MostVisitedURL;
