@@ -21,6 +21,7 @@ export class WorkspaceInstance {
     customStyles: string,
     assets: string[],
     favicon: FaviconInfoInitial,
+    unsaved: boolean,
   ) {
     this.#widgets = useObservable(new Set(widgets));
     this.#widgets.value.forEach(w => {
@@ -45,6 +46,7 @@ export class WorkspaceInstance {
     this.#trackObjectChange(this.customStyles);
     this.#trackObjectChange(this.#internalAssets);
     this.#trackObjectChange(this.favicon);
+    this.#hasChanges.set(unsaved);
   }
 
   readonly isLocked: Observable<boolean>;
@@ -182,7 +184,7 @@ export class WorkspaceInstance {
     this.#internalAssets.set(this.#internalAssets.value);
   }
 
-  static async create(settings: WorkspaceSettingsInitial) {
+  static async create(settings: WorkspaceSettingsInitial, unsaved: boolean) {
     const [background, ...widgets] = await Promise.all([
       BackgroundInstance.create(settings.background || { type: 'static-color' }),
       ...(settings.widgets || []).map(m => WidgetInstance.create(m)),
@@ -194,6 +196,7 @@ export class WorkspaceInstance {
       settings.customStyles || '',
       settings.assets || [],
       settings.favicon || {},
+      unsaved,
     );
   }
 }

@@ -31,6 +31,7 @@ export class WorkspaceIndex {
   async getInitialSettings(id: string) {
     const storageKey = getStorageKey(id);
     let storageRecord: WorkspaceSettingsInitial | undefined;
+    let usedDefaultWorkspace: boolean = false;
     try {
       storageRecord = <WorkspaceSettingsInitial>(await storage.local.get(storageKey))[storageKey];
     } catch (e) {
@@ -38,6 +39,7 @@ export class WorkspaceIndex {
     }
 
     if (!storageRecord) {
+      usedDefaultWorkspace = true;
       const defaultWorkspace: WorkspaceSettingsInitial = await import('$lib/assets/default_workspace.json').then<any>(
         p => p.default,
       );
@@ -55,12 +57,12 @@ export class WorkspaceIndex {
       storageRecord = defaultWorkspace;
     }
 
-    return storageRecord!;
+    return { settings: storageRecord!, usedDefault: usedDefaultWorkspace };
   }
 
   async get(id: string) {
-    const settings = await this.getInitialSettings(id);
-    const workspace = await WorkspaceInstance.create(settings);
+    const { settings, usedDefault } = await this.getInitialSettings(id);
+    const workspace = await WorkspaceInstance.create(settings, usedDefault);
     workspace.background.value.components.settings.model.preHeat();
     workspace.background.value.components.provider.preHeat();
     workspace.widgets.value.forEach(w => {

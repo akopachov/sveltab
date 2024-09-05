@@ -73,7 +73,7 @@
     });
     const workspacesExportData: WorkspacesExportObject = {};
     for (const wi of Workspaces.entries) {
-      const workspaceSettings = await Workspaces.getInitialSettings(wi.id);
+      const { settings: workspaceSettings } = await Workspaces.getInitialSettings(wi.id);
       workspacesExportData[wi.id] = workspaceSettings;
       if (workspaceSettings.assets) {
         for (const assetPath of workspaceSettings.assets) {
