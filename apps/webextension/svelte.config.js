@@ -9,6 +9,11 @@ const file = fileURLToPath(new URL('package.json', import.meta.url));
 const json = readFileSync(file, 'utf8');
 const pkg = JSON.parse(json);
 
+let versionMeta = `${child_process.execSync('git rev-parse --short HEAD').toString().trim()}.${process.env.VITE_BUILD_FOR || 'web'}`;
+if (process.env.VITE_TARGET_BROWSER) {
+  versionMeta += `.${process.env.VITE_TARGET_BROWSER}`;
+}
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
@@ -33,7 +38,7 @@ const config = {
       relative: false,
     },
     version: {
-      name: `${pkg.version}+${child_process.execSync('git rev-parse --short HEAD').toString().trim()}`,
+      name: `${pkg.version}+${versionMeta}`,
     },
   },
 };
