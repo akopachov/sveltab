@@ -59,7 +59,7 @@
   async function updateTimeQuote(time: Date) {
     const hours = getHours(time);
     const minutes = getMinutes(time);
-    const fileName = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}.json`;
+    const fileName = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}.min.json`;
     let quotes: TimeQuote[] = [];
     let lastUpdatedTime: number = 0;
     try {
@@ -71,7 +71,7 @@
     if (quotes.length <= 0 || differenceInDays(time, lastUpdatedTime) > 30) {
       try {
         const response = await fetch(
-          `https://cdn.jsdelivr.net/gh/lbngoc/literature-clock@master/docs/times/${fileName}`,
+          `https://cdn.statically.io/gh/lbngoc/literature-clock@master/docs/times/${fileName}`,
         );
         const blob = await response.blob();
         quotes = JSON.parse(await blob.text());
