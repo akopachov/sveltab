@@ -5,7 +5,9 @@
   import { differenceInDays, getHours, getMinutes, minutesToMilliseconds } from 'date-fns';
   import { textStroke } from '$actions/text-stroke';
   import { Opfs } from '$lib/opfs';
+  import { logger } from '$lib/logger';
 
+  const log = logger.getSubLogger({ prefix: ['Widget', 'Literature Clock'] });
   let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
   export let settings: Settings;
   export let id: string;
@@ -76,7 +78,9 @@
         try {
           await Opfs.save(`${opfsCacheDir}/times/${fileName}`, blob);
         } catch {}
-      } catch {}
+      } catch (error) {
+        log.error('Failed to fetch time quote', error);
+      }
     }
 
     if (quotes.length > 0) {
