@@ -13,7 +13,6 @@ const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wallhaven', 'Provider
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastSrc: string | undefined | null;
   pool: string[];
   currentPage: number;
   totalPages: number;
@@ -23,6 +22,10 @@ interface LocalSettings {
 export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'wallhaven');
+  }
 
   get canGoNext() {
     return true;
@@ -90,7 +93,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen', this.settings.resizeType.value));
+    this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
 
     const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
@@ -139,7 +142,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
         }
 
         const randomIndex = Math.floor(Math.random() * this.#localSettings!.pool.length);
-        this.#localSettings!.lastSrc = await getImageCdnUrl(
+        const newSrc = await getImageCdnUrl(
           this.#localSettings!.pool.splice(randomIndex, 1)[0],
           'screen',
           'screen',
@@ -151,9 +154,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
           return;
         }
 
-        this.setImage(
-          updateImageCdnUrl(this.#localSettings!.lastSrc, 'screen', 'screen', this.settings.resizeType.value),
-        );
+        this.setImage(updateImageCdnUrl(newSrc, 'screen', 'screen', this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }

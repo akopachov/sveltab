@@ -13,13 +13,16 @@ const availableTopics = Object.values(AnimeTopics).filter(f => f !== AnimeTopics
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastUrl: string | null | undefined;
   lastTopic: AnimeTopics;
 }
 
 export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'anime-image');
+  }
 
   get canGoNext() {
     return true;
@@ -63,7 +66,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
+    this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
     const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
@@ -80,12 +83,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
           throw new Error('Unexpected response');
         }
 
-        this.#localSettings!.lastUrl = await getImageCdnUrl(
-          response.url,
-          'screen',
-          'screen',
-          this.settings.resizeType.value,
-        );
+        const newSrc = await getImageCdnUrl(response.url, 'screen', 'screen', this.settings.resizeType.value);
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
@@ -93,9 +91,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(
-          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
-        );
+        this.setImage(updateImageCdnUrl(newSrc, 'screen', 'screen', this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }

@@ -15,6 +15,7 @@
 	"Core_MainMenu_Menu_Title": "Otwórz menu główne",
 	"Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Zablokuj obszar roboczy",
 	"Core_MainMenu_LockWorkspaceToggle_Title_Unlock": "Odblokuj obszar roboczy",
+  "Core_MainMenu_PreviousBackground_Title": "Poprzednie tło",
 	"Core_MainMenu_NextBackground_Title": "Następne tło",
 	"Core_Toasts_ErrorDetail": "Szczegóły błędu:",
 	"FontSelector_Search_Placeholder": "Szukaj...",

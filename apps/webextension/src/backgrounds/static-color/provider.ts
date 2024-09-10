@@ -8,6 +8,15 @@ export class StaticColorBackgroundProvider extends BackgroundProvider<Settings> 
   get canGoNext() {
     return false;
   }
+  get canGoBack() {
+    return false;
+  }
+  goBack(): Promise<void> | void {
+    return;
+  }
+  goNext(abortSignal: AbortSignal): Promise<void> | void {
+    return;
+  }
   apply(): void {
     this.#unsubscribe = this.settings.color.subscribe(() => this.forceUpdate());
   }

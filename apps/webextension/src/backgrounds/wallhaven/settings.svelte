@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type Settings, type WallhavenPurity, WallhavenSearchColors } from './settings';
-  import { forceUpdateBackground } from '$actions/dynamic-background';
+  import { forceNextBackground } from '$actions/dynamic-background';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
@@ -93,6 +93,6 @@
 
 <SettingsBase {settings} provider={{ href: 'https://wallhaven.cc', name: 'Wallhaven' }} />
 
-<button class="btn variant-soft" on:click={forceUpdateBackground}>
+<button class="btn variant-soft" on:click={forceNextBackground}>
   {m.Backgrounds_Wallhaven_Settings_Refresh()}
 </button>

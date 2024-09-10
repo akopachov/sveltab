@@ -11,13 +11,16 @@ const LocalSettingsKey = 'WikimediaCommonsPodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wikimedia Commons POD', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string | undefined | null;
   lastChangedTime: number;
 }
 
 export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'wikimedia-commons-pod');
+  }
 
   get canGoNext() {
     return false;
@@ -51,7 +54,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     if (abortSignal.aborted) {
       return;
     }
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
+    this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
     if (navigator.onLine && !isToday(this.#localSettings!.lastChangedTime)) {
       try {
         const now = new Date();
@@ -67,7 +70,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = now.valueOf();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(
+        const newSrc = await getImageCdnUrl(
           response.image.image.source,
           'screen',
           'screen',
@@ -78,9 +81,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
           return;
         }
 
-        this.setImage(
-          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
-        );
+        this.setImage(updateImageCdnUrl(newSrc, 'screen', 'screen', this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }

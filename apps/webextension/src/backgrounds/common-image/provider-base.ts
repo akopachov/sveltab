@@ -8,6 +8,7 @@ import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-bac
 import { Opfs, OpfsSchema } from '$lib/opfs';
 import { Lazy } from '$lib/lazy';
 import { storage } from '$stores/storage';
+import { ImageBackgroundHistory } from './history';
 
 const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 
@@ -28,16 +29,42 @@ export abstract class ImageBackgroundProviderBase<
   #img: HTMLImageElement | undefined;
   #imageColor = new Lazy(() => new FastAverageColorEx());
   #resizeObserver: ResizeObserver | undefined;
+  readonly history: ImageBackgroundHistory;
   #sharedMeta: {
     url?: string;
     dominant?: { color: string; isDark: boolean };
     corner?: { x: number; y: number; color: string; isDark: boolean };
   } = {};
-  constructor(node: HTMLElement, settings: T) {
+  constructor(node: HTMLElement, settings: T, providerName: string) {
     super(node, settings);
+    this.history = new ImageBackgroundHistory(providerName);
   }
 
-  protected async setImage(url: string | undefined | null): Promise<void> {
+  get canGoBack() {
+    return this.history.hasPrevious;
+  }
+
+  async goBack() {
+    const url = this.history.getPrevious();
+    if (url) {
+      await this.setImage(url);
+    }
+  }
+
+  get canGoNext() {
+    return this.history.hasNext;
+  }
+
+  async goNext(abortSignal: AbortSignal) {
+    const url = this.history.getNext();
+    if (url) {
+      await this.setImage(url);
+    } else {
+      await this.forceUpdate(abortSignal);
+    }
+  }
+
+  protected async setImage(url: string | undefined | null, addToHistory: boolean = false): Promise<void> {
     if (url === this.#lastImageUrl) return;
 
     this.#releaseBlob();
@@ -61,6 +88,9 @@ export abstract class ImageBackgroundProviderBase<
 
       this.#img!.src = url;
       this.#img!.style.visibility = 'visible';
+      if (addToHistory && !url.startsWith('blob://')) {
+        this.history.add(url);
+      }
     } else {
       this.#img!.src = '';
       this.#img!.style.visibility = 'hidden';

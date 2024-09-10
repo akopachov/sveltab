@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { forceUpdateBackground } from '$actions/dynamic-background';
+  import { forceNextBackground } from '$actions/dynamic-background';
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
 
@@ -32,6 +32,6 @@
   </select>
 </label>
 
-<button class="btn variant-soft" on:click={forceUpdateBackground}>
+<button class="btn variant-soft" on:click={forceNextBackground}>
   {m.Backgrounds_RandomColor_Settings_Refresh()}
 </button>

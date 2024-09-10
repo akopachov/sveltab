@@ -12,6 +12,17 @@ export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> 
     return true;
   }
 
+  get canGoBack() {
+    return false;
+  }
+
+  goBack(): Promise<void> | void {
+    return;
+  }
+  async goNext(): Promise<void> {
+    await this.forceUpdate();
+  }
+
   apply(): void {
     this.node.style.transition = 'background-color 0.3s ease';
     const forceUpdateDeb = debounce(() => this.forceUpdate(), 10);

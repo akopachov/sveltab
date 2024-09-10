@@ -12,7 +12,6 @@ const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Pexels', 'Provider'] 
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastSrc: string | undefined | null;
   pool: string[];
   currentPage: number;
   totalPages: number;
@@ -41,6 +40,10 @@ function pickBetterUrl(src: string | undefined | null, node: HTMLElement, resize
 export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'pexels');
+  }
 
   get canGoNext() {
     return true;
@@ -102,7 +105,7 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       return;
     }
 
-    this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node, this.settings.resizeType.value));
+    this.setImage(pickBetterUrl(this.history.current, this.node, this.settings.resizeType.value));
     const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
       try {
@@ -132,14 +135,14 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
         }
 
         const randomIndex = Math.floor(Math.random() * this.#localSettings!.pool.length);
-        this.#localSettings!.lastSrc = this.#localSettings!.pool.splice(randomIndex, 1)[0];
+        const newSrc = this.#localSettings!.pool.splice(randomIndex, 1)[0];
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(pickBetterUrl(this.#localSettings!.lastSrc, this.node, this.settings.resizeType.value));
+        this.setImage(pickBetterUrl(newSrc, this.node, this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }

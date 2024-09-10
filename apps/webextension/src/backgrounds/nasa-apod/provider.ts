@@ -12,13 +12,16 @@ const LocalSettingsKey = 'NasaApodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'NASA APOD', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string | null | undefined;
   lastChangedTime: number;
 }
 
 export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'nasa-apod');
+  }
 
   get canGoNext() {
     return false;
@@ -53,7 +56,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
+    this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
     const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && hoursSinceLastChange > 12) {
       try {
@@ -64,20 +67,13 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(
-          response.hdurl,
-          'screen',
-          'screen',
-          this.settings.resizeType.value,
-        );
+        const newSrc = await getImageCdnUrl(response.hdurl, 'screen', 'screen', this.settings.resizeType.value);
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(
-          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
-        );
+        this.setImage(updateImageCdnUrl(newSrc, 'screen', 'screen', this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }

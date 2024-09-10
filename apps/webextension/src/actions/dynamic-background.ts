@@ -1,14 +1,19 @@
 import type { BackgroundInstance } from '$lib/background-instance';
-import type { IBackgroundProvider } from '$stores/background-catalog';
+import type { IBackgroundProvider } from '$backgrounds/types';
 import type { Action } from 'svelte/action';
 import { writable, type Readable } from 'svelte/store';
 
-const forceNewSubscribers = new Set<() => void>();
+const forceNextSubscribers = new Set<() => void>();
+const forcePreviousSubscribers = new Set<() => void>();
 
 export type BackgroundCornerColorChangedEventArgs = { color: string; isDark: boolean };
 
-export function forceUpdateBackground() {
-  forceNewSubscribers.forEach(f => f());
+export function forceNextBackground() {
+  forceNextSubscribers.forEach(f => f());
+}
+
+export function forcePreviousBackground() {
+  forcePreviousSubscribers.forEach(f => f());
 }
 
 const _activeBackgroundProvider = writable<IBackgroundProvider | undefined>(undefined);
@@ -45,17 +50,24 @@ export const dynamicBackground: Action<
           provider.addEventListener('backgroundChanged', notifyBackgroundChanged);
         }
 
-        function forceNew() {
+        function forceNext() {
           if (background) {
-            provider.forceUpdate(abortController.signal);
+            provider.goNext(abortController.signal);
           }
         }
-        forceNewSubscribers.add(forceNew);
+        function forcePrevious() {
+          if (background) {
+            provider.goBack();
+          }
+        }
+        forceNextSubscribers.add(forceNext);
+        forcePreviousSubscribers.add(forcePrevious);
         await provider.apply(abortController.signal);
         _activeBackgroundProvider.set(provider);
         return () => {
           _activeBackgroundProvider.set(undefined);
-          forceNewSubscribers.delete(forceNew);
+          forceNextSubscribers.delete(forceNext);
+          forcePreviousSubscribers.delete(forcePrevious);
           if (provider instanceof EventTarget) {
             provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
           }

@@ -37,7 +37,7 @@
   import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
   import FaviconSettings from '$shared-components/favicon-settings.svelte';
   import Favicon from '$shared-components/favicon.svelte';
-  import { forceUpdateBackground } from '$actions/dynamic-background';
+  import { forceNextBackground, forcePreviousBackground } from '$actions/dynamic-background';
 
   const drawerStore = getDrawerStore();
 
@@ -303,7 +303,7 @@
       on:cornerColorChanged={cornerColorChanged}>
     </div>
     <div
-      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[129px]">
+      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[172px]">
       <div class="w-max flex flex-row">
         <button
           type="button"
@@ -325,15 +325,26 @@
             : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
           <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
         </button>
+        {#if $ActiveBackgroundProvider?.canGoBack}
+          <button
+            type="button"
+            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+            style:color={menuButtonColor}
+            style:--st-bg-color={menuButtonBackgroundColor}
+            on:click={() => forcePreviousBackground()}
+            title={m.Core_MainMenu_PreviousBackground_Title()}>
+            <span class="w-7 h-7 icon-[carbon--previous-outline]"></span>
+          </button>
+        {/if}
         {#if $ActiveBackgroundProvider?.canGoNext}
           <button
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
             style:color={menuButtonColor}
             style:--st-bg-color={menuButtonBackgroundColor}
-            on:click={() => forceUpdateBackground()}
+            on:click={() => forceNextBackground()}
             title={m.Core_MainMenu_NextBackground_Title()}>
-            <span class="w-7 h-7 icon-[heroicons--play]"></span>
+            <span class="w-7 h-7 icon-[carbon--next-outline]"></span>
           </button>
         {/if}
       </div>

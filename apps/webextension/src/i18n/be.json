@@ -15,6 +15,7 @@
 	"Core_MainMenu_Menu_Title": "Адкрыць галоўнае меню",
 	"Core_MainMenu_LockWorkspaceToggle_Title_Lock": "Заблакіраваць працоўную вобласць",
 	"Core_MainMenu_LockWorkspaceToggle_Title_Unlock": "Разблакіраваць працоўную вобласць",
+  "Core_MainMenu_PreviousBackground_Title": "Папярэдні фонавы малюнак",
 	"Core_MainMenu_NextBackground_Title": "Наступны фонавы малюнак",
 	"Core_Toasts_ErrorDetail": "Дэталі памылкі:",
 	"FontSelector_Search_Placeholder": "Пошук...",

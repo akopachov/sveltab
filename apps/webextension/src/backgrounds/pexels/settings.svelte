@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Settings } from './settings';
-  import { forceUpdateBackground } from '$actions/dynamic-background';
+  import { forceNextBackground } from '$actions/dynamic-background';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
@@ -31,6 +31,6 @@
 
 <SettingsBase {settings} provider={{ href: 'https://www.pexels.com', name: 'Pexels' }} />
 
-<button class="btn variant-soft" on:click={forceUpdateBackground}>
+<button class="btn variant-soft" on:click={forceNextBackground}>
   {m.Backgrounds_Pexels_Settings_Refresh()}
 </button>

@@ -14,6 +14,9 @@ export interface IBackgroundProvider {
   forceUpdate(abortSignal: AbortSignal): Promise<void> | void;
   destroy(): Promise<void> | void;
   get canGoNext(): boolean;
+  get canGoBack(): boolean;
+  goNext(abortSignal: AbortSignal): Promise<void> | void;
+  goBack(): Promise<void> | void;
 }
 
 export abstract class BackgroundProvider<T extends BackgroundSettingsExtra>
@@ -33,6 +36,9 @@ export abstract class BackgroundProvider<T extends BackgroundSettingsExtra>
   abstract forceUpdate(abortSignal: AbortSignal): Promise<void> | void;
   abstract destroy(): Promise<void> | void;
   abstract get canGoNext(): boolean;
+  abstract get canGoBack(): boolean;
+  abstract goNext(abortSignal: AbortSignal): Promise<void> | void;
+  abstract goBack(): Promise<void> | void;
 }
 
 export interface BackgroundCatalogItem {

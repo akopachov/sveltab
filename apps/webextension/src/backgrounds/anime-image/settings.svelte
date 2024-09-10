@@ -1,7 +1,7 @@
 <script lang="ts">
   import { AnimeTopics, type Settings } from './settings';
   import { RangeSlider } from '@skeletonlabs/skeleton';
-  import { forceUpdateBackground } from '$actions/dynamic-background';
+  import { forceNextBackground } from '$actions/dynamic-background';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import FilterSelector from '$shared-components/filter-selector.svelte';
@@ -44,6 +44,6 @@
 </label>
 <SettingsBase {settings} provider={{ href: 'https://t.mwm.moe/us/', name: 't.mwm.moe' }} />
 
-<button class="btn variant-soft" on:click={forceUpdateBackground}>
+<button class="btn variant-soft" on:click={forceNextBackground}>
   {m.Backgrounds_AnimeImage_Settings_Refresh()}
 </button>

@@ -11,7 +11,6 @@ const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
 
 interface LocalSettings {
-  lastUrl: string | null | undefined;
   lastLocale: string;
   lastChangedTime: number;
 }
@@ -25,6 +24,10 @@ function getClosestResolution(nodeWidth: number) {
 export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #localSettings: LocalSettings | undefined;
   #unsubscribe!: () => void;
+
+  constructor(node: HTMLElement, settings: Settings) {
+    super(node, settings, 'bing-daily-image');
+  }
 
   get canGoNext() {
     return false;
@@ -61,7 +64,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
       return;
     }
 
-    this.setImage(updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value));
+    this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
     const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
@@ -81,20 +84,13 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
         }
         this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastUrl = await getImageCdnUrl(
-          response.url,
-          'screen',
-          'screen',
-          this.settings.resizeType.value,
-        );
+        const newSrc = await getImageCdnUrl(response.url, 'screen', 'screen', this.settings.resizeType.value);
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {
           return;
         }
-        this.setImage(
-          updateImageCdnUrl(this.#localSettings!.lastUrl, 'screen', 'screen', this.settings.resizeType.value),
-        );
+        this.setImage(updateImageCdnUrl(newSrc, 'screen', 'screen', this.settings.resizeType.value), true);
       } catch (e) {
         log.warn(e);
       }
