@@ -6,25 +6,40 @@ const MAX_HISTORY_LENGTH = 100;
 
 export interface ImageBackgroundHistoryStorage {
   url: string[];
-  provider: string;
+  provider: string | null;
   currentIndex: number;
 }
 
 export class ImageBackgroundHistory {
-  #ready: boolean = false;
+  #historyRestored: boolean = false;
   #history: string[] = [];
-  #provider: string;
+  #provider: string | null = null;
   #currentIndex: number = -1;
+  #unsubscribe: () => void;
 
-  constructor(provider: string) {
+  constructor() {
+    if (browser) {
+      const beforeUnloadHandler = () => this.save();
+      window.addEventListener('beforeunload', beforeUnloadHandler);
+      this.#unsubscribe = () => window.removeEventListener('beforeunload', beforeUnloadHandler);
+    } else {
+      this.#unsubscribe = () => {};
+    }
+  }
+
+  async setProvider(provider: string) {
+    if (this.#provider === provider) return;
+
     this.#provider = provider;
-    storage.local.get(IMAGE_BACKGROUND_HISTORY_KEY).then(result => {
+    if (!this.#historyRestored) {
+      const storedHistory = (await storage.local.get(IMAGE_BACKGROUND_HISTORY_KEY))[
+        IMAGE_BACKGROUND_HISTORY_KEY
+      ] as ImageBackgroundHistoryStorage;
       let pendingItems: string[] = [];
       if (this.#history.length > 0) {
         pendingItems = this.#history;
       }
-      const storedHistory = result[IMAGE_BACKGROUND_HISTORY_KEY] as ImageBackgroundHistoryStorage;
-      if (storedHistory?.provider === provider) {
+      if (storedHistory?.provider === this.#provider) {
         this.#history = storedHistory.url || [];
         for (const item of pendingItems) {
           this.add(item);
@@ -33,11 +48,11 @@ export class ImageBackgroundHistory {
       } else {
         this.#currentIndex = this.#history.length - 1;
       }
-      this.#ready = true;
-    });
 
-    if (browser) {
-      window.addEventListener('beforeunload', () => this.save());
+      this.#historyRestored = true;
+    } else {
+      this.#history = [];
+      this.#currentIndex = -1;
     }
   }
 
@@ -81,7 +96,7 @@ export class ImageBackgroundHistory {
   }
 
   async save() {
-    if (!this.#ready) return;
+    if (!this.#historyRestored) return;
     await storage.local.set({
       [IMAGE_BACKGROUND_HISTORY_KEY]: {
         provider: this.#provider,
@@ -89,5 +104,9 @@ export class ImageBackgroundHistory {
         currentIndex: this.#currentIndex,
       } satisfies ImageBackgroundHistoryStorage,
     });
+  }
+
+  dispose() {
+    this.#unsubscribe();
   }
 }

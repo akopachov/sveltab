@@ -20,6 +20,8 @@ const BaseNodeClassList = [
   '[filter:blur(var(--st-blur))_var(--st-filter-url)]',
 ];
 
+const History = new ImageBackgroundHistory();
+
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
@@ -29,7 +31,8 @@ export abstract class ImageBackgroundProviderBase<
   #img: HTMLImageElement | undefined;
   #imageColor = new Lazy(() => new FastAverageColorEx());
   #resizeObserver: ResizeObserver | undefined;
-  readonly history: ImageBackgroundHistory;
+  #providerName: string;
+  readonly history = History;
   #sharedMeta: {
     url?: string;
     dominant?: { color: string; isDark: boolean };
@@ -37,7 +40,7 @@ export abstract class ImageBackgroundProviderBase<
   } = {};
   constructor(node: HTMLElement, settings: T, providerName: string) {
     super(node, settings);
-    this.history = new ImageBackgroundHistory(providerName);
+    this.#providerName = providerName;
   }
 
   get canGoBack() {
@@ -165,6 +168,7 @@ export abstract class ImageBackgroundProviderBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
+    const providerSetPromise = History.setProvider(this.#providerName);
     this.#sharedMeta =
       (await storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY))[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] ||
       {};
@@ -185,6 +189,7 @@ export abstract class ImageBackgroundProviderBase<
     this.#resizeObserver.observe(this.#img);
     this.#unsubscribeResizeType = this.settings.resizeType.subscribe(updateCornerColorDeb);
     this.#applyFilters();
+    await providerSetPromise;
   }
 
   destroy(): void {
