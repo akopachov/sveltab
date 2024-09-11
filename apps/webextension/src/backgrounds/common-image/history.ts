@@ -1,5 +1,7 @@
 import { storage } from '$stores/storage';
 import { browser } from '$app/environment';
+import pDebounce from 'p-debounce';
+import { secondsToMilliseconds } from 'date-fns';
 
 const IMAGE_BACKGROUND_HISTORY_KEY = 'imageBackgroundHistory';
 const MAX_HISTORY_LENGTH = 100;
@@ -15,15 +17,15 @@ export class ImageBackgroundHistory {
   #history: string[] = [];
   #provider: string | null = null;
   #currentIndex: number = -1;
-  #unsubscribe: () => void;
+  #unsubscribe: (() => void) | undefined;
+  #hasChanges: boolean = false;
+  #saveDebounced = pDebounce(() => this.save(), secondsToMilliseconds(5));
 
   constructor() {
     if (browser) {
       const beforeUnloadHandler = () => this.save();
       window.addEventListener('beforeunload', beforeUnloadHandler);
       this.#unsubscribe = () => window.removeEventListener('beforeunload', beforeUnloadHandler);
-    } else {
-      this.#unsubscribe = () => {};
     }
   }
 
@@ -51,8 +53,7 @@ export class ImageBackgroundHistory {
 
       this.#historyRestored = true;
     } else {
-      this.#history = [];
-      this.#currentIndex = -1;
+      this.clear();
     }
   }
 
@@ -64,11 +65,15 @@ export class ImageBackgroundHistory {
     }
 
     this.#currentIndex = this.#history.length - 1;
+    this.#hasChanges = true;
+    this.#saveDebounced();
   }
 
   clear() {
     this.#history = [];
     this.#currentIndex = -1;
+    this.#hasChanges = true;
+    this.#saveDebounced();
   }
 
   getPrevious(): string | null {
@@ -96,7 +101,7 @@ export class ImageBackgroundHistory {
   }
 
   async save() {
-    if (!this.#historyRestored) return;
+    if (!this.#historyRestored || !this.#hasChanges) return;
     await storage.local.set({
       [IMAGE_BACKGROUND_HISTORY_KEY]: {
         provider: this.#provider,
@@ -104,9 +109,12 @@ export class ImageBackgroundHistory {
         currentIndex: this.#currentIndex,
       } satisfies ImageBackgroundHistoryStorage,
     });
+    this.#hasChanges = false;
   }
 
   dispose() {
-    this.#unsubscribe();
+    if (this.#unsubscribe) {
+      this.#unsubscribe();
+    }
   }
 }
