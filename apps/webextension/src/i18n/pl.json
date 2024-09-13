@@ -66,6 +66,8 @@
   "Backgrounds_ImageCommon_Settings_ResizeType": "Dostosowanie rozmiaru",
   "Backgrounds_ImageCommon_Settings_ResizeType_Cover": "Pokryć",
   "Backgrounds_ImageCommon_Settings_ResizeType_Contain": "Fit",
+  "Backgrounds_ImageCommon_Settings_Next": "Następny",
+  "Backgrounds_ImageCommon_Settings_Previous": "Poprzedni",
 	"Backgrounds_BingDaily_Name": "Codzienny obraz Bing",
 	"Backgrounds_BingDaily_Settings_Country": "Kraj",
 	"Backgrounds_BingDaily_Settings_Country_Any": "Dowolna",
@@ -99,11 +101,11 @@
 	"Backgrounds_RandomImage_Settings_SearchTerms": "Warunki wyszukiwania",
 	"Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Owoce, zwierzęta, budynki, ...",
 	"Backgrounds_RandomImage_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-	"Backgrounds_RandomImage_Settings_Refresh": "Odśwież",
+
 	"Backgrounds_Pexels_Name": "Zdjęcie od Pexels",
 	"Backgrounds_Pexels_Settings_SearchTerms": "Warunki wyszukiwania",
 	"Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Owoce, zwierzęta, budynki, ...",
-	"Backgrounds_Pexels_Settings_Refresh": "Odśwież",
+
 	"Backgrounds_Wallhaven_Name": "Wallhaven",
 	"Backgrounds_Wallhaven_Settings_SearchTerms": "Warunki wyszukiwania",
 	"Backgrounds_Wallhaven_Settings_ApiKey": "Klucz API (opcjonalnie)",
@@ -113,12 +115,12 @@
 	"Backgrounds_Wallhaven_Settings_Purity_NSFW": "NSFW",
 	"Backgrounds_Wallhaven_Settings_Colors": "Kolory",
 	"Backgrounds_Wallhaven_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-	"Backgrounds_Wallhaven_Settings_Refresh": "Odśwież",
+
 	"Backgrounds_AnimeImage_Name": "Obraz anime",
 	"Backgrounds_AnimeImage_Settings_Topic": "Temat",
 	"Backgrounds_AnimeImage_Settings_Topic_Any": "Dowolny",
 	"Backgrounds_AnimeImage_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-	"Backgrounds_AnimeImage_Settings_Refresh": "Odśwież",
+
 	"Backgrounds_StaticColor_Name": "Kolor statyczny",
 	"Backgrounds_StaticColor_Settings_Color": "Kolor",
 	"Backgrounds_StaticImage_Name": "Obraz statyczny",

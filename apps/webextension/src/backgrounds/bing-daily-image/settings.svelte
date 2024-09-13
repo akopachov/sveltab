@@ -2,6 +2,7 @@
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
+  import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
   export let settings: Settings;
 
@@ -23,3 +24,5 @@
   </select>
 </label>
 <SettingsBase {settings} provider={{ href: 'https://bing.com', name: 'Bing' }} />
+
+<BackgroundHistoryControl />

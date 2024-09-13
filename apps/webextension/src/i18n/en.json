@@ -69,6 +69,8 @@
   "Backgrounds_ImageCommon_Settings_ResizeType": "Fit",
   "Backgrounds_ImageCommon_Settings_ResizeType_Cover": "Cover",
   "Backgrounds_ImageCommon_Settings_ResizeType_Contain": "Contain",
+  "Backgrounds_ImageCommon_Settings_Next": "Next",
+  "Backgrounds_ImageCommon_Settings_Previous": "Previous",
   
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
@@ -103,12 +105,12 @@
   "Backgrounds_RandomImage_Settings_SearchTerms": "Search terms",
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_RandomImage_Settings_UpdateInterval": "Update interval (minutes)",
-  "Backgrounds_RandomImage_Settings_Refresh": "Refresh",
+
   "Backgrounds_Pexels_Name": "Pexels photo",
   "Backgrounds_Pexels_Settings_SearchTerms": "Search terms",
   "Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_Pexels_Settings_UpdateInterval": "Update interval (minutes)",
-  "Backgrounds_Pexels_Settings_Refresh": "Refresh",
+
   "Backgrounds_Wallhaven_Name": "Wallhaven",
   "Backgrounds_Wallhaven_Settings_SearchTerms": "Search terms",
   "Backgrounds_Wallhaven_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
@@ -119,12 +121,12 @@
   "Backgrounds_Wallhaven_Settings_Purity_NSFW": "Not safe for work",
   "Backgrounds_Wallhaven_Settings_Colors": "Colors",
   "Backgrounds_Wallhaven_Settings_UpdateInterval": "Update interval (minutes)",
-  "Backgrounds_Wallhaven_Settings_Refresh": "Refresh",
+
   "Backgrounds_AnimeImage_Name": "Anime image",
   "Backgrounds_AnimeImage_Settings_Topic": "Topic",
   "Backgrounds_AnimeImage_Settings_Topic_Any": "Any",
   "Backgrounds_AnimeImage_Settings_UpdateInterval": "Update interval (minutes)",
-  "Backgrounds_AnimeImage_Settings_Refresh": "Refresh",
+
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
   "Backgrounds_StaticImage_Name": "Static image",

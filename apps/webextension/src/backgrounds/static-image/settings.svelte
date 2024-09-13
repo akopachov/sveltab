@@ -7,6 +7,7 @@
   import { OpfsSchema } from '$lib/opfs';
   import { nanoid } from 'nanoid/non-secure';
   import BrowserSupports, { Constraints } from '$shared-components/browser-supports.svelte';
+  import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
   export let settings: Settings;
   export let workspace: WorkspaceInstance;
@@ -75,3 +76,5 @@
 {/if}
 
 <SettingsBase {settings} />
+
+<BackgroundHistoryControl />

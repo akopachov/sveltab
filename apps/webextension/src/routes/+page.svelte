@@ -325,7 +325,7 @@
             : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
           <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
         </button>
-        {#if $ActiveBackgroundProvider?.canGoBack}
+        {#if $ActiveBackgroundProvider?.canGoBack === true}
           <button
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
@@ -336,7 +336,7 @@
             <span class="w-7 h-7 icon-[carbon--previous-outline]"></span>
           </button>
         {/if}
-        {#if $ActiveBackgroundProvider?.canGoNext}
+        {#if $ActiveBackgroundProvider?.canGoNext === true}
           <button
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"

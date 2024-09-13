@@ -1,10 +1,10 @@
 <script lang="ts">
   import { type Settings, type WallhavenPurity, WallhavenSearchColors } from './settings';
-  import { forceNextBackground } from '$actions/dynamic-background';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import { nanoid } from 'nanoid/non-secure';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
+  import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
   export let settings: Settings;
   const { searchTerms, apiKey, purity, colors } = settings;
@@ -93,6 +93,4 @@
 
 <SettingsBase {settings} provider={{ href: 'https://wallhaven.cc', name: 'Wallhaven' }} />
 
-<button class="btn variant-soft" on:click={forceNextBackground}>
-  {m.Backgrounds_Wallhaven_Settings_Refresh()}
-</button>
+<BackgroundHistoryControl />
