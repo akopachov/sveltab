@@ -20,7 +20,7 @@
             if (resource.type) {
               link.type = resource.type;
             }
-            link.crossOrigin = true;
+            link.crossOrigin = 'anonymous';
             link.setAttribute('href', resource.src);
             frag.appendChild(link);
           }
