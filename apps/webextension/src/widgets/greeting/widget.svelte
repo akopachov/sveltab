@@ -1,14 +1,44 @@
+<script lang="ts" context="module">
+  const monthNames = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const localeToLanguagesMap = new Map([
+    ['en', 'English'],
+    ['pl', 'Polish'],
+    ['be', 'Belarusian'],
+  ]);
+</script>
+
 <script lang="ts">
   import type { Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
-  import { getClockStore } from '$stores/clock-store';
-  import * as m from '$i18n/messages';
-  import { derived, type Readable } from 'svelte/store';
+  import { getPreciselyAlignedClockStore } from '$stores/clock-store';
   import { locale, localeCharSubset } from '$stores/locale';
-  import { minutesToMilliseconds } from 'date-fns';
+  import { differenceInDays, getHours, getDay, getMonth, hoursToMilliseconds, differenceInMinutes } from 'date-fns';
   import { textStroke } from '$actions/text-stroke';
+  import { Opfs } from '$lib/opfs';
+  import { logger } from '$lib/logger';
 
   export let settings: Settings;
+
+  const log = logger.getSubLogger({ prefix: ['Widget', 'Greeting'] });
+  const clockStore = getPreciselyAlignedClockStore(hoursToMilliseconds(1));
+  const opfsCacheDir = 'widgets/greeting';
+
+  $: updateGreetingsPool($clockStore);
+  $: updateGreeting(greetingsPool, $name);
 
   const {
     name,
@@ -25,66 +55,59 @@
     textStroke: textStrokeSettings,
   } = settings;
 
-  enum PartOfDay {
-    Unknown,
-    Morning,
-    Day,
-    Evening,
-    Night,
-  }
+  let currentGreeting: string | null = null;
+  let greetingsPool: string[] | null = null;
+  let greetingsPoolLastUpdateTime: number;
 
-  let currentPartOfDay = derived<Readable<Date>, PartOfDay>(
-    getClockStore(minutesToMilliseconds(1)),
-    (now, set) => {
-      let newPartOfTheDay = PartOfDay.Day;
-      const hours = now.getHours();
-      if (hours >= 4 && hours <= 12) {
-        newPartOfTheDay = PartOfDay.Morning;
-      } else if (hours > 12 && hours <= 18) {
-        newPartOfTheDay = PartOfDay.Day;
-      } else if (hours > 18 && hours <= 23) {
-        newPartOfTheDay = PartOfDay.Evening;
-      } else {
-        newPartOfTheDay = PartOfDay.Night;
+  async function updateGreetingsPool(time: Date) {
+    if (greetingsPool == null || differenceInMinutes(greetingsPoolLastUpdateTime, time) >= 60) {
+      const hours = getHours(time);
+      const month = monthNames[getMonth(time)];
+      const day = dayNames[getDay(time)];
+      const language = localeToLanguagesMap.get($locale);
+      const relativeFilePath = `${language}/${month}/${day}/${String(hours).padStart(2, '0')}-00.json`;
+      let lastUpdatedTime: number = 0;
+      let greetings: string[] = [];
+      try {
+        const cachedFile = await Opfs.get(`${opfsCacheDir}/greetings/${relativeFilePath}`);
+        lastUpdatedTime = cachedFile.lastModified;
+        greetings = JSON.parse(await cachedFile.text());
+      } catch {}
+
+      if (greetings.length <= 0 || differenceInDays(time, lastUpdatedTime) > 3) {
+        try {
+          const response = await fetch(
+            `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
+          );
+          const blob = await response.blob();
+          greetings = JSON.parse(await blob.text());
+          try {
+            await Opfs.save(`${opfsCacheDir}/greetings/${relativeFilePath}`, blob);
+          } catch {}
+        } catch (error) {
+          log.error('Failed to fetch greetings', error);
+        }
       }
 
-      set(newPartOfTheDay);
-    },
-    PartOfDay.Unknown,
-  );
-
-  $: greetingTemplate = getGreetingTemplate($currentPartOfDay) || $locale;
-
-  function getGreetingTemplate(part: PartOfDay): { named: string; nameless: string } {
-    let namedGreetingsPlain: string;
-    let namelessGreetingsPlain: string;
-
-    if (part === PartOfDay.Morning) {
-      namedGreetingsPlain = m.Widgets_Greeting_Messages_Morning_Named();
-      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Morning();
-    } else if (part === PartOfDay.Day) {
-      namedGreetingsPlain = m.Widgets_Greeting_Messages_Day_Named();
-      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Day();
-    } else if (part === PartOfDay.Evening) {
-      namedGreetingsPlain = m.Widgets_Greeting_Messages_Evening_Named();
-      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Evening();
-    } else if (part === PartOfDay.Night) {
-      namedGreetingsPlain = m.Widgets_Greeting_Messages_Night_Named();
-      namelessGreetingsPlain = m.Widgets_Greeting_Messages_Night();
-    } else {
-      namedGreetingsPlain = namelessGreetingsPlain = '';
+      greetingsPoolLastUpdateTime = Date.now();
+      greetingsPool = greetings;
     }
-
-    const namedGreetings = namedGreetingsPlain.split(';');
-    const namelessGreetings = namelessGreetingsPlain.split(';');
-
-    const randomIndex = Math.floor(Math.random() * namedGreetings.length);
-    return { named: namedGreetings[randomIndex], nameless: namelessGreetings[randomIndex] };
   }
 
-  function getGreeting(template: { named: string; nameless: string }, name: string) {
-    if (!template) return '';
-    return name ? template.named.replace('[name]', name) : template.nameless;
+  function updateGreeting(greetings: string[] | null, name: string) {
+    if (greetings && greetings.length > 0) {
+      let greetingsToUse = greetings;
+      if (!name) {
+        greetingsToUse = greetingsToUse.filter(greeting => !greeting.includes('{name}'));
+      }
+      let greeting = greetingsToUse[Math.floor(Math.random() * greetingsToUse.length)];
+      if (name) {
+        greeting = greeting.replace('{name}', name);
+      }
+      currentGreeting = greeting;
+    } else {
+      currentGreeting = null;
+    }
   }
 </script>
 
@@ -105,6 +128,6 @@
   }}
   use:textStroke={textStrokeSettings}>
   <p class="text-[calc(85cqh-1rem)] text-center leading-tight [-webkit-text-stroke:var(--sv-text-stroke)]">
-    {getGreeting(greetingTemplate, $name)}
+    {currentGreeting || ''}
   </p>
 </div>

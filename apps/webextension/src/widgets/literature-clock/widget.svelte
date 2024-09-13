@@ -10,17 +10,10 @@
   const log = logger.getSubLogger({ prefix: ['Widget', 'Literature Clock'] });
   let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
   export let settings: Settings;
-  export let id: string;
 
   $: updateTimeQuote($clockStore);
 
-  const opfsCacheDir = `widgets/literature-clock/${id}`;
-
-  export async function onDelete() {
-    try {
-      await Opfs.remove(opfsCacheDir);
-    } catch (error) {}
-  }
+  const opfsCacheDir = `widgets/literature-clock`;
 
   type TimeQuote = {
     time: string;
