@@ -33,7 +33,7 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
 
-  type CachedGreetings = { pool: string[]; lastUpdateDate: number; hour: number };
+  type CachedGreetings = { pool: string[]; lastUpdateDate: number; hour: number; locale: typeof $locale };
 
   export let settings: Settings;
   export let id: string;
@@ -42,7 +42,7 @@
   const clockStore = getPreciselyAlignedClockStore(hoursToMilliseconds(1));
   const storageKey = `Widget_Greeting_${id}_CachedPool`;
 
-  $: updateGreetingsPool($clockStore);
+  $: updateGreetingsPool($clockStore, $locale);
   $: cache && updateGreeting(cache.pool, $name);
 
   const {
@@ -68,25 +68,30 @@
       pool: [],
       lastUpdateDate: 0,
       hour: 0,
+      locale: '',
     };
+    await updateGreetingsPool($clockStore, $locale);
   });
 
-  async function updateGreetingsPool(time: Date) {
-    const hours = getHours(time);
-    if (cache && (cache.hour !== hours || differenceInHours(cache.lastUpdateDate, time) >= 24)) {
-      let greetings: string[] = [];
-      let lastUpdateDate: number = 0;
+  export async function onDelete() {
+    await storage.local.remove(storageKey);
+  }
 
+  async function updateGreetingsPool(time: Date, locale: typeof $locale) {
+    const hours = getHours(time);
+    if (
+      cache &&
+      (cache.hour !== hours || cache.locale !== locale || differenceInHours(cache.lastUpdateDate, time) >= 24)
+    ) {
       try {
         const month = monthNames[getMonth(time)];
         const day = dayNames[getDay(time)];
-        const language = localeToLanguagesMap.get($locale);
+        const language = localeToLanguagesMap.get(locale);
         const relativeFilePath = `${language}/${month}/${day}/${String(hours).padStart(2, '0')}-00.json`;
-        greetings = await fetch(
+        const greetings = await fetch(
           `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
         ).then(response => response.json());
-        lastUpdateDate = Date.now();
-        cache = { lastUpdateDate: lastUpdateDate, hour: hours, pool: greetings };
+        cache = { lastUpdateDate: Date.now(), hour: hours, pool: greetings, locale: locale };
         await storage.local.set({ [storageKey]: cache });
       } catch (error) {
         log.error('Failed to fetch greetings', error);

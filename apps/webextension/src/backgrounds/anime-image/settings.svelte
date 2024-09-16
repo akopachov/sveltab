@@ -7,7 +7,7 @@
 
   export let settings: Settings;
 
-  const { topic, blur, filter } = settings;
+  const { topic } = settings;
 
   const topicNames: [AnimeTopics, string][] = [
     [AnimeTopics.Any, m.Backgrounds_AnimeImage_Settings_Topic_Any()],
