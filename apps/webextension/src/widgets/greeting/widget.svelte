@@ -19,6 +19,7 @@
     ['pl', 'Polish'],
     ['be', 'Belarusian'],
   ]);
+  const namePlaceholder = '{name}';
 </script>
 
 <script lang="ts">
@@ -26,19 +27,23 @@
   import { fontsource } from '$actions/fontsource';
   import { getPreciselyAlignedClockStore } from '$stores/clock-store';
   import { locale, localeCharSubset } from '$stores/locale';
-  import { differenceInDays, getHours, getDay, getMonth, hoursToMilliseconds, differenceInMinutes } from 'date-fns';
+  import { getHours, getDay, getMonth, hoursToMilliseconds, differenceInHours } from 'date-fns';
   import { textStroke } from '$actions/text-stroke';
-  import { Opfs } from '$lib/opfs';
   import { logger } from '$lib/logger';
+  import { onMount } from 'svelte';
+  import { storage } from '$stores/storage';
+
+  type CachedGreetings = { pool: string[]; lastUpdateDate: number; hour: number };
 
   export let settings: Settings;
+  export let id: string;
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Greeting'] });
   const clockStore = getPreciselyAlignedClockStore(hoursToMilliseconds(1));
-  const opfsCacheDir = 'widgets/greeting';
+  const storageKey = `Widget_Greeting_${id}_CachedPool`;
 
   $: updateGreetingsPool($clockStore);
-  $: updateGreeting(greetingsPool, $name);
+  $: cache && updateGreeting(cache.pool, $name);
 
   const {
     name,
@@ -56,41 +61,37 @@
   } = settings;
 
   let currentGreeting: string | null = null;
-  let greetingsPool: string[] | null = null;
-  let greetingsPoolLastUpdateTime: number;
+  let cache: CachedGreetings | null = null;
+
+  onMount(async () => {
+    cache = <CachedGreetings>(await storage.local.get(storageKey))[storageKey] || {
+      pool: [],
+      lastUpdateDate: 0,
+      hour: 0,
+    };
+  });
 
   async function updateGreetingsPool(time: Date) {
-    if (greetingsPool == null || differenceInMinutes(greetingsPoolLastUpdateTime, time) >= 60) {
-      const hours = getHours(time);
-      const month = monthNames[getMonth(time)];
-      const day = dayNames[getDay(time)];
-      const language = localeToLanguagesMap.get($locale);
-      const relativeFilePath = `${language}/${month}/${day}/${String(hours).padStart(2, '0')}-00.json`;
-      let lastUpdatedTime: number = 0;
+    const hours = getHours(time);
+    if (cache && (cache.hour !== hours || differenceInHours(cache.lastUpdateDate, time) >= 24)) {
       let greetings: string[] = [];
-      try {
-        const cachedFile = await Opfs.get(`${opfsCacheDir}/greetings/${relativeFilePath}`);
-        lastUpdatedTime = cachedFile.lastModified;
-        greetings = JSON.parse(await cachedFile.text());
-      } catch {}
+      let lastUpdateDate: number = 0;
 
-      if (greetings.length <= 0 || differenceInDays(time, lastUpdatedTime) > 3) {
-        try {
-          const response = await fetch(
-            `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
-          );
-          const blob = await response.blob();
-          greetings = JSON.parse(await blob.text());
-          try {
-            await Opfs.save(`${opfsCacheDir}/greetings/${relativeFilePath}`, blob);
-          } catch {}
-        } catch (error) {
-          log.error('Failed to fetch greetings', error);
-        }
+      try {
+        const month = monthNames[getMonth(time)];
+        const day = dayNames[getDay(time)];
+        const language = localeToLanguagesMap.get($locale);
+        const relativeFilePath = `${language}/${month}/${day}/${String(hours).padStart(2, '0')}-00.json`;
+        greetings = await fetch(
+          `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
+        ).then(response => response.json());
+        lastUpdateDate = Date.now();
+      } catch (error) {
+        log.error('Failed to fetch greetings', error);
       }
 
-      greetingsPoolLastUpdateTime = Date.now();
-      greetingsPool = greetings;
+      cache = { lastUpdateDate: lastUpdateDate, hour: hours, pool: greetings };
+      await storage.local.set({ [storageKey]: cache });
     }
   }
 
@@ -98,11 +99,11 @@
     if (greetings && greetings.length > 0) {
       let greetingsToUse = greetings;
       if (!name) {
-        greetingsToUse = greetingsToUse.filter(greeting => !greeting.includes('{name}'));
+        greetingsToUse = greetingsToUse.filter(greeting => !greeting.includes(namePlaceholder));
       }
       let greeting = greetingsToUse[Math.floor(Math.random() * greetingsToUse.length)];
       if (name) {
-        greeting = greeting.replace('{name}', name);
+        greeting = greeting.replace(namePlaceholder, name);
       }
       currentGreeting = greeting;
     } else {
