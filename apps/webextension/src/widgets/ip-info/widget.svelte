@@ -15,7 +15,8 @@
   let ipInfo: IpApiCoResponse | null = null;
 
   $: {
-    $online && updateIpInfo();
+    $online;
+    updateIpInfo();
   }
 
   const {
@@ -34,7 +35,7 @@
   } = settings;
 
   async function updateIpInfo() {
-    if (!navigator.onLine) {
+    if (!$online) {
       ipInfo = null;
       return;
     }
