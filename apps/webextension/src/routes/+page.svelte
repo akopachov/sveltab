@@ -183,6 +183,13 @@
     menuButtonColor = e.detail.isDark ? '#fff' : '#000';
     menuButtonBackgroundColor = e.detail.color;
   }
+
+  function firstOfSet<T>(set: Set<T>): [T, Exclude<number, 0>] | [null, 0] {
+    for (const item of set) {
+      return [item, set.size];
+    }
+    return [null, 0];
+  }
 </script>
 
 <svelte:window on:beforeunload={onBeforeUnload} />
@@ -375,8 +382,11 @@
     class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
     data-popup={widgetSettingsPopupSettings.target}
     style:visibility={!$workspaceLocked && selectedWidgets.size === 1 ? 'visible' : 'hidden'}>
-    {#if widgetSettingsVisible && selectedWidgets.size === 1}
-      <WidgetSettingsComponent widget={selectedWidgets.values().next().value} workspace={workspaceEl} />
+    {#if widgetSettingsVisible}
+      {@const [widget, totalCount] = firstOfSet(selectedWidgets)}
+      {#if totalCount === 1}
+        <WidgetSettingsComponent {widget} workspace={workspaceEl} />
+      {/if}
     {/if}
   </div>
   <WidgetFilters />
