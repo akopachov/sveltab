@@ -86,7 +86,7 @@
       try {
         const month = monthNames[getMonth(time)];
         const day = dayNames[getDay(time)];
-        const language = localeToLanguagesMap.get(locale);
+        const language = localeToLanguagesMap.get(locale) || 'English';
         const relativeFilePath = `${language}/${month}/${day}/${String(hours).padStart(2, '0')}-00.json`;
         const greetings = await fetch(
           `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
