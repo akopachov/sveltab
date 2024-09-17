@@ -6,6 +6,7 @@
   import { textStroke } from '$actions/text-stroke';
   import { Opfs } from '$lib/opfs';
   import { logger } from '$lib/logger';
+  import { online } from '$stores/online-store';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Literature Clock'] });
   let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
@@ -61,7 +62,7 @@
       quotes = JSON.parse(await cachedFile.text());
     } catch {}
 
-    if (quotes.length <= 0 || differenceInDays(time, lastUpdatedTime) > 30) {
+    if ((quotes.length <= 0 || differenceInDays(time, lastUpdatedTime) > 30) && $online) {
       try {
         const response = await fetch(
           `https://cdn.statically.io/gh/lbngoc/literature-clock@master/docs/times/${fileName}`,

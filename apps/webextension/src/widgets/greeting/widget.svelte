@@ -32,6 +32,7 @@
   import { logger } from '$lib/logger';
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
+  import { online } from '$stores/online-store';
 
   type CachedGreetings = { pool: string[]; lastUpdateDate: number; hour: number; locale: typeof $locale };
 
@@ -81,6 +82,7 @@
     const hours = getHours(time);
     if (
       cache &&
+      $online &&
       (cache.hour !== hours || cache.locale !== locale || differenceInHours(cache.lastUpdateDate, time) >= 24)
     ) {
       try {
