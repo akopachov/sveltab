@@ -23,8 +23,8 @@
 		"@tailwindcss/forms": "^0.5.9",
 		"@types/aos": "^3.0.7",
 		"@types/eslint": "9.6.1",
-		"@typescript-eslint/eslint-plugin": "^8.5.0",
-		"@typescript-eslint/parser": "^8.5.0",
+		"@typescript-eslint/eslint-plugin": "^8.6.0",
+		"@typescript-eslint/parser": "^8.6.0",
 		"aos": "^2.3.4",
 		"autoprefixer": "^10.4.20",
 		"cssnano": "^7.0.6",
@@ -47,7 +47,7 @@
 		"tailwindcss": "^3.4.11",
 		"tslib": "^2.7.0",
 		"typescript": "^5.6.2",
-		"vite": "^5.4.5"
+		"vite": "^5.4.6"
 	},
 	"type": "module"
 }
