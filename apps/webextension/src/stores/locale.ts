@@ -12,7 +12,7 @@ const LocaleCharSubsetMap = new Map<string, string[]>([
   ['sk', ['latin', 'latin-ext']],
   ['tr', ['latin', 'latin-ext']],
   ['lt', ['latin', 'latin-ext']],
-  ['by', ['latin', 'cyrillic', 'cyrillic-ext']],
+  ['be', ['latin', 'cyrillic', 'cyrillic-ext']],
   ['uk', ['latin', 'cyrillic', 'cyrillic-ext']],
   ['bg', ['latin', 'cyrillic']],
   ['el', ['latin', 'greek']],
