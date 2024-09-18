@@ -72,7 +72,7 @@
       }
     });
     const workspacesExportData: WorkspacesExportObject = {};
-    for (const wi of Workspaces.entries) {
+    for (const wi of await Workspaces.entries) {
       const { settings: workspaceSettings } = await Workspaces.getInitialSettings(wi.id);
       workspacesExportData[wi.id] = workspaceSettings;
       if (workspaceSettings.assets) {
@@ -124,7 +124,7 @@
         throw new Error(m.DataManage_Restore_Error_InvalidFileType());
       }
 
-      await Workspaces.setDefault(importData!.defaultWorkspaceId || Workspaces.entries[0].id);
+      await Workspaces.setDefault(importData!.defaultWorkspaceId || (await Workspaces.entries)[0].id);
       ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
 
       dispatch('dataImported');

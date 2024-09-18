@@ -17,14 +17,28 @@ function getStorageKey(id: string) {
 }
 
 export class WorkspaceIndex {
-  #entries: WorkspaceInfo[];
-  #defaultWorkspaceId: string;
-  constructor(defaultWorkspaceId: string, entries: WorkspaceInfo[]) {
-    this.#defaultWorkspaceId = defaultWorkspaceId;
-    this.#entries = entries;
+  #entries: WorkspaceInfo[] | Promise<WorkspaceInfo[]>;
+  #defaultWorkspaceId: string | Promise<string>;
+  constructor() {
+    if (browser) {
+      const indexDataPromise = storage.local
+        .get(workspaceIndexStorageKey)
+        .then<{ default: string; entries: WorkspaceInfo[] } | undefined>(
+          data => data[workspaceIndexStorageKey],
+          e => {
+            log.warn('An error occurred during loading workspaces info list', e);
+            return e;
+          },
+        );
+      this.#defaultWorkspaceId = indexDataPromise.then(data => data?.default || defaultWorkspaceId);
+      this.#entries = indexDataPromise.then(data => data?.entries || [{ id: defaultWorkspaceId, name: 'Default' }]);
+    } else {
+      this.#defaultWorkspaceId = defaultWorkspaceId;
+      this.#entries = [{ id: defaultWorkspaceId, name: 'Default' }];
+    }
   }
 
-  get entries(): ReadonlyArray<WorkspaceInfo> {
+  get entries(): Promise<ReadonlyArray<WorkspaceInfo>> | ReadonlyArray<WorkspaceInfo> {
     return this.#entries;
   }
 
@@ -73,10 +87,16 @@ export class WorkspaceIndex {
   }
 
   async getDefault() {
+    if (this.#defaultWorkspaceId instanceof Promise) {
+      this.#defaultWorkspaceId = await this.#defaultWorkspaceId;
+    }
     return { id: this.#defaultWorkspaceId, workspace: await this.get(this.#defaultWorkspaceId) };
   }
 
   async #updateIndex(updater: (index: WorkspaceInfo[]) => WorkspaceInfo[]) {
+    if (this.#entries instanceof Promise) {
+      this.#entries = await this.#entries;
+    }
     this.#entries = updater(this.#entries);
     if (browser) {
       await storage.local.set({
@@ -100,7 +120,7 @@ export class WorkspaceIndex {
     });
     if (browser) {
       if (workspace instanceof WorkspaceInstance) {
-        await workspace.commit(data => storage.local.set({ [storageKey]: data }));
+        await workspace.commit(async data => await storage.local.set({ [storageKey]: data }));
       } else {
         await storage.local.set({ [storageKey]: workspace });
       }
@@ -121,22 +141,6 @@ export class WorkspaceIndex {
     this.#defaultWorkspaceId = id;
     await this.#updateIndex(i => i);
   }
-
-  static async create() {
-    let indexData: { default: string; entries: WorkspaceInfo[] } | undefined;
-    if (browser) {
-      try {
-        indexData = <any>(await storage.local.get(workspaceIndexStorageKey))[workspaceIndexStorageKey];
-      } catch (e) {
-        log.warn('An error occurred during loading workspaces info list', e);
-      }
-    }
-
-    return new WorkspaceIndex(
-      indexData?.default || defaultWorkspaceId,
-      indexData?.entries || [{ id: defaultWorkspaceId, name: 'Default' }],
-    );
-  }
 }
 
-export const Workspaces = await WorkspaceIndex.create();
+export const Workspaces = new WorkspaceIndex();
