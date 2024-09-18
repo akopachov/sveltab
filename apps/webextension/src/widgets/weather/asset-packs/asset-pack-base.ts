@@ -7,7 +7,7 @@ export type WmoCodeMap = ReadonlyArray<string | [string, string] | undefined> & 
 
 export abstract class BaseAssetsPack {
   #baseUrl: string;
-  #wmoCodeMap: ReadonlyArray<string | [string, string] | undefined>;
+  #wmoCodeMap: WmoCodeMap;
   #canBeColored: boolean;
 
   protected constructor(baseUrl: string, wmoCodeMap: WmoCodeMap, canBeColored: boolean) {
