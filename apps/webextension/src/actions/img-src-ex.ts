@@ -1,6 +1,7 @@
 import { getMirrorFor } from '$lib/service-mirrors';
 import type { Action } from 'svelte/action';
 import fallbackImage from '$lib/assets/image-fallback.svg';
+import { secondsToMilliseconds } from 'date-fns';
 
 const placeholderClasses = ['placeholder', 'animate-pulse', '!rounded-[inherit]'];
 
@@ -15,7 +16,7 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
     if (s) {
       if (node.src !== s) {
         node.src = s;
-        timeout = setTimeout(rollSrc, 5000);
+        timeout = setTimeout(rollSrc, secondsToMilliseconds(5));
       }
     } else {
       node.src = '';

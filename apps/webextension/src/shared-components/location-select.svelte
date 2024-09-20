@@ -25,6 +25,7 @@
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import { locale } from '$stores/locale';
   import { useObservable, type Observable, type Unobserved } from '$lib/observable';
+  import { nanoid } from 'nanoid/non-secure';
 
   export let location: GeoLocation;
 
@@ -32,7 +33,7 @@
 
   const locationPopupSettings: PopupSettings = {
     event: 'focus-click',
-    target: 'Widget_Weather_Settings_Location',
+    target: `LocationSelect_Popup_${nanoid()}`,
     placement: 'bottom',
   };
 

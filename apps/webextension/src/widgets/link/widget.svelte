@@ -64,7 +64,6 @@
   });
 </script>
 
-<!-- svelte-ignore a11y-missing-attribute -->
 <a
   href={ensureFqdnUrl($url)}
   rel="noreferrer"
@@ -82,7 +81,8 @@
       class="w-full h-full object-contain select-none !rounded-[inherit]"
       draggable="false"
       use:imgSrcEx={iconUrl}
-      data-fallback="true" />
+      data-fallback="true"
+      alt="" />
   {:else}
     <span class="w-full h-full icon-[bx--image] text-black"></span>
   {/if}

@@ -48,7 +48,6 @@
       minmax(0, 1fr))"
       use:textStroke={textStrokeSettings}>
       {#each list as item (item.url)}
-        <!-- svelte-ignore a11y-missing-attribute -->
         <a
           href={item.url}
           rel="noreferrer"
@@ -65,6 +64,7 @@
           <img
             class="w-full h-full object-contain select-none !rounded-[inherit]"
             draggable="false"
+            alt=""
             data-fallback="true"
             use:imgSrcEx={getFavIconUrl(item.url)} />
           {#if $showTitle && item.title}

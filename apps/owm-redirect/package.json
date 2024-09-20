@@ -8,7 +8,7 @@
     "start": "wrangler dev"
   },
   "devDependencies": {
-    "wrangler": "^3.78.4"
+    "wrangler": "^3.78.6"
   },
   "dependencies": {
     "geo-position.ts": "^1.4.1"
