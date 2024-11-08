@@ -226,81 +226,83 @@
         </p>
         <div class="overflow-y-auto">
           <table class="text-[max(0.5em,7px)] w-full max-w-[10em] leading-normal">
-            {#if $showVariables.includes(AirQualityVariables.PM2_5)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">
-                  PM
-                  <sub>2.5</sub>
-                </td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.pm2_5.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
-            {#if $showVariables.includes(AirQualityVariables.PM10)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">
-                  PM
-                  <sub>10</sub>
-                </td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.pm10.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
-            {#if $showVariables.includes(AirQualityVariables.CarbonMonoxide)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">CO</td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.carbon_monoxide.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
-            {#if $showVariables.includes(AirQualityVariables.NitrogenDioxide)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">
-                  NO
-                  <sub>2</sub>
-                </td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.nitrogen_dioxide.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
-            {#if $showVariables.includes(AirQualityVariables.SulfurDioxide)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">
-                  SO
-                  <sub>2</sub>
-                </td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.sulphur_dioxide.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
-            {#if $showVariables.includes(AirQualityVariables.Ozone)}
-              <tr>
-                <td class="w-full whitespace-nowrap pr-2">
-                  O
-                  <sub>3</sub>
-                </td>
-                <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.ozone.toFixed(0)}</td>
-                <td class="whitespace-nowrap">
-                  μg/m
-                  <sup>3</sup>
-                </td>
-              </tr>
-            {/if}
+            <tbody>
+              {#if $showVariables.includes(AirQualityVariables.PM2_5)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">
+                    PM
+                    <sub>2.5</sub>
+                  </td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.pm2_5.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+              {#if $showVariables.includes(AirQualityVariables.PM10)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">
+                    PM
+                    <sub>10</sub>
+                  </td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.pm10.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+              {#if $showVariables.includes(AirQualityVariables.CarbonMonoxide)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">CO</td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.carbon_monoxide.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+              {#if $showVariables.includes(AirQualityVariables.NitrogenDioxide)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">
+                    NO
+                    <sub>2</sub>
+                  </td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.nitrogen_dioxide.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+              {#if $showVariables.includes(AirQualityVariables.SulfurDioxide)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">
+                    SO
+                    <sub>2</sub>
+                  </td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.sulphur_dioxide.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+              {#if $showVariables.includes(AirQualityVariables.Ozone)}
+                <tr>
+                  <td class="w-full whitespace-nowrap pr-2">
+                    O
+                    <sub>3</sub>
+                  </td>
+                  <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.ozone.toFixed(0)}</td>
+                  <td class="whitespace-nowrap">
+                    μg/m
+                    <sup>3</sup>
+                  </td>
+                </tr>
+              {/if}
+            </tbody>
           </table>
         </div>
       </div>

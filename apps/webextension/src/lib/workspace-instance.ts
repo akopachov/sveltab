@@ -140,6 +140,7 @@ export class WorkspaceInstance {
 
   async addWidget(settings: WidgetSettingsInitial) {
     const widget = await WidgetInstance.create(settings);
+    if (!widget) return;
     this.#widgets.value = this.#widgets.value.add(widget);
     this.#hasChanges.value = true;
     this.#trackObjectChange(widget.settings);

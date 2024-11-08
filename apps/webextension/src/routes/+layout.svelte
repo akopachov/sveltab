@@ -13,11 +13,11 @@
   initializeStores();
   initLocaleStore();
 
-  $: {
+  $effect(() => {
     if (browser) {
       document.documentElement.lang = $locale;
     }
-  }
+  });
 </script>
 
 <svelte:head>
