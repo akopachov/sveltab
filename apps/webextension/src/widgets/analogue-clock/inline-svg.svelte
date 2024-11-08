@@ -1,15 +1,17 @@
 <script lang="ts">
-  export let src: string;
+  let { src, class: exClass, ...otherProps }: { src: string; class?: string; [key: string]: unknown } = $props();
 
-  let container: HTMLDivElement;
+  let container: HTMLDivElement | undefined = $state();
 
-  let { class: exClass, ...otherProps } = $$restProps;
-
-  $: {
+  $effect(() => {
     loadSvg(src);
-  }
+  });
 
   async function loadSvg(uri: string) {
+    if (!container) {
+      return;
+    }
+
     let plainSvg: string = '';
     if (uri) {
       plainSvg = await fetch(uri).then(r => r.text());

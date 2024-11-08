@@ -22,6 +22,9 @@ export class Observable<T> implements ReadOnlyObservable<T> {
 
   set(value: T) {
     if (value === this.#value) return;
+    if (value === undefined && this.#value === undefined) return;
+    if (typeof value === 'number' && isNaN(value) && typeof this.#value === 'number' && isNaN(this.#value)) return;
+    if (value === null && this.#value === null) return;
     this.#value = value;
     this.#subscribers.forEach(run => run(value));
   }

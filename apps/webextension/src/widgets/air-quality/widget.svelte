@@ -2,7 +2,7 @@
   import { AirQualityLegislation, AirQualityVariables, type Settings } from './settings';
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { fetchWeatherApi } from 'openmeteo';
   import { localeCharSubset } from '$stores/locale';
@@ -24,7 +24,6 @@
   import { textStroke } from '$actions/text-stroke';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Air Quality'] });
-  const dispatch = createEventDispatcher();
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestInfo = {
@@ -44,8 +43,13 @@
       dust: number;
     };
   };
-  export let settings: Settings;
-  export let id: string;
+
+  let {
+    settings,
+    id,
+    onautosettingsupdate,
+  }: { settings: Settings; id: string; onautosettingsupdate: (arg: { id: string; settings: Settings }) => void } =
+    $props();
 
   const {
     location: { latitude, longitude, city, country, admin1, admin2 },
@@ -71,26 +75,26 @@
     await storage.local.remove(storageKey);
   }
 
-  let latestInfo: LatestInfo;
+  let latestInfo: LatestInfo | undefined = $state();
 
-  $: {
+  $effect(() => {
     ($clockStore || $latitude || $longitude || $legislation) && checkIfObsoleteDebounced();
-  }
+  });
 
-  $: {
+  $effect(() => {
     $queryUserLocation && queryUserGeolocation();
-  }
+  });
 
-  $: airQualityDescriptor = latestInfo
-    ? getAirQualityIndexDescription(latestInfo.current.airQualityIndex, latestInfo.legislation)
-    : null;
+  let airQualityDescriptor = $derived.by(() =>
+    latestInfo ? getAirQualityIndexDescription(latestInfo.current.airQualityIndex, latestInfo.legislation) : null,
+  );
 
-  $: currentAirQualityIndexText = airQualityDescriptor?.text() || '';
-  $: currentAirQualityIndexPercent = latestInfo
-    ? (latestInfo.current.airQualityIndex / getAirQualityIndexMaxValue(latestInfo?.legislation)) * 100
-    : 0;
+  let currentAirQualityIndexText = $derived(airQualityDescriptor?.text() || '');
+  let currentAirQualityIndexPercent = $derived.by(() =>
+    latestInfo ? (latestInfo.current.airQualityIndex / getAirQualityIndexMaxValue(latestInfo?.legislation)) * 100 : 0,
+  );
 
-  $: airQualityDetailsLink = getRedirectUrl($city, $latitude, $longitude);
+  let airQualityDetailsLink = $derived(getRedirectUrl($city, $latitude, $longitude));
 
   onMount(() => {
     ensureLocationPresent();
@@ -152,7 +156,7 @@
 
         $latitude = position.latitude;
         $longitude = position.longitude;
-        dispatch('autosettingsupdate', { id, settings });
+        onautosettingsupdate({ id, settings });
       }
     } catch (e) {
       log.warn("An error ocurred during querying user's geolocation", e);
@@ -208,7 +212,7 @@
   style:--st-blur="{$backgroundBlur}px"
   style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
   {$textShadowColor}"
-  use:loadingPlaceholder={latestInfo?.lastUpdate > 0}
+  use:loadingPlaceholder={!!latestInfo && latestInfo.lastUpdate > 0}
   use:fontsource={{
     font: $fontId,
     subsets: $localeCharSubset,
@@ -216,7 +220,7 @@
     weights: [$fontWeight],
   }}
   use:textStroke={textStrokeSettings}>
-  {#if latestInfo?.lastUpdate > 0}
+  {#if latestInfo && latestInfo.lastUpdate > 0}
     <div class="flex flex-row max-h-[calc(100cqh-10cqmin)] h-full">
       <div class="flex flex-col flex-auto">
         <p class="mb-[.5em]">

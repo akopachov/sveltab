@@ -1,4 +1,5 @@
 import { ActiveFilters } from '$stores/active-filters-store';
+import { SvelteSet } from 'svelte/reactivity';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
 import {
@@ -14,11 +15,11 @@ import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
 
 export class WorkspaceInstance {
-  #widgets: Observable<Set<WidgetInstance>>;
+  #widgets: SvelteSet<WidgetInstance> = new SvelteSet();
   #background: Observable<BackgroundInstance>;
   #hasChanges: Observable<boolean> = useObservable(false);
   #trackingObjects = new Map<Subscribable<any>, () => void>();
-  #internalAssets: Observable<Set<string>>;
+  #internalAssets: SvelteSet<string> = new SvelteSet();
 
   private constructor(
     name: string,
@@ -29,8 +30,9 @@ export class WorkspaceInstance {
     favicon: FaviconInfoInitial,
     unsaved: boolean,
   ) {
-    this.#widgets = useObservable(new Set(widgets));
-    this.#widgets.value.forEach(w => {
+    this.#widgets.clear();
+    widgets.forEach(w => this.#widgets.add(w));
+    this.#widgets.forEach(w => {
       this.#trackObjectChange(w.settings);
       if (w.settings.filter.value) {
         ActiveFilters.add(w.settings.filter.value);
@@ -45,7 +47,7 @@ export class WorkspaceInstance {
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
     this.customStyles = useObservable(customStyles);
-    this.#internalAssets = useObservable(new Set(assets));
+    assets.forEach(a => this.#internalAssets.add(a));
     this.favicon = new FaviconInfo(favicon);
 
     this.#trackObjectChange(this.name);
@@ -109,7 +111,7 @@ export class WorkspaceInstance {
     return this.#hasChanges;
   }
 
-  get widgets(): ReadOnlyObservable<ReadonlySet<WidgetInstance>> {
+  get widgets(): ReadonlySet<WidgetInstance> {
     return this.#widgets;
   }
 
@@ -117,7 +119,7 @@ export class WorkspaceInstance {
     return this.#background;
   }
 
-  get internalAssets(): ReadOnlyObservable<ReadonlySet<string>> {
+  get internalAssets(): ReadonlySet<string> {
     return this.#internalAssets;
   }
 
@@ -141,7 +143,7 @@ export class WorkspaceInstance {
   async addWidget(settings: WidgetSettingsInitial) {
     const widget = await WidgetInstance.create(settings);
     if (!widget) return;
-    this.#widgets.value = this.#widgets.value.add(widget);
+    this.#widgets.add(widget);
     this.#hasChanges.value = true;
     this.#trackObjectChange(widget.settings);
     if (widget.settings.filter.value) {
@@ -150,8 +152,7 @@ export class WorkspaceInstance {
   }
 
   removeWidget(instance: WidgetInstance) {
-    this.#widgets.value.delete(instance);
-    this.#widgets.set(this.#widgets.value);
+    this.#widgets.delete(instance);
     this.#hasChanges.value = true;
     this.#untrackObjectChange(instance.settings);
     if (instance.settings.filter.value) {
@@ -163,10 +164,10 @@ export class WorkspaceInstance {
     return {
       name: this.name.value,
       background: unobserve(this.#background.value.settings),
-      widgets: [...this.#widgets.value].map(m => unobserve(m.settings)),
+      widgets: [...this.#widgets].map(m => unobserve(m.settings)),
       customStyles: this.customStyles.value,
       favicon: unobserve(this.favicon),
-      assets: [...this.#internalAssets.value],
+      assets: [...this.#internalAssets],
     } satisfies WorkspaceSettingsInitial;
   }
 
@@ -180,15 +181,13 @@ export class WorkspaceInstance {
       opfsPath = `${OpfsSchema}://${opfsPath}`;
     }
     await Opfs.save(opfsPath, data);
-    this.#internalAssets.value.add(opfsPath);
-    this.#internalAssets.set(this.#internalAssets.value);
+    this.#internalAssets.add(opfsPath);
     return opfsPath;
   }
 
   async removeInternalAsset(opfsUrl: string) {
     Opfs.remove(opfsUrl);
-    this.#internalAssets.value.delete(opfsUrl);
-    this.#internalAssets.set(this.#internalAssets.value);
+    this.#internalAssets.delete(opfsUrl);
   }
 
   static async create(settings: WorkspaceSettingsInitial, unsaved: boolean) {

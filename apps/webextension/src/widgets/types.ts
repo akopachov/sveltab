@@ -24,7 +24,7 @@ export interface WidgetCatalogItem {
 
 export type WidgetComponentProps = {
   settings: any;
-  id?: string;
+  id: string;
   onautosettingsupdate: (id: string, settings: WidgetSettingsExtra) => void;
 };
 

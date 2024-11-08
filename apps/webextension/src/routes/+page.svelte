@@ -366,7 +366,7 @@
         </div>
       </div>
       {#key workspace}
-        {#each workspace.widgets.value as widget (widget.id)}
+        {#each workspace.widgets as widget (widget.id)}
           <WidgetFactorty
             {widget}
             {widgetSettingsPopupSettings}
@@ -382,7 +382,7 @@
         <WidgetMoveController
           bind:this={moveable}
           bind:selected={selectedWidgets}
-          widgets={workspace.widgets.value}
+          widgets={workspace.widgets}
           workspace={workspaceEl}
           widgetControlsZone=".widget-control" />
       {/if}

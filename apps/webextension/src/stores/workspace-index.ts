@@ -79,7 +79,7 @@ export class WorkspaceIndex {
     const workspace = await WorkspaceInstance.create(settings, usedDefault);
     workspace.background.value.components.settings.model.preHeat();
     workspace.background.value.components.provider.preHeat();
-    workspace.widgets.value.forEach(w => {
+    workspace.widgets.forEach(w => {
       w.components.settings.model.preHeat();
       w.components.widget.preHeat();
     });

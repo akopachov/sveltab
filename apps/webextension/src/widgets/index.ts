@@ -1,6 +1,6 @@
 import type { WidgetCatalogItem } from './types';
 import { Widget as ClockWidget } from './clock';
-// import { Widget as DateWidget } from './date';
+import { Widget as DateWidget } from './date';
 // import { Widget as RandomQuoteWidget } from './quote';
 // import { Widget as SearchWidget } from './search';
 // import { Widget as GreetingWidget } from './greeting';
@@ -11,7 +11,7 @@ import { Widget as ClockWidget } from './clock';
 // import { Widget as TopSitesWidget } from './top-sites';
 // import { Widget as HtmlWidget } from './html';
 import { Widget as AnalogueClockWidget } from './analogue-clock';
-// import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation';
+import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation';
 import { Widget as AirQualityWidget } from './air-quality';
 // import { Widget as IpInfoWidget } from './ip-info';
 // import { Widget as HolidaysWidget } from './holidays';
@@ -21,7 +21,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
   AnalogueClockWidget,
   // LiteratureClockWidget,
-  // DateWidget,
+  DateWidget,
   // LinkWidget,
   // SearchWidget,
   // WeatherWidget,
@@ -32,7 +32,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   // FreeTextWidget,
   // TopSitesWidget,
   // HtmlWidget,
-  // CryptoAssetQuotationWidget,
+  CryptoAssetQuotationWidget,
   // IpInfoWidget,
   // HolidaysWidget,
 ];

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const ChartTabId = 1;
@@ -29,24 +29,24 @@
   import { locale } from '$stores/locale';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { font, textColor, backgroundColor, backgroundBlur, asset, chartLineColor, displayCurrency, chartAxisColor } =
-    settings;
+  let currencyName = $derived(new Intl.DisplayNames($locale, { type: 'currency' }));
 
-  $: currencyName = new Intl.DisplayNames($locale, { type: 'currency' });
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
   <div>
-    <AssetSelect bind:asset={$asset} />
+    <AssetSelect bind:asset={settings.asset.value} />
   </div>
   <label class="label mb-2">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_DisplayCurrency()}</span>
-    <select class="select" bind:value={$displayCurrency}>
+    <select class="select" bind:value={settings.displayCurrency.value}>
       {#each ExchangerateApiSupportedCurrencies as currencyCode}
         <option value={currencyCode}>{currencyName.of(currencyCode)}</option>
       {/each}
@@ -56,17 +56,21 @@
   <div class="label">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_LineColor()}</span>
     <div>
-      <ColorPicker bind:color={$chartLineColor} />
+      <ColorPicker bind:color={settings.chartLineColor.value} />
     </div>
   </div>
   <div class="label">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor()}</span>
     <div>
-      <ColorPicker bind:color={$chartAxisColor} />
+      <ColorPicker bind:color={settings.chartAxisColor.value} />
     </div>
   </div>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
+  <TextSettings
+    font={settings.font}
+    bind:color={settings.textColor.value}
+    shadow={settings.textShadow}
+    stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}

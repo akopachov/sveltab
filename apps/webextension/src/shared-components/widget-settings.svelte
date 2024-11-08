@@ -123,14 +123,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={widgetPosition.positionUnits}
+                  group={widgetPosition.positionUnits.value}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_PositionUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={widgetPosition.positionUnits}
+                  group={widgetPosition.positionUnits.value}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Fixed)}>
@@ -144,14 +144,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={widgetPosition.sizeUnits}
+                  group={widgetPosition.sizeUnits.value}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_SizeUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={widgetPosition.sizeUnits}
+                  group={widgetPosition.sizeUnits.value}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Fixed)}>
