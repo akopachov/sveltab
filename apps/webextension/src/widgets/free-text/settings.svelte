@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const TextTabId = 1;
@@ -21,18 +21,19 @@
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { font, textColor, backgroundColor, backgroundBlur, text, textAlign } = settings;
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
   <div class="label mb-2">
     <span>{m.Widgets_FreeText_Settings_Text()}</span>
-    <textarea class="textarea" bind:value={$text}></textarea>
+    <textarea class="textarea" bind:value={settings.text.value}></textarea>
   </div>
 {:else if tab === TextTabId}
   <div>
@@ -40,20 +41,24 @@
       <span>{m.Widgets_FreeText_Settings_Align()}</span>
       <div class="w-fit">
         <RadioGroup display="flex" padding="px-4 py-1 leading-none">
-          <RadioItem bind:group={$textAlign} name="justify" value={TextAlign.Left}>
+          <RadioItem bind:group={settings.textAlign.value} name="justify" value={TextAlign.Left}>
             <span class="icon-[fa6-solid--align-left]"></span>
           </RadioItem>
-          <RadioItem bind:group={$textAlign} name="justify" value={TextAlign.Middle}>
+          <RadioItem bind:group={settings.textAlign.value} name="justify" value={TextAlign.Middle}>
             <span class="icon-[fa6-solid--align-center]"></span>
           </RadioItem>
-          <RadioItem bind:group={$textAlign} name="justify" value={TextAlign.Right}>
+          <RadioItem bind:group={settings.textAlign.value} name="justify" value={TextAlign.Right}>
             <span class="icon-[fa6-solid--align-right]"></span>
           </RadioItem>
         </RadioGroup>
       </div>
     </div>
-    <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
+    <TextSettings
+      font={settings.font}
+      bind:color={settings.textColor.value}
+      shadow={settings.textShadow}
+      stroke={settings.textStroke} />
   </div>
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}
