@@ -1,6 +1,6 @@
 import { ImageBackgroundProviderSettingsBase } from '$backgrounds/common-image/settings-base';
 import type { BackgroundSettingsExtraInitial } from '$lib/background-settings';
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 import { OpfsSchema } from '$lib/opfs';
 import type { WorkspaceInstance } from '$lib/workspace-instance';
 

@@ -5,10 +5,17 @@
   import ShadowSelector from './shadow-selector.svelte';
   import TextStrokeSelector from './text-stroke-selector.svelte';
 
-  export let color: string | null | undefined = null;
-  export let font: FontSettings;
-  export let shadow: ShadowSettings | null | undefined = null;
-  export let stroke: TextStrokeSettings | null | undefined = null;
+  let {
+    color = $bindable(null),
+    font,
+    shadow = null,
+    stroke = null,
+  }: {
+    color?: string | null;
+    font: FontSettings;
+    shadow?: ShadowSettings | null;
+    stroke?: TextStrokeSettings | null;
+  } = $props();
 </script>
 
 <div class="label mb-2">

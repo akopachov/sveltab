@@ -7,31 +7,18 @@
   import { minutesToMilliseconds } from 'date-fns';
 
   let clockStore = getPreciselyAlignedClockStore(minutesToMilliseconds(1));
-  let timeDisplay: DynamicSizeText | null;
+  let timeDisplay: ReturnType<typeof DynamicSizeText> | null;
 
-  export let settings: Settings;
+  let { settings }: { settings: Settings } = $props();
 
-  const {
-    clockFormat,
-    backgroundColor,
-    backgroundBlur,
-    textColor,
-    font: { weight: fontWeight, id: fontId },
-    textShadow: {
-      color: textShadowColor,
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-    },
-    textStroke,
-  } = settings;
-
-  $: intlFormat = new Intl.DateTimeFormat($locale, {
-    hour: 'numeric',
-    minute: '2-digit',
-    hour12: $clockFormat == ClockFormat.TwelveHrs,
-  });
-  $: time = intlFormat.format($clockStore);
+  let intlFormat = $derived(
+    new Intl.DateTimeFormat($locale, {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: settings.clockFormat.value == ClockFormat.TwelveHrs,
+    }),
+  );
+  let time = $derived(intlFormat.format($clockStore));
 
   function redrawAll() {
     timeDisplay?.refresh();
@@ -40,22 +27,23 @@
 
 <div
   class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
-  style:background-color={$backgroundColor}
-  style:color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
+  style:background-color={settings.backgroundColor.value}
+  style:color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: ['latin'],
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  on:fontChanged={redrawAll}>
+  onfontChanged={redrawAll}>
   <DynamicSizeText
     bind:this={timeDisplay}
     text={time}
     class="max-h-[100cqh] max-w-[100cqw] cursor-default"
-    stroke={textStroke} />
+    stroke={settings.textStroke} />
 </div>

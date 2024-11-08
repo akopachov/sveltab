@@ -41,7 +41,7 @@ export type FontChangedEventDetails = { target: HTMLElement; fontFamily: string 
 export const fontsource: Action<
   HTMLElement,
   FontSourceActionSettings | undefined | null,
-  { 'on:fontChanged': (e: CustomEvent<FontChangedEventDetails>) => void }
+  { onfontChanged: (e: CustomEvent<FontChangedEventDetails>) => void }
 > = function (node: HTMLElement, settings: FontSourceActionSettings | undefined | null) {
   let currentFont: string | null = '';
   const currentSubsets: Set<FontSubset> = new Set<FontSubset>();
@@ -103,7 +103,7 @@ export const fontsource: Action<
 
       const activeFontRef = await activeFontRefPromise;
 
-      const availableSubsets = <FontSubset[]>activeFontRef.raw.subsets;
+      const availableSubsets = activeFontRef.raw.subsets || [];
       let subsets = s.subsets;
       if (subsets) {
         subsets = subsets.filter(s => availableSubsets.includes(s));
@@ -114,7 +114,7 @@ export const fontsource: Action<
         subsets = availableSubsets;
       }
 
-      const availableStyles = <FontStyle[]>activeFontRef.raw.styles;
+      const availableStyles = activeFontRef.raw.styles;
       let styles = s.styles;
       if (styles) {
         styles = styles.filter(s => availableStyles.includes(s));
@@ -125,7 +125,7 @@ export const fontsource: Action<
         styles = availableStyles;
       }
 
-      const availableWeights = <FontWeight[]>activeFontRef.raw.weights;
+      const availableWeights = activeFontRef.raw.weights;
       let weights = s.weights;
       if (weights) {
         weights = weights.filter(s => availableWeights.includes(s));

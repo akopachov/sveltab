@@ -1,4 +1,4 @@
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 import { WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
 
 export class Settings extends WidgetSettingsExtra {

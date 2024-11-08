@@ -1,7 +1,13 @@
 import { ActiveFilters } from '$stores/active-filters-store';
 import { BackgroundInstance } from './background-instance';
 import type { BackgroundSettingsInitial } from './background-settings';
-import { useObservable, type Observable, type Subscribable, type ReadOnlyObservable, unobserve } from './observable';
+import {
+  useObservable,
+  type Observable,
+  type Subscribable,
+  type ReadOnlyObservable,
+  unobserve,
+} from './observable.svelte';
 import { Opfs, OpfsSchema } from './opfs';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
@@ -191,7 +197,7 @@ export class WorkspaceInstance {
     ]);
     return new WorkspaceInstance(
       settings.name || '',
-      widgets,
+      widgets.filter(Boolean) as WidgetInstance[], // Filter out null values
       background,
       settings.customStyles || '',
       settings.assets || [],

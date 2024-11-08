@@ -12,17 +12,16 @@
 
   type FontInfo = { label: string; id: string; searchIndex: string; weights: number[]; styles: string[] };
 
-  export let color: string | null | undefined = null;
-  export let font: FontSettings;
+  let { color = $bindable(), font }: { color?: string | null; font: FontSettings } = $props();
 
   const { id: fontId, weight, size } = font;
 
-  let selectedFontInfo: FontInfo;
-  $: {
+  let selectedFontInfo: FontInfo | undefined = $state();
+  $effect(() => {
     if (selectedFontInfo && (!weight || !selectedFontInfo.weights.includes($weight))) {
       $weight = selectedFontInfo.weights[0];
     }
-  }
+  });
 
   const fonts: Promise<FontInfo[]> = fetch('https://api.fontsource.org/v1/fonts')
     .then<FontList>(r => r.json())
@@ -53,9 +52,9 @@
     [FontWeight.Heavy, m.FontSelector_Weight_Heavy],
   ]);
 
-  let searchValue = '';
-  let fontList: VirtualScroll;
-  let fontSelectVisible: boolean = false;
+  let searchValue = $state('');
+  let fontList: VirtualScroll | undefined = $state();
+  let fontSelectVisible: boolean = $state(false);
 
   let debounceOpts: DebounceOptions = {
     ms: 500,
@@ -102,7 +101,7 @@
     if (font) {
       const loadedFonts = await fonts;
       const index = loadedFonts.findIndex(f => f.id == $fontId);
-      if (index >= 0) {
+      if (index >= 0 && fontList) {
         fontList.scrollToIndex(index);
       }
     }
@@ -169,7 +168,7 @@
               weights: [FontWeight.Normal],
               noPreload: true,
             }}
-            on:click={() => onSelected(data)}>
+            onclick={() => onSelected(data)}>
             {data.label}
           </button>
         </VirtualScroll>
@@ -177,7 +176,7 @@
     </div>
   </div>
   {#if $size}
-    <!-- svelte-ignore a11y-label-has-associated-control -->
+    <!-- svelte-ignore -->
     <label class="label mt-2">
       <span>{m.FontSelector_Size()}</span>
       <RangeSlider name="fontSizeSlider" bind:value={$size} min={5} max={20} step={0.1} />

@@ -4,27 +4,13 @@
   import { secondsToMilliseconds } from 'date-fns';
   import InlineSvg from './inline-svg.svelte';
   import { Watchfaces } from './watchfaces';
-  import { derived } from 'svelte/store';
+  import { derived as derivedStore } from 'svelte/store';
 
   let clockStore = getPreciselyAlignedClockStore(secondsToMilliseconds(1));
 
-  export let settings: AnalogueClockSettings;
+  let { settings }: { settings: AnalogueClockSettings } = $props();
 
-  const {
-    backgroundColor,
-    backgroundBlur,
-    watchfaceColor,
-    hourMarksColor,
-    hourArmColor,
-    minuteArmColor,
-    secondArmColor,
-    displaySecondArm,
-    watchface,
-    watchfaceBackgroundColor,
-    shadow: { color: shadowColor, offsetX: shadowOffsetX, offsetY: shadowOffsetY, blur: shadowBlur },
-  } = settings;
-
-  const totalHours = derived<typeof clockStore, number>(
+  const totalHours = derivedStore<typeof clockStore, number>(
     clockStore,
     (date, _set, update) => {
       const hours = date.getHours();
@@ -32,7 +18,7 @@
     },
     $clockStore.getHours(),
   );
-  const totalMinutes = derived<typeof clockStore, number>(
+  const totalMinutes = derivedStore<typeof clockStore, number>(
     clockStore,
     (date, _set, update) => {
       const minutes = date.getMinutes();
@@ -40,7 +26,7 @@
     },
     $clockStore.getMinutes(),
   );
-  const totalSeconds = derived<typeof clockStore, number>(
+  const totalSeconds = derivedStore<typeof clockStore, number>(
     clockStore,
     (date, _set, update) => {
       const seconds = date.getSeconds();
@@ -48,22 +34,23 @@
     },
     $clockStore.getSeconds(),
   );
-  $: watchfaceDef = Watchfaces.get($watchface);
+  let watchfaceDef = $derived(Watchfaces.get(settings.watchface.value));
 </script>
 
 <div
   class="w-full h-full p-2 select-none flex justify-center content-center items-center [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
-  style:background-color={$backgroundColor}
-  style:--watchface-background-color={$watchfaceBackgroundColor}
-  style:--watchface-color={$watchfaceColor}
-  style:--hour-marks-color={$hourMarksColor}
-  style:--hour-arm-color={$hourArmColor}
-  style:--minute-arm-color={$minuteArmColor}
-  style:--second-arm-color={$secondArmColor}
-  style:--second-arm-visibility={$displaySecondArm ? 'visible' : 'hidden'}
-  style:--st-blur="{$backgroundBlur}px"
-  style:--st-shadow="{$shadowOffsetX}cqmin {$shadowOffsetY}cqmin {$shadowBlur}cqmin
-  {$shadowColor}"
+  style:background-color={settings.backgroundColor.value}
+  style:--watchface-background-color={settings.watchfaceBackgroundColor.value}
+  style:--watchface-color={settings.watchfaceColor.value}
+  style:--hour-marks-color={settings.hourMarksColor.value}
+  style:--hour-arm-color={settings.hourArmColor.value}
+  style:--minute-arm-color={settings.minuteArmColor.value}
+  style:--second-arm-color={settings.secondArmColor.value}
+  style:--second-arm-visibility={settings.displaySecondArm.value ? 'visible' : 'hidden'}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st-shadow="{settings.shadow.offsetX.value}cqmin {settings.shadow.offsetY.value}cqmin {settings.shadow.blur
+    .value}cqmin
+  {settings.shadow.color.value}"
   style:--time-total-hours={$totalHours}
   style:--time-total-minutes={$totalMinutes}
   style:--time-total-seconds={$totalSeconds}

@@ -3,29 +3,33 @@
   import { onDestroy, onMount } from 'svelte';
   import { textStroke } from '$actions/text-stroke';
 
-  export let text: string;
-  export let stroke: TextStrokeSettings | null | undefined = null;
+  let {
+    text,
+    stroke = null,
+    class: exClass,
+    ...otherProps
+  }: { text: string; stroke: TextStrokeSettings | null | undefined; class: string } = $props();
+
   export function refresh() {
     updateWHRatio();
     updateFontSize();
   }
 
-  $: {
+  $effect(() => {
     if (text) {
       updateWHRatio();
       updateFontSize();
     }
-  }
+  });
 
   const canvas = new OffscreenCanvas(1, 1);
   const canvasCtx = canvas.getContext('2d', { alpha: false })!;
   let container: HTMLElement;
-  let fontSize: number = 0;
+  let fontSize: number = $state(0);
   let whRatio: number;
   const resizeObserver = new ResizeObserver(() => {
     updateFontSize();
   });
-  const { class: exClass, ...otherProps } = $$restProps;
 
   function updateWHRatio() {
     if (!container || !text) return;

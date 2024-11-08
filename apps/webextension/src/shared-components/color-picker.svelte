@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
   export enum ColorPickerLayout {
     Inline = 'inline',
     ButtonPopup = 'button-popup',
@@ -13,10 +13,10 @@
   import transparentSm from '$lib/assets/transparent-sm.png';
   import { onMount } from 'svelte';
 
-  export let color: string;
-  export let layout: ColorPickerLayout = ColorPickerLayout.InputPopup;
+  let { color = $bindable(), layout = ColorPickerLayout.InputPopup }: { color: string; layout?: ColorPickerLayout } =
+    $props();
 
-  let popupVisible: boolean = false;
+  let popupVisible: boolean = $state(false);
 
   let popupSettings: PopupSettings = {
     event: 'click',
@@ -58,6 +58,7 @@
   {#if layout === ColorPickerLayout.InputPopup}
     <div class="input-group input-group-divider grid-cols-[auto_1fr_auto]">
       <div class="input-group-shim !px-2 border-r">
+        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button
           style:background-image="url('{transparentSm}')"
           class="btn rounded-full !p-0 w-6 h-6 bg-contain"
@@ -66,11 +67,12 @@
           style:box-shadow="inset 0 0 0 1.5rem {color}">
         </button>
       </div>
-      <hex-input {color} alpha="true" prefixed="true" on:color-changed={onColorChanged}>
+      <hex-input {color} alpha="true" prefixed="true" oncolor-changed={onColorChanged}>
         <input type="text" class="w-full border-surface-500" />
       </hex-input>
     </div>
   {:else if layout === ColorPickerLayout.ButtonPopup}
+    <!-- svelte-ignore a11y_consider_explicit_label -->
     <button
       style:background-image="url('{transparentSm}')"
       class="btn rounded-full !p-0 w-6 h-6 bg-contain"

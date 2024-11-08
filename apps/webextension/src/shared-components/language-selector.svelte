@@ -2,7 +2,7 @@
   import { availableLanguageTags } from '$i18n/runtime';
   import { locale } from '$stores/locale';
 
-  $: langDisplayNames = new Intl.DisplayNames([$locale], { type: 'language' });
+  let langDisplayNames = $derived(new Intl.DisplayNames([$locale], { type: 'language' }));
 
   function pascalCase(s: string | undefined) {
     if (!s) return s;

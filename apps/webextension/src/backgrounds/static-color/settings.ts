@@ -1,5 +1,5 @@
 import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$lib/background-settings';
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 
 export class Settings extends BackgroundSettingsExtra {
   constructor(initial: BackgroundSettingsExtraInitial<Settings>) {

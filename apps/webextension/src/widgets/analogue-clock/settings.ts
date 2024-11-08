@@ -1,4 +1,4 @@
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 import { ShadowSettings, WidgetSettingsExtra, type WidgetSettingsExtraInitial } from '$lib/widget-settings';
 import type { WatchfaceKey } from './watchfaces';
 

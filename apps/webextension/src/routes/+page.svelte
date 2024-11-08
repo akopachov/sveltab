@@ -31,7 +31,7 @@
   import DataManage from '$shared-components/data-manage.svelte';
   import { secondsToMilliseconds } from 'date-fns';
   import { Workspaces } from '$stores/workspace-index';
-  import { useObservable } from '$lib/observable';
+  import { useObservable } from '$lib/observable.svelte';
   import CustomStyles from '$shared-components/custom-styles.svelte';
   import { customStyles as customCss } from '$actions/custom-styles';
   import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
@@ -61,7 +61,7 @@
 
   let workspaceEl: HTMLElement;
   let selectedWidgets = new Set<WidgetInstance>();
-  let moveable: WidgetMoveController;
+  let moveable: ReturnType<typeof WidgetMoveController>;
   let widgetSettingsVisible = false;
   let menuButtonColor = '#fff';
   let menuButtonBackgroundColor = 'transparent';
@@ -165,10 +165,10 @@
     }
   }
 
-  function onWidgetDelete(e: CustomEvent<WidgetInstance>) {
+  function onWidgetDelete(e: WidgetInstance) {
     if (!workspace) return;
-    moveable?.unselect(e.detail);
-    workspace.removeWidget(e.detail);
+    moveable?.unselect(e);
+    workspace.removeWidget(e);
   }
 
   async function onBackgroundTypeChanged(e: Event) {
@@ -196,7 +196,9 @@
 <svelte:document use:customCss={$customStyles} />
 
 <svelte:head>
-  <Favicon workspaceInstance={workspace} />
+  {#if workspace}
+    <Favicon workspaceInstance={workspace} />
+  {/if}
 </svelte:head>
 
 <Drawer>
@@ -214,8 +216,8 @@
                 widgetCatalogItem={item}
                 class="aspect-square"
                 draggable
-                on:dragstart={ev => onWidgetCatalogItemDragStart(ev, item)}
-                on:click={() => onWidgetCatalogItemClick(item.settings)} />
+                ondragstart={(ev: any) => onWidgetCatalogItemDragStart(ev, item)}
+                onclick={() => onWidgetCatalogItemClick(item.settings)} />
             {/each}
           </div>
         </svelte:fragment>
@@ -249,10 +251,12 @@
             <span>{m.Core_Sidebar_Settings_ColorScheme()}</span>
             <Lightswitch />
           </div>
-          <div>
-            <span>{m.Favicon_Settings_Label()}</span>
-            <FaviconSettings workspaceInstance={workspace} />
-          </div>
+          {#if workspace}
+            <div>
+              <span>{m.Favicon_Settings_Label()}</span>
+              <FaviconSettings workspaceInstance={workspace} />
+            </div>
+          {/if}
           <!-- svelte-ignore a11y-label-has-associated-control -->
           <label class="label">
             <span>{m.Core_Sidebar_Settings_Language()}</span>
@@ -263,7 +267,7 @@
             <DataManage
               bind:activeWorkspaceId={workspaceId}
               bind:activeWorkspace={workspace}
-              on:dataImported={() => drawerStore.close()} />
+              dataImported={() => drawerStore.close()} />
           </div>
         </svelte:fragment>
       </AccordionItem>
@@ -312,6 +316,7 @@
     <div
       class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[172px]">
       <div class="w-max flex flex-row">
+        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button
           type="button"
           class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
@@ -321,6 +326,7 @@
           on:click={openWidgetsMenu}>
           <span class="w-6 h-6 icon-[tdesign--menu-application]"></span>
         </button>
+        <!-- svelte-ignore a11y_consider_explicit_label -->
         <button
           type="button"
           class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
@@ -333,6 +339,7 @@
           <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
         </button>
         {#if $ActiveBackgroundProvider?.canGoBack === true}
+          <!-- svelte-ignore a11y_consider_explicit_label -->
           <button
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
@@ -344,6 +351,7 @@
           </button>
         {/if}
         {#if $ActiveBackgroundProvider?.canGoNext === true}
+          <!-- svelte-ignore a11y_consider_explicit_label -->
           <button
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
@@ -361,12 +369,12 @@
         <WidgetFactorty
           {widget}
           {widgetSettingsPopupSettings}
-          on:delete={onWidgetDelete}
+          delete={onWidgetDelete}
           showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
           class="widget widget_{widget.settings.type}"
           controlsClassName="widget-control"
           workspaceLocked={$workspaceLocked}
-          on:autosettingsupdate={saveWorkspaceChanges} />
+          onautosettingsupdate={saveWorkspaceChanges} />
       {/each}
     {/key}
     {#if !$workspaceLocked}

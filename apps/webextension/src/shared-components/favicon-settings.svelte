@@ -11,22 +11,22 @@
   import { logger } from '$lib/logger';
   import BrowserSupports, { Constraints } from './browser-supports.svelte';
 
-  const log = logger.getSubLogger({ prefix: ['Favicon settings:'] });
-
-  export let workspaceInstance: WorkspaceInstance | undefined;
-
-  let faviconType: FaviconType;
-  let iconFileSources: FileList;
-  let isLoading = false;
-
-  $: icon16 = workspaceInstance?.favicon[16];
-  $: icon32 = workspaceInstance?.favicon[32];
-  $: iconIco = workspaceInstance?.favicon.ico;
-
   enum FaviconType {
     Default = 'default',
     Manual = 'manual',
   }
+
+  const log = logger.getSubLogger({ prefix: ['Favicon settings:'] });
+
+  let { workspaceInstance }: { workspaceInstance: WorkspaceInstance } = $props();
+
+  let faviconType: FaviconType = $state(FaviconType.Default);
+  let iconFileSources: FileList;
+  let isLoading = $state(false);
+
+  let icon16 = $derived(workspaceInstance.favicon[16]);
+  let icon32 = $derived(workspaceInstance.favicon[32]);
+  let iconIco = $derived(workspaceInstance.favicon.ico);
 
   async function saveFavicon(url: string) {
     if (!url) {
@@ -62,10 +62,14 @@
 
   async function onFaviconTypeChange() {
     if (faviconType === FaviconType.Default) {
-      await Promise.all([tryRemoveFavicon($icon16), tryRemoveFavicon($icon32), tryRemoveFavicon($iconIco)]);
-      $icon16 = '';
-      $icon32 = '';
-      $iconIco = '';
+      await Promise.all([
+        tryRemoveFavicon(icon16.value),
+        tryRemoveFavicon(icon32.value),
+        tryRemoveFavicon(iconIco.value),
+      ]);
+      icon16.value = '';
+      icon32.value = '';
+      iconIco.value = '';
     }
   }
 
@@ -106,25 +110,29 @@
       }).then<RealFaviconGenerator.GenerationResponse>(response => response.json());
       const favIconUrls = favIconResponse.favicon_generation_result?.favicon?.files_urls || [];
 
-      await Promise.all([tryRemoveFavicon($icon16), tryRemoveFavicon($icon32), tryRemoveFavicon($iconIco)]);
+      await Promise.all([
+        tryRemoveFavicon(icon16.value),
+        tryRemoveFavicon(icon32.value),
+        tryRemoveFavicon(iconIco.value),
+      ]);
 
-      [$icon16, $icon32, $iconIco] = await Promise.all([
+      [icon16.value, icon32.value, iconIco.value] = await Promise.all([
         saveFavicon(favIconUrls.find(url => url.includes('16x16')) || ''),
         saveFavicon(favIconUrls.find(url => url.includes('32x32')) || ''),
         saveFavicon(favIconUrls.find(url => url.endsWith('.ico')) || ''),
       ]);
     } catch (error) {
       log.error(error);
-      $icon16 = '';
-      $icon32 = '';
-      $iconIco = '';
+      icon16.value = '';
+      icon32.value = '';
+      iconIco.value = '';
     } finally {
       isLoading = false;
     }
   }
 
   onMount(() => {
-    faviconType = $icon16 || $icon32 ? FaviconType.Manual : FaviconType.Default;
+    faviconType = icon16.value || icon32.value ? FaviconType.Manual : FaviconType.Default;
   });
 </script>
 
@@ -152,18 +160,18 @@
           {#if isLoading}
             <ProgressRadial width="w-[32px]" />
           {:else}
-            {#if $icon32}
+            {#if icon32.value}
               <img
                 class="w-[32px] h-[32px] rounded-sm text-[0]"
-                use:opfsSrc={$icon32}
+                use:opfsSrc={icon32.value}
                 width="32"
                 height="32"
                 alt="32x32" />
             {/if}
-            {#if $icon16}
+            {#if icon16.value}
               <img
                 class="w-[16px] h-[16px] rounded-sm text-[0]"
-                use:opfsSrc={$icon16}
+                use:opfsSrc={icon16.value}
                 width="16"
                 height="16"
                 alt="16x16" />

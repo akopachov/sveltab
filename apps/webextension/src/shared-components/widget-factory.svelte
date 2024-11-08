@@ -1,29 +1,36 @@
 <script lang="ts">
   import type { WidgetInstance } from '$lib/widget-instance';
   import { getModalStore, popup, type PopupSettings } from '@skeletonlabs/skeleton';
-  import { SvelteComponent, createEventDispatcher } from 'svelte';
   import * as m from '$i18n/messages';
-  import type { WidgetSettingsExtra } from '$lib/widget-settings';
   import { offset, flip, shift } from 'svelte-floating-ui/dom';
   import { createFloatingActions } from 'svelte-floating-ui';
+  import type { WidgetComponentExports } from '$widgets/types';
 
-  export let widget: WidgetInstance;
-  export let widgetSettingsPopupSettings: PopupSettings;
-  export let showControls: boolean;
-  export let workspaceLocked: boolean;
-  export let controlsClassName: string = '';
+  let {
+    widget,
+    widgetSettingsPopupSettings,
+    showControls,
+    workspaceLocked,
+    controlsClassName = '',
+    class: exClass,
+    delete: onDelete,
+    onautosettingsupdate,
+    ...restProps
+  }: {
+    widget: WidgetInstance;
+    widgetSettingsPopupSettings: PopupSettings;
+    showControls: boolean;
+    workspaceLocked: boolean;
+    controlsClassName: string;
+    class: string;
+    delete: (widget: WidgetInstance) => void;
+    onautosettingsupdate: () => void;
+    [key: string]: unknown;
+  } = $props();
 
-  type WidgetComponent = SvelteComponent & {
-    onDelete?: () => void | Promise<void>;
-    settings?: WidgetSettingsExtra;
-    id?: string;
-    overrideBorder?: boolean;
-  };
-
-  const dispatch = createEventDispatcher();
   const modalStore = getModalStore();
-  let fakeEditButton: HTMLElement;
-  let widgetComponent: WidgetComponent;
+  let fakeEditButton: HTMLElement | undefined = $state();
+  let widgetComponent: WidgetComponentExports | undefined = $state();
 
   const [settingsFloatingRef, settingsFloatingContent] = createFloatingActions({
     strategy: 'absolute',
@@ -37,15 +44,8 @@
     middleware: [offset({ mainAxis: 0, crossAxis: -1 }), flip(), shift()],
   });
 
-  const {
-    zIndex,
-    borderRadius,
-    borderColor,
-    borderSize,
-    rotation,
-    filter,
-    position: { width, height, sizeUnits, positionUnits, x, y, offsetX, offsetY },
-  } = widget.settings;
+  let widgetSettings = $derived(widget.settings);
+  let widgetPosition = $derived(widgetSettings.position);
 
   function onDeleteWidgetClick() {
     modalStore.trigger({
@@ -53,40 +53,40 @@
       title: m.Widgets_Common_Menu_Delete_Confirm_Title(),
       body: m.Widgets_Common_Menu_Delete_Confirm_Body(),
       response: async (confirmed: boolean) => {
-        if (confirmed) {
+        if (confirmed && widgetComponent) {
           if (widgetComponent.onDelete) {
             await widgetComponent.onDelete();
           }
-          dispatch('delete', widget);
+          onDelete(widget);
         }
       },
     });
   }
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore -->
+<!-- svelte-ignore a11y_no_static_element_interactions -->
 <div
   use:settingsFloatingRef
   use:deleteFloatingRef
-  class="absolute [container-type:size] relative-position {$$restProps.class ||
-    ''} focus-within:!z-[99999] focus:!z-[99999]"
+  class="absolute [container-type:size] relative-position {exClass || ''} focus-within:!z-[99999] focus:!z-[99999]"
   id={widget.htmlElementId}
   tabindex="-1"
-  on:mousedown
-  style:z-index={$zIndex}
-  style:--relative-width="{$width}{$sizeUnits}"
-  style:--relative-height="{$height}{$sizeUnits}"
-  style:--relative-y="{$y}{$positionUnits}"
-  style:--relative-x="{$x}{$positionUnits}"
-  style:--relative-offset-y="{$offsetY}cqh"
-  style:--relative-offset-x="{$offsetX}cqw"
-  style:--relative-origin-y={$offsetY / 100}
-  style:--relative-origin-x={$offsetX / 100}
-  style:--st-rotation="rotate({$rotation}deg)"
-  style:--st-border-radius="{$borderRadius}cqmin"
-  style:--st-border-color={$borderColor}
-  style:--st-border-size="{$borderSize}cqmin">
-  {#await widget.components.widget.value then component}
+  {...restProps}
+  style:z-index={widgetSettings.zIndex.value}
+  style:--relative-width="{widgetPosition.width.value}{widgetPosition.sizeUnits.value}"
+  style:--relative-height="{widgetPosition.height.value}{widgetPosition.sizeUnits.value}"
+  style:--relative-y="{widgetPosition.y.value}{widgetPosition.positionUnits.value}"
+  style:--relative-x="{widgetPosition.x.value}{widgetPosition.positionUnits.value}"
+  style:--relative-offset-y="{widgetPosition.offsetY.value}cqh"
+  style:--relative-offset-x="{widgetPosition.offsetX.value}cqw"
+  style:--relative-origin-y={widgetPosition.offsetY.value / 100}
+  style:--relative-origin-x={widgetPosition.offsetX.value / 100}
+  style:--st-rotation="rotate({widgetSettings.rotation.value}deg)"
+  style:--st-border-radius="{widgetSettings.borderRadius.value}cqmin"
+  style:--st-border-color={widgetSettings.borderColor.value}
+  style:--st-border-size="{widgetSettings.borderSize.value}cqmin">
+  {#await widget.components.widget.value then ConcreteWidgetComponent}
     <div
       class="block w-full h-full overflow-hidden rounded-[var(--st-border-radius)] {widgetComponent?.overrideBorder !==
       true
@@ -94,13 +94,12 @@
         : ''}">
       <div
         class="w-full h-full rounded-[calc(var(--st-border-radius)-var(--st-border-size))]"
-        style:filter={$filter ? `url('#${$filter}')` : ''}>
-        <svelte:component
-          this={component}
+        style:filter={widgetSettings.filter ? `url('#${widgetSettings.filter}')` : ''}>
+        <ConcreteWidgetComponent
           bind:this={widgetComponent}
           settings={widget.settings.extra}
           id={widget.id}
-          on:autosettingsupdate />
+          {onautosettingsupdate} />
       </div>
     </div>
   {/await}
@@ -117,20 +116,22 @@
   <div
     use:settingsFloatingContent
     class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
+    <!-- svelte-ignore a11y_consider_explicit_label -->
     <button
       class="btn-icon variant-filled-surface rounded-none w-full h-full"
       title={m.Widgets_Common_Menu_OpenSettings()}
-      on:click={() => fakeEditButton.click()}>
+      onclick={() => fakeEditButton?.click()}>
       <span class="w-full h-full icon-[fluent--settings-20-regular]"></span>
     </button>
   </div>
   <div
     use:deleteFloatingContent
     class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
+    <!-- svelte-ignore a11y_consider_explicit_label -->
     <button
       class="{controlsClassName} btn-icon variant-filled-error rounded-none w-full h-full"
       title={m.Widgets_Common_Menu_Delete()}
-      on:click={onDeleteWidgetClick}>
+      onclick={onDeleteWidgetClick}>
       <span class="w-full h-full icon-[fluent--delete-28-regular]"></span>
     </button>
   </div>

@@ -1,5 +1,5 @@
 import type { BackgroundSettingsInitial } from './background-settings';
-import { useObservable, type Observable, type Unobserved } from './observable';
+import { useObservable, type Observable, type Unobserved } from './observable.svelte';
 import type { WidgetSettingsInitial } from './widget-settings';
 
 export type WorkspaceSettingsInitial = Partial<Unobserved<WorkspaceSettings>>;

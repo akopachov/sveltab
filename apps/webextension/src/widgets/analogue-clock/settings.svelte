@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const WatchfaceTabId = 1;
@@ -22,30 +22,24 @@
   import ShadowSelector from '$shared-components/shadow-selector.svelte';
   import { Watchfaces } from './watchfaces';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: AnalogueClockSettings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let {
+    settings,
+    tab,
+    tabs = $bindable(),
+  }: { settings: AnalogueClockSettings; tab: number; tabs: object[] } = $props();
 
-  const {
-    backgroundColor,
-    backgroundBlur,
-    watchfaceColor,
-    secondArmColor,
-    displaySecondArm,
-    minuteArmColor,
-    hourArmColor,
-    hourMarksColor,
-    watchface,
-    watchfaceBackgroundColor,
-  } = settings;
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === WatchfaceTabId}
   <div>
     <label class="label mb-2">
       <span>{m.Widgets_AnalogueClock_Settings_Watchface()}</span>
-      <select class="select" bind:value={$watchface}>
+      <select class="select" bind:value={settings.watchface.value}>
         {#each Watchfaces as [key, wf]}
           <option value={key}>{wf.name()}</option>
         {/each}
@@ -54,43 +48,43 @@
     <div class="label mb-2">
       <span>{m.Widgets_AnalogueClock_Settings_SecondsArm_Visible()}</span>
       <div>
-        <SlideToggle name="secondsArmVisible" size="sm" bind:checked={$displaySecondArm} />
+        <SlideToggle name="secondsArmVisible" size="sm" bind:checked={settings.displaySecondArm.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_Watchface_Color()}</span>
       <div>
-        <ColorPicker bind:color={$watchfaceColor} />
+        <ColorPicker bind:color={settings.watchfaceColor.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_Watchface_BackgroundColor()}</span>
       <div>
-        <ColorPicker bind:color={$watchfaceBackgroundColor} />
+        <ColorPicker bind:color={settings.watchfaceBackgroundColor.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_SecondsArm_Color()}</span>
       <div>
-        <ColorPicker bind:color={$secondArmColor} />
+        <ColorPicker bind:color={settings.secondArmColor.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_MinutesArm_Color()}</span>
       <div>
-        <ColorPicker bind:color={$minuteArmColor} />
+        <ColorPicker bind:color={settings.minuteArmColor.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_HoursArm_Color()}</span>
       <div>
-        <ColorPicker bind:color={$hourArmColor} />
+        <ColorPicker bind:color={settings.hourArmColor.value} />
       </div>
     </div>
     <div class="label">
       <span>{m.Widgets_AnalogueClock_Settings_HourMarks_Color()}</span>
       <div>
-        <ColorPicker bind:color={$hourMarksColor} />
+        <ColorPicker bind:color={settings.hourMarksColor.value} />
       </div>
     </div>
     <div class="mt-2">
@@ -101,5 +95,5 @@
     </div>
   </div>
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}

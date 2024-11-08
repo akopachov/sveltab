@@ -1,4 +1,4 @@
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 import { ImageResizeType } from '$lib/cdn';
 import type { Filter } from '$stores/active-filters-store';
 import { BackgroundSettingsExtra, type BackgroundSettingsExtraInitial } from '$lib/background-settings';

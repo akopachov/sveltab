@@ -1,4 +1,4 @@
-<script context="module">
+<script module>
   export const GeneralTabId = -1;
   export const BorderTabId = 0;
 </script>
@@ -12,23 +12,14 @@
   import FilterSelector from './filter-selector.svelte';
   import ColorPicker, { ColorPickerLayout } from './color-picker.svelte';
 
-  export let widget: WidgetInstance;
-  export let workspace: HTMLElement;
-  let currentTabId: any = GeneralTabId;
+  let { widget, workspace }: { widget: WidgetInstance; workspace: HTMLElement } = $props();
 
-  $: widgetSettings = widget.settings;
-  $: widgetPosition = widgetSettings.position;
-  $: widgetPositionOffsetX = widgetPosition.offsetX;
-  $: widgetPositionOffsetY = widgetPosition.offsetY;
-  $: widgetPositionPositionUnits = widgetPosition.positionUnits;
-  $: widgetPositionSizeUnits = widgetPosition.sizeUnits;
-  $: borderRadius = widgetSettings.borderRadius;
-  $: borderSize = widgetSettings.borderSize;
-  $: borderColor = widgetSettings.borderColor;
-  $: zIndex = widgetSettings.zIndex;
-  $: filter = widgetSettings.filter;
+  let currentTabId: number = $state(GeneralTabId);
 
-  let tabs: { id: number; title: () => string }[] = [];
+  let widgetSettings = $derived(widget.settings);
+  let widgetPosition = $derived(widgetSettings.position);
+
+  let tabs: { id: number; title: () => string }[] = $state([]);
 
   function setAnchor(offsetX: number, offsetY: number) {
     widgetPosition.updateMeasurement(workspace, { offsetX: offsetX, offsetY: offsetY });
@@ -43,7 +34,7 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_consider_explicit_label -->
 <TabGroup>
   <Tab bind:group={currentTabId} name="tabCommon" value={GeneralTabId}>{m.Widgets_Common_Settings_Tabs_General()}</Tab>
   <Tab bind:group={currentTabId} name="tabCommon" value={BorderTabId}>{m.Widgets_Common_Settings_Tabs_Border()}</Tab>
@@ -52,8 +43,8 @@
   {/each}
   <svelte:fragment slot="panel">
     <div class="overflow-auto max-h-[calc(100cqh-92px)]">
-      {#await widget.components.settings.component.value then component}
-        <svelte:component this={component} settings={widget.settings.extra} tab={currentTabId} bind:tabs />
+      {#await widget.components.settings.component.value then SettingsComponent}
+        <SettingsComponent settings={widget.settings.extra} tab={currentTabId} bind:tabs />
       {/await}
       {#if currentTabId === GeneralTabId}
         <div class="flex flex-row gap-4 content-center">
@@ -62,58 +53,67 @@
             <div class="grid gap-1 grid-cols-3 grid-rows-3 w-fit h-fit">
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(0, 0)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 0}>
+                onclick={() => setAnchor(0, 0)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 0 &&
+                  widgetPosition.offsetY.value === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(50, 0)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 0}>
+                onclick={() => setAnchor(50, 0)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 50 &&
+                  widgetPosition.offsetY.value === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(100, 0)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 0}>
+                onclick={() => setAnchor(100, 0)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 100 &&
+                  widgetPosition.offsetY.value === 0}>
                 <span class="w-6 h-6 icon-[mdi--arrow-top-right]"></span>
               </button>
 
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(0, 50)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 50}>
+                onclick={() => setAnchor(0, 50)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 0 &&
+                  widgetPosition.offsetY.value === 50}>
                 <span class="w-6 h-6 icon-[mdi--arrow-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(50, 50)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 50}>
+                onclick={() => setAnchor(50, 50)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 50 &&
+                  widgetPosition.offsetY.value === 50}>
                 <span class="w-6 h-6 icon-[material-symbols--align-flex-center]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(100, 50)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 50}>
+                onclick={() => setAnchor(100, 50)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 100 &&
+                  widgetPosition.offsetY.value === 50}>
                 <span class="w-6 h-6 icon-[mdi--arrow-right]"></span>
               </button>
 
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(0, 100)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 0 && $widgetPositionOffsetY === 100}>
+                onclick={() => setAnchor(0, 100)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 0 &&
+                  widgetPosition.offsetY.value === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom-left]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(50, 100)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 50 && $widgetPositionOffsetY === 100}>
+                onclick={() => setAnchor(50, 100)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 50 &&
+                  widgetPosition.offsetY.value === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom]"></span>
               </button>
               <button
                 class="btn btn-icon btn-icon-sm min-w-[16px] max-w-[25px] variant-soft rounded-sm"
-                on:click={() => setAnchor(100, 100)}
-                class:!variant-filled-primary={$widgetPositionOffsetX === 100 && $widgetPositionOffsetY === 100}>
+                onclick={() => setAnchor(100, 100)}
+                class:!variant-filled-primary={widgetPosition.offsetX.value === 100 &&
+                  widgetPosition.offsetY.value === 100}>
                 <span class="w-6 h-6 icon-[mdi--arrow-bottom-right]"></span>
               </button>
             </div>
@@ -123,14 +123,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={$widgetPositionPositionUnits}
+                  group={widgetPosition.positionUnits}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_PositionUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={$widgetPositionPositionUnits}
+                  group={widgetPosition.positionUnits}
                   name="Widget_{widgetSettings.id}_PositionUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setPositionUnits(WidgetMeasurementUnits.Fixed)}>
@@ -144,14 +144,14 @@
             <div class="w-20">
               <ListBox active="variant-filled-primary">
                 <ListBoxItem
-                  group={$widgetPositionSizeUnits}
+                  group={widgetPosition.sizeUnits}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Scale}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Scale)}>
                   {m.Widgets_Common_Settings_SizeUnit_Scale()}
                 </ListBoxItem>
                 <ListBoxItem
-                  group={$widgetPositionSizeUnits}
+                  group={widgetPosition.sizeUnits}
                   name="Widget_{widgetSettings.id}_SizeUnits"
                   value={WidgetMeasurementUnits.Fixed}
                   on:change={() => setSizeUnits(WidgetMeasurementUnits.Fixed)}>
@@ -161,30 +161,36 @@
             </div>
           </div>
         </div>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_ZIndex()}</span>
-          <NumberInput placeholder={m.Widgets_Common_Settings_ZIndex()} bind:value={$zIndex} min={-999} max={999} />
+          <NumberInput
+            placeholder={m.Widgets_Common_Settings_ZIndex()}
+            bind:value={widgetSettings.zIndex.value}
+            min={-999}
+            max={999} />
         </label>
         <label class="label">
           <span>{m.Widgets_Common_Settings_Filter()}</span>
-          <FilterSelector bind:filter={$filter} />
+          <FilterSelector bind:filter={widgetSettings.filter.value} />
         </label>
       {:else if currentTabId === BorderTabId}
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderSize()}</span>
-          <RangeSlider name="borderSizeSlider" bind:value={$borderSize} min={0} max={10} step={0.1}></RangeSlider>
+          <RangeSlider name="borderSizeSlider" bind:value={widgetSettings.borderSize.value} min={0} max={10} step={0.1}
+          ></RangeSlider>
         </label>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderColor()}</span>
-          <ColorPicker bind:color={$borderColor} layout={ColorPickerLayout.InputPopup} />
+          <ColorPicker bind:color={widgetSettings.borderColor.value} layout={ColorPickerLayout.InputPopup} />
         </label>
-        <!-- svelte-ignore a11y-label-has-associated-control -->
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderRadius()}</span>
-          <RangeSlider name="borderRadiusSlider" bind:value={$borderRadius} min={0} max={50} step={0.5}></RangeSlider>
+          <RangeSlider
+            name="borderRadiusSlider"
+            bind:value={widgetSettings.borderRadius.value}
+            min={0}
+            max={50}
+            step={0.5}></RangeSlider>
         </label>
       {/if}
     </div>

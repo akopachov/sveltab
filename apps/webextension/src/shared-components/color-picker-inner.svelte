@@ -3,21 +3,20 @@
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
 
-  export let color: string;
-  export let hexInput: boolean;
+  let { color = $bindable(), hexInput = false }: { color: string; hexInput: boolean } = $props();
 
   enum Tabs {
     Picker,
     Pallet,
   }
 
-  let currentTab: Tabs = Tabs.Picker;
-  let flatUIColorPalletsPromise: Promise<any[]> | null = null;
-  $: {
+  let currentTab: Tabs = $state(Tabs.Picker);
+  let flatUIColorPalletsPromise: Promise<any[]> | null = $state(null);
+  $effect(() => {
     if (currentTab === Tabs.Pallet && !flatUIColorPalletsPromise) {
       flatUIColorPalletsPromise = import('flat-ui-colors-json/palettes.json').then(m => m.default);
     }
-  }
+  });
 
   function onColorChanged(event: CustomEvent<{ value: string }>) {
     color = event.detail.value;
@@ -35,9 +34,9 @@
   <svelte:fragment slot="panel">
     {#if currentTab === Tabs.Picker}
       <div class="flex flex-col items-center gap-3 w-min px-4 pt-1 pb-3">
-        <hex-alpha-color-picker {color} on:color-changed={onColorChanged}></hex-alpha-color-picker>
+        <hex-alpha-color-picker {color} oncolor-changed={onColorChanged}></hex-alpha-color-picker>
         {#if hexInput}
-          <hex-input {color} alpha="true" prefixed="true" on:color-changed={onColorChanged} class="w-2/3">
+          <hex-input {color} alpha="true" prefixed="true" oncolor-changed={onColorChanged} class="w-2/3">
             <input type="text" class="input text-center" />
           </hex-input>
         {/if}

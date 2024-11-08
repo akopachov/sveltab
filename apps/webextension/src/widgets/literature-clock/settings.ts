@@ -1,4 +1,4 @@
-import { useObservable, type Observable } from '$lib/observable';
+import { useObservable, type Observable } from '$lib/observable.svelte';
 import {
   FontSettings,
   ShadowSettings,

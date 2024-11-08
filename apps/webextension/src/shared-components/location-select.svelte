@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   export type GeoLocationInitial = Partial<Unobserved<GeoLocation>>;
   export class GeoLocation {
     constructor(initial: GeoLocationInitial) {
@@ -24,7 +24,7 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import { locale } from '$stores/locale';
-  import { useObservable, type Observable, type Unobserved } from '$lib/observable';
+  import { useObservable, type Observable, type Unobserved } from '$lib/observable.svelte';
   import { nanoid } from 'nanoid/non-secure';
 
   export let location: GeoLocation;
@@ -66,12 +66,12 @@
   let locationSearchSuggestion: Required<GeoLocationInitial>[] = [];
 
   function selectLocation(newLocation: Required<GeoLocationInitial>) {
-    $city = newLocation.city;
-    $latitude = newLocation.latitude;
-    $longitude = newLocation.longitude;
-    $country = newLocation.country;
-    $admin1 = newLocation.admin1;
-    $admin2 = newLocation.admin2;
+    city.value = newLocation.city;
+    latitude.value = newLocation.latitude;
+    longitude.value = newLocation.longitude;
+    country.value = newLocation.country;
+    admin1.value = newLocation.admin1;
+    admin2.value = newLocation.admin2;
     locationSearchSuggestion = [];
   }
 </script>
@@ -81,7 +81,7 @@
   <input
     class="input"
     type="search"
-    value={$city ? `${$city}, ${$country}` : ''}
+    value={$city ? `${city.value}, ${country.value}` : ''}
     placeholder={m.LocationSelector_Placeholder()}
     use:popup={locationPopupSettings}
     use:debounce={locationSearchDebounceOpts} />
