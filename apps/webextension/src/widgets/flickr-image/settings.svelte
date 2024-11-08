@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const ImageTabId = 1;
@@ -15,28 +15,29 @@
   import type { Settings } from './settings';
   import NumberInput from '$shared-components/number-input.svelte';
   import { minutesToSeconds, secondsToMinutes } from 'date-fns';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { updateInterval: updateIntervalObs, searchTopic } = settings;
+  let updateIntervalMinutes = $state(secondsToMinutes(settings.updateInterval.value));
 
-  let updateInterval = secondsToMinutes($updateIntervalObs);
+  $effect(() => {
+    settings.updateInterval.value = minutesToSeconds(Math.max(updateIntervalMinutes, 1));
+  });
 
-  $: {
-    $updateIntervalObs = minutesToSeconds(Math.max(updateInterval, 1));
-  }
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === ImageTabId}
   <label class="label mb-2">
     <span>{m.Widgets_FlickrImage_Settings_Topic()}</span>
-    <input type="search" class="input" bind:value={$searchTopic} />
+    <input type="search" class="input" bind:value={settings.searchTopic.value} />
   </label>
   <div class="label">
     <span>{m.Widgets_FlickrImage_Settings_UpdateInterval()}</span>
-    <NumberInput bind:value={updateInterval} min={1} />
+    <NumberInput bind:value={updateIntervalMinutes} min={1} />
   </div>
   <div>
     <span class="text-xs opacity-50">

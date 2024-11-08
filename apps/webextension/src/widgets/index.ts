@@ -4,7 +4,7 @@ import { Widget as DateWidget } from './date';
 // import { Widget as RandomQuoteWidget } from './quote';
 // import { Widget as SearchWidget } from './search';
 // import { Widget as GreetingWidget } from './greeting';
-// import { Widget as FlickrWidget } from './flickr-image';
+import { Widget as FlickrWidget } from './flickr-image';
 // import { Widget as LinkWidget } from './link';
 // import { Widget as WeatherWidget } from './weather';
 // import { Widget as FreeTextWidget } from './free-text';
@@ -28,7 +28,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   AirQualityWidget,
   // GreetingWidget,
   // RandomQuoteWidget,
-  // FlickrWidget,
+  FlickrWidget,
   // FreeTextWidget,
   // TopSitesWidget,
   // HtmlWidget,
