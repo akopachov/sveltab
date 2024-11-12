@@ -14,35 +14,21 @@
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestQuote = { quote: string; author: string; lastUpdate: number };
-  export let settings: Settings;
-  export let id: string;
+
+  let { id, settings }: { id: string; settings: Settings } = $props();
 
   const storageKey = `Widget_Quote_${id}_LatestQuote`;
-
-  const {
-    updateInterval,
-    backgroundColor,
-    backgroundBlur,
-    textColor,
-    font: { id: fontId, weight: fontWeight, size: fontSize },
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    textStroke: textStrokeSettings,
-  } = settings;
 
   export async function onDelete() {
     await storage.local.remove(storageKey);
   }
 
-  let quote: LatestQuote;
+  let quote: LatestQuote | undefined = $state();
 
-  $: {
-    ($updateInterval || $clockStore) && checkIfObsoleteDebounced();
-  }
+  $effect(() => {
+    void (settings.updateInterval.value, $clockStore);
+    checkIfObsoleteDebounced();
+  });
 
   onMount(async () => {
     quote = <LatestQuote>(await storage.local.get(storageKey))[storageKey] || { lastUpdate: 0 };
@@ -52,7 +38,11 @@
   const checkIfObsoleteDebounced = pDebounce.promise(checkIfObsolete);
 
   async function checkIfObsolete() {
-    if (quote && differenceInSeconds(Date.now(), quote.lastUpdate) > $updateInterval && navigator.onLine) {
+    if (
+      quote &&
+      differenceInSeconds(Date.now(), quote.lastUpdate) > settings.updateInterval.value &&
+      navigator.onLine
+    ) {
       await loadNewQuote();
     }
   }
@@ -79,20 +69,21 @@
 
 <div
   class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] [-webkit-text-stroke:var(--sv-text-stroke)]"
-  style:background-color={$backgroundColor}
-  style:color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
-  style:font-size="{$fontSize}cqmin"
+  style:background-color={settings.backgroundColor.value}
+  style:color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:text-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
+  style:font-size="{settings.font.size.value}cqmin"
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: ['latin'],
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
+  use:textStroke={settings.textStroke}>
   {#if quote}
     <figure>
       <blockquote>"{quote.quote}"</blockquote>

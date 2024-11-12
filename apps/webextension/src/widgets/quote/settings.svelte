@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const TextTabId = 1;
@@ -22,17 +22,19 @@
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
   import { minutesToSeconds, secondsToMinutes } from 'date-fns';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { updateInterval: updateIntervalObs, font, textColor, backgroundColor, backgroundBlur } = settings;
+  let updateInterval = $state(secondsToMinutes(settings.updateInterval.value));
 
-  let updateInterval = secondsToMinutes($updateIntervalObs);
-  $: {
-    $updateIntervalObs = minutesToSeconds(Math.max(updateInterval, 1));
-  }
+  $effect(() => {
+    settings.updateInterval.value = minutesToSeconds(Math.max(updateInterval, 1));
+  });
+
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
@@ -43,9 +45,9 @@
 {:else if tab === TextTabId}
   <TextSettings
     font={settings.font}
-    bind:color={$textColor}
+    bind:color={settings.textColor.value}
     shadow={settings.textShadow}
     stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}
