@@ -15,12 +15,12 @@ import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation'
 import { Widget as AirQualityWidget } from './air-quality';
 import { Widget as IpInfoWidget } from './ip-info';
 import { Widget as HolidaysWidget } from './holidays';
-// import { Widget as LiteratureClockWidget } from './literature-clock';
+import { Widget as LiteratureClockWidget } from './literature-clock';
 
 export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
   AnalogueClockWidget,
-  // LiteratureClockWidget,
+  LiteratureClockWidget,
   DateWidget,
   LinkWidget,
   // SearchWidget,
