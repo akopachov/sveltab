@@ -13,7 +13,7 @@ import { Widget as HtmlWidget } from './html';
 import { Widget as AnalogueClockWidget } from './analogue-clock';
 import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation';
 import { Widget as AirQualityWidget } from './air-quality';
-// import { Widget as IpInfoWidget } from './ip-info';
+import { Widget as IpInfoWidget } from './ip-info';
 import { Widget as HolidaysWidget } from './holidays';
 // import { Widget as LiteratureClockWidget } from './literature-clock';
 
@@ -33,6 +33,6 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   // TopSitesWidget,
   HtmlWidget,
   CryptoAssetQuotationWidget,
-  // IpInfoWidget,
+  IpInfoWidget,
   HolidaysWidget,
 ];
