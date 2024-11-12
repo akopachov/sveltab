@@ -7,25 +7,23 @@
   import { storage } from '$stores/storage';
   import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
-  import { Line } from 'svelte-chartjs';
-  import {
-    Chart as ChartJS,
-    LineElement,
-    LinearScale,
-    CategoryScale,
-    PointElement,
-    Tooltip,
-    Legend,
-    type ChartData,
-    type ChartOptions,
-  } from 'chart.js';
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
+  import { Chart } from 'svelte-echarts';
+  import { init, use, type ComposeOption } from 'echarts/core';
+  import { type LineSeriesOption, LineChart } from 'echarts/charts';
+  import {
+    GridComponent,
+    TooltipComponent,
+    type GridComponentOption,
+    type TooltipComponentOption,
+  } from 'echarts/components';
+  import { CanvasRenderer } from 'echarts/renderers';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
   import { exchangeRates } from './exchange-rate-store';
   import { textStroke } from '$actions/text-stroke';
 
-  ChartJS.register(LineElement, LinearScale, CategoryScale, PointElement, Tooltip, Legend);
+  use([GridComponent, CanvasRenderer, TooltipComponent, LineChart]);
 
   let { settings, id }: { settings: Settings; id: string } = $props();
 
@@ -54,103 +52,70 @@
   }
 
   let priceInfo: PriceInfo | undefined = $state();
-  let chart: ChartJS<'line', number[], unknown> | undefined = $state();
 
   let currencyFormatter = $derived(
     new Intl.NumberFormat(
-      browserLocales.map(m => m.toString()),
+      browserLocales.map(x => x.toString()),
       { style: 'currency', currency: settings.displayCurrency.value },
     ),
   );
   const dateFormatter = new Intl.DateTimeFormat(
-    browserLocales.map(m => m.toString()),
+    browserLocales.map(x => x.toString()),
     { dateStyle: 'medium', timeStyle: 'medium' },
   );
 
   let currentTab = $state(HistoryTab.Daily);
+  let chartAnimationDuration = 0;
 
-  const chartData = {
-    labels: [],
-    datasets: [
-      {
-        label: '',
-        backgroundColor: 'rgb(205, 130, 158)',
-        fill: false,
-        borderColor: 'rgb(255, 130, 158)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointHoverRadius: 4,
-        pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-        pointHoverBorderColor: 'rgba(220, 220, 220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 0,
-        pointHitRadius: 10,
-        data: [],
+  let chartOptions = $derived({
+    tooltip: {
+      trigger: 'axis',
+      formatter: (params: any) => {
+        return `<strong class="text-xs">${dateFormatter.format(params[0].data[0])}</strong><br /><center class="mt-1 text-base">${currencyFormatter.format(params[0].data[1])}</center>`;
       },
-    ],
-  } satisfies ChartData<'line', number[], unknown>;
-
-  $effect(() => {
-    if (chart && chart?.data.datasets?.length > 0) {
-      const historyData = historyDataForTab(priceInfo, currentTab);
-      chart.data.labels = historyData.map(m => dateFormatter.format(m.date));
-      chart.data.datasets[0].data = historyData.map(m => m.price * currentExchangeRate);
-      chart.update();
-    }
-  });
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem: any) {
-            return tooltipItem.yLabel;
-          },
+    },
+    xAxis: {
+      type: 'time',
+      boundaryGap: [0, 0],
+      axisPointer: {
+        lineStyle: {
+          color: settings.chartLineColor.value,
         },
       },
     },
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    animation: false,
-    scales: {
-      x: {
-        display: false,
-      },
-      y: {
-        ticks: {
-          display: false,
-        },
-        grid: {
+    yAxis: {
+      type: 'value',
+      boundaryGap: [0, '100%'],
+      splitLine: {
+        lineStyle: {
           color: settings.chartAxisColor.value,
         },
       },
     },
-  } satisfies ChartOptions<'line'>;
+    grid: {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      backgroundColor: 'transparent',
+    },
+    series: [
+      {
+        name: settings.asset.value?.name,
+        type: 'line',
+        smooth: false,
+        symbol: 'none',
+        areaStyle: {},
+        animation: true,
+        animationDuration: () => chartAnimationDuration,
+        color: settings.chartLineColor.value,
+        data: historyDataForTab(priceInfo, currentTab).map(x => [x.date, x.price * currentExchangeRate]),
+      },
+    ],
+  } satisfies ComposeOption<GridComponentOption | TooltipComponentOption | LineSeriesOption>);
 
   $effect(() => {
     (settings.asset.value || $clockStore) && updateDebounced();
-  });
-
-  $effect(() => {
-    if (chart && chart?.data.datasets?.length > 0) {
-      chart.data.datasets[0].borderColor = settings.chartLineColor.value;
-      chart.data.datasets[0].backgroundColor = settings.chartLineColor.value;
-      chart.update();
-    }
-  });
-
-  $effect(() => {
-    if (chart?.options.scales) {
-      chart.options.scales!.y!.grid!.color = settings.chartAxisColor.value;
-      chart.update();
-    }
   });
 
   export async function onDelete() {
@@ -188,17 +153,17 @@
       priceInfo = {
         lastUpdate: Date.now(),
         currentPrice: assetData.data.priceUsd,
-        dailyHistoryPrices: dailyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        dailyHistoryPrices: dailyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
-        hourlyHistoryPrices: hourlyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        hourlyHistoryPrices: hourlyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
-        minutelyHistoryPrices: minutelyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        minutelyHistoryPrices: minutelyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
         asset: settings.asset.value,
       };
@@ -222,7 +187,10 @@
     }
   }
 
-  onMount(() => update());
+  onMount(() => {
+    update();
+    setTimeout(() => (chartAnimationDuration = 500), 0);
+  });
 </script>
 
 <div
@@ -270,7 +238,7 @@
         </TabAnchor>
         <svelte:fragment slot="panel">
           <div class="w-full h-full">
-            <Line data={chartData} options={chartOptions} bind:chart />
+            <Chart {init} options={chartOptions} />
           </div>
         </svelte:fragment>
       </TabGroup>
