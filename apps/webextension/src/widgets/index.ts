@@ -9,7 +9,7 @@ import { Widget as FlickrWidget } from './flickr-image';
 // import { Widget as WeatherWidget } from './weather';
 import { Widget as FreeTextWidget } from './free-text';
 // import { Widget as TopSitesWidget } from './top-sites';
-// import { Widget as HtmlWidget } from './html';
+import { Widget as HtmlWidget } from './html';
 import { Widget as AnalogueClockWidget } from './analogue-clock';
 import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation';
 import { Widget as AirQualityWidget } from './air-quality';
@@ -31,7 +31,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   FlickrWidget,
   FreeTextWidget,
   // TopSitesWidget,
-  // HtmlWidget,
+  HtmlWidget,
   CryptoAssetQuotationWidget,
   // IpInfoWidget,
   HolidaysWidget,
