@@ -28,7 +28,8 @@
 
   let activeImage = $derived(latestSearchResult?.activeImage);
   $effect(() => {
-    (settings.searchTopic.value || settings.updateInterval.value || $clockStore) && pickRandomPhotoDebounced();
+    void (settings.searchTopic.value, settings.updateInterval.value, $clockStore);
+    pickRandomPhotoDebounced();
   });
 
   onMount(async () => {

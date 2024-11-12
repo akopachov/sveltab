@@ -15,7 +15,7 @@
   let ipInfo: IpApiCoResponse | undefined | null = $state();
 
   $effect(() => {
-    $online;
+    void $online;
     updateIpInfo();
   });
 

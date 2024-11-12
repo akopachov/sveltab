@@ -115,7 +115,8 @@
   } satisfies ComposeOption<GridComponentOption | TooltipComponentOption | LineSeriesOption>);
 
   $effect(() => {
-    (settings.asset.value || $clockStore) && updateDebounced();
+    void (settings.asset.value, $clockStore);
+    updateDebounced();
   });
 
   export async function onDelete() {

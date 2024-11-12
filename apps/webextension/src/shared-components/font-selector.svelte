@@ -18,8 +18,8 @@
 
   let selectedFontInfo: FontInfo | undefined = $state();
   $effect(() => {
-    if (selectedFontInfo && (!weight || !selectedFontInfo.weights.includes($weight))) {
-      $weight = selectedFontInfo.weights[0];
+    if (selectedFontInfo && (!weight || !selectedFontInfo.weights.includes(weight.value))) {
+      weight.value = selectedFontInfo.weights[0];
     }
   });
 
@@ -92,8 +92,8 @@
     selectedFontInfo = e;
     searchValue = e.label;
     $fontId = e.id;
-    if (weight && !e.weights.includes($weight)) {
-      $weight = e.weights[0];
+    if (weight && !e.weights.includes(weight.value)) {
+      weight.value = e.weights[0];
     }
   }
 
@@ -137,7 +137,7 @@
         use:popup={popupSettings}
         use:debounce={debounceOpts} />
       {#if selectedFontInfo}
-        <select bind:value={$weight}>
+        <select bind:value={weight.value}>
           {#each selectedFontInfo.weights as w}
             {@const optionTextFn = fontWeightsMap.get(w) || (() => String(w))}
             <option value={w}>{optionTextFn()}</option>

@@ -5,7 +5,7 @@ import { Widget as DateWidget } from './date';
 // import { Widget as SearchWidget } from './search';
 import { Widget as GreetingWidget } from './greeting';
 import { Widget as FlickrWidget } from './flickr-image';
-// import { Widget as LinkWidget } from './link';
+import { Widget as LinkWidget } from './link';
 // import { Widget as WeatherWidget } from './weather';
 import { Widget as FreeTextWidget } from './free-text';
 // import { Widget as TopSitesWidget } from './top-sites';
@@ -22,7 +22,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   AnalogueClockWidget,
   // LiteratureClockWidget,
   DateWidget,
-  // LinkWidget,
+  LinkWidget,
   // SearchWidget,
   // WeatherWidget,
   AirQualityWidget,

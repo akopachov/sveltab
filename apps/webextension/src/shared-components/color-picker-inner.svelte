@@ -14,7 +14,7 @@
   let flatUIColorPalletsPromise: Promise<any[]> | null = $state(null);
   $effect(() => {
     if (currentTab === Tabs.Pallet && !flatUIColorPalletsPromise) {
-      flatUIColorPalletsPromise = import('flat-ui-colors-json/palettes.json').then(m => m.default);
+      flatUIColorPalletsPromise = import('flat-ui-colors-json/palettes.json').then(x => x.default);
     }
   });
 

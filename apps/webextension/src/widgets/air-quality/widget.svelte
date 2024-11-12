@@ -78,11 +78,13 @@
   let latestInfo: LatestInfo | undefined = $state();
 
   $effect(() => {
-    ($clockStore || $latitude || $longitude || $legislation) && checkIfObsoleteDebounced();
+    void ($clockStore || $latitude || $longitude || $legislation);
+    checkIfObsoleteDebounced();
   });
 
   $effect(() => {
-    $queryUserLocation && queryUserGeolocation();
+    void $queryUserLocation;
+    queryUserGeolocation();
   });
 
   let airQualityDescriptor = $derived.by(() =>

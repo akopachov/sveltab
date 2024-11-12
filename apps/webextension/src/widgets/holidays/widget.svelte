@@ -64,7 +64,8 @@
   );
 
   $effect(() => {
-    (settings.country.value || visibleHolidays || $online) && updateIfNeeded();
+    void (settings.country.value, visibleHolidays, $online);
+    updateIfNeeded();
   });
 
   onMount(async () => {
