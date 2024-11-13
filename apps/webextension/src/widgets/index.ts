@@ -8,7 +8,7 @@ import { Widget as FlickrWidget } from './flickr-image';
 import { Widget as LinkWidget } from './link';
 // import { Widget as WeatherWidget } from './weather';
 import { Widget as FreeTextWidget } from './free-text';
-// import { Widget as TopSitesWidget } from './top-sites';
+import { Widget as TopSitesWidget } from './top-sites';
 import { Widget as HtmlWidget } from './html';
 import { Widget as AnalogueClockWidget } from './analogue-clock';
 import { Widget as CryptoAssetQuotationWidget } from './crypto-assets-quotation';
@@ -30,7 +30,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   RandomQuoteWidget,
   FlickrWidget,
   FreeTextWidget,
-  // TopSitesWidget,
+  TopSitesWidget,
   HtmlWidget,
   CryptoAssetQuotationWidget,
   IpInfoWidget,
