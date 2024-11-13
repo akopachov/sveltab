@@ -2,7 +2,7 @@ import type { WidgetCatalogItem } from './types';
 import { Widget as ClockWidget } from './clock';
 import { Widget as DateWidget } from './date';
 import { Widget as RandomQuoteWidget } from './quote';
-// import { Widget as SearchWidget } from './search';
+import { Widget as SearchWidget } from './search';
 import { Widget as GreetingWidget } from './greeting';
 import { Widget as FlickrWidget } from './flickr-image';
 import { Widget as LinkWidget } from './link';
@@ -23,7 +23,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   LiteratureClockWidget,
   DateWidget,
   LinkWidget,
-  // SearchWidget,
+  SearchWidget,
   // WeatherWidget,
   AirQualityWidget,
   GreetingWidget,

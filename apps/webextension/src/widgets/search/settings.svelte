@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const TextTabId = 1;
@@ -22,18 +22,19 @@
   import { SearchProviders } from './providers';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { searchProvider, font, textColor, backgroundBlur, backgroundColor, searchSuggestionEnabled } = settings;
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
   <label class="label mb-2">
     <span>{m.Widgets_Search_Settings_SearchProvider()}</span>
-    <select class="select" bind:value={$searchProvider}>
+    <select class="select" bind:value={settings.searchProvider.value}>
       {#each SearchProviders as [key, provider]}
         <option value={key}>{provider.name}</option>
       {/each}
@@ -42,11 +43,11 @@
   <div class="label mb-2">
     <span>{m.Widgets_Search_Settings_SearchSuggestionsEnabled()}</span>
     <div>
-      <SlideToggle name="searchSuggestionEnabled" size="sm" bind:checked={$searchSuggestionEnabled} />
+      <SlideToggle name="searchSuggestionEnabled" size="sm" bind:checked={settings.searchSuggestionEnabled.value} />
     </div>
   </div>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} stroke={settings.textStroke} />
+  <TextSettings font={settings.font} bind:color={settings.textColor.value} stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}

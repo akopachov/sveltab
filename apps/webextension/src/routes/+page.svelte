@@ -66,7 +66,7 @@
     }
   });
   $effect(() => {
-    if (workspace?.hasChanges?.value === true) {
+    if (workspace && workspace.hasChanges.value === true) {
       saveWorkspaceChangesDefer();
     }
   });

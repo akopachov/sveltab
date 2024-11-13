@@ -94,7 +94,7 @@
         : ''}">
       <div
         class="w-full h-full rounded-[calc(var(--st-border-radius)-var(--st-border-size))]"
-        style:filter={widgetSettings.filter ? `url('#${widgetSettings.filter}')` : ''}>
+        style:filter={widgetSettings.filter.value ? `url('#${widgetSettings.filter.value}')` : ''}>
         <ConcreteWidgetComponent
           bind:this={widgetComponent}
           settings={widget.settings.extra}
