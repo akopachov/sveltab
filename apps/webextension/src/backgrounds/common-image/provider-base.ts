@@ -15,8 +15,8 @@ const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderShared
 const BaseNodeClassList = [
   'top-[calc(0px-var(--st-blur))]',
   'left-[calc(0px-var(--st-blur))]',
-  'w-[calc(100%+var(--st-blur)*2)]',
-  'h-[calc(100%+var(--st-blur)*2)]',
+  '!w-[calc(100%+var(--st-blur)*2)]',
+  '!h-[calc(100%+var(--st-blur)*2)]',
   '[filter:blur(var(--st-blur))_var(--st-filter-url)]',
 ];
 

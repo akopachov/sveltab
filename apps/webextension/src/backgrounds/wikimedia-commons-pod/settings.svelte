@@ -3,7 +3,7 @@
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
-  export let settings: Settings;
+  let { settings }: { settings: Settings } = $props();
 </script>
 
 <SettingsBase

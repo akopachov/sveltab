@@ -5,33 +5,33 @@
   import { ImageResizeType } from '$lib/cdn';
   import type { ImageBackgroundProviderSettingsBase } from './settings-base';
 
-  export let settings: ImageBackgroundProviderSettingsBase;
-  export let provider: { href: string; name: string } | undefined = undefined;
-
-  const { resizeType, blur, filter } = settings;
+  let {
+    settings,
+    provider,
+  }: { settings: ImageBackgroundProviderSettingsBase; provider?: { href: string; name: string } } = $props();
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label>
   {m.Backgrounds_ImageCommon_Settings_ResizeType()}
   <RadioGroup display="flex" active="variant-filled-primary" hover="hover:variant-soft-primary">
-    <RadioItem bind:group={$resizeType} name="resize_cover" value={ImageResizeType.Cover}>
+    <RadioItem bind:group={settings.resizeType.value} name="resize_cover" value={ImageResizeType.Cover}>
       {m.Backgrounds_ImageCommon_Settings_ResizeType_Cover()}
     </RadioItem>
-    <RadioItem bind:group={$resizeType} name="resize_contain" value={ImageResizeType.Contain}>
+    <RadioItem bind:group={settings.resizeType.value} name="resize_contain" value={ImageResizeType.Contain}>
       {m.Backgrounds_ImageCommon_Settings_ResizeType_Contain()}
     </RadioItem>
   </RadioGroup>
 </label>
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="label">
   <span>{m.Backgrounds_ImageCommon_Settings_Blur()}</span>
-  <RangeSlider name="blurSlider" bind:value={$blur} min={0} max={15} step={0.1}></RangeSlider>
+  <RangeSlider name="blurSlider" bind:value={settings.blur.value} min={0} max={15} step={0.1}></RangeSlider>
 </label>
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="label">
   <span>{m.Backgrounds_ImageCommon_Settings_Filter()}</span>
-  <FilterSelector bind:filter={$filter} />
+  <FilterSelector bind:filter={settings.filter.value} />
 </label>
 {#if provider}
   <div>

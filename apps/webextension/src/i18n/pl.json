@@ -105,6 +105,7 @@
 	"Backgrounds_Pexels_Name": "Zdjęcie od Pexels",
 	"Backgrounds_Pexels_Settings_SearchTerms": "Warunki wyszukiwania",
 	"Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Owoce, zwierzęta, budynki, ...",
+  "Backgrounds_Pexels_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
 
 	"Backgrounds_Wallhaven_Name": "Wallhaven",
 	"Backgrounds_Wallhaven_Settings_SearchTerms": "Warunki wyszukiwania",

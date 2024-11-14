@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 import type { LazyLike } from '$lib/lazy';
 import {
   BackgroundSettingsExtra,
@@ -50,10 +50,15 @@ export interface BackgroundCatalogItem {
   };
 }
 
+export type BackgroundCatalogItemComponentProps = {
+  settings: any;
+  workspace?: WorkspaceInstance;
+};
+
 export interface BackgroundCatalogItemComponents {
   readonly provider: LazyLike<Promise<new (node: HTMLElement, settings: any) => IBackgroundProvider>>;
   readonly settings: {
-    readonly component: LazyLike<Promise<ComponentType<SvelteComponent>>>;
+    readonly component: LazyLike<Promise<Component<BackgroundCatalogItemComponentProps>>>;
     readonly model: LazyLike<Promise<new (initial: BackgroundSettingsExtraInitial<any>) => BackgroundSettingsExtra>>;
   };
 }

@@ -5,9 +5,7 @@
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
-  export let settings: Settings;
-
-  const { topic } = settings;
+  let { settings }: { settings: Settings } = $props();
 
   const topicNames: [AnimeTopics, string][] = [
     [AnimeTopics.Any, m.Backgrounds_AnimeImage_Settings_Topic_Any()],
@@ -19,21 +17,22 @@
     [AnimeTopics.Landscape, 'Landscape'],
     [AnimeTopics.Genshin, 'Genshin'],
   ];
-  let updateInterval = settings.updateInterval.value / 60;
-  $: {
+  let updateInterval = $state(settings.updateInterval.value / 60);
+
+  $effect(() => {
     settings.updateInterval.value = Math.max(updateInterval, 1) * 60;
-  }
+  });
 </script>
 
 <label class="label mb-2">
   <span>{m.Backgrounds_AnimeImage_Settings_Topic()}</span>
-  <select class="select" bind:value={$topic}>
+  <select class="select" bind:value={settings.topic.value}>
     {#each topicNames as [topic, name]}
       <option value={topic}>{name}</option>
     {/each}
   </select>
 </label>
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="label">
   <span>{m.Backgrounds_AnimeImage_Settings_UpdateInterval()}</span>
   <div>
