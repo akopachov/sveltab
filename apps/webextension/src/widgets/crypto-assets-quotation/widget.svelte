@@ -66,12 +66,37 @@
 
   let currentTab = $state(HistoryTab.Daily);
   let chartAnimationDuration = 0;
+  let chartGlobalCursorPosition = { x: 0, y: 0 };
 
-  let chartOptions = $derived({
+  let chartOptions: any = $derived<ComposeOption<GridComponentOption | TooltipComponentOption | LineSeriesOption>>({
     tooltip: {
       trigger: 'axis',
       formatter: (params: any) => {
-        return `<strong class="text-xs">${dateFormatter.format(params[0].data[0])}</strong><br /><center class="mt-1 text-base">${currencyFormatter.format(params[0].data[1])}</center>`;
+        return `<strong class="text-[clamp(8px,.75em,24px)]">${dateFormatter.format(params[0].data[0])}</strong><br /><center class="mt-1 text-[clamp(10px,1em,26px)]">${currencyFormatter.format(params[0].data[1])}</center>`;
+      },
+      className: '!p-[clamp(3px,.5em,10px)]',
+      appendTo() {
+        return document.body;
+      },
+      position: function (point, params, dom, rect, size) {
+        let [left, top] = point;
+        let [tooltipWidth, tooltipHeight]: [number, number] = size.contentSize;
+
+        if (dom instanceof HTMLElement) {
+          tooltipWidth = dom.offsetWidth;
+          tooltipHeight = dom.offsetHeight;
+        } else {
+          [tooltipWidth, tooltipHeight] = size.contentSize;
+        }
+
+        if (chartGlobalCursorPosition.x + tooltipWidth > document.body.clientWidth) {
+          left -= chartGlobalCursorPosition.x + tooltipWidth - document.body.clientWidth;
+        }
+
+        if (chartGlobalCursorPosition.y + tooltipHeight > document.body.clientHeight) {
+          top -= chartGlobalCursorPosition.y + tooltipHeight - document.body.clientHeight;
+        }
+        return [left, top];
       },
     },
     xAxis: {
@@ -112,7 +137,7 @@
         data: historyDataForTab(priceInfo, currentTab).map(x => [x.date, x.price * currentExchangeRate]),
       },
     ],
-  } satisfies ComposeOption<GridComponentOption | TooltipComponentOption | LineSeriesOption>);
+  });
 
   $effect(() => {
     void (settings.asset.value, $clockStore);
@@ -192,6 +217,11 @@
     update();
     setTimeout(() => (chartAnimationDuration = 500), 0);
   });
+
+  function onChartMouseMove(event: MouseEvent) {
+    chartGlobalCursorPosition.x = event.pageX;
+    chartGlobalCursorPosition.y = event.pageY;
+  }
 </script>
 
 <div
@@ -218,6 +248,7 @@
     </p>
     <div
       class="w-full flex-1 min-h-0 text-[max(.3em,8px)] [&>.tab-group]:h-full [&>.tab-group]:flex [&>.tab-group]:flex-col">
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <TabGroup
         padding="px-2 py-0"
         regionPanel="!mt-[3cqmin] min-h-0 flex-1"
@@ -238,7 +269,7 @@
           <span class="icon-[heroicons-solid--external-link]"></span>
         </TabAnchor>
         <svelte:fragment slot="panel">
-          <div class="w-full h-full">
+          <div class="w-full h-full" onmousemove={onChartMouseMove}>
             <Chart {init} options={chartOptions} />
           </div>
         </svelte:fragment>

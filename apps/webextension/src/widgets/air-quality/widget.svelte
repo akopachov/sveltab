@@ -22,6 +22,7 @@
   import { ProgressRadial } from '@skeletonlabs/skeleton';
   import { getRedirectUrl } from './iqair-redirect.gen';
   import { textStroke } from '$actions/text-stroke';
+  import { online } from '$stores/online-store';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Air Quality'] });
 
@@ -51,24 +52,6 @@
   }: { settings: Settings; id: string; onautosettingsupdate: (arg: { id: string; settings: Settings }) => void } =
     $props();
 
-  const {
-    location: { latitude, longitude, city, country, admin1, admin2 },
-    textColor,
-    backgroundBlur,
-    backgroundColor,
-    legislation,
-    queryUserLocation,
-    font: { id: fontId, weight: fontWeight },
-    showVariables,
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    textStroke: textStrokeSettings,
-  } = settings;
-
   const storageKey = `Widget_AirQuality_${id}_Latest`;
 
   export async function onDelete() {
@@ -78,13 +61,14 @@
   let latestInfo: LatestInfo | undefined = $state();
 
   $effect(() => {
-    void ($clockStore || $latitude || $longitude || $legislation);
+    void (settings.location.latitude.value, settings.location.longitude.value, settings.legislation.value, $clockStore);
     checkIfObsoleteDebounced();
   });
 
   $effect(() => {
-    void $queryUserLocation;
-    queryUserGeolocation();
+    if (settings.queryUserLocation.value) {
+      queryUserGeolocation();
+    }
   });
 
   let airQualityDescriptor = $derived.by(() =>
@@ -96,36 +80,38 @@
     latestInfo ? (latestInfo.current.airQualityIndex / getAirQualityIndexMaxValue(latestInfo?.legislation)) * 100 : 0,
   );
 
-  let airQualityDetailsLink = $derived(getRedirectUrl($city, $latitude, $longitude));
+  let airQualityDetailsLink = $derived(
+    getRedirectUrl(settings.location.city.value, settings.location.latitude.value, settings.location.longitude.value),
+  );
 
   onMount(() => {
     ensureLocationPresent();
   });
 
   async function ensureLocationPresent() {
-    if (!$city) {
+    if (!settings.location.city.value) {
       try {
         ({
-          city: $city,
-          country: $country,
-          latitude: $latitude,
-          longitude: $longitude,
-          admin1: $admin1,
-          admin2: $admin2,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+          latitude: settings.location.latitude.value,
+          longitude: settings.location.longitude.value,
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
         } = await getIpGeolocation());
       } catch (e) {
         log.error('An error occurred during querying GeoIP info', { widgetId: id }, e);
       }
 
-      if (!$city && !$queryUserLocation) {
+      if (!settings.location.city.value && !settings.queryUserLocation.value) {
         // If unabled to geolocate by some reason - default to my home town
         ({
-          city: $city,
-          country: $country,
-          latitude: $latitude,
-          longitude: $longitude,
-          admin1: $admin1,
-          admin2: $admin2,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+          latitude: settings.location.latitude.value,
+          longitude: settings.location.longitude.value,
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
         } = getDefaultFallbackGeolocation());
       }
     }
@@ -141,9 +127,9 @@
     if (
       !latestInfo ||
       differenceInMinutes(Date.now(), latestInfo.lastUpdate) > 15 || // Every 15 minutes
-      latestInfo.latitude !== $latitude || // Or location change
-      latestInfo.longitude !== $longitude ||
-      latestInfo.legislation !== $legislation
+      latestInfo.latitude !== settings.location.latitude.value || // Or location change
+      latestInfo.longitude !== settings.location.longitude.value ||
+      latestInfo.legislation !== settings.legislation.value
     ) {
       await loadNewInfo();
     }
@@ -153,11 +139,22 @@
     try {
       const position = await getBrowserGeolocation();
       const precision = getPrecision(position.accuracy);
-      if (!compareCoordinates(position, { latitude: $latitude, longitude: $longitude }, precision)) {
-        ({ admin1: $admin1, admin2: $admin2, city: $city, country: $country } = await reverseGeocode(position));
+      if (
+        !compareCoordinates(
+          position,
+          { latitude: settings.location.latitude.value, longitude: settings.location.longitude.value },
+          precision,
+        )
+      ) {
+        ({
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+        } = await reverseGeocode(position));
 
-        $latitude = position.latitude;
-        $longitude = position.longitude;
+        settings.location.latitude.value = position.latitude;
+        settings.location.longitude.value = position.longitude;
         onautosettingsupdate({ id, settings });
       }
     } catch (e) {
@@ -166,12 +163,12 @@
   }
 
   async function loadNewInfo() {
-    if (!$city || !navigator.onLine) return;
+    if (!settings.location.city.value || !$online) return;
     const params = {
-      latitude: $latitude,
-      longitude: $longitude,
+      latitude: settings.location.latitude.value,
+      longitude: settings.location.longitude.value,
       current: [
-        $legislation,
+        settings.legislation.value,
         'pm10',
         'pm2_5',
         'carbon_monoxide',
@@ -187,9 +184,9 @@
     const current = response[0].current()!;
     latestInfo = {
       lastUpdate: Date.now(),
-      latitude: $latitude,
-      longitude: $longitude,
-      legislation: $legislation,
+      latitude: settings.location.latitude.value,
+      longitude: settings.location.longitude.value,
+      legislation: settings.legislation.value,
       current: {
         airQualityIndex: current.variables(0)!.value(),
         pm10: current.variables(1)!.value(),
@@ -208,20 +205,21 @@
 
 <div
   class="w-full h-full select-none flex justify-center content-center flex-col p-[5cqmin] text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
-  style:background-color={$backgroundColor}
-  style:--st--text-color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
+  style:background-color={settings.backgroundColor.value}
+  style:--st--text-color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
   use:loadingPlaceholder={!!latestInfo && latestInfo.lastUpdate > 0}
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: $localeCharSubset,
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
+  use:textStroke={settings.textStroke}>
   {#if latestInfo && latestInfo.lastUpdate > 0}
     <div class="flex flex-row max-h-[calc(100cqh-10cqmin)] h-full">
       <div class="flex flex-col flex-auto">
@@ -233,7 +231,7 @@
         <div class="overflow-y-auto">
           <table class="text-[max(0.5em,7px)] w-full max-w-[10em] leading-normal">
             <tbody>
-              {#if $showVariables.includes(AirQualityVariables.PM2_5)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.PM2_5)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">
                     PM
@@ -246,7 +244,7 @@
                   </td>
                 </tr>
               {/if}
-              {#if $showVariables.includes(AirQualityVariables.PM10)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.PM10)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">
                     PM
@@ -259,7 +257,7 @@
                   </td>
                 </tr>
               {/if}
-              {#if $showVariables.includes(AirQualityVariables.CarbonMonoxide)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.CarbonMonoxide)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">CO</td>
                   <td class="whitespace-nowrap pr-1 text-right">{latestInfo.current.carbon_monoxide.toFixed(0)}</td>
@@ -269,7 +267,7 @@
                   </td>
                 </tr>
               {/if}
-              {#if $showVariables.includes(AirQualityVariables.NitrogenDioxide)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.NitrogenDioxide)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">
                     NO
@@ -282,7 +280,7 @@
                   </td>
                 </tr>
               {/if}
-              {#if $showVariables.includes(AirQualityVariables.SulfurDioxide)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.SulfurDioxide)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">
                     SO
@@ -295,7 +293,7 @@
                   </td>
                 </tr>
               {/if}
-              {#if $showVariables.includes(AirQualityVariables.Ozone)}
+              {#if settings.showVariables.value.includes(AirQualityVariables.Ozone)}
                 <tr>
                   <td class="w-full whitespace-nowrap pr-2">
                     O
