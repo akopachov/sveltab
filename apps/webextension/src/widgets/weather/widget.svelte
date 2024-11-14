@@ -2,17 +2,16 @@
   import { MeasurementUnits, type Settings } from './settings';
   import { getClockStore } from '$stores/clock-store';
   import { fontsource } from '$actions/fontsource';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import { fetchWeatherApi } from 'openmeteo';
-  import { localeCharSubset } from '$stores/locale';
+  import { locale, localeCharSubset } from '$stores/locale';
   import { AssetsPacks, DefaultAssetsPack } from './asset-packs';
   import { TimeOfDay } from './asset-packs/asset-pack-base';
   import pDebounce from 'p-debounce';
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { imgSrcEx } from '$actions/img-src-ex';
-  import { debouncedDerived } from '$stores/debounce-store';
   import { differenceInMinutes, isSameDay, minutesToMilliseconds, secondsToMilliseconds } from 'date-fns';
   import { logger } from '$lib/logger';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
@@ -26,9 +25,10 @@
   } from '$lib/geolocation';
   import { getRedirectUrl } from './owm-redirect.gen';
   import { textStroke } from '$actions/text-stroke';
+  import { derivedDebounce } from '$stores/rune-utils.svelte';
+  import { online } from '$stores/online-store';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Weather'] });
-  const dispatch = createEventDispatcher();
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestForecast = {
@@ -58,31 +58,13 @@
       sunset: number[];
     };
   };
-  export let settings: Settings;
-  export let id: string;
 
-  const {
-    location: { latitude, longitude, city, country, admin1, admin2 },
-    assetPack: assetPackId,
-    textColor,
-    backgroundBlur,
-    backgroundColor,
-    measurementUnits,
-    queryUserLocation,
-    font: { id: fontId, weight: fontWeight },
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    showDetails,
-    showCity,
-    showAdminArea1,
-    showCountry,
-    showCurrentIcon,
-    textStroke: textStrokeSettings,
-  } = settings;
+  let {
+    settings,
+    id,
+    onautosettingsupdate,
+  }: { settings: Settings; id: string; onautosettingsupdate: (arg: { id: string; settings: Settings }) => void } =
+    $props();
 
   const storageKey = `Widget_Weather_${id}_LatestForecast`;
 
@@ -90,83 +72,103 @@
     await storage.local.remove(storageKey);
   }
 
-  let forecast: LatestForecast;
+  let forecast: LatestForecast | undefined = $state();
 
-  $: {
-    ($clockStore || $latitude || $longitude) && checkIfObsoleteDebounced();
-  }
-
-  $: {
-    $queryUserLocation && queryUserGeolocation();
-  }
-
-  $: weatherDetailsLink = getRedirectUrl($city, $country, $latitude, $longitude);
-
-  $: assetPack = (AssetsPacks.get($assetPackId) ?? DefaultAssetsPack).assetPack.value;
-
-  const debouncedTextColor = debouncedDerived(textColor, 300);
-
-  $: intlTimeFormat = new Intl.DateTimeFormat(navigator.language, {
-    hour: 'numeric',
+  $effect(() => {
+    void (settings.location.latitude.value, settings.location.longitude.value, $clockStore, $online);
+    checkIfObsoleteDebounced();
   });
 
-  $: intlDateFormat = new Intl.DateTimeFormat(navigator.language, {
-    day: 'numeric',
-    month: 'numeric',
+  $effect(() => {
+    if (settings.queryUserLocation.value) {
+      queryUserGeolocation();
+    }
   });
 
-  $: hourlyRange = forecast
-    ? forecast.hourly.time
-        .map((t, i) => [t, i])
-        .filter(f => f[0] > $clockStore.valueOf())
-        .slice(0, 12)
-    : [];
+  let weatherDetailsLink = $derived(
+    getRedirectUrl(
+      settings.location.city.value,
+      settings.location.country.value,
+      settings.location.latitude.value,
+      settings.location.longitude.value,
+    ),
+  );
 
-  $: dailyRange = forecast
-    ? forecast.daily.time
-        .map((t, i) => [t, i])
-        .filter(f => f[0] > $clockStore.valueOf())
-        .slice(0, 14)
-    : [];
+  let assetPack = $derived((AssetsPacks.get(settings.assetPack.value) ?? DefaultAssetsPack).assetPack.value);
 
-  $: locationDisplayText = [
-    $city && $showCity ? $city : '',
-    $admin1 && $showAdminArea1 ? $admin1 : '',
-    $country && $showCountry ? $country : '',
-  ]
-    .filter(Boolean)
-    .join(', ');
+  let debouncedTextColor = $derived.by(derivedDebounce(() => settings.textColor.value, 300));
 
-  let currentTab = 0;
+  let intlTimeFormat = $derived(
+    new Intl.DateTimeFormat($locale, {
+      hour: 'numeric',
+    }),
+  );
+
+  let intlDateFormat = $derived(
+    new Intl.DateTimeFormat($locale, {
+      day: 'numeric',
+      month: 'numeric',
+    }),
+  );
+
+  let hourlyRange = $derived(
+    forecast
+      ? forecast.hourly.time
+          .map((t, i) => [t, i])
+          .filter(f => f[0] > $clockStore.valueOf())
+          .slice(0, 12)
+      : [],
+  );
+
+  let dailyRange = $derived(
+    forecast
+      ? forecast.daily.time
+          .map((t, i) => [t, i])
+          .filter(f => f[0] > $clockStore.valueOf())
+          .slice(0, 14)
+      : [],
+  );
+
+  let locationDisplayText = $derived(
+    [
+      settings.location.city.value && settings.showCity.value ? settings.location.city.value : '',
+      settings.location.admin1.value && settings.showAdminArea1.value ? settings.location.admin1.value : '',
+      settings.location.country.value && settings.showCountry.value ? settings.location.country.value : '',
+    ]
+      .filter(Boolean)
+      .join(', '),
+  );
+
+  let currentTab = $state(0);
 
   onMount(() => {
     ensureLocationPresent();
   });
 
   async function ensureLocationPresent() {
-    if (!$city) {
+    if (!settings.location.city.value) {
       try {
         ({
-          city: $city,
-          country: $country,
-          latitude: $latitude,
-          longitude: $longitude,
-          admin1: $admin1,
-          admin2: $admin2,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+          latitude: settings.location.latitude.value,
+          longitude: settings.location.longitude.value,
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
         } = await getIpGeolocation());
       } catch (e) {
         log.error('An error occurred during querying GeoIP info', { widgetId: id }, e);
       }
 
-      if (!$city && !$queryUserLocation) {
+      if (!settings.location.city.value && !settings.queryUserLocation.value) {
         // If unabled to geolocate by some reason - default to my home town
         ({
-          city: $city,
-          country: $country,
-          latitude: $latitude,
-          longitude: $longitude,
-          admin1: $admin1,
-          admin2: $admin2,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+          latitude: settings.location.latitude.value,
+          longitude: settings.location.longitude.value,
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
         } = getDefaultFallbackGeolocation());
       }
     }
@@ -182,8 +184,8 @@
     if (
       !forecast ||
       differenceInMinutes(Date.now(), forecast.lastUpdate) > 15 || // Every 15 minutes
-      forecast.latitude !== $latitude || // Or location change
-      forecast.longitude !== $longitude
+      forecast.latitude !== settings.location.latitude.value || // Or location change
+      forecast.longitude !== settings.location.longitude.value
     ) {
       await loadNewForecast();
     }
@@ -193,12 +195,23 @@
     try {
       const position = await getBrowserGeolocation();
       const precision = getPrecision(position.accuracy);
-      if (!compareCoordinates(position, { latitude: $latitude, longitude: $longitude }, precision)) {
-        ({ admin1: $admin1, admin2: $admin2, city: $city, country: $country } = await reverseGeocode(position));
+      if (
+        !compareCoordinates(
+          position,
+          { latitude: settings.location.latitude.value, longitude: settings.location.longitude.value },
+          precision,
+        )
+      ) {
+        ({
+          admin1: settings.location.admin1.value,
+          admin2: settings.location.admin2.value,
+          city: settings.location.city.value,
+          country: settings.location.country.value,
+        } = await reverseGeocode(position));
 
-        $latitude = position.latitude;
-        $longitude = position.longitude;
-        dispatch('autosettingsupdate', { id, settings });
+        settings.location.latitude.value = position.latitude;
+        settings.location.longitude.value = position.longitude;
+        onautosettingsupdate({ id, settings });
       }
     } catch (e) {
       log.warn("An error ocurred during querying user's geolocation", e);
@@ -206,10 +219,10 @@
   }
 
   async function loadNewForecast() {
-    if (!$city || !navigator.onLine) return;
+    if (!settings.location.city.value || !$online) return;
     const params = {
-      latitude: $latitude,
-      longitude: $longitude,
+      latitude: settings.location.latitude.value,
+      longitude: settings.location.longitude.value,
       current: ['temperature_2m', 'apparent_temperature', 'weather_code', 'is_day'],
       hourly: ['temperature_2m', 'precipitation_probability', 'weather_code'],
       daily: [
@@ -250,8 +263,8 @@
 
     forecast = {
       lastUpdate: Date.now(),
-      latitude: $latitude,
-      longitude: $longitude,
+      latitude: settings.location.latitude.value,
+      longitude: settings.location.longitude.value,
       current: {
         temperature2m: current.variables(0)!.value(),
         apparentTemperature: current.variables(1)!.value(),
@@ -287,7 +300,7 @@
 
   function adaptTemperature(metric: number, targetUnits: MeasurementUnits) {
     if (targetUnits === MeasurementUnits.Imperial) {
-      return metric * 1.8 + 32;
+      return Math.round(metric * 1.8 + 32).toFixed(0);
     }
 
     return Math.round(metric).toFixed(0);
@@ -295,30 +308,32 @@
 </script>
 
 <div
-  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] {$showDetails
+  class="w-full h-full select-none flex justify-center content-center flex-col px-[5cqmin] pt-[5cqmin] {settings
+    .showDetails.value
     ? 'pb-[1cqmin]'
     : 'pb-[5cqmin]'} text-[var(--st--text-color)] text-[15cqmin] [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] rounded-[inherit] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
-  style:background-color={$backgroundColor}
-  style:--st--text-color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
-  use:loadingPlaceholder={forecast?.lastUpdate > 0}
+  style:background-color={settings.backgroundColor.value}
+  style:--st--text-color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
+  use:loadingPlaceholder={!!forecast && forecast.lastUpdate > 0}
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: $localeCharSubset,
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
-  {#if forecast?.lastUpdate > 0}
+  use:textStroke={settings.textStroke}>
+  {#if !!forecast && forecast.lastUpdate > 0}
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">
-        <h4 class="{$showDetails ? 'text-[max(0.4em,10px)]' : 'text-[max(1em,10px)]'} leading-none">
+        <h4 class="{settings.showDetails.value ? 'text-[max(0.4em,10px)]' : 'text-[max(1em,10px)]'} leading-none">
           {locationDisplayText}
         </h4>
-        {#if $showCurrentIcon}
+        {#if settings.showCurrentIcon.value}
           <div class="min-h-0 p-[1cqmin]">
             <img
               class="block object-contain object-left-top w-full h-full"
@@ -326,22 +341,25 @@
               use:imgSrcEx={assetPack.getIconUrl(
                 forecast.current.weatherCode,
                 forecast.current.timeOfDay,
-                $debouncedTextColor,
+                debouncedTextColor,
               )}
               alt={m.Widgets_Weather_Forecast_Current_WeatherIcon_Alt()} />
           </div>
         {/if}
       </div>
       <div class="row-start-1 col-start-2 row-end-2 col-end-3">
-        <div class="text-right {$showDetails ? 'text-[1.3em]' : 'text-[calc(85cqh-max(1em,7px))]'} leading-none">
-          {adaptTemperature(forecast.current.temperature2m, $measurementUnits)}&deg;
+        <div
+          class="text-right {settings.showDetails.value
+            ? 'text-[1.3em]'
+            : 'text-[calc(85cqh-max(1em,7px))]'} leading-none">
+          {adaptTemperature(forecast.current.temperature2m, settings.measurementUnits.value)}&deg;
         </div>
-        <div class={$showDetails ? 'text-[max(0.4em,7px)]' : 'text-[max(1em,7px)]'}>
+        <div class={settings.showDetails.value ? 'text-[max(0.4em,7px)]' : 'text-[max(1em,7px)]'}>
           {m.Widgets_Weather_Forecast_Current_FeelsLike()}
-          {adaptTemperature(forecast.current.apparentTemperature, $measurementUnits)}&deg;
+          {adaptTemperature(forecast.current.apparentTemperature, settings.measurementUnits.value)}&deg;
         </div>
       </div>
-      {#if $showDetails}
+      {#if settings.showDetails.value}
         <div class="row-start-2 col-start-1 row-end-3 col-end-3 text-[max(.3em,6px)]">
           <TabGroup
             padding="px-2 py-0"
@@ -378,12 +396,12 @@
                           use:imgSrcEx={assetPack.getIconUrl(
                             forecast.hourly.weatherCode[item[1]],
                             forecast.hourly.timeOfDay[item[1]],
-                            $debouncedTextColor,
+                            debouncedTextColor,
                           )}
                           alt={m.Widgets_Weather_Forecast_Hourly_WeatherIcon_Alt()} />
                       </div>
                       <div class="text-center mt-auto leading-tight">
-                        {adaptTemperature(forecast.hourly.temperature2m[item[1]], $measurementUnits)}&deg;
+                        {adaptTemperature(forecast.hourly.temperature2m[item[1]], settings.measurementUnits.value)}&deg;
                       </div>
                     </div>
                   {/each}
@@ -406,14 +424,17 @@
                           use:imgSrcEx={assetPack.getIconUrl(
                             forecast.daily.weatherCode[item[1]],
                             forecast.current.timeOfDay,
-                            $debouncedTextColor,
+                            debouncedTextColor,
                           )}
                           alt={m.Widgets_Weather_Forecast_Daily_WeatherIcon_Alt()} />
                       </div>
                       <div class="text-center mt-auto leading-tight">
-                        {adaptTemperature(forecast.daily.temperature2mMin[item[1]], $measurementUnits)}&deg; / {adaptTemperature(
+                        {adaptTemperature(
+                          forecast.daily.temperature2mMin[item[1]],
+                          settings.measurementUnits.value,
+                        )}&deg; / {adaptTemperature(
                           forecast.daily.temperature2mMax[item[1]],
-                          $measurementUnits,
+                          settings.measurementUnits.value,
                         )}&deg;
                       </div>
                     </div>

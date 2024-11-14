@@ -6,7 +6,7 @@ import { Widget as SearchWidget } from './search';
 import { Widget as GreetingWidget } from './greeting';
 import { Widget as FlickrWidget } from './flickr-image';
 import { Widget as LinkWidget } from './link';
-// import { Widget as WeatherWidget } from './weather';
+import { Widget as WeatherWidget } from './weather';
 import { Widget as FreeTextWidget } from './free-text';
 import { Widget as TopSitesWidget } from './top-sites';
 import { Widget as HtmlWidget } from './html';
@@ -24,7 +24,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   DateWidget,
   LinkWidget,
   SearchWidget,
-  // WeatherWidget,
+  WeatherWidget,
   AirQualityWidget,
   GreetingWidget,
   RandomQuoteWidget,
