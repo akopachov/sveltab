@@ -65,6 +65,12 @@
       <ColorPicker bind:color={settings.chartAxisColor.value} />
     </div>
   </div>
+  <div class="label">
+    <span>{m.Widgets_CryptoAssetQuotation_Settings_Chart_AreaFillColor()}</span>
+    <div>
+      <ColorPicker bind:color={settings.chartFillAreaColor.value} />
+    </div>
+  </div>
 {:else if tab === TextTabId}
   <TextSettings
     font={settings.font}

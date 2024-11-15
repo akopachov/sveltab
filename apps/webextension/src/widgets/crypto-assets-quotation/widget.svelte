@@ -74,12 +74,11 @@
       formatter: (params: any) => {
         return `<strong class="text-[clamp(8px,.75em,24px)]">${dateFormatter.format(params[0].data[0])}</strong><br /><center class="mt-1 text-[clamp(10px,1em,26px)]">${currencyFormatter.format(params[0].data[1])}</center>`;
       },
-      className: '!p-[clamp(3px,.5em,10px)]',
+      className: '!p-[clamp(3px,.5em,10px)] !card !text-token !border-none',
       appendTo() {
         return document.body;
       },
       position: function (point, params, dom, rect, size) {
-        let [left, top] = point;
         let [tooltipWidth, tooltipHeight]: [number, number] = size.contentSize;
 
         if (dom instanceof HTMLElement) {
@@ -89,13 +88,29 @@
           [tooltipWidth, tooltipHeight] = size.contentSize;
         }
 
-        if (chartGlobalCursorPosition.x + tooltipWidth > document.body.clientWidth) {
-          left -= chartGlobalCursorPosition.x + tooltipWidth - document.body.clientWidth;
+        const padY = -tooltipHeight - 5;
+        const padX = -tooltipWidth / 2;
+
+        let [left, top] = point;
+        top += padY;
+        left += padX;
+
+        if (chartGlobalCursorPosition.x + tooltipWidth + padX > document.body.clientWidth) {
+          left -= chartGlobalCursorPosition.x + tooltipWidth + padX - document.body.clientWidth;
         }
 
-        if (chartGlobalCursorPosition.y + tooltipHeight > document.body.clientHeight) {
-          top -= chartGlobalCursorPosition.y + tooltipHeight - document.body.clientHeight;
+        if (chartGlobalCursorPosition.x - tooltipWidth - padX < 0) {
+          left += tooltipWidth + padX - chartGlobalCursorPosition.x;
         }
+
+        if (chartGlobalCursorPosition.y + tooltipHeight + padY > document.body.clientHeight) {
+          top -= chartGlobalCursorPosition.y + tooltipHeight + padY - document.body.clientHeight;
+        }
+
+        if (chartGlobalCursorPosition.y - tooltipHeight - padY < 0) {
+          top += tooltipHeight + padY - chartGlobalCursorPosition.y;
+        }
+
         return [left, top];
       },
     },
@@ -130,7 +145,10 @@
         type: 'line',
         smooth: false,
         symbol: 'none',
-        areaStyle: {},
+        areaStyle: {
+          color: settings.chartFillAreaColor.value,
+          opacity: 1,
+        },
         animation: true,
         animationDuration: () => chartAnimationDuration,
         color: settings.chartLineColor.value,

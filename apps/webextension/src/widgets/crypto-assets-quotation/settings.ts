@@ -18,6 +18,7 @@ export class Settings extends WidgetSettingsExtra {
     this.textColor = useObservable(initial.textColor || '#000');
     this.chartLineColor = useObservable(initial.chartLineColor || '#000');
     this.chartAxisColor = useObservable(initial.chartAxisColor || 'rgba(0, 0, 0, 0.1)');
+    this.chartFillAreaColor = useObservable(initial.chartFillAreaColor || 'rgba(0, 0, 0, 0.3)');
     this.asset = useObservable(initial.asset || { id: 'bitcoin', name: 'Bitcoin', code: 'BTC' });
     this.displayCurrency = useObservable(initial.displayCurrency || 'USD');
     this.font = new FontSettings(initial.font || {});
@@ -30,6 +31,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly textColor: Observable<string>;
   readonly chartLineColor: Observable<string>;
   readonly chartAxisColor: Observable<string>;
+  readonly chartFillAreaColor: Observable<string>;
   readonly asset: Observable<CryptoAssetRef>;
   readonly displayCurrency: Observable<ExchangerateApiSupportedCurrency>;
   readonly font: FontSettings;
