@@ -27,9 +27,7 @@
   import { useObservable, type Observable, type Unobserved } from '$lib/observable.svelte';
   import { nanoid } from 'nanoid/non-secure';
 
-  export let location: GeoLocation;
-
-  const { city, admin1, admin2, country, latitude, longitude } = location;
+  let { location }: { location: GeoLocation } = $props();
 
   const locationPopupSettings: PopupSettings = {
     event: 'focus-click',
@@ -63,15 +61,15 @@
       }
     },
   };
-  let locationSearchSuggestion: Required<GeoLocationInitial>[] = [];
+  let locationSearchSuggestion: Required<GeoLocationInitial>[] = $state([]);
 
   function selectLocation(newLocation: Required<GeoLocationInitial>) {
-    city.value = newLocation.city;
-    latitude.value = newLocation.latitude;
-    longitude.value = newLocation.longitude;
-    country.value = newLocation.country;
-    admin1.value = newLocation.admin1;
-    admin2.value = newLocation.admin2;
+    location.city.value = newLocation.city;
+    location.latitude.value = newLocation.latitude;
+    location.longitude.value = newLocation.longitude;
+    location.country.value = newLocation.country;
+    location.admin1.value = newLocation.admin1;
+    location.admin2.value = newLocation.admin2;
     locationSearchSuggestion = [];
   }
 </script>
@@ -81,7 +79,7 @@
   <input
     class="input"
     type="search"
-    value={$city ? `${city.value}, ${country.value}` : ''}
+    value={location.city.value ? `${location.city.value}, ${location.country.value}` : ''}
     placeholder={m.LocationSelector_Placeholder()}
     use:popup={locationPopupSettings}
     use:debounce={locationSearchDebounceOpts} />
@@ -93,7 +91,7 @@
   <ul class="list">
     {#each locationSearchSuggestion as suggestion}
       <li>
-        <button class="btn variant-soft w-full mb-1 rounded-sm" on:click={() => selectLocation(suggestion)}>
+        <button class="btn variant-soft w-full mb-1 rounded-sm" onclick={() => selectLocation(suggestion)}>
           <span class="flex-auto">
             {suggestion.city}, {suggestion.admin1 ? `${suggestion.admin1}, ` : ''}{suggestion.country}
           </span>
