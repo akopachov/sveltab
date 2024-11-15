@@ -46,7 +46,7 @@
         class="checkbox"
         type="checkbox"
         checked={settings.purity.value[0] === '1'}
-        on:change={e => updatePurity(e.currentTarget, ContentPurity.SFW)} />
+        onchange={e => updatePurity(e.currentTarget, ContentPurity.SFW)} />
       <span>{m.Backgrounds_Wallhaven_Settings_Purity_SFW()}</span>
     </label>
     <label class="flex items-center space-x-2">
@@ -54,7 +54,7 @@
         class="checkbox"
         type="checkbox"
         checked={settings.purity.value[1] === '1'}
-        on:change={e => updatePurity(e.currentTarget, ContentPurity.Sketchy)} />
+        onchange={e => updatePurity(e.currentTarget, ContentPurity.Sketchy)} />
       <span>{m.Backgrounds_Wallhaven_Settings_Purity_Sketchy()}</span>
     </label>
     {#if settings.apiKey.value}
@@ -63,7 +63,7 @@
           class="checkbox"
           type="checkbox"
           checked={settings.purity.value[2] === '1'}
-          on:change={e => updatePurity(e.currentTarget, ContentPurity.NSFW)} />
+          onchange={e => updatePurity(e.currentTarget, ContentPurity.NSFW)} />
         <span>{m.Backgrounds_Wallhaven_Settings_Purity_NSFW()}</span>
       </label>
     {/if}

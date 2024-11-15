@@ -11,10 +11,10 @@
 
   let { settings, workspace }: { settings: Settings; workspace: WorkspaceInstance } = $props();
 
-  let localFiles: FileList;
+  let localFiles: FileList | undefined = $state();
 
   async function onLocalFileChange() {
-    if (localFiles.length <= 0) {
+    if (!localFiles || localFiles.length <= 0) {
       return;
     }
 

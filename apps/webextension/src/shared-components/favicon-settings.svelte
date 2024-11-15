@@ -21,7 +21,7 @@
   let { workspaceInstance }: { workspaceInstance: WorkspaceInstance } = $props();
 
   let faviconType: FaviconType = $state(FaviconType.Default);
-  let iconFileSources: FileList;
+  let iconFileSources: FileList | undefined = $state();
   let isLoading = $state(false);
 
   let icon16 = $derived(workspaceInstance.favicon[16]);
@@ -74,7 +74,7 @@
   }
 
   async function onCustomIconFileChange() {
-    if (iconFileSources.length <= 0) {
+    if (!iconFileSources || iconFileSources.length <= 0) {
       return;
     }
 

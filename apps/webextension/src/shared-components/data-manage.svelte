@@ -29,7 +29,7 @@
     dataImported,
   }: { activeWorkspaceId: string; activeWorkspace?: WorkspaceInstance; dataImported?: () => void } = $props();
 
-  let importFiles: FileList;
+  let importFiles: FileList | undefined = $state();
 
   async function* streamToIterable<T>(stream: ReadableStream<T>): AsyncGenerator<T> {
     const reader = stream.getReader();
@@ -105,7 +105,7 @@
   }
 
   async function importData() {
-    if (importFiles.length <= 0) {
+    if (!importFiles || importFiles.length <= 0) {
       return;
     }
 

@@ -56,7 +56,7 @@
 {:else if tab === IconTabId}
   <label class="label mb-2">
     <span>{m.Widgets_Link_Settings_IconSource()}</span>
-    <select class="select" bind:value={settings.iconSource.value} on:change={onIconSourceChange}>
+    <select class="select" bind:value={settings.iconSource.value} onchange={onIconSourceChange}>
       <option value={IconSource.Favicon}>{m.Widgets_Link_Settings_IconSource_Favicon()}</option>
       <option value={IconSource.Iconify}>{m.Widgets_Link_Settings_IconSource_Iconify()}</option>
       <option value={IconSource.Direct}>{m.Widgets_Link_Settings_IconSource_Direct()}</option>
