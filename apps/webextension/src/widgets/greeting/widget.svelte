@@ -45,12 +45,11 @@
   $effect(() => {
     updateGreetingsPool($clockStore, $locale);
   });
-  $effect(() => {
-    cache && updateGreeting(cache.pool, settings.name.value);
-  });
 
-  let currentGreeting: string | undefined | null = $state();
-  let cache: CachedGreetings | undefined | null = $state();
+  let cache: CachedGreetings | undefined | null = $state.raw();
+  let currentGreeting: string | undefined | null = $derived(
+    cache ? updateGreeting(cache.pool, settings.name.value) : undefined,
+  );
 
   onMount(async () => {
     cache = <CachedGreetings>(await storage.local.get(storageKey))[storageKey] || {
@@ -99,10 +98,10 @@
       if (name) {
         greeting = greeting.replace(namePlaceholder, name);
       }
-      currentGreeting = greeting;
-    } else {
-      currentGreeting = null;
+      return greeting;
     }
+
+    return null;
   }
 </script>
 

@@ -7,7 +7,7 @@ if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
     module = import('webextension-polyfill').then(b => b.default.storage);
   }
 } else {
-  module = import('browser-storage-polyfill/index').then(b => b.default);
+  module = import('browser-storage-polyfill-esm/index').then(b => b.default);
 }
 
 export const storage = await module;

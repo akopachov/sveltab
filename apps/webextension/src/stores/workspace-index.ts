@@ -57,17 +57,30 @@ export class WorkspaceIndex {
       const defaultWorkspace: WorkspaceSettingsInitial = await import('$lib/assets/default_workspace.json').then<any>(
         p => p.default,
       );
-      for (const widget of defaultWorkspace.widgets!) {
-        if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
-          if (widget.position!.width! > document.documentElement.offsetWidth - 10) {
-            widget.position!.width = document.documentElement.offsetWidth - 10;
+      setTimeout(() => {
+        for (const widget of defaultWorkspace.widgets!) {
+          if (widget.position!.positionUnits === WidgetMeasurementUnits.Fixed) {
+            if (widget.position!.x! >= document.documentElement.offsetWidth) {
+              widget.position!.x = 0;
+            }
+
+            if (widget.position!.y! >= document.documentElement.offsetHeight) {
+              widget.position!.y = 0;
+            }
           }
 
-          if (widget.position!.height! > document.documentElement.offsetHeight - 10) {
-            widget.position!.height = document.documentElement.offsetHeight - 10;
+          if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
+            if (widget.position!.width! > document.documentElement.offsetWidth - 10) {
+              widget.position!.width = document.documentElement.offsetWidth - 10;
+            }
+
+            if (widget.position!.height! > document.documentElement.offsetHeight - 10) {
+              widget.position!.height = document.documentElement.offsetHeight - 10;
+            }
           }
         }
-      }
+      }, 500);
+
       storageRecord = defaultWorkspace;
     }
 
