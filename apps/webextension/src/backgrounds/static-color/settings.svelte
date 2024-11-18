@@ -3,15 +3,13 @@
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
 
-  export let settings: Settings;
-
-  const { color } = settings;
+  let { settings }: { settings: Settings } = $props();
 </script>
 
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="label">
   <span>{m.Backgrounds_StaticColor_Settings_Color()}</span>
   <div class="flex flex-col items-center">
-    <ColorPicker bind:color={$color} layout={ColorPickerLayout.Inline} />
+    <ColorPicker bind:color={settings.color.value} layout={ColorPickerLayout.Inline} />
   </div>
 </label>

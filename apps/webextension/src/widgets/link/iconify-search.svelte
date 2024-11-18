@@ -4,37 +4,40 @@
   import { imgSrcEx } from '$actions/img-src-ex';
 
   import pDebounce from 'p-debounce';
-  import { createEventDispatcher } from 'svelte';
   import { AppliedColorScheme } from '$actions/color-scheme';
   import ColorPicker, { ColorPickerLayout } from '$shared-components/color-picker.svelte';
   import { getSvgUrl } from '../../lib/service-mirrors';
   import { secondsToMilliseconds } from 'date-fns';
 
-  export let icon: string;
-  export let color: string;
+  let {
+    icon = $bindable(),
+    color = $bindable(),
+    onselected,
+  }: { icon: string; color: string; onselected?: (arg: { icon: string }) => void } = $props();
 
-  let searchQuery: string = '';
-  let allIcons: string[] = [];
-  let iconsUpdatePromise: Promise<void> | undefined;
-  const dispatch = createEventDispatcher();
-  $: previewIconColor = $AppliedColorScheme === 'dark' ? '#fff' : '#000';
+  let searchQuery: string = $state('');
+  let allIcons: string[] = $state([]);
+  let iconsUpdatePromise: Promise<void> | undefined = $state();
+  let previewIconColor = $derived($AppliedColorScheme === 'dark' ? '#fff' : '#000');
 
-  let paginationSettings: PaginationSettings = {
+  let paginationSettings: PaginationSettings = $derived({
     page: 0,
     limit: 15,
     size: allIcons.length,
     amounts: [15],
-  };
+  });
 
-  $: currentPage = allIcons.slice(
-    paginationSettings.page * paginationSettings.limit,
-    paginationSettings.page * paginationSettings.limit + paginationSettings.limit,
+  let currentPage = $derived(
+    allIcons.slice(
+      paginationSettings.page * paginationSettings.limit,
+      paginationSettings.page * paginationSettings.limit + paginationSettings.limit,
+    ),
   );
 
-  $: {
-    searchQuery;
+  $effect(() => {
+    void searchQuery;
     iconsUpdatePromise = updateIconsListDebounced();
-  }
+  });
 
   const updateIconsListDebounced = pDebounce(updateIconsList, secondsToMilliseconds(1));
   async function updateIconsList() {
@@ -54,7 +57,7 @@
 
   function selectIcon(iconStr: string) {
     icon = iconStr;
-    dispatch('selected', { icon: iconStr });
+    onselected?.({ icon: iconStr });
   }
 </script>
 
@@ -86,7 +89,7 @@
         <button
           class="btn btn-icon-base w-full h-full !p-1 variant-soft min-w-[50px] max-w-[64px] rounded-sm icon"
           class:!variant-filled-primary={icon === iconStr}
-          on:click={() => selectIcon(iconStr)}>
+          onclick={() => selectIcon(iconStr)}>
           <img
             class="aspect-square w-full h-full"
             use:imgSrcEx={getSvgUrl(iconStr, previewIconColor)}
@@ -101,7 +104,7 @@
 {#if allIcons.length > paginationSettings.limit}
   <div class="mt-2">
     <Paginator
-      bind:settings={paginationSettings}
+      settings={paginationSettings}
       showFirstLastButtons={false}
       showPreviousNextButtons={true}
       showNumerals={true}

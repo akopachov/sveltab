@@ -1,6 +1,5 @@
 import adapter from '@sveltejs/adapter-static';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
-import { fastDimension } from 'svelte-fast-dimension';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import * as child_process from 'node:child_process';
@@ -18,7 +17,7 @@ if (process.env.VITE_TARGET_BROWSER) {
 const config = {
   // Consult https://kit.svelte.dev/docs/integrations#preprocessors
   // for more information about preprocessors
-  preprocess: [fastDimension(), vitePreprocess()],
+  preprocess: [vitePreprocess({ script: true })],
 
   kit: {
     // adapter-auto only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.

@@ -5,7 +5,7 @@ import type {
   WidgetSettingsExtraInitial,
   WidgetSettingsInitial,
 } from '$lib/widget-settings';
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Component } from 'svelte';
 import type { LazyLike } from '$lib/lazy';
 
 export type CatalogWidgetSettingsInitial = Omit<WidgetSettingsInitial, 'position'> & {
@@ -22,11 +22,28 @@ export interface WidgetCatalogItem {
   readonly components: WidgetCatalogItemComponents;
 }
 
+export type WidgetComponentProps = {
+  settings: any;
+  id: string;
+  onautosettingsupdate: (id: string, settings: WidgetSettingsExtra) => void;
+};
+
+export type WidgetSettingsComponentProps = {
+  settings: any;
+  tab: number;
+  tabs: object[];
+};
+
+export type WidgetComponentExports = {
+  onDelete?: () => void | Promise<void>;
+  overrideBorder?: boolean;
+};
+
 export interface WidgetCatalogItemComponents {
-  readonly widget: LazyLike<Promise<ComponentType<SvelteComponent>>>;
-  readonly preview: LazyLike<Promise<ComponentType<SvelteComponent>>>;
+  readonly widget: LazyLike<Promise<Component<WidgetComponentProps, WidgetComponentExports>>>;
+  readonly preview: LazyLike<Promise<Component>>;
   readonly settings: {
-    readonly component: LazyLike<Promise<ComponentType<SvelteComponent>>>;
+    readonly component: LazyLike<Promise<Component<WidgetSettingsComponentProps>>>;
     readonly model: LazyLike<Promise<new (initial: WidgetSettingsExtraInitial<any>) => WidgetSettingsExtra>>;
   };
 }

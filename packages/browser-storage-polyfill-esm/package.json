@@ -1,0 +1,22 @@
+{
+  "name": "browser-storage-polyfill-esm",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Alexander Kopachov (@akopachov)",
+  "keywords": [],
+  "license": "GPL-3.0-only",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "@types/webextension-polyfill": "^0.12.1",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "browser-storage-polyfill": "^1.0.11",
+    "webextension-polyfill": "^0.12.0"
+  }
+}

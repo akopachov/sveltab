@@ -7,14 +7,12 @@
   import { Workspaces } from '$stores/workspace-index';
   import { CommonToastType, getToastFacade } from '$lib/toast-facade';
   import { version } from '$app/environment';
-  import { createEventDispatcher } from 'svelte';
   import { Opfs, OpfsSchema } from '$lib/opfs';
   import { Zip, ZipDeflate, ZipPassThrough, strToU8, Unzip, UnzipInflate } from 'fflate';
   import { secondsToMilliseconds } from 'date-fns';
 
   const log = logger.getSubLogger({ prefix: ['Shared Components', 'ImportExport'] });
   const toastFacade = getToastFacade();
-  const dispatch = createEventDispatcher();
   const BundledWorkspacesJsonFileName = 'workspaces.json';
 
   type WorkspacesExportObject = { [key: string]: WorkspaceSettingsInitial };
@@ -25,10 +23,13 @@
     defaultWorkspaceId: string;
   };
 
-  export let activeWorkspaceId: string;
-  export let activeWorkspace: WorkspaceInstance | undefined;
+  let {
+    activeWorkspaceId = $bindable(),
+    activeWorkspace = $bindable(),
+    dataImported,
+  }: { activeWorkspaceId: string; activeWorkspace?: WorkspaceInstance; dataImported?: () => void } = $props();
 
-  let importFiles: FileList;
+  let importFiles: FileList | undefined = $state();
 
   async function* streamToIterable<T>(stream: ReadableStream<T>): AsyncGenerator<T> {
     const reader = stream.getReader();
@@ -104,7 +105,7 @@
   }
 
   async function importData() {
-    if (importFiles.length <= 0) {
+    if (!importFiles || importFiles.length <= 0) {
       return;
     }
 
@@ -127,7 +128,7 @@
       await Workspaces.setDefault(importData!.defaultWorkspaceId || (await Workspaces.entries)[0].id);
       ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
 
-      dispatch('dataImported');
+      dataImported && dataImported();
       activeWorkspace = activeWorkspace;
       toastFacade.show(
         m.DataManage_Restore_SuccessfullyDone({ count: Object.keys(importData!.workspaces!).length }),
@@ -228,7 +229,7 @@
 </script>
 
 <div class="flex flex-col gap-1">
-  <button class="btn btn-md variant-soft" on:click={exportData}>{m.DataManage_Backup()}</button>
+  <button class="btn btn-md variant-soft" onclick={exportData}>{m.DataManage_Backup()}</button>
   <FileButton
     class="btn btn-md variant-soft"
     name="files"

@@ -58,16 +58,27 @@ export class WorkspaceIndex {
         p => p.default,
       );
       for (const widget of defaultWorkspace.widgets!) {
-        if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
-          if (widget.position!.width! > document.documentElement.offsetWidth - 10) {
-            widget.position!.width = document.documentElement.offsetWidth - 10;
+        if (widget.position!.positionUnits === WidgetMeasurementUnits.Fixed) {
+          if (widget.position!.x! >= document.documentElement.clientWidth) {
+            widget.position!.x = 0;
           }
 
-          if (widget.position!.height! > document.documentElement.offsetHeight - 10) {
-            widget.position!.height = document.documentElement.offsetHeight - 10;
+          if (widget.position!.y! >= document.documentElement.clientHeight) {
+            widget.position!.y = 0;
+          }
+        }
+
+        if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
+          if (widget.position!.width! > document.documentElement.clientWidth - 10) {
+            widget.position!.width = document.documentElement.clientWidth - 10;
+          }
+
+          if (widget.position!.height! > document.documentElement.clientHeight - 10) {
+            widget.position!.height = document.documentElement.clientHeight - 10;
           }
         }
       }
+
       storageRecord = defaultWorkspace;
     }
 
@@ -79,7 +90,7 @@ export class WorkspaceIndex {
     const workspace = await WorkspaceInstance.create(settings, usedDefault);
     workspace.background.value.components.settings.model.preHeat();
     workspace.background.value.components.provider.preHeat();
-    workspace.widgets.value.forEach(w => {
+    workspace.widgets.forEach(w => {
       w.components.settings.model.preHeat();
       w.components.widget.preHeat();
     });

@@ -1,9 +1,11 @@
 <script lang="ts" context="module">
   import { WeakLazy } from '$lib/lazy';
   import type { Filter } from '$stores/active-filters-store';
-  import type { ComponentType, SvelteComponent } from 'svelte';
 
-  const AvailableFilters: ReadonlyMap<Filter, WeakLazy<Promise<ComponentType<SvelteComponent>>>> = new Map([
+  const AvailableFilters: ReadonlyMap<
+    Filter,
+    WeakLazy<Promise<ConstructorOfATypedSvelteComponent | Component<any, any, any>>>
+  > = new Map([
     ['Apollo', new WeakLazy(() => import('@skeletonlabs/skeleton').then(r => r.Apollo))],
     ['BlueNight', new WeakLazy(() => import('@skeletonlabs/skeleton').then(r => r.BlueNight))],
     ['Emerald', new WeakLazy(() => import('@skeletonlabs/skeleton').then(r => r.Emerald))],
@@ -18,11 +20,12 @@
 
 <script lang="ts">
   import { ActiveFilters } from '$stores/active-filters-store';
+  import type { Component } from 'svelte';
 </script>
 
 {#each $ActiveFilters as f (f)}
   {@const filterLoader = AvailableFilters.get(f)}
-  {#await filterLoader?.value then loadedFilter}
-    <svelte:component this={loadedFilter} />
+  {#await filterLoader?.value then LoadedFilter}
+    <LoadedFilter />
   {/await}
 {/each}

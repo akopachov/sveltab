@@ -5,7 +5,7 @@
   import type { CryptoAssetRef } from './settings';
   import type { CoincapioAsset, CoincapioAssetsResponse } from './types/coincapio';
 
-  export let asset: CryptoAssetRef;
+  let { asset = $bindable() }: { asset: CryptoAssetRef } = $props();
 
   const assetsPopupSettings: PopupSettings = {
     event: 'focus-click',
@@ -26,7 +26,7 @@
       }
     },
   };
-  let assetSearchSuggestion: Required<CoincapioAsset>[] = [];
+  let assetSearchSuggestion: Required<CoincapioAsset>[] = $state([]);
 
   function selectAsset(newAsset: Required<CoincapioAsset>) {
     asset = { id: newAsset.id, name: newAsset.name, code: newAsset.symbol };
@@ -51,7 +51,7 @@
   <ul class="list">
     {#each assetSearchSuggestion as suggestion}
       <li>
-        <button class="btn variant-soft w-full mb-1 rounded-sm" on:click={() => selectAsset(suggestion)}>
+        <button class="btn variant-soft w-full mb-1 rounded-sm" onclick={() => selectAsset(suggestion)}>
           <span class="flex-auto">
             {suggestion.name} ({suggestion.symbol})
           </span>

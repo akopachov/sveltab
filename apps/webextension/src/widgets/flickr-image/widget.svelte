@@ -19,19 +19,18 @@
     activeImage: FlickrImageData | undefined;
     lastUpdate: number;
   };
-  export let settings: Settings;
-  export let id: string;
+
+  let { id, settings }: { id: string; settings: Settings } = $props();
 
   const storageKey = `Widget_FlickrImage_${id}_CachedData`;
 
-  const { searchTopic, updateInterval } = settings;
+  let latestSearchResult: CachedData | undefined = $state();
 
-  let latestSearchResult: CachedData | undefined;
-
-  $: activeImage = latestSearchResult?.activeImage;
-  $: {
-    ($searchTopic || $updateInterval || $clockStore) && pickRandomPhotoDebounced();
-  }
+  let activeImage = $derived(latestSearchResult?.activeImage);
+  $effect(() => {
+    void (settings.searchTopic.value, settings.updateInterval.value, $clockStore);
+    pickRandomPhotoDebounced();
+  });
 
   onMount(async () => {
     latestSearchResult = <CachedData>(await storage.local.get(storageKey))[storageKey] || {
@@ -57,20 +56,20 @@
       navigator.onLine &&
       (!latestSearchResult.activeImage ||
         !latestSearchResult.activeImage.sources ||
-        differenceInSeconds(Date.now(), latestSearchResult.lastUpdate) >= $updateInterval ||
-        latestSearchResult.searchTerm !== $searchTopic)
+        differenceInSeconds(Date.now(), latestSearchResult.lastUpdate) >= settings.updateInterval.value ||
+        latestSearchResult.searchTerm !== settings.searchTopic.value)
     ) {
       latestSearchResult.lastUpdate = Date.now();
-      if (latestSearchResult.images.length <= 0 || latestSearchResult.searchTerm !== $searchTopic) {
+      if (latestSearchResult.images.length <= 0 || latestSearchResult.searchTerm !== settings.searchTopic.value) {
         let page = 1;
-        if (latestSearchResult.searchTerm === $searchTopic) {
+        if (latestSearchResult.searchTerm === settings.searchTopic.value) {
           page = latestSearchResult.page + 1;
           if (page > latestSearchResult.totalPages) {
             page = 1;
           }
         }
 
-        latestSearchResult.searchTerm = $searchTopic || 'random';
+        latestSearchResult.searchTerm = settings.searchTopic.value || 'random';
         const response = await fetch(
           `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${PUBLIC_FLICKR_API_KEY}&text=${latestSearchResult.searchTerm}&safe_search=1&content_type=1&sort=interestingness-desc&per_page=20&format=json&page=${page}&nojsoncallback=1`,
         ).then(r => r.json());

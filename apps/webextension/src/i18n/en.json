@@ -302,6 +302,7 @@
 
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Line color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Axis color",
+  "Widgets_CryptoAssetQuotation_Settings_Chart_AreaFillColor": "Area fill color",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Crypto asset",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
   "Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Display currency",

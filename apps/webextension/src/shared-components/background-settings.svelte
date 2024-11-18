@@ -3,8 +3,7 @@
   import { RangeSlider } from '@skeletonlabs/skeleton';
   import ColorPicker from '$shared-components/color-picker.svelte';
 
-  export let color: string;
-  export let blur: number;
+  let { color = $bindable(), blur = $bindable() }: { color: string; blur: number } = $props();
 </script>
 
 <div class="label">
@@ -13,7 +12,6 @@
     <ColorPicker bind:color />
   </div>
 </div>
-<!-- svelte-ignore a11y-label-has-associated-control -->
 <label class="label mb-2">
   <span>{m.Widgets_Common_Settings_Background_Blur()}</span>
   <RangeSlider name="blurSlider" bind:value={blur} min={0} max={15} step={0.1} />

@@ -6,8 +6,11 @@ import {
 } from './widget-settings';
 import type { WidgetCatalogItem, WidgetCatalogItemComponents } from '$widgets/types';
 import { Widgets } from '$widgets/index';
+import { logger } from './logger';
 
 const WidgetsIndex = new Map<string, WidgetCatalogItem>(Widgets.map(c => [c.settings.type, c]));
+
+const log = logger.getSubLogger({ prefix: ['Widget Instance:'] });
 
 export class WidgetInstance {
   private constructor(
@@ -22,7 +25,8 @@ export class WidgetInstance {
   static async create(settings: WidgetSettingsInitial) {
     const catalogItem = WidgetsIndex.get(settings.type);
     if (!catalogItem) {
-      throw new Error(`Unknown widget type "${settings.type}"`);
+      log.warn('Unknown widget type', settings.type);
+      return null;
     }
     const extra = await catalogItem.components.settings.model.value;
     return new WidgetInstance(catalogItem, settings, extra);

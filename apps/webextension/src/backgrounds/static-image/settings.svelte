@@ -9,15 +9,12 @@
   import BrowserSupports, { Constraints } from '$shared-components/browser-supports.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
-  export let settings: Settings;
-  export let workspace: WorkspaceInstance;
+  let { settings, workspace }: { settings: Settings; workspace: WorkspaceInstance } = $props();
 
-  const { url, source } = settings;
-
-  let localFiles: FileList;
+  let localFiles: FileList | undefined = $state();
 
   async function onLocalFileChange() {
-    if (localFiles.length <= 0) {
+    if (!localFiles || localFiles.length <= 0) {
       return;
     }
 
@@ -26,10 +23,10 @@
     const fileExtension = fileExtensionSeparatorIndex >= 0 ? file.name.slice(fileExtensionSeparatorIndex) : '';
     const newUrl = await workspace.addInternalAsset(`static-bg-${nanoid()}${fileExtension}`, file);
     try {
-      if ($url.startsWith(OpfsSchema)) {
-        await workspace.removeInternalAsset($url);
+      if (settings.url.value.startsWith(OpfsSchema)) {
+        await workspace.removeInternalAsset(settings.url.value);
       }
-      $url = newUrl;
+      settings.url.value = newUrl;
     } catch (error) {
       await workspace.removeInternalAsset(newUrl);
       throw error;
@@ -37,28 +34,36 @@
   }
 
   async function onSourceTypeChange() {
-    if ($url.startsWith(`${OpfsSchema}://`)) {
-      await workspace.removeInternalAsset($url);
+    if (settings.url.value.startsWith(`${OpfsSchema}://`)) {
+      await workspace.removeInternalAsset(settings.url.value);
     }
-    $url = '';
+    settings.url.value = '';
   }
 </script>
 
 <RadioGroup display="flex" active="variant-filled-primary" hover="hover:variant-soft-primary">
-  <RadioItem bind:group={$source} name="source_url" value={StaticImageSource.Url} on:change={onSourceTypeChange}>
+  <RadioItem
+    bind:group={settings.source.value}
+    name="source_url"
+    value={StaticImageSource.Url}
+    on:change={onSourceTypeChange}>
     {m.Backgrounds_StaticImage_Settings_Source_Type_Url()}
   </RadioItem>
-  <RadioItem bind:group={$source} name="source_local" value={StaticImageSource.Local} on:change={onSourceTypeChange}>
+  <RadioItem
+    bind:group={settings.source.value}
+    name="source_local"
+    value={StaticImageSource.Local}
+    on:change={onSourceTypeChange}>
     {m.Backgrounds_StaticImage_Settings_Source_Type_Local()}
   </RadioItem>
 </RadioGroup>
 
-{#if $source === StaticImageSource.Url}
+{#if settings.source.value === StaticImageSource.Url}
   <label class="label">
     <span>{m.Backgrounds_StaticImage_Settings_Url()}</span>
-    <input type="url" class="input" bind:value={$url} />
+    <input type="url" class="input" bind:value={settings.url.value} />
   </label>
-{:else if $source === StaticImageSource.Local}
+{:else if settings.source.value === StaticImageSource.Local}
   <BrowserSupports constraint={Constraints.OPFS} class="!mt-4">
     <div class="mt-2 flex justify-center">
       <FileButton

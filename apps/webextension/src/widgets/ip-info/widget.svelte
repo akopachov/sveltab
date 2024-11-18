@@ -10,29 +10,14 @@
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Ip Info'] });
 
-  export let settings: Settings;
+  let { settings }: { settings: Settings } = $props();
 
-  let ipInfo: IpApiCoResponse | null = null;
+  let ipInfo: IpApiCoResponse | undefined | null = $state();
 
-  $: {
-    $online;
+  $effect(() => {
+    void $online;
     updateIpInfo();
-  }
-
-  const {
-    backgroundColor,
-    backgroundBlur,
-    textColor,
-    font: { id: fontId, weight: fontWeight },
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    showVariables,
-    textStroke: textStrokeSettings,
-  } = settings;
+  });
 
   async function updateIpInfo() {
     if (!$online) {
@@ -54,38 +39,40 @@
 
 <div
   class="w-full h-full p-4 select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)]"
-  style:background-color={$backgroundColor}
-  style:color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
-  style:--st-font-size="{$showVariables.length > 0 ? 48 / $showVariables.length : 0}cqh"
+  style:background-color={settings.backgroundColor.value}
+  style:color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:text-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
+  style:--st-font-size="{settings.showVariables.value.length > 0 ? 48 / settings.showVariables.value.length : 0}cqh"
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
+  use:textStroke={settings.textStroke}>
   <div
     class="grid grid-cols-[auto_1fr] w-full leading-normal text-[length:var(--st-font-size)] [-webkit-text-stroke:var(--sv-text-stroke)]"
-    style:grid-template-rows="repeat({$showVariables.length}, {100 / $showVariables.length}%)">
-    {#if $showVariables.includes(NetworkInfoVariables.IP)}
+    style:grid-template-rows="repeat({settings.showVariables.value.length}, {100 /
+      settings.showVariables.value.length}%)">
+    {#if settings.showVariables.value.includes(NetworkInfoVariables.IP)}
       <div class="whitespace-nowrap pr-2 content-center">IP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
         <span title={ipInfo?.ip}>{ipInfo?.ip ?? '---'}</span>
       </div>
     {/if}
 
-    {#if $showVariables.includes(NetworkInfoVariables.Network)}
+    {#if settings.showVariables.value.includes(NetworkInfoVariables.Network)}
       <div class="whitespace-nowrap pr-2 content-center">Network:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
         <span title={ipInfo?.network}>{ipInfo?.network ?? '---'}</span>
       </div>
     {/if}
 
-    {#if $showVariables.includes(NetworkInfoVariables.ISP)}
+    {#if settings.showVariables.value.includes(NetworkInfoVariables.ISP)}
       <div class="whitespace-nowrap pr-2 content-center">ISP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
         <span title={ipInfo?.org}>{ipInfo?.org ?? '---'}</span>

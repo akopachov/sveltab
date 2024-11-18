@@ -6,6 +6,8 @@ import type { Settings } from './settings';
 import { differenceInHours, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import type { BingSupportedMarkets } from './types';
+import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
@@ -15,10 +17,56 @@ interface LocalSettings {
   lastChangedTime: number;
 }
 
-function getClosestResolution(nodeWidth: number) {
-  if (nodeWidth > 1920) return 3840;
-  if (nodeWidth > 1366) return 1920;
-  return 1366;
+type BingApiResponse = { images: { urlbase: string }[] };
+
+const BingAvailableMarkets: BingSupportedMarkets[] = [
+  'en-US',
+  'zh-CN',
+  'ja-JP',
+  'en-AU',
+  'en-GB',
+  'de-DE',
+  'en-NZ',
+  'en-CA',
+  'en-IN',
+  'fr-FR',
+  'fr-CA',
+];
+
+const BingResolutionMap = [
+  { width: 240, height: 320, resolution: '240x320' },
+  { width: 320, height: 240, resolution: '320x240' },
+  { width: 400, height: 240, resolution: '400x240' },
+  { width: 480, height: 800, resolution: '480x800' },
+  { width: 640, height: 480, resolution: '640x480' },
+  { width: 720, height: 1280, resolution: '720x1280' },
+  { width: 768, height: 1280, resolution: '768x1280' },
+  { width: 800, height: 480, resolution: '800x480' },
+  { width: 800, height: 600, resolution: '800x600' },
+  { width: 1024, height: 768, resolution: '1024x768' },
+  { width: 1280, height: 768, resolution: '1280x768' },
+  { width: 1366, height: 768, resolution: '1366x768' },
+  { width: 1920, height: 1080, resolution: '1920x1080' },
+  { width: 1920, height: 1200, resolution: '1920x1200' },
+  { width: 3840, height: 2160, resolution: 'UHD' },
+];
+
+function getClosestResolution(nodeWidth: number, nodeHeight: number) {
+  for (const res of BingResolutionMap) {
+    if (res.width >= nodeWidth && res.height >= nodeHeight) {
+      return res.resolution;
+    }
+  }
+
+  return BingResolutionMap.at(-1)!.resolution;
+}
+
+function getClosestMarket(locale: BingSupportedMarkets | 'random') {
+  if (locale === 'random') {
+    return BingAvailableMarkets[Math.floor(Math.random() * BingAvailableMarkets.length)];
+  }
+
+  return locale;
 }
 
 export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
@@ -72,19 +120,20 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     ) {
       try {
         const response = await fetch(
-          `https://bing.biturl.top/?resolution=${getClosestResolution(this.node.offsetWidth)}&format=json&index=0&mkt=${
-            this.settings.locale.value
-          }&image_format=jpg`,
+          getCorsFriendlyUrl(
+            `https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=${getClosestMarket(this.settings.locale.value)}`,
+          ),
           {
             signal: abortSignal,
           },
-        ).then(r => r.json());
-        if (!response?.url) {
+        ).then<BingApiResponse>(r => r.json());
+        if (!response?.images || response.images.length <= 0) {
           throw new Error('Unexpected response');
         }
         this.#localSettings!.lastLocale = this.settings.locale.value;
         this.#localSettings!.lastChangedTime = Date.now();
-        const newSrc = await getImageCdnUrl(response.url, 'screen', 'screen', this.settings.resizeType.value);
+        const bingImageUrl = `https://bing.com${response.images[0].urlbase}_${getClosestResolution(this.node.offsetWidth, this.node.offsetHeight)}.jpg`;
+        const newSrc = await getImageCdnUrl(bingImageUrl, 'screen', 'screen', this.settings.resizeType.value);
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {

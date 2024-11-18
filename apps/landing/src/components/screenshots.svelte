@@ -68,6 +68,7 @@
             <div class="embla__container w-full h-full">
               {#each screenshots as screenshot, i}
                 <div class="flex-[0_0_100%] w-full h-full">
+                  <!-- svelte-ignore a11y_consider_explicit_label -->
                   <button
                     class="embla__slide__number cursor-default md:cursor-pointer"
                     on:click={e => openScreenshotDialog(e, screenshot)}>

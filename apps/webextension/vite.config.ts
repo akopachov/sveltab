@@ -29,5 +29,10 @@ export default async ({ mode }: { mode: string }) => {
       }),
       purgeCss(),
     ],
+    build: {
+      commonjsOptions: {
+        transformMixedEsModules: true,
+      },
+    },
   });
 };

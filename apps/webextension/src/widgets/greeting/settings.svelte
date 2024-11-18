@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   import * as m from '$i18n/messages';
 
   const TextTabId = 1;
@@ -20,21 +20,26 @@
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { name, font, textColor, backgroundColor, backgroundBlur } = settings;
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
   <label class="label mb-2">
     <span>{m.Widgets_Greeting_Settings_Name()}</span>
-    <input type="text" class="input" bind:value={$name} />
+    <input type="text" class="input" bind:value={settings.name.value} />
   </label>
 {:else if tab === TextTabId}
-  <TextSettings {font} bind:color={$textColor} shadow={settings.textShadow} stroke={settings.textStroke} />
+  <TextSettings
+    font={settings.font}
+    bind:color={settings.textColor.value}
+    shadow={settings.textShadow}
+    stroke={settings.textStroke} />
 {:else if tab === BackgroundTabId}
-  <BackgroundSettings bind:color={$backgroundColor} bind:blur={$backgroundBlur} />
+  <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}

@@ -1,5 +1,5 @@
 <script lang="ts">
-  export let styles: string;
+  let { styles = $bindable() }: { styles: string } = $props();
 </script>
 
 <textarea bind:value={styles} class="textarea font-mono"></textarea>

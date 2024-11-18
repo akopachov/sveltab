@@ -23,8 +23,8 @@ export const dynamicBackground: Action<
   HTMLElement,
   BackgroundInstance | undefined | null,
   {
-    'on:backgroundChanged': (e: CustomEvent) => void;
-    'on:cornerColorChanged': (e: CustomEvent<BackgroundCornerColorChangedEventArgs>) => void;
+    onbackgroundChanged: (e: CustomEvent) => void;
+    oncornerColorChanged: (e: CustomEvent<BackgroundCornerColorChangedEventArgs>) => void;
   }
 > = function (node: HTMLElement, background: BackgroundInstance | undefined | null) {
   let backgroundProviderDestroyPromise: Promise<() => void> | undefined;

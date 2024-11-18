@@ -31,23 +31,18 @@
   import DataManage from '$shared-components/data-manage.svelte';
   import { secondsToMilliseconds } from 'date-fns';
   import { Workspaces } from '$stores/workspace-index';
-  import { useObservable } from '$lib/observable';
   import CustomStyles from '$shared-components/custom-styles.svelte';
   import { customStyles as customCss } from '$actions/custom-styles';
   import WidgetMoveController from '$shared-components/widget-move-controller.svelte';
   import FaviconSettings from '$shared-components/favicon-settings.svelte';
   import Favicon from '$shared-components/favicon.svelte';
   import { forceNextBackground, forcePreviousBackground } from '$actions/dynamic-background';
+  import { SvelteSet } from 'svelte/reactivity';
 
   const drawerStore = getDrawerStore();
 
-  let workspaceId: string;
-  let workspace: WorkspaceInstance | undefined;
-
-  $: background = workspace?.background;
-  $: customStyles = workspace?.customStyles || useObservable('');
-  $: widgets = workspace?.widgets || useObservable(new Set<WidgetInstance>());
-  $: hasChanges = workspace?.hasChanges || useObservable(false);
+  let workspaceId: string = $state('');
+  let workspace: WorkspaceInstance | undefined = $state();
 
   onMount(async () => {
     ({ id: workspaceId, workspace: workspace } = await Workspaces.getDefault());
@@ -59,23 +54,22 @@
     }
   });
 
-  let workspaceEl: HTMLElement;
-  let selectedWidgets = new Set<WidgetInstance>();
-  let moveable: WidgetMoveController;
-  let widgetSettingsVisible = false;
-  let menuButtonColor = '#fff';
-  let menuButtonBackgroundColor = 'transparent';
-  $: workspaceLocked = workspace?.isLocked || useObservable(true);
-  $: {
-    if ($workspaceLocked) {
+  let workspaceEl: HTMLElement | undefined = $state();
+  let selectedWidgets = $state(new SvelteSet<WidgetInstance>());
+  let moveable: ReturnType<typeof WidgetMoveController> | undefined = $state();
+  let widgetSettingsVisible = $state(false);
+  let menuButtonColor = $state('#fff');
+  let menuButtonBackgroundColor = $state('transparent');
+  $effect(() => {
+    if (workspace?.isLocked.value === true) {
       moveable?.unselectAll();
     }
-  }
-  $: {
-    if ($hasChanges === true) {
+  });
+  $effect(() => {
+    if (workspace && workspace.hasChanges.value === true) {
       saveWorkspaceChangesDefer();
     }
-  }
+  });
 
   const widgetSettingsPopupSettings: PopupSettings = {
     event: 'click',
@@ -118,9 +112,9 @@
   }
 
   async function onWidgetCatalogItemClick(widgetSettings: CatalogWidgetSettingsInitial) {
-    if (!workspace) return;
+    if (!workspace || !workspaceEl) return;
     const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-    $workspaceLocked = false;
+    workspace.isLocked.value = false;
     await workspace.addWidget({
       ...widgetSettings,
       position: {
@@ -139,14 +133,14 @@
   }
 
   async function onWidgetCatalogItemDragDrop(e: DragEvent) {
-    if (e.dataTransfer) {
+    if (e.dataTransfer && workspaceEl) {
       e.preventDefault();
       if (!workspace) return;
       const plainData = e.dataTransfer.getData('text/json');
       if (!plainData) return;
       const widgetSettings = <CatalogWidgetSettingsInitial>JSON.parse(plainData);
       const cqminBase = Math.min(workspaceEl.clientWidth, workspaceEl.clientHeight);
-      $workspaceLocked = false;
+      workspace.isLocked.value = false;
       await workspace.addWidget({
         ...widgetSettings,
         position: {
@@ -165,10 +159,10 @@
     }
   }
 
-  function onWidgetDelete(e: CustomEvent<WidgetInstance>) {
+  function onWidgetDelete(e: WidgetInstance) {
     if (!workspace) return;
-    moveable?.unselect(e.detail);
-    workspace.removeWidget(e.detail);
+    moveable?.unselect(e);
+    workspace.removeWidget(e);
   }
 
   async function onBackgroundTypeChanged(e: Event) {
@@ -193,10 +187,12 @@
 </script>
 
 <svelte:window on:beforeunload={onBeforeUnload} />
-<svelte:document use:customCss={$customStyles} />
+<svelte:document use:customCss={workspace?.customStyles.value} />
 
 <svelte:head>
-  <Favicon workspaceInstance={workspace} />
+  {#if workspace}
+    <Favicon workspaceInstance={workspace} />
+  {/if}
 </svelte:head>
 
 <Drawer>
@@ -214,8 +210,8 @@
                 widgetCatalogItem={item}
                 class="aspect-square"
                 draggable
-                on:dragstart={ev => onWidgetCatalogItemDragStart(ev, item)}
-                on:click={() => onWidgetCatalogItemClick(item.settings)} />
+                ondragstart={(ev: any) => onWidgetCatalogItemDragStart(ev, item)}
+                onclick={() => onWidgetCatalogItemClick(item.settings)} />
             {/each}
           </div>
         </svelte:fragment>
@@ -226,15 +222,17 @@
         </svelte:fragment>
         <svelte:fragment slot="summary">{m.Core_Sidebar_Background()}</svelte:fragment>
         <svelte:fragment slot="content">
-          <select class="select" on:change={onBackgroundTypeChanged}>
+          <select class="select" onchange={onBackgroundTypeChanged}>
             {#each Backgrounds as item, index (item.settings.type)}
-              <option value={index} selected={$background?.settings?.type === item.settings.type}>{item.name()}</option>
+              <option value={index} selected={workspace?.background.value.settings.type === item.settings.type}>
+                {item.name()}
+              </option>
             {/each}
           </select>
           <hr />
-          {#if $background}
-            {#await $background.components.settings.component.value then component}
-              <svelte:component this={component} settings={$background.settings.extra} {workspace} />
+          {#if workspace?.background.value}
+            {#await workspace.background.value.components.settings.component.value then BgSettingsComponent}
+              <BgSettingsComponent settings={workspace.background.value.settings.extra} {workspace} />
             {/await}
           {/if}
         </svelte:fragment>
@@ -249,11 +247,13 @@
             <span>{m.Core_Sidebar_Settings_ColorScheme()}</span>
             <Lightswitch />
           </div>
-          <div>
-            <span>{m.Favicon_Settings_Label()}</span>
-            <FaviconSettings workspaceInstance={workspace} />
-          </div>
-          <!-- svelte-ignore a11y-label-has-associated-control -->
+          {#if workspace}
+            <div>
+              <span>{m.Favicon_Settings_Label()}</span>
+              <FaviconSettings workspaceInstance={workspace} />
+            </div>
+          {/if}
+          <!-- svelte-ignore a11y_label_has_associated_control -->
           <label class="label">
             <span>{m.Core_Sidebar_Settings_Language()}</span>
             <LanguageSelector />
@@ -263,7 +263,7 @@
             <DataManage
               bind:activeWorkspaceId={workspaceId}
               bind:activeWorkspace={workspace}
-              on:dataImported={() => drawerStore.close()} />
+              dataImported={() => drawerStore.close()} />
           </div>
         </svelte:fragment>
       </AccordionItem>
@@ -273,10 +273,12 @@
         </svelte:fragment>
         <svelte:fragment slot="summary">{m.Core_Sidebar_Advanced()}</svelte:fragment>
         <svelte:fragment slot="content">
-          <div class="label">
-            <span>{m.Core_Sidebar_Advanced_CustomStyles()}</span>
-            <CustomStyles bind:styles={$customStyles} />
-          </div>
+          {#if workspace}
+            <div class="label">
+              <span>{m.Core_Sidebar_Advanced_CustomStyles()}</span>
+              <CustomStyles bind:styles={workspace.customStyles.value} />
+            </div>
+          {/if}
         </svelte:fragment>
       </AccordionItem>
     </Accordion>
@@ -286,11 +288,11 @@
       </a>
     </div>
     <div class="block mt-auto">
-      <!-- svelte-ignore a11y-label-has-associated-control -->
+      <!-- svelte-ignore a11y_label_has_associated_control -->
       <label class="label flex justify-center items-center mb-3">
         <span>{m.Core_Sidebar_LockWorkspace()}</span>
         {#if workspace}
-          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={$workspaceLocked} size="sm" />
+          <SlideToggle name="stWorkspaceEditMode" class="ml-3" bind:checked={workspace.isLocked.value} size="sm" />
         {/if}
       </label>
       <span class="block text-[10px] p-2 leading-none">{m.Core_Version({ version })}</span>
@@ -298,98 +300,106 @@
   </div>
 </Drawer>
 <AppShell>
-  <!-- svelte-ignore a11y-no-static-element-interactions -->
-  <div
-    class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
-    on:drop={onWidgetCatalogItemDragDrop}
-    on:dragover={onWidgetCatalogItemDragOver}
-    bind:this={workspaceEl}>
+  {#if workspace}
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div
-      class="absolute w-full h-full -z-10"
-      use:dynamicBackground={$background}
-      on:cornerColorChanged={cornerColorChanged}>
-    </div>
-    <div
-      class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[172px]">
-      <div class="w-max flex flex-row">
-        <button
-          type="button"
-          class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
-          style:color={menuButtonColor}
-          style:--st-bg-color={menuButtonBackgroundColor}
-          title={m.Core_MainMenu_Menu_Title()}
-          on:click={openWidgetsMenu}>
-          <span class="w-6 h-6 icon-[tdesign--menu-application]"></span>
-        </button>
-        <button
-          type="button"
-          class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
-          style:color={menuButtonColor}
-          style:--st-bg-color={menuButtonBackgroundColor}
-          on:click={() => ($workspaceLocked = !$workspaceLocked)}
-          title={$workspaceLocked
-            ? m.Core_MainMenu_LockWorkspaceToggle_Title_Unlock()
-            : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
-          <span class="w-6 h-6 {$workspaceLocked ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}"></span>
-        </button>
-        {#if $ActiveBackgroundProvider?.canGoBack === true}
-          <button
-            type="button"
-            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
-            style:color={menuButtonColor}
-            style:--st-bg-color={menuButtonBackgroundColor}
-            on:click={() => forcePreviousBackground()}
-            title={m.Core_MainMenu_PreviousBackground_Title()}>
-            <span class="w-7 h-7 icon-[carbon--previous-outline]"></span>
-          </button>
-        {/if}
-        {#if $ActiveBackgroundProvider?.canGoNext === true}
-          <button
-            type="button"
-            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
-            style:color={menuButtonColor}
-            style:--st-bg-color={menuButtonBackgroundColor}
-            on:click={() => forceNextBackground()}
-            title={m.Core_MainMenu_NextBackground_Title()}>
-            <span class="w-7 h-7 icon-[carbon--next-outline]"></span>
-          </button>
-        {/if}
+      class="[container-type:size] w-screen h-screen overflow-hidden max-w-[100vw] max-h-[100vh] workspace"
+      ondrop={onWidgetCatalogItemDragDrop}
+      ondragover={onWidgetCatalogItemDragOver}
+      bind:this={workspaceEl}>
+      <div
+        class="absolute w-full h-full -z-10"
+        use:dynamicBackground={workspace.background.value}
+        oncornerColorChanged={cornerColorChanged}>
       </div>
-    </div>
-    {#key workspace}
-      {#each $widgets as widget (widget.id)}
-        <WidgetFactorty
-          {widget}
-          {widgetSettingsPopupSettings}
-          on:delete={onWidgetDelete}
-          showControls={!$workspaceLocked && selectedWidgets.has(widget) && selectedWidgets.size === 1}
-          class="widget widget_{widget.settings.type}"
-          controlsClassName="widget-control"
-          workspaceLocked={$workspaceLocked}
-          on:autosettingsupdate={saveWorkspaceChanges} />
-      {/each}
-    {/key}
-    {#if !$workspaceLocked}
-      <WidgetMoveController
-        bind:this={moveable}
-        bind:selected={selectedWidgets}
-        widgets={$widgets}
-        workspace={workspaceEl}
-        widgetControlsZone=".widget-control" />
-    {/if}
-  </div>
-  <div
-    class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
-    data-popup={widgetSettingsPopupSettings.target}
-    style:visibility={!$workspaceLocked && selectedWidgets.size === 1 ? 'visible' : 'hidden'}>
-    {#if widgetSettingsVisible}
-      {@const [widget, totalCount] = firstOfSet(selectedWidgets)}
-      {#if totalCount === 1}
-        <WidgetSettingsComponent {widget} workspace={workspaceEl} />
+      <div
+        class="fixed left-0 top-0 z-[99999] h-[43px] w-[43px] overflow-hidden transition-[width] hoverable:hover:w-[172px]">
+        <div class="w-max flex flex-row">
+          <!-- svelte-ignore a11y_consider_explicit_label -->
+          <button
+            type="button"
+            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+            style:color={menuButtonColor}
+            style:--st-bg-color={menuButtonBackgroundColor}
+            title={m.Core_MainMenu_Menu_Title()}
+            onclick={openWidgetsMenu}>
+            <span class="w-6 h-6 icon-[tdesign--menu-application]"></span>
+          </button>
+          <!-- svelte-ignore a11y_consider_explicit_label -->
+          <button
+            type="button"
+            class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+            style:color={menuButtonColor}
+            style:--st-bg-color={menuButtonBackgroundColor}
+            onclick={() => (workspace!.isLocked.value = !workspace!.isLocked.value)}
+            title={workspace!.isLocked.value
+              ? m.Core_MainMenu_LockWorkspaceToggle_Title_Unlock()
+              : m.Core_MainMenu_LockWorkspaceToggle_Title_Lock()}>
+            <span
+              class="w-6 h-6 {workspace!.isLocked.value ? 'icon-[ic--twotone-lock]' : 'icon-[ic--round-lock-open]'}">
+            </span>
+          </button>
+          {#if $ActiveBackgroundProvider?.canGoBack === true}
+            <!-- svelte-ignore a11y_consider_explicit_label -->
+            <button
+              type="button"
+              class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+              style:color={menuButtonColor}
+              style:--st-bg-color={menuButtonBackgroundColor}
+              onclick={() => forcePreviousBackground()}
+              title={m.Core_MainMenu_PreviousBackground_Title()}>
+              <span class="w-7 h-7 icon-[carbon--previous-outline]"></span>
+            </button>
+          {/if}
+          {#if $ActiveBackgroundProvider?.canGoNext === true}
+            <!-- svelte-ignore a11y_consider_explicit_label -->
+            <button
+              type="button"
+              class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
+              style:color={menuButtonColor}
+              style:--st-bg-color={menuButtonBackgroundColor}
+              onclick={() => forceNextBackground()}
+              title={m.Core_MainMenu_NextBackground_Title()}>
+              <span class="w-7 h-7 icon-[carbon--next-outline]"></span>
+            </button>
+          {/if}
+        </div>
+      </div>
+      {#key workspace}
+        {#each workspace.widgets as widget (widget.id)}
+          <WidgetFactorty
+            {widget}
+            {widgetSettingsPopupSettings}
+            delete={onWidgetDelete}
+            showControls={!workspace!.isLocked.value && selectedWidgets.has(widget) && selectedWidgets.size === 1}
+            class="widget widget_{widget.settings.type}"
+            controlsClassName="widget-control"
+            workspaceLocked={workspace!.isLocked.value}
+            onautosettingsupdate={saveWorkspaceChanges} />
+        {/each}
+      {/key}
+      {#if !workspace!.isLocked.value}
+        <WidgetMoveController
+          bind:this={moveable}
+          bind:selected={selectedWidgets}
+          widgets={workspace.widgets}
+          workspace={workspaceEl}
+          widgetControlsZone=".widget-control" />
       {/if}
-    {/if}
-  </div>
-  <WidgetFilters />
+    </div>
+    <div
+      class="card p-2 w-fit max-w-[100cqw] shadow-xl [z-index:99999]"
+      data-popup={widgetSettingsPopupSettings.target}
+      style:visibility={!workspace!.isLocked.value && selectedWidgets.size === 1 ? 'visible' : 'hidden'}>
+      {#if widgetSettingsVisible}
+        {@const [widget, totalCount] = firstOfSet(selectedWidgets)}
+        {#if totalCount === 1}
+          <WidgetSettingsComponent {widget} workspace={workspaceEl} />
+        {/if}
+      {/if}
+    </div>
+    <WidgetFilters />
+  {/if}
 </AppShell>
 
 <style>

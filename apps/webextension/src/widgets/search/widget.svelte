@@ -8,18 +8,7 @@
   import { SearchProviders } from './providers';
   import { textStroke } from '$actions/text-stroke';
 
-  export let settings: Settings;
-  export let id: string;
-
-  const {
-    searchProvider,
-    backgroundBlur,
-    backgroundColor,
-    textColor,
-    font: { id: fontId, weight: fontWeight },
-    searchSuggestionEnabled,
-    textStroke: textStrokeSettings,
-  } = settings;
+  let { settings, id }: { settings: Settings; id: string } = $props();
 
   const popupSettings: PopupSettings = {
     event: 'focus-click',
@@ -30,7 +19,7 @@
   const debounceOpts: DebounceOptions = {
     ms: 500,
     callback: async str => {
-      if ($searchSuggestionEnabled && str?.length > 2 && searchProviderAdapter && navigator.onLine) {
+      if (settings.searchSuggestionEnabled.value && str?.length > 2 && searchProviderAdapter && navigator.onLine) {
         searchSuggestions = await searchProviderAdapter.getSuggestion(str);
       } else {
         searchSuggestions = [];
@@ -38,19 +27,14 @@
     },
   };
 
-  let searchTerm: string = '';
-  let searchSuggestions: string[] = [];
-  let searchSuggestionContainerEl: HTMLElement;
+  let searchTerm: string = $state('');
+  let searchSuggestions: string[] = $state([]);
+  let searchSuggestionContainerEl: HTMLElement | undefined = $state();
 
-  $: searchProviderAdapter = SearchProviders.get($searchProvider);
+  let searchProviderAdapter = $derived(SearchProviders.get(settings.searchProvider.value));
 
-  $: {
-    if (!searchTerm) {
-      searchSuggestions = [];
-    }
-  }
-
-  function doSearch() {
+  function doSearch(e: Event) {
+    e.preventDefault();
     if (searchTerm) {
       if (searchProviderAdapter) {
         location.assign(searchProviderAdapter.searchUrl(searchTerm));
@@ -70,7 +54,7 @@
       index--;
     }
 
-    if (index >= 0 && index < searchSuggestions.length) {
+    if (index >= 0 && index < searchSuggestions.length && searchSuggestionContainerEl) {
       const nextElement = searchSuggestionContainerEl.querySelector(`a[tabindex="${index}"]`);
       if (nextElement instanceof HTMLElement) {
         nextElement.focus();
@@ -81,23 +65,23 @@
 
 <div
   class="contents rounded-[inherit]"
-  style:--st-background-color={$backgroundColor}
-  style:--st-text-color={$textColor}
-  style:--st-font-weight={$fontWeight}
-  style:--st-background-blur="{$backgroundBlur}px">
+  style:--st-background-color={settings.backgroundColor.value}
+  style:--st-text-color={settings.textColor.value}
+  style:--st-font-weight={settings.font.weight.value}
+  style:--st-background-blur="{settings.backgroundBlur.value}px">
   <div
     class="input-group border-none flex w-full h-full rounded-[inherit] !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     use:fontsource={{
-      font: $fontId,
+      font: settings.font.id.value,
       subsets: $userPosssibleLocaleCharSubset,
       styles: ['normal'],
-      weights: [$fontWeight],
+      weights: [settings.font.weight.value],
     }}
-    use:textStroke={textStrokeSettings}>
+    use:textStroke={settings.textStroke}>
     <div class="input-group-shim h-full w-auto !p-[calc(15cqh-var(--st-border-size)/2)] aspect-square bg-transparent">
       <span class="w-full h-full {searchProviderAdapter?.iconClass || ''}"></span>
     </div>
-    <form on:submit|preventDefault={doSearch} class="w-full">
+    <form onsubmit={doSearch} class="w-full">
       <input
         type="search"
         name="searchQuery"
@@ -113,10 +97,10 @@
     class="w-full ml-[-50cqh] rounded !text-[var(--st-text-color)] !bg-[var(--st-background-color)] !font-[var(--st-font-weight)] !backdrop-blur-[var(--st-background-blur)]"
     data-popup={popupSettings.target}
     style:visibility={searchSuggestions.length > 0 ? 'visible' : 'hidden'}>
-    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
     <nav
       class="list-nav text-[calc(70cqh-1rem)] [-webkit-text-stroke:var(--sv-text-stroke)]"
-      on:keydown={onSuggestionKeyDown}
+      onkeydown={onSuggestionKeyDown}
       bind:this={searchSuggestionContainerEl}>
       <ul>
         {#each searchSuggestions as suggestion, index}

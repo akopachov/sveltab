@@ -12,16 +12,27 @@
   } from 'svelte-moveable';
   import Selecto, { type OnDragStart, type OnSelectEnd } from 'svelte-selecto';
 
-  export let selected: Set<WidgetInstance>;
-  export let widgets: ReadonlySet<WidgetInstance>;
-  export let workspace: HTMLElement;
-  export let widgetControlsZone: string;
+  let {
+    widgets,
+    selected = $bindable(new Set()),
+    workspace,
+    widgetControlsZone,
+  }: {
+    widgets: ReadonlySet<WidgetInstance>;
+    selected: Set<WidgetInstance>;
+    workspace: HTMLElement;
+    widgetControlsZone: string;
+  } = $props();
 
-  $: snappableList = [...Array.from(widgets, m => (selected.has(m) ? null : `#${m.htmlElementId}`)), workspace];
-  $: widgetElementMap = new Map(Array.from(widgets, m => [m.htmlElementId, m]));
-  $: selectedWidgetHtmlElementsMap = new Map(Array.from(selected, m => [m.htmlElementId, m]));
+  let snappableList = $derived([
+    ...Array.from(widgets, m => (selected.has(m) ? null : `#${m.htmlElementId}`)),
+    workspace,
+  ]);
+  let widgetElementMap = $derived(new Map(Array.from(widgets, m => [m.htmlElementId, m])));
+  let selectedWidgetHtmlElementsMap = $derived(new Map(Array.from(selected, m => [m.htmlElementId, m])));
 
-  let moveableRef: Moveable;
+  let moveableRef: any = $state();
+  let moveableInstance: Moveable | undefined = $derived(moveableRef?.getInstance());
   const unspecified: any = undefined;
 
   function select(widget: WidgetInstance, selectedWidgetEl: HTMLElement) {
@@ -119,12 +130,12 @@
         ev.target.style.top = `${ev.lastEvent.drag.top}px`;
       }
     });
-    setTimeout(() => moveableRef.updateRect());
+    setTimeout(() => moveableInstance?.updateRect());
   }
 
   function onDragStart({ detail: e }: CustomEvent<OnDragStart>) {
     let target = <HTMLElement | null>e.inputEvent.target;
-    if (target && moveableRef.isMoveableElement(target)) {
+    if (target && moveableInstance?.isMoveableElement(target)) {
       e.stop();
     } else {
       let widget = null;
@@ -145,8 +156,8 @@
   function onSelectEnd({ detail: e }: CustomEvent<OnSelectEnd>) {
     if (e.isDragStart) {
       e.inputEvent.preventDefault();
-      moveableRef.waitToChangeTarget().then(() => {
-        moveableRef.dragStart(e.inputEvent);
+      moveableInstance?.waitToChangeTarget().then(() => {
+        moveableInstance?.dragStart(e.inputEvent);
       });
     }
 

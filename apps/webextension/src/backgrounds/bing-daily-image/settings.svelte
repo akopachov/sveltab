@@ -4,14 +4,12 @@
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
-  export let settings: Settings;
-
-  const { locale } = settings;
+  let { settings }: { settings: Settings } = $props();
 </script>
 
 <label class="label">
   <span>{m.Backgrounds_BingDaily_Settings_Country()}</span>
-  <select class="select" bind:value={$locale}>
+  <select class="select" bind:value={settings.locale.value}>
     <option value="random">{m.Backgrounds_BingDaily_Settings_Country_Any()}</option>
     <option value="en-AU">{m.Backgrounds_BingDaily_Settings_Country_Australia()}</option>
     <option value="en-CA">{m.Backgrounds_BingDaily_Settings_Country_Canada()}</option>

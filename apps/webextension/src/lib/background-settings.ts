@@ -1,4 +1,4 @@
-import type { Unobserved } from './observable';
+import type { Unobserved } from './observable.svelte';
 
 export type BackgroundSettingsInitial = Partial<BackgroundSettings> & Required<Pick<BackgroundSettings, 'type'>>;
 

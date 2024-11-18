@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
   const monthNames = [
     'January',
     'February',
@@ -36,33 +36,20 @@
 
   type CachedGreetings = { pool: string[]; lastUpdateDate: number; hour: number; locale: typeof $locale };
 
-  export let settings: Settings;
-  export let id: string;
+  let { id, settings }: { id: string; settings: Settings } = $props();
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Greeting'] });
   const clockStore = getPreciselyAlignedClockStore(hoursToMilliseconds(1));
   const storageKey = `Widget_Greeting_${id}_CachedPool`;
 
-  $: updateGreetingsPool($clockStore, $locale);
-  $: cache && updateGreeting(cache.pool, $name);
+  $effect(() => {
+    updateGreetingsPool($clockStore, $locale);
+  });
 
-  const {
-    name,
-    font: { id: fontId, weight: fontWeight, size: fontSize },
-    textColor,
-    backgroundColor,
-    backgroundBlur,
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    textStroke: textStrokeSettings,
-  } = settings;
-
-  let currentGreeting: string | null = null;
-  let cache: CachedGreetings | null = null;
+  let cache: CachedGreetings | undefined | null = $state.raw();
+  let currentGreeting: string | undefined | null = $derived(
+    cache ? updateGreeting(cache.pool, settings.name.value) : undefined,
+  );
 
   onMount(async () => {
     cache = <CachedGreetings>(await storage.local.get(storageKey))[storageKey] || {
@@ -111,29 +98,30 @@
       if (name) {
         greeting = greeting.replace(namePlaceholder, name);
       }
-      currentGreeting = greeting;
-    } else {
-      currentGreeting = null;
+      return greeting;
     }
+
+    return null;
   }
 </script>
 
 <div
   class="w-full h-full p-2 select-none flex justify-center content-center items-center flex-col backdrop-blur-[var(--st-blur)]"
-  style:background-color={$backgroundColor}
-  style:color={$textColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:text-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
-  style:font-size="{$fontSize}cqmin"
+  style:background-color={settings.backgroundColor.value}
+  style:color={settings.textColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:text-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
+  style:font-size="{settings.font.size.value}cqmin"
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: $localeCharSubset,
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
+  use:textStroke={settings.textStroke}>
   <p class="text-[calc(85cqh-1rem)] text-center leading-tight [-webkit-text-stroke:var(--sv-text-stroke)]">
     {currentGreeting || ''}
   </p>

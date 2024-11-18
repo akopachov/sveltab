@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script module lang="ts">
   const Tabs: never[] = [];
 </script>
 
@@ -6,17 +6,18 @@
   import type { Settings } from './settings';
   import * as m from '$i18n/messages';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
+  import { onMount } from 'svelte';
 
-  export let settings: Settings;
-  export let tab: number;
-  export const tabs = Tabs;
+  let { settings, tabs = $bindable(), tab }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
-  const { html } = settings;
+  onMount(() => {
+    tabs = Tabs;
+  });
 </script>
 
 {#if tab === GeneralTabId}
   <div class="label mb-2">
     <span>{m.Widgets_Html_Settings_Html()}</span>
-    <textarea class="textarea" bind:value={$html}></textarea>
+    <textarea class="textarea" bind:value={settings.html.value}></textarea>
   </div>
 {/if}

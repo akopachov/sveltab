@@ -2,13 +2,12 @@
   import { type Settings, type WallhavenPurity, WallhavenSearchColors } from './settings';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
-  import { nanoid } from 'nanoid/non-secure';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
 
-  export let settings: Settings;
-  const { searchTerms, apiKey, purity, colors } = settings;
-  let updateInterval = settings.updateInterval.value / 60;
+  let { settings }: { settings: Settings } = $props();
+
+  let updateInterval = $state(settings.updateInterval.value / 60);
 
   enum ContentPurity {
     SFW = 0,
@@ -16,14 +15,14 @@
     NSFW = 2,
   }
 
-  $: {
+  $effect(() => {
     settings.updateInterval.value = Math.max(updateInterval, 1) * 60;
-  }
+  });
 
   function updatePurity(target: HTMLInputElement, value: ContentPurity) {
-    const purities = $purity.split('');
+    const purities = settings.purity.value.split('');
     purities[value] = target.checked ? '1' : '0';
-    $purity = <WallhavenPurity>purities.join('');
+    settings.purity.value = <WallhavenPurity>purities.join('');
   }
 </script>
 
@@ -32,12 +31,12 @@
   <input
     type="search"
     class="input"
-    bind:value={$searchTerms}
+    bind:value={settings.searchTerms.value}
     placeholder={m.Backgrounds_Wallhaven_Settings_SearchTerms_Placeholder()} />
 </label>
 <label class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_ApiKey()}</span>
-  <input type="password" class="input" autocomplete={nanoid()} bind:value={$apiKey} />
+  <input type="password" class="input" autocomplete="off" bind:value={settings.apiKey.value} />
 </label>
 <div class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_Purity()}</span>
@@ -46,25 +45,25 @@
       <input
         class="checkbox"
         type="checkbox"
-        checked={$purity[0] === '1'}
-        on:change={e => updatePurity(e.currentTarget, ContentPurity.SFW)} />
+        checked={settings.purity.value[0] === '1'}
+        onchange={e => updatePurity(e.currentTarget, ContentPurity.SFW)} />
       <span>{m.Backgrounds_Wallhaven_Settings_Purity_SFW()}</span>
     </label>
     <label class="flex items-center space-x-2">
       <input
         class="checkbox"
         type="checkbox"
-        checked={$purity[1] === '1'}
-        on:change={e => updatePurity(e.currentTarget, ContentPurity.Sketchy)} />
+        checked={settings.purity.value[1] === '1'}
+        onchange={e => updatePurity(e.currentTarget, ContentPurity.Sketchy)} />
       <span>{m.Backgrounds_Wallhaven_Settings_Purity_Sketchy()}</span>
     </label>
-    {#if $apiKey}
+    {#if settings.apiKey.value}
       <label class="flex items-center space-x-2">
         <input
           class="checkbox"
           type="checkbox"
-          checked={$purity[2] === '1'}
-          on:change={e => updatePurity(e.currentTarget, ContentPurity.NSFW)} />
+          checked={settings.purity.value[2] === '1'}
+          onchange={e => updatePurity(e.currentTarget, ContentPurity.NSFW)} />
         <span>{m.Backgrounds_Wallhaven_Settings_Purity_NSFW()}</span>
       </label>
     {/if}
@@ -77,13 +76,13 @@
       <label
         style:--sv-outline-color="#{color}"
         class="[&>input:checked_~_span]:outline-[var(--sv-outline-color)] [&>input:checked~span]:outline-4 [&>input:checked~span]:outline aspect-square">
-        <input type="checkbox" class="hidden" value={color} bind:group={$colors} />
+        <input type="checkbox" class="hidden" value={color} bind:group={settings.colors.value} />
         <span style:background-color="#{color}" class="block w-full h-full cursor-pointer"></span>
       </label>
     {/each}
   </div>
 </div>
-<!-- svelte-ignore a11y-label-has-associated-control -->
+<!-- svelte-ignore a11y_label_has_associated_control -->
 <label class="label">
   <span>{m.Backgrounds_Wallhaven_Settings_UpdateInterval()}</span>
   <div>

@@ -13,11 +13,13 @@
   initializeStores();
   initLocaleStore();
 
-  $: {
+  let { children } = $props();
+
+  $effect(() => {
     if (browser) {
       document.documentElement.lang = $locale;
     }
-  }
+  });
 </script>
 
 <svelte:head>
@@ -28,7 +30,7 @@
 
 <svelte:document use:colorScheme />
 {#key $locale}
-  <slot />
+  {@render children?.()}
 {/key}
 <Modal />
 <Toast />

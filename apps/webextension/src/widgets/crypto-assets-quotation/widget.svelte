@@ -7,30 +7,29 @@
   import { storage } from '$stores/storage';
   import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
-  import { Line } from 'svelte-chartjs';
-  import {
-    Chart as ChartJS,
-    LineElement,
-    LinearScale,
-    CategoryScale,
-    PointElement,
-    Tooltip,
-    Legend,
-    type ChartData,
-    type ChartOptions,
-  } from 'chart.js';
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
+  import { Chart } from 'svelte-echarts';
+  import { init, use, type ComposeOption } from 'echarts/core';
+  import { type LineSeriesOption, LineChart } from 'echarts/charts';
+  import {
+    GridComponent,
+    TooltipComponent,
+    type GridComponentOption,
+    type TooltipComponentOption,
+  } from 'echarts/components';
+  import { CanvasRenderer } from 'echarts/renderers';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
   import { exchangeRates } from './exchange-rate-store';
   import { textStroke } from '$actions/text-stroke';
 
-  ChartJS.register(LineElement, LinearScale, CategoryScale, PointElement, Tooltip, Legend);
+  use([GridComponent, CanvasRenderer, TooltipComponent, LineChart]);
 
-  export let settings: Settings;
-  export let id: string;
+  let { settings, id }: { settings: Settings; id: string } = $props();
 
-  $: currentExchangeRate = $displayCurrency === 'USD' ? 1 : ($exchangeRates || {})[$displayCurrency] || 1;
+  let currentExchangeRate = $derived(
+    settings.displayCurrency.value === 'USD' ? 1 : ($exchangeRates || {})[settings.displayCurrency.value] || 1,
+  );
 
   const storageKey = `Widget_CryptoAssets_${id}_LastPriceInfo`;
   let clockStore = getClockStore(minutesToMilliseconds(1));
@@ -52,121 +51,116 @@
     Minutely = 2,
   }
 
-  let priceInfo: PriceInfo;
-  let chart: ChartJS<'line', number[], unknown>;
+  let priceInfo: PriceInfo | undefined = $state();
 
-  const {
-    asset,
-    chartLineColor,
-    chartAxisColor,
-    displayCurrency,
-    backgroundColor,
-    backgroundBlur,
-    textColor,
-    font: { id: fontId, weight: fontWeight },
-    textShadow: {
-      offsetX: textShadowOffsetX,
-      offsetY: textShadowOffsetY,
-      blur: textShadowBlur,
-      color: textShadowColor,
-    },
-    textStroke: textStrokeSettings,
-  } = settings;
-
-  $: currencyFormatter = new Intl.NumberFormat(
-    browserLocales.map(m => m.toString()),
-    { style: 'currency', currency: $displayCurrency },
+  let currencyFormatter = $derived(
+    new Intl.NumberFormat(
+      browserLocales.map(x => x.toString()),
+      { style: 'currency', currency: settings.displayCurrency.value },
+    ),
   );
   const dateFormatter = new Intl.DateTimeFormat(
-    browserLocales.map(m => m.toString()),
+    browserLocales.map(x => x.toString()),
     { dateStyle: 'medium', timeStyle: 'medium' },
   );
 
-  let currentTab = HistoryTab.Daily;
+  let currentTab = $state(HistoryTab.Daily);
+  let chartAnimationDuration = 0;
+  let chartGlobalCursorPosition = { x: 0, y: 0 };
 
-  const chartData = {
-    labels: [],
-    datasets: [
+  let chartOptions: any = $derived<ComposeOption<GridComponentOption | TooltipComponentOption | LineSeriesOption>>({
+    tooltip: {
+      trigger: 'axis',
+      formatter: (params: any) => {
+        return `<strong class="text-[clamp(8px,.75em,24px)]">${dateFormatter.format(params[0].data[0])}</strong><br /><center class="mt-1 text-[clamp(10px,1em,26px)]">${currencyFormatter.format(params[0].data[1])}</center>`;
+      },
+      className: '!p-[clamp(3px,.5em,10px)] !card !text-token !border-none',
+      appendTo() {
+        return document.body;
+      },
+      position: function (point, params, dom, rect, size) {
+        let [tooltipWidth, tooltipHeight]: [number, number] = size.contentSize;
+
+        if (dom instanceof HTMLElement) {
+          tooltipWidth = dom.offsetWidth;
+          tooltipHeight = dom.offsetHeight;
+        } else {
+          [tooltipWidth, tooltipHeight] = size.contentSize;
+        }
+
+        const padY = -tooltipHeight - 5;
+        const padX = -tooltipWidth / 2;
+
+        let [left, top] = point;
+        top += padY;
+        left += padX;
+
+        if (chartGlobalCursorPosition.x + tooltipWidth + padX > document.body.clientWidth) {
+          left -= chartGlobalCursorPosition.x + tooltipWidth + padX - document.body.clientWidth;
+        }
+
+        if (chartGlobalCursorPosition.x - tooltipWidth - padX < 0) {
+          left += tooltipWidth + padX - chartGlobalCursorPosition.x;
+        }
+
+        if (chartGlobalCursorPosition.y + tooltipHeight + padY > document.body.clientHeight) {
+          top -= chartGlobalCursorPosition.y + tooltipHeight + padY - document.body.clientHeight;
+        }
+
+        if (chartGlobalCursorPosition.y - tooltipHeight - padY < 0) {
+          top += tooltipHeight + padY - chartGlobalCursorPosition.y;
+        }
+
+        return [left, top];
+      },
+    },
+    xAxis: {
+      type: 'time',
+      boundaryGap: [0, 0],
+      axisPointer: {
+        lineStyle: {
+          color: settings.chartLineColor.value,
+        },
+      },
+    },
+    yAxis: {
+      type: 'value',
+      boundaryGap: [0, '100%'],
+      splitLine: {
+        lineStyle: {
+          color: settings.chartAxisColor.value,
+        },
+      },
+    },
+    grid: {
+      left: 0,
+      right: 0,
+      top: 0,
+      bottom: 0,
+      backgroundColor: 'transparent',
+    },
+    series: [
       {
-        label: '',
-        backgroundColor: 'rgb(205, 130, 158)',
-        fill: false,
-        borderColor: 'rgb(255, 130, 158)',
-        borderCapStyle: 'butt',
-        borderDash: [],
-        borderDashOffset: 0.0,
-        borderJoinStyle: 'miter',
-        pointHoverRadius: 4,
-        pointHoverBackgroundColor: 'rgb(0, 0, 0)',
-        pointHoverBorderColor: 'rgba(220, 220, 220,1)',
-        pointHoverBorderWidth: 2,
-        pointRadius: 0,
-        pointHitRadius: 10,
-        data: [],
+        name: settings.asset.value?.name,
+        type: 'line',
+        smooth: false,
+        symbol: 'none',
+        areaStyle: {
+          color: settings.chartFillAreaColor.value,
+          opacity: 1,
+        },
+        animation: true,
+        animationDuration: () => chartAnimationDuration,
+        color: settings.chartLineColor.value,
+        data: historyDataForTab(priceInfo, currentTab).map(x => [x.date, x.price * currentExchangeRate]),
       },
     ],
-  } satisfies ChartData<'line', number[], unknown>;
+  });
 
-  $: {
-    if (chart?.data.datasets?.length > 0) {
-      const historyData = historyDataForTab(priceInfo, currentTab);
-      chart.data.labels = historyData.map(m => dateFormatter.format(m.date));
-      chart.data.datasets[0].data = historyData.map(m => m.price * currentExchangeRate);
-      chart.update();
-    }
-  }
-
-  const chartOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { display: false },
-      tooltip: {
-        callbacks: {
-          label: function (tooltipItem: any) {
-            return tooltipItem.yLabel;
-          },
-        },
-      },
-    },
-    interaction: {
-      mode: 'index',
-      intersect: false,
-    },
-    animation: false,
-    scales: {
-      x: {
-        display: false,
-      },
-      y: {
-        ticks: {
-          display: false,
-        },
-        grid: {
-          color: $chartAxisColor,
-        },
-      },
-    },
-  } satisfies ChartOptions<'line'>;
-
-  $: {
-    ($asset || $clockStore) && updateDebounced();
-  }
-
-  $: {
-    if (chart?.data.datasets?.length > 0) {
-      chart.data.datasets[0].borderColor = $chartLineColor;
-      chart.data.datasets[0].backgroundColor = $chartLineColor;
-      chart.update();
-    }
-  }
-
-  $: {
-    if (chart?.options.scales) {
-      chart.options.scales!.y!.grid!.color = $chartAxisColor;
-      chart.update();
-    }
-  }
+  $effect(() => {
+    void (settings.asset.value, $clockStore);
+    updateDebounced();
+  });
 
   export async function onDelete() {
     await storage.local.remove(storageKey);
@@ -176,18 +170,20 @@
     if (!priceInfo) {
       priceInfo = <PriceInfo>(await storage.local.get(storageKey))[storageKey];
     }
-    if (!$asset) {
+    if (!settings.asset.value) {
       return;
     }
     if (
       navigator.onLine &&
-      (!priceInfo || differenceInMinutes(Date.now(), priceInfo.lastUpdate) > 5 || priceInfo.asset.id !== $asset.id)
+      (!priceInfo ||
+        differenceInMinutes(Date.now(), priceInfo.lastUpdate) > 5 ||
+        priceInfo.asset.id !== settings.asset.value.id)
     ) {
       const promises = [
-        fetch(`https://api.coincap.io/v2/assets/${$asset.id}`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${$asset.id}/history?interval=d1`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${$asset.id}/history?interval=h1`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${$asset.id}/history?interval=m1`).then(r => r.json()),
+        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}`).then(r => r.json()),
+        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=d1`).then(r => r.json()),
+        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=h1`).then(r => r.json()),
+        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=m1`).then(r => r.json()),
       ];
       let [assetData, dailyHistoryData, hourlyHistoryData, minutelyHistoryData] = <
         [
@@ -201,19 +197,19 @@
       priceInfo = {
         lastUpdate: Date.now(),
         currentPrice: assetData.data.priceUsd,
-        dailyHistoryPrices: dailyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        dailyHistoryPrices: dailyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
-        hourlyHistoryPrices: hourlyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        hourlyHistoryPrices: hourlyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
-        minutelyHistoryPrices: minutelyHistoryData.data.map(m => ({
-          price: m.priceUsd,
-          date: m.time,
+        minutelyHistoryPrices: minutelyHistoryData.data.map(d => ({
+          price: d.priceUsd,
+          date: d.time,
         })),
-        asset: $asset,
+        asset: settings.asset.value,
       };
       await storage.local.set({ [storageKey]: priceInfo });
     }
@@ -221,7 +217,7 @@
 
   const updateDebounced = pDebounce(update, 500);
 
-  function historyDataForTab(info: PriceInfo, tab: HistoryTab) {
+  function historyDataForTab(info: PriceInfo | undefined | null, tab: HistoryTab) {
     if (!info) return [];
     switch (tab) {
       case HistoryTab.Daily:
@@ -235,25 +231,34 @@
     }
   }
 
-  onMount(() => update());
+  onMount(() => {
+    update();
+    setTimeout(() => (chartAnimationDuration = 500), 0);
+  });
+
+  function onChartMouseMove(event: MouseEvent) {
+    chartGlobalCursorPosition.x = event.pageX;
+    chartGlobalCursorPosition.y = event.pageY;
+  }
 </script>
 
 <div
   class="w-full h-full p-[5cqmin] select-none flex justify-center content-center flex-col overflow-hidden hover:overflow-y-auto rounded-[inherit] backdrop-blur-[var(--st-blur)] text-[var(--st--text-color)] text-[9cqmin] [&>*]:drop-shadow-[var(--st-shadow)] [&_*]:[-webkit-text-stroke:var(--sv-text-stroke)]"
-  style:background-color={$backgroundColor}
-  style:font-weight={$fontWeight}
-  style:--st-blur="{$backgroundBlur}px"
-  style:--st--text-color={$textColor}
-  style:--st-shadow="{$textShadowOffsetX}cqmin {$textShadowOffsetY}cqmin {$textShadowBlur}cqmin
-  {$textShadowColor}"
+  style:background-color={settings.backgroundColor.value}
+  style:font-weight={settings.font.weight.value}
+  style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st--text-color={settings.textColor.value}
+  style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
+    .textShadow.blur.value}cqmin
+  {settings.textShadow.color.value}"
   class:placeholder={!priceInfo}
   use:fontsource={{
-    font: $fontId,
+    font: settings.font.id.value,
     subsets: $userPosssibleLocaleCharSubset,
     styles: ['normal'],
-    weights: [$fontWeight],
+    weights: [settings.font.weight.value],
   }}
-  use:textStroke={textStrokeSettings}>
+  use:textStroke={settings.textStroke}>
   {#if priceInfo}
     <p class="mb-1 text-[max(0.5em,12px)]">
       {priceInfo.asset.name} ({priceInfo.asset.code}):&nbsp;
@@ -261,6 +266,7 @@
     </p>
     <div
       class="w-full flex-1 min-h-0 text-[max(.3em,8px)] [&>.tab-group]:h-full [&>.tab-group]:flex [&>.tab-group]:flex-col">
+      <!-- svelte-ignore a11y_no_static_element_interactions -->
       <TabGroup
         padding="px-2 py-0"
         regionPanel="!mt-[3cqmin] min-h-0 flex-1"
@@ -281,8 +287,8 @@
           <span class="icon-[heroicons-solid--external-link]"></span>
         </TabAnchor>
         <svelte:fragment slot="panel">
-          <div class="w-full h-full">
-            <Line data={chartData} options={chartOptions} bind:chart />
+          <div class="w-full h-full" onmousemove={onChartMouseMove}>
+            <Chart {init} options={chartOptions} />
           </div>
         </svelte:fragment>
       </TabGroup>

@@ -4,33 +4,31 @@
   import type { ShadowSettings } from '$lib/widget-settings';
   import * as m from '$i18n/messages';
 
-  export let shadowSettings: ShadowSettings;
-
-  const { offsetX, offsetY, blur, color } = shadowSettings;
+  let { shadowSettings }: { shadowSettings: ShadowSettings } = $props();
 </script>
 
 <div class="label">
   <span>{m.ShadowSelector_Color()}</span>
   <div>
-    <ColorPicker bind:color={$color} />
+    <ColorPicker bind:color={shadowSettings.color.value} />
   </div>
 </div>
 
 <div class="flex flex-row gap-2">
-  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <!-- svelte-ignore -->
   <label class="label w-0 flex-1">
     <span>{m.ShadowSelector_OffsetX()}</span>
-    <RangeSlider name="offsetX" bind:value={$offsetX} min={-5} max={5} step={0.1} />
+    <RangeSlider name="offsetX" bind:value={shadowSettings.offsetX.value} min={-5} max={5} step={0.1} />
   </label>
 
-  <!-- svelte-ignore a11y-label-has-associated-control -->
+  <!-- svelte-ignore -->
   <label class="label w-0 flex-1">
     <span>{m.ShadowSelector_OffsetY()}</span>
-    <RangeSlider name="offsetY" bind:value={$offsetY} min={-5} max={5} step={0.1} />
+    <RangeSlider name="offsetY" bind:value={shadowSettings.offsetY.value} min={-5} max={5} step={0.1} />
   </label>
 </div>
 
 <div class="label">
   <span>{m.ShadowSelector_Blur()}</span>
-  <RangeSlider name="blur" bind:value={$blur} min={0} max={7} step={0.1} />
+  <RangeSlider name="blur" bind:value={shadowSettings.blur.value} min={0} max={7} step={0.1} />
 </div>
