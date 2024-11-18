@@ -61,7 +61,7 @@
   {settings.textShadow.color.value}">
   {#if iconUrl}
     <img
-      class="w-full h-full object-contain select-none !rounded-[inherit]"
+      class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
       draggable="false"
       use:imgSrcEx={iconUrl}
       data-fallback="true"
