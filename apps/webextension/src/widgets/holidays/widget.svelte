@@ -109,7 +109,7 @@
     cache.holidays = holidays.map(holiday => ({ ...holiday, date: new Date(holiday.date).getTime() }));
     cache.lastUpdate = Date.now();
     cache.country = settings.country.value;
-    await storage.local.set({ [storageKey]: cache });
+    await storage.local.set({ [storageKey]: $state.snapshot(cache) });
   }
 
   function getClosestUpcommingHolidayIndex(holidays: (HolidayInfo | CachedHoliday)[], now: Date) {

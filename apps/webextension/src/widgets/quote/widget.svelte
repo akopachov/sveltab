@@ -62,7 +62,7 @@
       }).then(r => r.json());
       q = { quote: response.text, author: response.author, lastUpdate: Date.now() };
     }
-    await storage.local.set({ [storageKey]: q });
+    await storage.local.set({ [storageKey]: $state.snapshot(q) });
     quote = q;
   }
 </script>

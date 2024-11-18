@@ -99,7 +99,7 @@
         sources,
       };
 
-      await storage.local.set({ [storageKey]: latestSearchResult });
+      await storage.local.set({ [storageKey]: $state.snapshot(latestSearchResult) });
     }
   }
 </script>

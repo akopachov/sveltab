@@ -195,7 +195,7 @@
   {/if}
 </svelte:head>
 
-<Drawer>
+<Drawer zIndex="z-[100000]">
   <div class="flex flex-col h-full w-full">
     <Accordion autocollapse>
       <AccordionItem>

@@ -81,7 +81,7 @@
           `https://cdn.statically.io/gh/akopachov/greetings@master/greetings/${relativeFilePath}`,
         ).then(response => response.json());
         cache = { lastUpdateDate: Date.now(), hour: hours, pool: greetings, locale: locale };
-        await storage.local.set({ [storageKey]: cache });
+        await storage.local.set({ [storageKey]: $state.snapshot(cache) });
       } catch (error) {
         log.error('Failed to fetch greetings', error);
       }

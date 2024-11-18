@@ -295,7 +295,7 @@
         sunset: dailySunset,
       },
     };
-    await storage.local.set({ [storageKey]: forecast });
+    await storage.local.set({ [storageKey]: $state.snapshot(forecast) });
   }
 
   function adaptTemperature(metric: number, targetUnits: MeasurementUnits) {

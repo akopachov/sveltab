@@ -211,7 +211,7 @@
         })),
         asset: settings.asset.value,
       };
-      await storage.local.set({ [storageKey]: priceInfo });
+      await storage.local.set({ [storageKey]: $state.snapshot(priceInfo) });
     }
   }
 
@@ -233,7 +233,7 @@
 
   onMount(() => {
     update();
-    setTimeout(() => (chartAnimationDuration = 500), 0);
+    setTimeout(() => (chartAnimationDuration = 500), 500);
   });
 
   function onChartMouseMove(event: MouseEvent) {

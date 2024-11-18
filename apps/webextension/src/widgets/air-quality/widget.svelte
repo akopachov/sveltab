@@ -199,7 +199,7 @@
         dust: current.variables(8)!.value(),
       },
     } satisfies LatestInfo;
-    await storage.local.set({ [storageKey]: latestInfo });
+    await storage.local.set({ [storageKey]: $state.snapshot(latestInfo) });
   }
 </script>
 
