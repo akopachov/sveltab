@@ -217,10 +217,9 @@ jobs:
           echo "ADDON_FILE=$(find $(pwd) -type f -maxdepth 1 -name 'sveltab-chromium-*.zip')" >> $GITHUB_OUTPUT
         id: find_addon_file
 
-      - uses: wdzeng/edge-addon@v1
+      - uses: wdzeng/edge-addon@v2
         with:
           product-id: ${{ secrets.PRODUCT_ID }}
           zip-path: ${{ steps.find_addon_file.outputs.ADDON_FILE }}
           client-id: ${{ secrets.CLIENT_ID }}
-          client-secret: ${{ secrets.CLIENT_SECRET }}
-          access-token-url: ${{ secrets.ACCESS_TOKEN_URL }}
+          api-key: ${{ secrets.API_KEY }}
