@@ -57,29 +57,27 @@ export class WorkspaceIndex {
       const defaultWorkspace: WorkspaceSettingsInitial = await import('$lib/assets/default_workspace.json').then<any>(
         p => p.default,
       );
-      setTimeout(() => {
-        for (const widget of defaultWorkspace.widgets!) {
-          if (widget.position!.positionUnits === WidgetMeasurementUnits.Fixed) {
-            if (widget.position!.x! >= document.documentElement.offsetWidth) {
-              widget.position!.x = 0;
-            }
-
-            if (widget.position!.y! >= document.documentElement.offsetHeight) {
-              widget.position!.y = 0;
-            }
+      for (const widget of defaultWorkspace.widgets!) {
+        if (widget.position!.positionUnits === WidgetMeasurementUnits.Fixed) {
+          if (widget.position!.x! >= document.documentElement.clientWidth) {
+            widget.position!.x = 0;
           }
 
-          if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
-            if (widget.position!.width! > document.documentElement.offsetWidth - 10) {
-              widget.position!.width = document.documentElement.offsetWidth - 10;
-            }
-
-            if (widget.position!.height! > document.documentElement.offsetHeight - 10) {
-              widget.position!.height = document.documentElement.offsetHeight - 10;
-            }
+          if (widget.position!.y! >= document.documentElement.clientHeight) {
+            widget.position!.y = 0;
           }
         }
-      }, 500);
+
+        if (widget.position!.sizeUnits === WidgetMeasurementUnits.Fixed) {
+          if (widget.position!.width! > document.documentElement.clientWidth - 10) {
+            widget.position!.width = document.documentElement.clientWidth - 10;
+          }
+
+          if (widget.position!.height! > document.documentElement.clientHeight - 10) {
+            widget.position!.height = document.documentElement.clientHeight - 10;
+          }
+        }
+      }
 
       storageRecord = defaultWorkspace;
     }
