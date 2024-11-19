@@ -206,6 +206,8 @@
   "Widgets_Link_Settings_IconSource_Direct": "Manual",
   "Widgets_Link_Settings_IconSource_Direct_Label": "Icon url",
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
+  "Widgets_Link_Settings_IconSource_Local": "Local file",
+  "Widgets_Link_Settings_IconSource_Local_Select": "Select",
 
 
   "Widgets_Weather_Name": "Weather",

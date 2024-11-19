@@ -8,6 +8,7 @@
   import { nanoid } from 'nanoid/non-secure';
   import BrowserSupports, { Constraints } from '$shared-components/browser-supports.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
+  import { getFileExtension } from '$lib/path-utils';
 
   let { settings, workspace }: { settings: Settings; workspace: WorkspaceInstance } = $props();
 
@@ -19,23 +20,22 @@
     }
 
     const file = localFiles[0];
-    const fileExtensionSeparatorIndex = file.name.lastIndexOf('.');
-    const fileExtension = fileExtensionSeparatorIndex >= 0 ? file.name.slice(fileExtensionSeparatorIndex) : '';
-    const newUrl = await workspace.addInternalAsset(`static-bg-${nanoid()}${fileExtension}`, file);
+    const fileExtension = getFileExtension(file.name);
+    const newUrl = await workspace.internalAssetsManager.addAsset(`static-bg-${nanoid()}${fileExtension}`, file);
     try {
       if (settings.url.value.startsWith(OpfsSchema)) {
-        await workspace.removeInternalAsset(settings.url.value);
+        await workspace.internalAssetsManager.removeAsset(settings.url.value);
       }
       settings.url.value = newUrl;
     } catch (error) {
-      await workspace.removeInternalAsset(newUrl);
+      await workspace.internalAssetsManager.removeAsset(newUrl);
       throw error;
     }
   }
 
   async function onSourceTypeChange() {
     if (settings.url.value.startsWith(`${OpfsSchema}://`)) {
-      await workspace.removeInternalAsset(settings.url.value);
+      await workspace.internalAssetsManager.removeAsset(settings.url.value);
     }
     settings.url.value = '';
   }

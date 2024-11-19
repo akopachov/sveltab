@@ -55,7 +55,7 @@
   });
 
   let workspaceEl: HTMLElement | undefined = $state();
-  let selectedWidgets = $state(new SvelteSet<WidgetInstance>());
+  let selectedWidgets = new SvelteSet<WidgetInstance>();
   let moveable: ReturnType<typeof WidgetMoveController> | undefined = $state();
   let widgetSettingsVisible = $state(false);
   let menuButtonColor = $state('#fff');
@@ -370,8 +370,9 @@
           <WidgetFactorty
             {widget}
             {widgetSettingsPopupSettings}
+            internalAssetsManager={workspace.internalAssetsManager}
             delete={onWidgetDelete}
-            showControls={!workspace!.isLocked.value && selectedWidgets.has(widget) && selectedWidgets.size === 1}
+            showControls={!workspace.isLocked.value && selectedWidgets.has(widget) && selectedWidgets.size === 1}
             class="widget widget_{widget.settings.type}"
             controlsClassName="widget-control"
             workspaceLocked={workspace!.isLocked.value}
@@ -381,7 +382,7 @@
       {#if !workspace!.isLocked.value}
         <WidgetMoveController
           bind:this={moveable}
-          bind:selected={selectedWidgets}
+          selected={selectedWidgets}
           widgets={workspace.widgets}
           workspace={workspaceEl}
           widgetControlsZone=".widget-control" />
@@ -394,7 +395,10 @@
       {#if widgetSettingsVisible}
         {@const [widget, totalCount] = firstOfSet(selectedWidgets)}
         {#if totalCount === 1}
-          <WidgetSettingsComponent {widget} workspace={workspaceEl} />
+          <WidgetSettingsComponent
+            {widget}
+            workspace={workspaceEl}
+            internalAssetsManager={workspace.internalAssetsManager} />
         {/if}
       {/if}
     </div>

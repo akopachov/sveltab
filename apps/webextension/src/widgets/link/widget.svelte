@@ -9,6 +9,7 @@
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
   import { getFavIconUrl } from '$lib/favicon-provider';
   import { textStroke } from '$actions/text-stroke';
+  import { opfsSrc } from '$actions/opfs-src';
 
   let { settings }: { settings: Settings } = $props();
 
@@ -38,6 +39,8 @@
       iconUrl = settings.icon.value;
     } else if (settings.iconSource.value === IconSource.Iconify) {
       iconUrl = getSvgUrl(settings.icon.value, settings.iconColor.value);
+    } else {
+      iconUrl = settings.icon.value;
     }
   }
 
@@ -60,12 +63,21 @@
     .textShadow.blur.value}cqmin
   {settings.textShadow.color.value}">
   {#if iconUrl}
-    <img
-      class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
-      draggable="false"
-      use:imgSrcEx={iconUrl}
-      data-fallback="true"
-      alt="" />
+    {#if settings.iconSource.value === IconSource.Local}
+      <img
+        class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
+        draggable="false"
+        use:opfsSrc={iconUrl}
+        data-fallback="true"
+        alt="" />
+    {:else}
+      <img
+        class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
+        draggable="false"
+        use:imgSrcEx={iconUrl}
+        data-fallback="true"
+        alt="" />
+    {/if}
   {:else}
     <span class="w-full h-full icon-[bx--image] text-black"></span>
   {/if}

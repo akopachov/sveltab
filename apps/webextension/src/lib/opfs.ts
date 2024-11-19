@@ -45,7 +45,7 @@ export class OpfsManager {
   async remove(opfsFileUrl: string) {
     const [fileName, ...dirHandles] = await this.#parseOpfsUrl(opfsFileUrl);
     await dirHandles[0].removeEntry(fileName, { recursive: true });
-    for (let i = 0; i < dirHandles.length - 1; i++) {
+    for (let i = 0; i < dirHandles.length; i++) {
       const dirHandle = dirHandles[i];
       let isEmpty = true;
       for await (let _ of dirHandle.keys()) {
@@ -54,7 +54,7 @@ export class OpfsManager {
       }
 
       if (isEmpty) {
-        dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: false });
+        dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: true });
       } else {
         break;
       }

@@ -14,7 +14,7 @@
 
   let {
     widgets,
-    selected = $bindable(new Set()),
+    selected,
     workspace,
     widgetControlsZone,
   }: {
@@ -73,7 +73,6 @@
 
       selectedWidgetEl.classList.remove('selected');
       selected.delete(widget);
-      selected = selected;
     }
   }
 
@@ -178,7 +177,6 @@
         }
       }
     });
-    selected = selected;
   }
 </script>
 

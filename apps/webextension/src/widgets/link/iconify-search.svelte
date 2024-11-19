@@ -8,6 +8,7 @@
   import ColorPicker, { ColorPickerLayout } from '$shared-components/color-picker.svelte';
   import { getSvgUrl } from '../../lib/service-mirrors';
   import { secondsToMilliseconds } from 'date-fns';
+  import { derivedDebounce } from '$stores/rune-utils.svelte';
 
   let {
     icon = $bindable(),
@@ -17,7 +18,6 @@
 
   let searchQuery: string = $state('');
   let allIcons: string[] = $state([]);
-  let iconsUpdatePromise: Promise<void> | undefined = $state();
   let previewIconColor = $derived($AppliedColorScheme === 'dark' ? '#fff' : '#000');
 
   let paginationSettings: PaginationSettings = $derived({
@@ -34,12 +34,10 @@
     ),
   );
 
-  $effect(() => {
-    void searchQuery;
-    iconsUpdatePromise = updateIconsListDebounced();
-  });
+  let iconsUpdatePromise = $derived.by(
+    derivedDebounce(() => updateIconsList(), secondsToMilliseconds(1), { activityNotificator: () => searchQuery }),
+  );
 
-  const updateIconsListDebounced = pDebounce(updateIconsList, secondsToMilliseconds(1));
   async function updateIconsList() {
     if (searchQuery.length > 0) {
       const iconifyInfo = await fetch(

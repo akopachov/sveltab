@@ -5,6 +5,7 @@
   import { offset, flip, shift } from 'svelte-floating-ui/dom';
   import { createFloatingActions } from 'svelte-floating-ui';
   import type { WidgetComponentExports } from '$widgets/types';
+  import type { InternalAssetsManager } from '$lib/internal-assets-manager';
 
   let {
     widget,
@@ -13,6 +14,7 @@
     workspaceLocked,
     controlsClassName = '',
     class: exClass,
+    internalAssetsManager,
     delete: onDelete,
     onautosettingsupdate,
     ...restProps
@@ -23,6 +25,7 @@
     workspaceLocked: boolean;
     controlsClassName: string;
     class: string;
+    internalAssetsManager: InternalAssetsManager;
     delete: (widget: WidgetInstance) => void;
     onautosettingsupdate: () => void;
     [key: string]: unknown;
@@ -99,6 +102,7 @@
           bind:this={widgetComponent}
           settings={widget.settings.extra}
           id={widget.id}
+          {internalAssetsManager}
           {onautosettingsupdate} />
       </div>
     </div>

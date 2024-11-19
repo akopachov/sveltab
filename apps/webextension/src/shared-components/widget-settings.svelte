@@ -11,8 +11,13 @@
   import { WidgetMeasurementUnits } from '$lib/widget-settings';
   import FilterSelector from './filter-selector.svelte';
   import ColorPicker, { ColorPickerLayout } from './color-picker.svelte';
+  import type { InternalAssetsManager } from '$lib/internal-assets-manager';
 
-  let { widget, workspace }: { widget: WidgetInstance; workspace: HTMLElement } = $props();
+  let {
+    widget,
+    workspace,
+    internalAssetsManager,
+  }: { widget: WidgetInstance; workspace: HTMLElement; internalAssetsManager: InternalAssetsManager } = $props();
 
   let currentTabId: number = $state(GeneralTabId);
 
@@ -44,7 +49,12 @@
   <svelte:fragment slot="panel">
     <div class="overflow-auto max-h-[calc(100cqh-92px)]">
       {#await widget.components.settings.component.value then SettingsComponent}
-        <SettingsComponent settings={widget.settings.extra} tab={currentTabId} bind:tabs />
+        <SettingsComponent
+          id={widget.id}
+          settings={widget.settings.extra}
+          tab={currentTabId}
+          {internalAssetsManager}
+          bind:tabs />
       {/await}
       {#if currentTabId === GeneralTabId}
         <div class="flex flex-row gap-4 content-center">

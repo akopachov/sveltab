@@ -10,6 +10,7 @@
   import { Opfs, OpfsSchema } from '$lib/opfs';
   import { Zip, ZipDeflate, ZipPassThrough, strToU8, Unzip, UnzipInflate } from 'fflate';
   import { secondsToMilliseconds } from 'date-fns';
+  import { getFileExtension } from '$lib/path-utils';
 
   const log = logger.getSubLogger({ prefix: ['Shared Components', 'ImportExport'] });
   const toastFacade = getToastFacade();
@@ -116,7 +117,7 @@
     const file = importFiles.item(0)!;
     try {
       let importData: Partial<ExportObject> | undefined;
-      const fileExtension = file.name.split('.').pop()?.toLowerCase();
+      const fileExtension = getFileExtension(file.name)?.toLowerCase();
       if (fileExtension === 'json') {
         importData = await importDataJson(file);
       } else if (fileExtension === 'svtx' || fileExtension === 'zip') {

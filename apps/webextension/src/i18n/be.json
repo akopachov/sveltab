@@ -202,6 +202,8 @@
   "Widgets_Link_Settings_IconSource_Direct": "Уручную",
   "Widgets_Link_Settings_IconSource_Direct_Label": "URL значка",
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
+  "Widgets_Link_Settings_IconSource_Local": "Лакальны файл",
+  "Widgets_Link_Settings_IconSource_Local_Select": "Выбраць файл",
 
 
   "Widgets_Weather_Name": "Надвор'е",

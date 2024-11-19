@@ -13,13 +13,14 @@ import { Opfs, OpfsSchema } from './opfs';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
+import { InternalAssetsManager } from './internal-assets-manager';
 
 export class WorkspaceInstance {
   #widgets: SvelteSet<WidgetInstance> = new SvelteSet();
   #background: Observable<BackgroundInstance>;
   #hasChanges: Observable<boolean> = useObservable(false);
   #trackingObjects = new Map<Subscribable<any>, () => void>();
-  #internalAssets: SvelteSet<string> = new SvelteSet();
+  readonly internalAssetsManager: InternalAssetsManager;
 
   private constructor(
     name: string,
@@ -47,12 +48,12 @@ export class WorkspaceInstance {
     this.isLocked = useObservable(true);
     this.name = useObservable(name);
     this.customStyles = useObservable(customStyles);
-    assets.forEach(a => this.#internalAssets.add(a));
+    this.internalAssetsManager = new InternalAssetsManager(assets);
     this.favicon = new FaviconInfo(favicon);
 
     this.#trackObjectChange(this.name);
     this.#trackObjectChange(this.customStyles);
-    this.#trackObjectChange(this.#internalAssets);
+    this.#trackObjectChange(this.internalAssetsManager.internalAssets);
     this.#trackObjectChange(this.favicon);
     this.#hasChanges.set(unsaved);
   }
@@ -119,10 +120,6 @@ export class WorkspaceInstance {
     return this.#background;
   }
 
-  get internalAssets(): ReadonlySet<string> {
-    return this.#internalAssets;
-  }
-
   async setBackground(settings: BackgroundSettingsInitial) {
     if (this.#background.value) {
       this.#untrackObjectChange(this.#background.value.settings);
@@ -167,27 +164,13 @@ export class WorkspaceInstance {
       widgets: [...this.#widgets].map(m => unobserve(m.settings)),
       customStyles: this.customStyles.value,
       favicon: unobserve(this.favicon),
-      assets: [...this.#internalAssets],
+      assets: [...this.internalAssetsManager.internalAssets],
     } satisfies WorkspaceSettingsInitial;
   }
 
   async commit(handler: (data: any) => Promise<void>) {
     await handler(this.export());
     this.#hasChanges.value = false;
-  }
-
-  async addInternalAsset(opfsPath: string, data: ArrayBufferLike | Blob) {
-    if (!opfsPath.startsWith(`${OpfsSchema}://`)) {
-      opfsPath = `${OpfsSchema}://${opfsPath}`;
-    }
-    await Opfs.save(opfsPath, data);
-    this.#internalAssets.add(opfsPath);
-    return opfsPath;
-  }
-
-  async removeInternalAsset(opfsUrl: string) {
-    Opfs.remove(opfsUrl);
-    this.#internalAssets.delete(opfsUrl);
   }
 
   static async create(settings: WorkspaceSettingsInitial, unsaved: boolean) {

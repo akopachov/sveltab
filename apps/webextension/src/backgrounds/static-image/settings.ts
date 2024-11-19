@@ -23,7 +23,7 @@ export class Settings extends ImageBackgroundProviderSettingsBase {
 export async function onRemove(workspace: WorkspaceInstance) {
   const url = (workspace.background.value.settings.extra as Settings).url;
   if (url.value.startsWith(OpfsSchema)) {
-    await workspace.removeInternalAsset(url.value);
+    await workspace.internalAssetsManager.removeAsset(url.value);
     url.value = '';
   }
 }

@@ -201,6 +201,8 @@
   "Widgets_Link_Settings_IconSource_Direct": "Ręcznie",
   "Widgets_Link_Settings_IconSource_Direct_Label": "Adres URL znaczka",
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
+  "Widgets_Link_Settings_IconSource_Local": "Lokalny plik",
+  "Widgets_Link_Settings_IconSource_Local_Select": "Wybierz plik",
 
 
   "Widgets_Weather_Name": "Pogoda",

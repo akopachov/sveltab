@@ -11,6 +11,7 @@ export enum IconSource {
   Favicon = 'favicon',
   Direct = 'direct',
   Iconify = 'iconify',
+  Local = 'local',
 }
 
 export class Settings extends WidgetSettingsExtra {

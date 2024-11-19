@@ -10,6 +10,7 @@
   import type { RealFaviconGenerator } from '$lib/realfavicongenerator';
   import { logger } from '$lib/logger';
   import BrowserSupports, { Constraints } from './browser-supports.svelte';
+  import { getFileExtension } from '$lib/path-utils';
 
   enum FaviconType {
     Default = 'default',
@@ -34,9 +35,9 @@
     }
     const response = await fetch(url);
     const blob = await response.blob();
-    const fileExtension = url.split('.').pop();
+    const fileExtension = getFileExtension(url);
     const filePath = `favicon-${nanoid()}.${fileExtension}`;
-    return await workspaceInstance?.addInternalAsset(filePath, blob);
+    return await workspaceInstance?.internalAssetsManager.addAsset(filePath, blob);
   }
 
   async function tryRemoveFavicon(fileName: string | undefined) {
@@ -45,7 +46,7 @@
     }
 
     try {
-      await workspaceInstance?.removeInternalAsset(fileName);
+      await workspaceInstance?.internalAssetsManager.removeAsset(fileName);
     } catch (error) {
       log.error(error);
     }
