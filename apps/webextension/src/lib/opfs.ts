@@ -54,7 +54,7 @@ export class OpfsManager {
       }
 
       if (isEmpty) {
-        dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: true });
+        await dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: true });
       } else {
         break;
       }
@@ -64,7 +64,7 @@ export class OpfsManager {
   async wipe() {
     const opfsRoot = await this.#opfsRoot.value;
     for await (let name of opfsRoot.keys()) {
-      opfsRoot.removeEntry(name, { recursive: true });
+      await opfsRoot.removeEntry(name, { recursive: true });
     }
   }
 
