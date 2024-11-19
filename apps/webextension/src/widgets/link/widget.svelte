@@ -10,8 +10,13 @@
   import { getFavIconUrl } from '$lib/favicon-provider';
   import { textStroke } from '$actions/text-stroke';
   import { opfsSrc } from '$actions/opfs-src';
+  import type { InternalAssetsManager } from '$lib/internal-assets-manager';
+  import { logger } from '$lib/logger';
 
-  let { settings }: { settings: Settings } = $props();
+  const log = logger.getSubLogger({ prefix: ['Widget', 'Link'] });
+
+  let { settings, internalAssetsManager }: { settings: Settings; internalAssetsManager: InternalAssetsManager } =
+    $props();
 
   let iconUrl: string | undefined = $state();
 
@@ -19,6 +24,16 @@
     void (settings.iconSource.value, settings.icon.value, settings.url.value, settings.iconColor.value);
     updateIconUrlDebounced();
   });
+
+  export async function onDelete() {
+    if (settings.iconSource.value === IconSource.Local && settings.icon.value) {
+      try {
+        internalAssetsManager.removeAsset(settings.icon.value);
+      } catch (e) {
+        log.warn(e);
+      }
+    }
+  }
 
   function ensureFqdnUrl(url: string | null | undefined) {
     url = url?.trim();

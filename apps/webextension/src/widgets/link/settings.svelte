@@ -53,16 +53,6 @@
 
   let iconFileSources: FileList | undefined = $state();
 
-  export async function onDelete() {
-    if (settings.iconSource.value === IconSource.Local && settings.icon.value) {
-      try {
-        internalAssetsManager.removeAsset(settings.icon.value);
-      } catch (e) {
-        log.warn(e);
-      }
-    }
-  }
-
   function onIconSourceChange() {
     if (settings.iconSource.value !== IconSource.Local && settings.icon.value?.startsWith(OpfsSchema) === true) {
       try {
