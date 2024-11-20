@@ -84,14 +84,14 @@
         draggable="false"
         use:opfsSrc={iconUrl}
         data-fallback="true"
-        alt="" />
+        alt=" " />
     {:else}
       <img
         class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
         draggable="false"
         use:imgSrcEx={iconUrl}
         data-fallback="true"
-        alt="" />
+        alt=" " />
     {/if}
   {:else}
     <span class="w-full h-full icon-[bx--image] text-black"></span>
