@@ -59,6 +59,14 @@
     }
   }
 
+  function conditionalSrc(node: HTMLImageElement, options: { src: string | undefined; iconSource: IconSource }) {
+    if (options.iconSource === IconSource.Local) {
+      return opfsSrc(node, options.src);
+    }
+
+    return imgSrcEx(node, options.src);
+  }
+
   onMount(() => {
     updateIconUrl();
   });
@@ -78,21 +86,12 @@
     .textShadow.blur.value}cqmin
   {settings.textShadow.color.value}">
   {#if iconUrl}
-    {#if settings.iconSource.value === IconSource.Local}
-      <img
-        class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
-        draggable="false"
-        use:opfsSrc={iconUrl}
-        data-fallback="true"
-        alt=" " />
-    {:else}
-      <img
-        class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
-        draggable="false"
-        use:imgSrcEx={iconUrl}
-        data-fallback="true"
-        alt=" " />
-    {/if}
+    <img
+      class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
+      draggable="false"
+      use:conditionalSrc={{ src: iconUrl, iconSource: settings.iconSource.value }}
+      data-fallback="true"
+      alt=" " />
   {:else}
     <span class="w-full h-full icon-[bx--image] text-black"></span>
   {/if}
