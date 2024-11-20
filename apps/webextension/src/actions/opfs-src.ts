@@ -5,7 +5,7 @@ import type { Action } from 'svelte/action';
 type HTMLElementWithRef = HTMLElement & ({ src: string | undefined } | { href: string | undefined });
 
 const log = logger.getSubLogger({ prefix: ['OPFS source loader:'] });
-const BLOB_STRATEGY_THRESHOLD = 32_768; // 32KiB
+const BLOB_STRATEGY_THRESHOLD = 16_384; // 16KiB
 
 export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function (
   node: HTMLElementWithRef,
