@@ -7,13 +7,13 @@
   import pDebounce from 'p-debounce';
   import { minutesToMilliseconds, differenceInSeconds } from 'date-fns';
   import { logger } from '$lib/logger';
-  import { PUBLIC_THEQUOTEAPI_KEY } from '$env/static/public';
   import { textStroke } from '$actions/text-stroke';
+  import { getRandomQuote, type Quote } from './api';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Quote'] });
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
-  type LatestQuote = { quote: string; author: string; lastUpdate: number };
+  type LatestQuote = Quote & { lastUpdate: number };
 
   let { id, settings }: { id: string; settings: Settings } = $props();
 
@@ -48,22 +48,14 @@
   }
 
   async function loadNewQuote() {
-    let q: LatestQuote | undefined;
     try {
-      const response = await fetch('https://api.quotable.io/quotes/random').then(r => r.json());
-      q = { quote: response[0].content, author: response[0].author, lastUpdate: Date.now() };
+      const response = await getRandomQuote();
+      quote = { ...response, lastUpdate: Date.now() };
     } catch (e) {
-      log.warn('An error occurred during fetching quote from https://api.quotable.io/quotes/random', e);
+      log.warn('An error occurred during fetching quote', e);
     }
 
-    if (!q) {
-      const response = await fetch('https://thequoteapi.com/api/quotes/random/', {
-        headers: { api_key: PUBLIC_THEQUOTEAPI_KEY },
-      }).then(r => r.json());
-      q = { quote: response.text, author: response.author, lastUpdate: Date.now() };
-    }
-    await storage.local.set({ [storageKey]: $state.snapshot(q) });
-    quote = q;
+    await storage.local.set({ [storageKey]: $state.snapshot(quote) });
   }
 </script>
 
