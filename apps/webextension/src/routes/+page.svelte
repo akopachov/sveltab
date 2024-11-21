@@ -198,7 +198,7 @@
 <Drawer zIndex="z-[100000]">
   <div class="flex flex-col h-full w-full">
     <Accordion autocollapse>
-      <AccordionItem>
+      <AccordionItem id="aiWidgetsCatalog">
         <svelte:fragment slot="lead">
           <span class="w-6 h-6 icon-[streamline--widget]"></span>
         </svelte:fragment>
@@ -216,13 +216,13 @@
           </div>
         </svelte:fragment>
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem id="aiBackgroundCatalog">
         <svelte:fragment slot="lead">
           <span class="w-6 h-6 icon-[fluent--color-background-24-regular]"></span>
         </svelte:fragment>
         <svelte:fragment slot="summary">{m.Core_Sidebar_Background()}</svelte:fragment>
         <svelte:fragment slot="content">
-          <select class="select" onchange={onBackgroundTypeChanged}>
+          <select id="cbxBackgroundType" class="select" onchange={onBackgroundTypeChanged}>
             {#each Backgrounds as item, index (item.settings.type)}
               <option value={index} selected={workspace?.background.value.settings.type === item.settings.type}>
                 {item.name()}
@@ -232,7 +232,9 @@
           <hr />
           {#if workspace?.background.value}
             {#await workspace.background.value.components.settings.component.value then BgSettingsComponent}
-              <BgSettingsComponent settings={workspace.background.value.settings.extra} {workspace} />
+              <div id="divBackgroundProviderSettings" class="contents">
+                <BgSettingsComponent settings={workspace.background.value.settings.extra} {workspace} />
+              </div>
             {/await}
           {/if}
         </svelte:fragment>
@@ -317,6 +319,7 @@
         <div class="w-max flex flex-row">
           <!-- svelte-ignore a11y_consider_explicit_label -->
           <button
+            id="btnMainMenu"
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
             style:color={menuButtonColor}

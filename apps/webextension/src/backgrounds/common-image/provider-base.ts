@@ -177,6 +177,7 @@ export abstract class ImageBackgroundProviderBase<
     this.#img.alt = '';
     this.#img.classList.add('w-full', 'h-full', 'max-w-none', 'max-h-none', 'select-none');
     this.#img.draggable = false;
+    this.#img.id = 'imgBackground';
     this.#img.onload = async () => {
       await this.#updateDominantColor();
       await this.#updateCornerColor();

@@ -13,7 +13,8 @@
     "lint": "prettier --check . && eslint .",
     "format": "prettier --write .",
     "run:ff": "node generateManifest.js firefox && web-ext run --devtools --firefox=deved --source-dir=build",
-    "i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/i18n/generated"
+    "i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/i18n/generated",
+    "e2e": "playwright test"
   },
   "devDependencies": {
     "@floating-ui/core": "^1.6.8",
@@ -23,6 +24,7 @@
     "@iconify/utils": "^2.1.33",
     "@inlang/paraglide-js": "1.11.3",
     "@inlang/paraglide-sveltekit": "^0.12.1",
+    "@playwright/test": "^1.49.0",
     "@putout/minify": "^4.7.2",
     "@skeletonlabs/skeleton": "^2.10.3",
     "@skeletonlabs/tw-plugin": "^0.4.0",
@@ -34,6 +36,7 @@
     "@tailwindcss/typography": "^0.5.15",
     "@types/color": "^4.2.0",
     "@types/firefox-webext-browser": "^120.0.4",
+    "@types/node": "^22.9.1",
     "@types/randomcolor": "^0.5.9",
     "@types/webextension-polyfill": "^0.12.1",
     "@typescript-eslint/eslint-plugin": "^8.15.0",
