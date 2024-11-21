@@ -4,13 +4,21 @@ import { useObservable, type Observable } from '$lib/observable.svelte';
 
 export enum AnimeTopics {
   Any = 'any',
-  ACG = 'ycy',
-  MOE = 'moez',
+  YCY = 'ycy',
+  MOEZ = 'moez',
   AI = 'ai',
   OriginalGod = 'ysz',
   PCTransverse = 'pc',
+  MOE = 'moe',
   Landscape = 'fj',
+  BD = 'bd',
   Genshin = 'ys',
+  MP = 'mp',
+  MOEMP = 'moemp',
+  YSMP = 'ysmp',
+  AIMP = 'aimp',
+  LAI = 'lai',
+  XHL = 'xhl',
 }
 
 export class Settings extends ImageBackgroundProviderSettingsBase {

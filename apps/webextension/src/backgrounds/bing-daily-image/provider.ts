@@ -90,7 +90,8 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
 
     const updateDeb = pDebounce.promise(() => this.#update(abortSignal));
     const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
-    const localeUnsubscribe = this.settings.locale.subscribe(() => updateDeb());
+    const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
+    const localeUnsubscribe = this.settings.locale.subscribe(() => forceUpdateDeb());
     const screenResolutionUnsubscribe = observeScreenResolution(update1SecDeb);
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 

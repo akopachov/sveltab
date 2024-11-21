@@ -43,7 +43,8 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     }, minutesToMilliseconds(1));
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
-    const topicUnsubsribe = this.settings.topic.subscribe(() => updateDeb());
+    const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
+    const topicUnsubsribe = this.settings.topic.subscribe(() => forceUpdateDeb());
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);

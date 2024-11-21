@@ -10,12 +10,20 @@
   const topicNames: [AnimeTopics, string][] = [
     [AnimeTopics.Any, m.Backgrounds_AnimeImage_Settings_Topic_Any()],
     [AnimeTopics.AI, 'AI Drawing'],
-    [AnimeTopics.ACG, 'ACG'],
+    [AnimeTopics.YCY, 'YCY'],
     [AnimeTopics.MOE, 'MOE'],
+    [AnimeTopics.MOEZ, 'MOEZ'],
     [AnimeTopics.OriginalGod, 'Original God'],
     [AnimeTopics.PCTransverse, 'PC Transverse'],
     [AnimeTopics.Landscape, 'Landscape'],
+    [AnimeTopics.BD, 'BD'],
     [AnimeTopics.Genshin, 'Genshin'],
+    [AnimeTopics.MP, 'MP'],
+    [AnimeTopics.MOEMP, 'MOEMP'],
+    [AnimeTopics.YSMP, 'YSMP'],
+    [AnimeTopics.AIMP, 'AIMP'],
+    [AnimeTopics.LAI, 'LAI'],
+    [AnimeTopics.XHL, 'XHL'],
   ];
   let updateInterval = $state(settings.updateInterval.value / 60);
 
