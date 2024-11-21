@@ -6,6 +6,7 @@ import { AnimeTopics, type Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
@@ -78,12 +79,16 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
           this.settings.topic.value === AnimeTopics.Any
             ? availableTopics[Math.floor(Math.random() * availableTopics.length)]
             : this.settings.topic.value;
-        const response = await fetch(`https://t.mwm.moe/${topic}/?json`, { signal: abortSignal }).then(r => r.json());
-        if (!response?.url) {
+        const responseImageUrl = await fetch(getCorsFriendlyUrl(`https://t.alcy.cc/${topic}/?json`), {
+          signal: abortSignal,
+        })
+          .then(r => r.text())
+          .then(t => t?.trim());
+        if (!responseImageUrl) {
           throw new Error('Unexpected response');
         }
 
-        const newSrc = await getImageCdnUrl(response.url, 'screen', 'screen', this.settings.resizeType.value);
+        const newSrc = await getImageCdnUrl(responseImageUrl, 'screen', 'screen', this.settings.resizeType.value);
         this.#localSettings!.lastChangedTime = Date.now();
         this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
