@@ -14,7 +14,7 @@
     "format": "prettier --write .",
     "run:ff": "node generateManifest.js firefox && web-ext run --devtools --firefox=deved --source-dir=build",
     "i18n": "paraglide-js compile --project ./project.inlang --outdir ./src/i18n/generated",
-    "e2e": "playwright test"
+    "test:e2e": "playwright test"
   },
   "devDependencies": {
     "@floating-ui/core": "^1.6.8",
