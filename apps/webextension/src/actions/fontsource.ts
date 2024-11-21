@@ -162,7 +162,7 @@ export const fontsource: Action<
                 weight: String(weight),
                 style: style,
                 unicodeRange: unicodeRange,
-                display: 'swap',
+                display: 'auto',
               });
               fontFaceSources.set(fontFace, uri);
               if (settings?.noPreload !== true) {
