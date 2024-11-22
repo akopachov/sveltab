@@ -14,11 +14,11 @@ export interface ImageBackgroundHistoryStorage {
 
 export class ImageBackgroundHistory {
   #historyRestored: boolean = false;
-  #history: string[] = [];
+  #history: string[] = $state([]);
   #provider: string | null = null;
-  #currentIndex: number = -1;
+  #currentIndex: number = $state(-1);
   #unsubscribe: (() => void) | undefined;
-  #hasChanges: boolean = false;
+  #hasChanges: boolean = $state(false);
   #saveDebounced = pDebounce(() => this.save(), secondsToMilliseconds(5));
 
   constructor() {

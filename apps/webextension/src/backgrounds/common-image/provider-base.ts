@@ -8,7 +8,7 @@ import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-bac
 import { Opfs, OpfsSchema } from '$lib/opfs';
 import { Lazy } from '$lib/lazy';
 import { storage } from '$stores/storage';
-import { ImageBackgroundHistory } from './history';
+import { ImageBackgroundHistory } from './history.svelte';
 
 const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 

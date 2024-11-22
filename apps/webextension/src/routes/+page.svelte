@@ -208,6 +208,7 @@
             {#each Widgets as item (item.settings.type)}
               <WidgetCatalogItemPreview
                 widgetCatalogItem={item}
+                id="wcipWidget_{item.settings.type}"
                 class="aspect-square"
                 draggable
                 ondragstart={(ev: any) => onWidgetCatalogItemDragStart(ev, item)}
