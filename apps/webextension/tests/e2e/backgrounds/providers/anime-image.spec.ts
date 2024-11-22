@@ -5,6 +5,8 @@ import { test, expect } from '@playwright/test';
 test.slow();
 test.describe.configure({ mode: 'serial', retries: 3 });
 
+const GetApiCallRegex = () => /(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi;
+
 test('sets background image', async ({ page }) => {
   await page.goto('/');
   await page.locator('#btnMainMenu').click();
@@ -12,7 +14,7 @@ test('sets background image', async ({ page }) => {
   const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'anime-image');
   const [_, response] = await Promise.all([
     page.selectOption('#cbxBackgroundType', providerIndex.toString()),
-    page.waitForResponse(/(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi),
+    page.waitForResponse(GetApiCallRegex()),
   ]);
 
   await expect(response.ok()).toBe(true);
@@ -27,6 +29,38 @@ test('sets background image', async ({ page }) => {
   await expect(imgBackgroundLocator).not.toHaveJSProperty('naturalWidth', 0);
 });
 
+test('do not send api call after page reload', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#btnMainMenu').click();
+  await page.locator('#aiBackgroundCatalog').click();
+  const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'anime-image');
+  await Promise.all([
+    page.selectOption('#cbxBackgroundType', providerIndex.toString()),
+    page.waitForResponse(GetApiCallRegex()),
+  ]);
+
+  const imgBackgroundLocator = page.locator('#imgBackground[src]');
+  await imgBackgroundLocator.waitFor({ state: 'visible' });
+  await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
+  await expect(imgBackgroundLocator).not.toHaveJSProperty('naturalWidth', 0);
+
+  page.on('dialog', async dialog => {
+    await page.waitForTimeout(500);
+    await dialog.accept();
+  });
+
+  await page.reload();
+  let timeoutFired = false;
+  try {
+    await page.waitForRequest(GetApiCallRegex(), {
+      timeout: 5000,
+    });
+  } catch (e) {
+    timeoutFired = true;
+  }
+  expect(timeoutFired).toBe(true);
+});
+
 const allTopics = Object.values(AnimeTopics);
 for (const topic of allTopics) {
   test(`sets background from the topic ${topic}`, async ({ page }) => {
@@ -35,17 +69,17 @@ for (const topic of allTopics) {
     await page.locator('#aiBackgroundCatalog').click();
     const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'anime-image');
     await Promise.all([
+      page.waitForResponse(GetApiCallRegex()),
       page.selectOption('#cbxBackgroundType', providerIndex.toString()),
-      page.waitForResponse(/(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi),
     ]);
 
     const imgBackgroundLocator = page.locator('#imgBackground[src]');
     await imgBackgroundLocator.waitFor({ state: 'visible' });
     await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
 
-    const [_, response] = await Promise.all([
+    const [response, _] = await Promise.all([
+      page.waitForResponse(GetApiCallRegex()),
       page.locator('#cbxAnimeImageBgProvider_Settings_Topic').selectOption(topic),
-      page.waitForResponse(/(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi),
     ]);
 
     await expect(response.ok()).toBe(true);
@@ -68,7 +102,7 @@ test('background image is not changing on refresh', async ({ page }) => {
   const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'anime-image');
   const [_, response] = await Promise.all([
     page.selectOption('#cbxBackgroundType', providerIndex.toString()),
-    page.waitForResponse(/(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi),
+    page.waitForResponse(GetApiCallRegex()),
   ]);
 
   await expect(response.ok()).toBe(true);
