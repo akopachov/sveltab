@@ -2,19 +2,19 @@ import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-
 import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import pDebounce from 'p-debounce';
-import { AnimeTopics, type Settings } from './settings';
+import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
-import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
+import { AnimeTopics, getAnimeImageForTopic } from './api';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
-const availableTopics = Object.values(AnimeTopics).filter(f => f !== AnimeTopics.Any);
+const availableTopics = Object.values(AnimeTopics);
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastTopic: AnimeTopics;
+  lastTopic: AnimeTopics | 'any';
 }
 
 export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
@@ -77,14 +77,10 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     ) {
       try {
         const topic =
-          this.settings.topic.value === AnimeTopics.Any
+          this.settings.topic.value === 'any'
             ? availableTopics[Math.floor(Math.random() * availableTopics.length)]
             : this.settings.topic.value;
-        const responseImageUrl = await fetch(getCorsFriendlyUrl(`https://t.alcy.cc/${topic}/?json`), {
-          signal: abortSignal,
-        })
-          .then(r => r.text())
-          .then(t => t?.trim());
+        const responseImageUrl = await getAnimeImageForTopic(topic, abortSignal);
         if (!responseImageUrl) {
           throw new Error('Unexpected response');
         }

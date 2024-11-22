@@ -1,14 +1,15 @@
 <script lang="ts">
-  import { AnimeTopics, type Settings } from './settings';
+  import type { Settings } from './settings';
   import NumberInput from '$shared-components/number-input.svelte';
   import * as m from '$i18n/messages';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
+  import { AnimeTopics } from './api';
 
   let { settings }: { settings: Settings } = $props();
 
-  const topicNames: [AnimeTopics, string][] = [
-    [AnimeTopics.Any, m.Backgrounds_AnimeImage_Settings_Topic_Any()],
+  const topicNames: [AnimeTopics | 'any', string][] = [
+    ['any', m.Backgrounds_AnimeImage_Settings_Topic_Any()],
     [AnimeTopics.AI, 'AI Drawing'],
     [AnimeTopics.YCY, 'YCY'],
     [AnimeTopics.MOE, 'MOE'],
@@ -34,7 +35,7 @@
 
 <label class="label mb-2">
   <span>{m.Backgrounds_AnimeImage_Settings_Topic()}</span>
-  <select class="select" bind:value={settings.topic.value}>
+  <select id="cbxAnimeImageBgProvider_Settings_Topic" class="select" bind:value={settings.topic.value}>
     {#each topicNames as [topic, name]}
       <option value={topic}>{name}</option>
     {/each}
@@ -47,6 +48,6 @@
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
 </label>
-<SettingsBase {settings} provider={{ href: 'https://t.mwm.moe/us/', name: 't.mwm.moe' }} />
+<SettingsBase {settings} provider={{ href: 'https://t.alcy.cc', name: 't.alcy.cc' }} />
 
 <BackgroundHistoryControl />

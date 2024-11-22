@@ -6,7 +6,6 @@ test('sets background image', async ({ page }) => {
   await page.locator('#btnMainMenu').click();
   await page.locator('#aiBackgroundCatalog').click();
   const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'wallhaven');
-  await page.locator('#cbxBackgroundType').selectOption(providerIndex.toString());
   await Promise.all([
     page.selectOption('#cbxBackgroundType', providerIndex.toString()),
     page.waitForResponse(/(https:\/\/wallhaven.cc\/api\/)|(https%3A%2F%2Fwallhaven\.cc%2Fapi%2F)/gi),

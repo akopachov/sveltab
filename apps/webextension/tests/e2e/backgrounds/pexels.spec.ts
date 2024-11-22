@@ -6,7 +6,6 @@ test('sets background image', async ({ page }) => {
   await page.locator('#btnMainMenu').click();
   await page.locator('#aiBackgroundCatalog').click();
   const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'pexels');
-  await page.locator('#cbxBackgroundType').selectOption(providerIndex.toString());
   await Promise.all([
     page.selectOption('#cbxBackgroundType', providerIndex.toString()),
     page.waitForResponse(/https:\/\/api\.pexels\.com\/v1\//gi),

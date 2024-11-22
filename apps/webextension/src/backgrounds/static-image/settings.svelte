@@ -61,7 +61,7 @@
 {#if settings.source.value === StaticImageSource.Url}
   <label class="label">
     <span>{m.Backgrounds_StaticImage_Settings_Url()}</span>
-    <input type="url" class="input" bind:value={settings.url.value} />
+    <input id="cbxStaticImageBgProvider_Settings_Url" type="url" class="input" bind:value={settings.url.value} />
   </label>
 {:else if settings.source.value === StaticImageSource.Local}
   <BrowserSupports constraint={Constraints.OPFS} class="!mt-4">
