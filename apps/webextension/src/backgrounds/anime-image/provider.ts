@@ -30,6 +30,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
   }
 
   async apply(abortSignal: AbortSignal) {
+    let initialized = false;
     await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -44,7 +45,13 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
-    const topicUnsubsribe = this.settings.topic.subscribe(() => forceUpdateDeb());
+    const forceUpdateDebIfInitialized = () => {
+      if (initialized) {
+        forceUpdateDeb();
+      }
+    };
+
+    const topicUnsubsribe = this.settings.topic.subscribe(forceUpdateDebIfInitialized);
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
@@ -55,6 +62,7 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       screenResolutionUnsubscribe();
       resizeTypeUnsubscribe();
     };
+    initialized = true;
     this.#update(abortSignal);
   }
 

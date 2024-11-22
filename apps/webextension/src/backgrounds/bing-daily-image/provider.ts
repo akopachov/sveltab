@@ -82,6 +82,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
   }
 
   async apply(abortSignal: AbortSignal) {
+    let initialized = false;
     await super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
@@ -91,7 +92,12 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     const updateDeb = pDebounce.promise(() => this.#update(abortSignal));
     const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
-    const localeUnsubscribe = this.settings.locale.subscribe(() => forceUpdateDeb());
+    const forceUpdateDebIfInitialized = () => {
+      if (initialized) {
+        forceUpdateDeb();
+      }
+    };
+    const localeUnsubscribe = this.settings.locale.subscribe(forceUpdateDebIfInitialized);
     const screenResolutionUnsubscribe = observeScreenResolution(update1SecDeb);
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
@@ -100,6 +106,7 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
       screenResolutionUnsubscribe();
       resizeTypeUnsubscribe();
     };
+    initialized = true;
     updateDeb();
   }
 
