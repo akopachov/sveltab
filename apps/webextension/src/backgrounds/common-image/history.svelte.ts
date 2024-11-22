@@ -105,8 +105,8 @@ export class ImageBackgroundHistory {
     await storage.local.set({
       [IMAGE_BACKGROUND_HISTORY_KEY]: {
         provider: this.#provider,
-        url: this.#history,
-        currentIndex: this.#currentIndex,
+        url: $state.snapshot(this.#history),
+        currentIndex: $state.snapshot(this.#currentIndex),
       } satisfies ImageBackgroundHistoryStorage,
     });
     this.#hasChanges = false;
