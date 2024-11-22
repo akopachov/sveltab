@@ -78,8 +78,8 @@
   use:textStroke={settings.textStroke}>
   {#if quote}
     <figure>
-      <blockquote>"{quote.quote}"</blockquote>
-      <figcaption class="text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
+      <blockquote class="quote">"{quote.quote}"</blockquote>
+      <figcaption class="author text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
     </figure>
   {/if}
 </div>

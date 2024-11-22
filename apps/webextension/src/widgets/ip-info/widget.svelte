@@ -61,21 +61,21 @@
     {#if settings.showVariables.value.includes(NetworkInfoVariables.IP)}
       <div class="whitespace-nowrap pr-2 content-center">IP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
-        <span title={ipInfo?.ip}>{ipInfo?.ip ?? '---'}</span>
+        <span class="ip" title={ipInfo?.ip}>{ipInfo?.ip ?? '---'}</span>
       </div>
     {/if}
 
     {#if settings.showVariables.value.includes(NetworkInfoVariables.Network)}
       <div class="whitespace-nowrap pr-2 content-center">Network:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
-        <span title={ipInfo?.network}>{ipInfo?.network ?? '---'}</span>
+        <span class="network" title={ipInfo?.network}>{ipInfo?.network ?? '---'}</span>
       </div>
     {/if}
 
     {#if settings.showVariables.value.includes(NetworkInfoVariables.ISP)}
       <div class="whitespace-nowrap pr-2 content-center">ISP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
-        <span title={ipInfo?.org}>{ipInfo?.org ?? '---'}</span>
+        <span class="org" title={ipInfo?.org}>{ipInfo?.org ?? '---'}</span>
       </div>
     {/if}
   </div>
