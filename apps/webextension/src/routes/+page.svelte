@@ -331,6 +331,7 @@
           </button>
           <!-- svelte-ignore a11y_consider_explicit_label -->
           <button
+            id="btnToggleLockWorkspace"
             type="button"
             class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
             style:color={menuButtonColor}
@@ -346,6 +347,7 @@
           {#if $ActiveBackgroundProvider?.canGoBack === true}
             <!-- svelte-ignore a11y_consider_explicit_label -->
             <button
+              id="btnPreviousBackground"
               type="button"
               class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
               style:color={menuButtonColor}
@@ -358,6 +360,7 @@
           {#if $ActiveBackgroundProvider?.canGoNext === true}
             <!-- svelte-ignore a11y_consider_explicit_label -->
             <button
+              id="btnNextBackground"
               type="button"
               class="btn-icon bg-transparent hover:bg-[var(--st-bg-color)]"
               style:color={menuButtonColor}
