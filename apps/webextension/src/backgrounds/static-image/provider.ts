@@ -20,8 +20,8 @@ export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<S
   forceUpdate(): void {
     this.setImage(this.settings.url.value);
   }
-  destroy(): void {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }

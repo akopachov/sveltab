@@ -9,6 +9,7 @@ import { Opfs, OpfsSchema } from '$lib/opfs';
 import { Lazy } from '$lib/lazy';
 import { storage } from '$stores/storage';
 import { ImageBackgroundHistory } from './history.svelte';
+import { browser } from '$app/environment';
 
 const IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY = 'imageBackgroundProviderSharedMeta';
 
@@ -20,19 +21,15 @@ const BaseNodeClassList = [
   '[filter:blur(var(--st-blur))_var(--st-filter-url)]',
 ];
 
-const History = new ImageBackgroundHistory();
-
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,
 > extends BackgroundProvider<T> {
-  #unsubscribeFilterChange!: () => void;
-  #unsubscribeResizeType!: () => void;
+  #unsubscribe: (() => void)[] = [];
   #lastImageUrl: string | undefined | null;
   #img: HTMLImageElement | undefined;
   #imageColor = new Lazy(() => new FastAverageColorEx());
   #resizeObserver: ResizeObserver | undefined;
-  #providerName: string;
-  readonly history = History;
+  readonly history: ImageBackgroundHistory;
   #sharedMeta: {
     url?: string;
     dominant?: { color: string; isDark: boolean };
@@ -40,7 +37,7 @@ export abstract class ImageBackgroundProviderBase<
   } = {};
   constructor(node: HTMLElement, settings: T, providerName: string) {
     super(node, settings);
-    this.#providerName = providerName;
+    this.history = new ImageBackgroundHistory(providerName);
   }
 
   get canGoBack() {
@@ -168,7 +165,6 @@ export abstract class ImageBackgroundProviderBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
-    const providerSetPromise = this.history.setProvider(this.#providerName);
     this.#sharedMeta =
       (await storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY))[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] ||
       {};
@@ -188,15 +184,29 @@ export abstract class ImageBackgroundProviderBase<
     }, 500);
     this.#resizeObserver = new ResizeObserver(updateCornerColorDeb);
     this.#resizeObserver.observe(this.#img);
-    this.#unsubscribeResizeType = this.settings.resizeType.subscribe(updateCornerColorDeb);
+    this.#unsubscribe.push(this.settings.resizeType.subscribe(updateCornerColorDeb));
     this.#applyFilters();
-    await providerSetPromise;
+    if (browser) {
+      const beforeUnloadHandler = (event: BeforeUnloadEvent) => {
+        if (this.history.hasChanges) {
+          this.history.save();
+        }
+
+        if (this.history.hasChanges) {
+          event.preventDefault();
+          event.returnValue = true;
+        }
+      };
+      window.addEventListener('beforeunload', beforeUnloadHandler);
+      this.#unsubscribe.push(() => window.removeEventListener('beforeunload', beforeUnloadHandler));
+    }
   }
 
-  destroy(): void {
+  async destroy() {
+    await this.history.save();
     this.#releaseBlob();
-    this.#unsubscribeFilterChange!();
-    this.#unsubscribeResizeType!();
+    this.#unsubscribe.forEach(unsub => unsub());
+    this.#unsubscribe.length = 0;
     this.#resizeObserver?.unobserve(this.#img!);
     this.#resizeObserver?.disconnect();
     if (this.#imageColor.isConstructed) {
@@ -214,14 +224,11 @@ export abstract class ImageBackgroundProviderBase<
     this.#updateFilters();
     const updateFiltersDeb = debounce(() => this.#updateFilters(), 0);
 
-    const blurUnsubscribe = this.settings.blur.subscribe(() => updateFiltersDeb());
-    const filterUnsubscribe = this.settings.filter.subscribe(() => updateFiltersDeb());
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateFiltersDeb());
-    this.#unsubscribeFilterChange = () => {
-      blurUnsubscribe();
-      filterUnsubscribe();
-      resizeTypeUnsubscribe();
-    };
+    this.#unsubscribe.push(
+      this.settings.blur.subscribe(() => updateFiltersDeb()),
+      this.settings.filter.subscribe(() => updateFiltersDeb()),
+      this.settings.resizeType.subscribe(() => updateFiltersDeb()),
+    );
   }
 
   #updateFilters() {

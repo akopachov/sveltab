@@ -34,6 +34,14 @@ function pickBetterUrl(src: string | undefined | null, node: HTMLElement, resize
       break;
   }
 
+  if (src.includes('?') && URL.canParse(src)) {
+    const srcUrl = new URL(src);
+    srcUrl.searchParams.set('fit', resizeTypeArgValue);
+    srcUrl.searchParams.set('h', height.toString());
+    srcUrl.searchParams.set('w', width.toString());
+    return srcUrl.toString();
+  }
+
   return `${src}?fit=${resizeTypeArgValue}&h=${height}&w=${width}`;
 }
 
@@ -149,8 +157,8 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
     }
   });
 
-  destroy() {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }

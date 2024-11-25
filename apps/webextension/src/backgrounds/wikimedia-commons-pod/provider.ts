@@ -88,8 +88,8 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     }
   });
 
-  destroy() {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }

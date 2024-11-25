@@ -80,8 +80,8 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     }
   });
 
-  destroy() {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }

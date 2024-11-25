@@ -154,8 +154,8 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     }
   });
 
-  destroy(): void {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }

@@ -27,7 +27,7 @@ export const dynamicBackground: Action<
     oncornerColorChanged: (e: CustomEvent<BackgroundCornerColorChangedEventArgs>) => void;
   }
 > = function (node: HTMLElement, background: BackgroundInstance | undefined | null) {
-  let backgroundProviderDestroyPromise: Promise<() => void> | undefined;
+  let backgroundProviderDestroyPromise: Promise<() => Promise<void>> | undefined;
   initializeNew(background);
 
   function notifyBackgroundChanged() {
@@ -37,7 +37,7 @@ export const dynamicBackground: Action<
   async function destroyExisting() {
     if (backgroundProviderDestroyPromise) {
       const backgroundProviderDestroy = await backgroundProviderDestroyPromise;
-      backgroundProviderDestroy();
+      await backgroundProviderDestroy();
     }
   }
 
@@ -64,7 +64,7 @@ export const dynamicBackground: Action<
         forcePreviousSubscribers.add(forcePrevious);
         await provider.apply(abortController.signal);
         _activeBackgroundProvider.set(provider);
-        return () => {
+        return async () => {
           _activeBackgroundProvider.set(undefined);
           forceNextSubscribers.delete(forceNext);
           forcePreviousSubscribers.delete(forcePrevious);
@@ -72,7 +72,7 @@ export const dynamicBackground: Action<
             provider.removeEventListener('backgroundChanged', notifyBackgroundChanged);
           }
           abortController.abort('User has changed background provider');
-          provider.destroy();
+          await provider.destroy();
         };
       });
     }

@@ -50,3 +50,45 @@ test(`history navigation is working`, async ({ page }) => {
   await page.locator('.drawer-backdrop').click();
   await expect(page.locator('#btnPreviousBackground')).toHaveCount(0);
 });
+
+test('history preserved after refresh', async ({ page }) => {
+  await page.goto('/');
+  await page.locator('#btnMainMenu').click();
+  await page.locator('#aiBackgroundCatalog').click();
+  const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'wallhaven');
+  await Promise.all([
+    page.selectOption('#cbxBackgroundType', providerIndex.toString()),
+    page.waitForResponse(/(https:\/\/wallhaven.cc\/api\/)|(https%3A%2F%2Fwallhaven\.cc%2Fapi%2F)/gi),
+  ]);
+
+  const imgBackgroundLocator = page.locator('#imgBackground[src]');
+  await imgBackgroundLocator.waitFor({ state: 'visible' });
+
+  await page.locator('.drawer-backdrop').click();
+
+  await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
+
+  const [, response] = await Promise.all([
+    page.locator('#btnNextBackground').click(),
+    page.waitForResponse(r => r.url().includes(encodeURIComponent('https://w.wallhaven.cc'))),
+  ]);
+
+  await expect(response.ok()).toBe(true);
+  await imgBackgroundLocator.waitFor({ state: 'visible' });
+
+  const originalSrc = (await imgBackgroundLocator.getAttribute('src')) || '';
+
+  page.on('dialog', async dialog => {
+    await page.waitForTimeout(500);
+    await dialog.accept();
+  });
+
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+
+  await imgBackgroundLocator.waitFor({ state: 'visible' });
+  await expect(imgBackgroundLocator).toHaveAttribute(
+    'src',
+    expect.stringContaining(encodeURIComponent(originalSrc.trim())),
+  );
+});

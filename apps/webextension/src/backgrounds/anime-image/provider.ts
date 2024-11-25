@@ -107,8 +107,8 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     }
   });
 
-  destroy() {
-    super.destroy();
+  async destroy() {
+    await super.destroy();
     this.#unsubscribe();
   }
 }
