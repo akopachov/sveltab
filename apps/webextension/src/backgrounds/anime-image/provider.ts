@@ -35,7 +35,6 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
         lastChangedTime: 0,
-        lastUrl: '',
       };
     }
 

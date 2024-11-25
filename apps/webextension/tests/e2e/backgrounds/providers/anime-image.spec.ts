@@ -3,7 +3,7 @@ import { AnimeTopics } from '$backgrounds/anime-image/api';
 import { test, expect } from '@playwright/test';
 
 test.slow();
-test.describe.configure({ mode: 'serial', retries: 3 });
+test.describe.configure({ mode: 'serial', retries: 5 });
 
 const GetApiCallRegex = () => /(https:\/\/t\.alcy\.cc\/.+\/\?json)|(https%3A%2F%2Ft\.alcy\.cc%2F.+%2F%3Fjson)/gi;
 
@@ -116,9 +116,15 @@ test('background image is not changing on refresh', async ({ page }) => {
   await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
   await expect(imgBackgroundLocator).not.toHaveJSProperty('naturalWidth', 0);
 
+  page.on('dialog', async dialog => {
+    await page.waitForTimeout(500);
+    await dialog.accept();
+  });
+
   await page.reload();
   await page.waitForLoadState('networkidle');
 
+  await imgBackgroundLocator.waitFor({ state: 'visible' });
   await expect(imgBackgroundLocator).toHaveAttribute(
     'src',
     expect.stringContaining(encodeURIComponent(imageUrl.trim())),

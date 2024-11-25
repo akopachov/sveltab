@@ -1,5 +1,3 @@
-import type { TopSites } from 'webextension-polyfill';
-
 let module;
 
 if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
@@ -10,7 +8,7 @@ if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
   }
 } else {
   module = Promise.resolve({
-    get(): Promise<MostVisitedURL[]> {
+    get(): ReturnType<typeof browser.topSites.get> {
       return Promise.resolve([
         {
           url: 'https://duckduckgo.com',
@@ -25,4 +23,3 @@ if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
 }
 
 export const topSites = await module;
-export type MostVisitedURL = TopSites.MostVisitedURL;

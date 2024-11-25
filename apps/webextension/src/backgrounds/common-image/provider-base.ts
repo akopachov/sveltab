@@ -168,7 +168,7 @@ export abstract class ImageBackgroundProviderBase<
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async apply(abortSignal: AbortSignal) {
     abortSignal.throwIfAborted();
-    const providerSetPromise = History.setProvider(this.#providerName);
+    const providerSetPromise = this.history.setProvider(this.#providerName);
     this.#sharedMeta =
       (await storage.local.get(IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY))[IMAGE_BACKGROUND_PROVIDER_SHARED_META_KEY] ||
       {};
