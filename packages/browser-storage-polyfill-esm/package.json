@@ -11,9 +11,9 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.9.3",
     "@types/webextension-polyfill": "^0.12.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "browser-storage-polyfill": "^1.0.11",

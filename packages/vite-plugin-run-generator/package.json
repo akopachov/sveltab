@@ -12,9 +12,9 @@
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
-    "@types/node": "^22.9.1",
+    "@types/node": "^22.9.3",
     "@types/picomatch": "^3.0.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
     "colorette": "^2.0.20",
