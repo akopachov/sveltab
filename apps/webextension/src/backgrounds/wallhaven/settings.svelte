@@ -92,4 +92,4 @@
 
 <SettingsBase {settings} provider={{ href: 'https://wallhaven.cc', name: 'Wallhaven' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

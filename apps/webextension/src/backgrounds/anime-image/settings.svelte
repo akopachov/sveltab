@@ -50,4 +50,4 @@
 </label>
 <SettingsBase {settings} provider={{ href: 'https://t.alcy.cc', name: 't.alcy.cc' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

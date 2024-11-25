@@ -82,4 +82,4 @@
 
 <SettingsBase {settings} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

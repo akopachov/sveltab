@@ -10,4 +10,4 @@
   {settings}
   provider={{ href: 'https://commons.wikimedia.org/wiki/Main_Page', name: 'Wikimedia Commons' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

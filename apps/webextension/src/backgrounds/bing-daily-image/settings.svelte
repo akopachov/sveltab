@@ -23,4 +23,4 @@
 </label>
 <SettingsBase {settings} provider={{ href: 'https://bing.com', name: 'Bing' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

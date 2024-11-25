@@ -32,4 +32,4 @@
 
 <SettingsBase {settings} provider={{ href: 'https://www.pexels.com', name: 'Pexels' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />

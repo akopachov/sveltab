@@ -8,4 +8,4 @@
 
 <SettingsBase {settings} provider={{ href: 'https://apod.nasa.gov/apod/astropix.html', name: 'NASA' }} />
 
-<BackgroundHistoryControl />
+<BackgroundHistoryControl class="mt-2" />
