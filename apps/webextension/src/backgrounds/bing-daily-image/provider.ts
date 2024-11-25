@@ -86,7 +86,6 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     await super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
-      lastUrl: '',
     };
 
     const updateDeb = pDebounce.promise(() => this.#update(abortSignal));

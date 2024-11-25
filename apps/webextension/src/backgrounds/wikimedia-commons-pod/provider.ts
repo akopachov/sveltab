@@ -30,7 +30,6 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
     await super.apply(abortSignal);
     this.#localSettings = <LocalSettings>(await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
-      lastUrl: '',
     };
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
