@@ -21,7 +21,7 @@ export class Settings extends WidgetSettingsExtra {
     this.textColor = useObservable(initial.textColor || '#000');
     this.assetPack = useObservable(initial.assetPack || 'default');
     this.measurementUnits = useObservable(initial.measurementUnits || MeasurementUnits.Metric);
-    this.queryUserLocation = useObservable(initial.queryUserLocation ?? false);
+    this.queryUserLocation = useObservable(initial.queryUserLocation ?? true);
     this.location = new GeoLocation(initial.location || {});
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});

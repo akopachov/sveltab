@@ -330,13 +330,16 @@
   {#if !!forecast && forecast.lastUpdate > 0}
     <div class="grid grid-rows-[1fr,auto] grid-cols-[1fr,auto] gap-0 w-full h-full">
       <div class="row-start-1 col-start-1 row-end-1 col-end-1 flex flex-col min-h-0 min-w-0">
-        <h4 class="{settings.showDetails.value ? 'text-[max(0.4em,10px)]' : 'text-[max(1em,10px)]'} leading-none">
+        <h4
+          class="{settings.showDetails.value
+            ? 'text-[max(0.4em,10px)]'
+            : 'text-[max(1em,10px)]'} leading-none location">
           {locationDisplayText}
         </h4>
         {#if settings.showCurrentIcon.value}
           <div class="min-h-0 p-[1cqmin]">
             <img
-              class="block object-contain object-left-top w-full h-full"
+              class="block object-contain object-left-top w-full h-full current-weather-icon"
               draggable="false"
               use:imgSrcEx={assetPack.getIconUrl(
                 forecast.current.weatherCode,
@@ -351,7 +354,7 @@
         <div
           class="text-right {settings.showDetails.value
             ? 'text-[1.3em]'
-            : 'text-[calc(85cqh-max(1em,7px))]'} leading-none">
+            : 'text-[calc(85cqh-max(1em,7px))]'} leading-none current-weather-temperature">
           {adaptTemperature(forecast.current.temperature2m, settings.measurementUnits.value)}&deg;
         </div>
         <div class={settings.showDetails.value ? 'text-[max(0.4em,7px)]' : 'text-[max(1em,7px)]'}>
