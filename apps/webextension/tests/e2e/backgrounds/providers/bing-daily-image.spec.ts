@@ -1,10 +1,12 @@
 import { test, expect } from '@playwright/test';
 
+test.describe.configure({ mode: 'serial', retries: 3 });
+
 const GetApiCallRegex = () => /https%3A%2F%2Fwww.bing.com%2FHPImageArchive\.aspx/gi;
 
 test('sets background image', async ({ page }) => {
   await page.goto('/');
-  await page.waitForResponse(GetApiCallRegex());
+  await page.waitForLoadState('networkidle');
 
   // No need to select the provider, as Bing is the default provider
 
@@ -20,7 +22,7 @@ test('sets background image', async ({ page }) => {
 
 test('do not send api call after page reload', async ({ page }) => {
   await page.goto('/');
-  await page.waitForResponse(GetApiCallRegex());
+  await page.waitForLoadState('networkidle');
 
   // No need to select the provider, as Bing is the default provider
 

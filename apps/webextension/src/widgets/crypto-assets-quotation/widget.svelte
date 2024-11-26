@@ -3,7 +3,7 @@
   import { fontsource } from '$actions/fontsource';
   import { browserLocales, userPosssibleLocaleCharSubset } from '$stores/locale';
   import pDebounce from 'p-debounce';
-  import type { CoincapioAssetHistoryResponse, CoincapioAssetResponse } from './types/coincapio';
+  import { CoincapioHistoryInterval, getAsset, getAssetHistory } from './coincapio-api';
   import { storage } from '$stores/storage';
   import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
@@ -179,20 +179,12 @@
         differenceInMinutes(Date.now(), priceInfo.lastUpdate) > 5 ||
         priceInfo.asset.id !== settings.asset.value.id)
     ) {
-      const promises = [
-        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=d1`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=h1`).then(r => r.json()),
-        fetch(`https://api.coincap.io/v2/assets/${settings.asset.value.id}/history?interval=m1`).then(r => r.json()),
-      ];
-      let [assetData, dailyHistoryData, hourlyHistoryData, minutelyHistoryData] = <
-        [
-          CoincapioAssetResponse,
-          CoincapioAssetHistoryResponse,
-          CoincapioAssetHistoryResponse,
-          CoincapioAssetHistoryResponse,
-        ]
-      >await Promise.all(promises);
+      const [assetData, dailyHistoryData, hourlyHistoryData, minutelyHistoryData] = await Promise.all([
+        getAsset(settings.asset.value.id),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Daily),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Hourly),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Minutely),
+      ]);
 
       priceInfo = {
         lastUpdate: Date.now(),
@@ -260,7 +252,7 @@
   }}
   use:textStroke={settings.textStroke}>
   {#if priceInfo}
-    <p class="mb-1 text-[max(0.5em,12px)]">
+    <p class="mb-1 text-[max(0.5em,12px)] current-price">
       {priceInfo.asset.name} ({priceInfo.asset.code}):&nbsp;
       <span class="font-medium">{currencyFormatter.format(priceInfo.currentPrice * currentExchangeRate)}</span>
     </p>
@@ -287,7 +279,7 @@
           <span class="icon-[heroicons-solid--external-link]"></span>
         </TabAnchor>
         <svelte:fragment slot="panel">
-          <div class="w-full h-full" onmousemove={onChartMouseMove}>
+          <div class="w-full h-full chart" onmousemove={onChartMouseMove}>
             <Chart {init} options={chartOptions} />
           </div>
         </svelte:fragment>

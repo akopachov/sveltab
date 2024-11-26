@@ -7,6 +7,7 @@ test('loads image', async ({ page }) => {
   await Promise.all([
     page.locator('#wcipWidget_flickr-image').click(),
     page.locator('.widget_flickr-image').waitFor({ state: 'visible' }),
+    page.waitForLoadState('networkidle'),
   ]);
 
   const linkLocator = page.locator('.widget_flickr-image a');

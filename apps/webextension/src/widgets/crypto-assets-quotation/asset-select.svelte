@@ -3,7 +3,7 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import type { CryptoAssetRef } from './settings';
-  import type { CoincapioAsset, CoincapioAssetsResponse } from './types/coincapio';
+  import type { CoincapioAsset, CoincapioAssetsResponse } from './coincapio-api';
 
   let { asset = $bindable() }: { asset: CryptoAssetRef } = $props();
 

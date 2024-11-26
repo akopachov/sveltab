@@ -26,10 +26,12 @@ for (const cityInfo of TestCities) {
     ]);
 
     const qualityIndexTextLocator = page.locator('.widget_air-quality .quality-index-text');
+    await qualityIndexTextLocator.waitFor({ state: 'visible' });
     await expect(qualityIndexTextLocator).not.toBeEmpty();
     await expect(qualityIndexTextLocator).toHaveAttribute('href', /https:\/\/.+/);
 
     const qualityIndexValueLocator = page.locator('.widget_air-quality .quality-index-value');
+    await qualityIndexValueLocator.waitFor({ state: 'visible' });
     await expect(qualityIndexValueLocator).toHaveText(/\d+/);
     await expect(qualityIndexValueLocator).toHaveAttribute('href', /https:\/\/.+/);
   });

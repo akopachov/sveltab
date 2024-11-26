@@ -23,14 +23,18 @@ for (const cityInfo of TestCities) {
     await Promise.all([
       page.locator('#wcipWidget_weather').click(),
       page.locator('.widget_weather').waitFor({ state: 'visible' }),
+      page.waitForLoadState('networkidle'),
     ]);
 
     const locationLocator = page.locator('.widget_weather .location');
+    await locationLocator.waitFor({ state: 'visible' });
     await expect(locationLocator).toContainText(new RegExp(`${cityInfo.city}, (.+, )?${cityInfo.country}`));
     const currentWeatherIconLocator = page.locator('.widget_weather .current-weather-icon');
+    await currentWeatherIconLocator.waitFor({ state: 'visible' });
     await expect(currentWeatherIconLocator).toHaveAttribute('src', /https:\/\/.+/);
     await expect(currentWeatherIconLocator).toHaveJSProperty('complete', true);
     const currentTemperatureLocator = page.locator('.widget_weather .current-weather-temperature');
+    await currentTemperatureLocator.waitFor({ state: 'visible' });
     await expect(currentTemperatureLocator).toHaveText(/-?\d+°/);
   });
 }
