@@ -146,6 +146,10 @@
   });
 
   async function ensureLocationPresent() {
+    if (!settings.location.city.value && settings.queryUserLocation.value) {
+      await queryUserGeolocation();
+    }
+
     if (!settings.location.city.value) {
       try {
         ({
@@ -159,18 +163,18 @@
       } catch (e) {
         log.error('An error occurred during querying GeoIP info', { widgetId: id }, e);
       }
+    }
 
-      if (!settings.location.city.value && !settings.queryUserLocation.value) {
-        // If unabled to geolocate by some reason - default to my home town
-        ({
-          city: settings.location.city.value,
-          country: settings.location.country.value,
-          latitude: settings.location.latitude.value,
-          longitude: settings.location.longitude.value,
-          admin1: settings.location.admin1.value,
-          admin2: settings.location.admin2.value,
-        } = getDefaultFallbackGeolocation());
-      }
+    if (!settings.location.city.value) {
+      // If unabled to geolocate by some reason - default to my home town
+      ({
+        city: settings.location.city.value,
+        country: settings.location.country.value,
+        latitude: settings.location.latitude.value,
+        longitude: settings.location.longitude.value,
+        admin1: settings.location.admin1.value,
+        admin2: settings.location.admin2.value,
+      } = getDefaultFallbackGeolocation());
     }
   }
 

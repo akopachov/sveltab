@@ -7,7 +7,7 @@ test(`loads info`, async ({ page }) => {
   const [, , response] = await Promise.all([
     page.locator('#wcipWidget_ip-info').click(),
     page.locator('.widget_ip-info').waitFor({ state: 'visible' }),
-    page.waitForResponse('https://ipapi.co/json/'),
+    page.waitForResponse(/https:\/\/get.geojs.io\/.+/),
   ]);
 
   await expect(response.ok()).toBe(true);
@@ -17,10 +17,9 @@ test(`loads info`, async ({ page }) => {
   await expect(ipLocator).not.toBeEmpty();
   await expect(ipLocator).not.toHaveText('---');
 
-  const networkLocator = page.locator('.widget_ip-info .network');
-  await expect(networkLocator).not.toBeNull();
-  await expect(networkLocator).not.toBeEmpty();
-  await expect(networkLocator).not.toHaveText('---');
+  const asnLocator = page.locator('.widget_ip-info .asn');
+  await expect(asnLocator).toHaveText(/\d+/);
+  await expect(asnLocator).toHaveAttribute('href', /https:\/\/bgpview.io\/asn\/\d+/);
 
   const orgLocator = page.locator('.widget_ip-info .org');
   await expect(orgLocator).not.toBeNull();

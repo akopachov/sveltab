@@ -2,7 +2,7 @@
   import { NetworkInfoVariables, type Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
-  import { getGeoIpInfo, type IpApiCoResponse } from '$lib/ipapi-co';
+  import { getGeoIpInfo, type IpApiResponse } from '$lib/ipapi';
   import { logger } from '$lib/logger';
   import { onMount } from 'svelte';
   import { online } from '$stores/online-store';
@@ -12,7 +12,7 @@
 
   let { settings }: { settings: Settings } = $props();
 
-  let ipInfo: IpApiCoResponse | undefined | null = $state();
+  let ipInfo: IpApiResponse | undefined | null = $state();
 
   $effect(() => {
     void $online;
@@ -65,17 +65,23 @@
       </div>
     {/if}
 
-    {#if settings.showVariables.value.includes(NetworkInfoVariables.Network)}
-      <div class="whitespace-nowrap pr-2 content-center">Network:</div>
+    {#if settings.showVariables.value.includes(NetworkInfoVariables.ASN)}
+      <div class="whitespace-nowrap pr-2 content-center">ASN:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
-        <span class="network" title={ipInfo?.network}>{ipInfo?.network ?? '---'}</span>
+        {#if ipInfo?.asn}
+          <a class="asn underline decoration-dotted" href="https://bgpview.io/asn/{ipInfo.asn}">
+            {ipInfo.asn}
+          </a>
+        {:else}
+          <span class="asn">---</span>
+        {/if}
       </div>
     {/if}
 
     {#if settings.showVariables.value.includes(NetworkInfoVariables.ISP)}
       <div class="whitespace-nowrap pr-2 content-center">ISP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
-        <span class="org" title={ipInfo?.org}>{ipInfo?.org ?? '---'}</span>
+        <span class="org" title={ipInfo?.organization_name}>{ipInfo?.organization_name ?? '---'}</span>
       </div>
     {/if}
   </div>

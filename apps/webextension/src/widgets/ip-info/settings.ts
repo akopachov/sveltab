@@ -9,7 +9,7 @@ import {
 
 export enum NetworkInfoVariables {
   IP = 'ip',
-  Network = 'network',
+  ASN = 'asn',
   ISP = 'isp',
 }
 
@@ -22,7 +22,7 @@ export class Settings extends WidgetSettingsExtra {
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.showVariables = useObservable(
-      initial.showVariables || [NetworkInfoVariables.IP, NetworkInfoVariables.Network, NetworkInfoVariables.ISP],
+      initial.showVariables || [NetworkInfoVariables.IP, NetworkInfoVariables.ASN, NetworkInfoVariables.ISP],
     );
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }

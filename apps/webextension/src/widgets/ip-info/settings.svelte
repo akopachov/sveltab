@@ -48,9 +48,9 @@
     <input
       class="checkbox"
       type="checkbox"
-      value={NetworkInfoVariables.Network}
+      value={NetworkInfoVariables.ASN}
       bind:group={settings.showVariables.value} />
-    <p>Network</p>
+    <p>ASN</p>
   </label>
   <label class="flex items-center space-x-2 w-full mb-2">
     <input
