@@ -224,7 +224,11 @@
     <div class="flex flex-row max-h-[calc(100cqh-10cqmin)] h-full">
       <div class="flex flex-col flex-auto">
         <p class="mb-[.5em]">
-          <a class="hover:underline" href={airQualityDetailsLink} rel="noreferrer" referrerpolicy="no-referrer">
+          <a
+            class="hover:underline quality-index-text"
+            href={airQualityDetailsLink}
+            rel="noreferrer"
+            referrerpolicy="no-referrer">
             {currentAirQualityIndexText}
           </a>
         </p>
@@ -321,7 +325,7 @@
             strokeLinecap="butt" />
         </div>
         <a
-          class="hover:underline absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[1.5em]"
+          class="hover:underline absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[1.5em] quality-index-value"
           href={airQualityDetailsLink}
           rel="noreferrer"
           referrerpolicy="no-referrer">
