@@ -92,7 +92,10 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     ) {
       try {
         const bingImageUrl = await getDailyWalpaper(
-          getClosestResolution(this.node.offsetWidth, this.node.offsetHeight),
+          getClosestResolution(
+            window.screen.availWidth * window.devicePixelRatio,
+            window.screen.availHeight * window.devicePixelRatio,
+          ),
           getClosestMarket(this.settings.locale.value),
           abortSignal,
         );
