@@ -4,11 +4,11 @@
   import { onMount } from 'svelte';
   import { storage } from '$stores/storage';
   import pDebounce from 'p-debounce';
-  import { PUBLIC_FLICKR_API_KEY } from '$env/static/public';
   import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
   import { loadingPlaceholder } from '$actions/loading-placeholder';
   import * as m from '$i18n/messages';
   import { type FlickrImageData, flickrSrc } from './flickr-src';
+  import { getImageSizes, searchImages } from './api';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type CachedData = {
@@ -33,14 +33,16 @@
   });
 
   onMount(async () => {
-    latestSearchResult = <CachedData>(await storage.local.get(storageKey))[storageKey] || {
-      images: [],
-      searchTerm: '',
-      page: 0,
-      totalPages: 0,
-      activeImage: undefined,
-      lastUpdate: 0,
-    };
+    latestSearchResult =
+      <CachedData>(await storage.local.get(storageKey))[storageKey] ||
+      ({
+        images: [],
+        searchTerm: '',
+        page: 0,
+        totalPages: 0,
+        activeImage: undefined,
+        lastUpdate: 0,
+      } satisfies CachedData);
     await pickRandomPhoto();
   });
 
@@ -70,14 +72,12 @@
         }
 
         latestSearchResult.searchTerm = settings.searchTopic.value || 'random';
-        const response = await fetch(
-          `https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=${PUBLIC_FLICKR_API_KEY}&text=${latestSearchResult.searchTerm}&safe_search=1&content_type=1&sort=interestingness-desc&per_page=20&format=json&page=${page}&nojsoncallback=1`,
-        ).then(r => r.json());
+        const response = await searchImages(latestSearchResult.searchTerm, page);
         latestSearchResult.page = response.photos.page;
         latestSearchResult.totalPages = response.photos.pages;
-        latestSearchResult.images = response.photos.photo.map((m: any) => ({
-          id: m.id,
-          owner: m.owner,
+        latestSearchResult.images = response.photos.photo.map(x => ({
+          id: x.id,
+          owner: x.owner,
         }));
       }
 
@@ -85,13 +85,11 @@
 
       const randomImage = latestSearchResult.images.splice(randomIndex, 1)[0];
 
-      const sizesResponse = await fetch(
-        `https://www.flickr.com/services/rest/?method=flickr.photos.getSizes&api_key=${PUBLIC_FLICKR_API_KEY}&photo_id=${randomImage.id}&format=json&nojsoncallback=1`,
-      ).then(r => r.json());
-      const sources: FlickrImageData['sources'] = sizesResponse.sizes.size.map((m: any) => ({
-        width: m.width,
-        height: m.height,
-        source: m.source,
+      const sizesResponse = await getImageSizes(randomImage.id);
+      const sources: FlickrImageData['sources'] = sizesResponse.sizes.size.map(x => ({
+        width: x.width,
+        height: x.height,
+        source: x.source,
       }));
 
       latestSearchResult.activeImage = {
