@@ -60,6 +60,14 @@
       bind:group={settings.showVariables.value} />
     <p>ISP</p>
   </label>
+  <label class="flex items-center space-x-2 w-full mb-2">
+    <input
+      class="checkbox"
+      type="checkbox"
+      value={NetworkInfoVariables.Location}
+      bind:group={settings.showVariables.value} />
+    <p>{m.Widgets_IpInfo_Settings_Variable_Location()}</p>
+  </label>
 {:else if tab === BackgroundTabId}
   <BackgroundSettings bind:color={settings.backgroundColor.value} bind:blur={settings.backgroundBlur.value} />
 {/if}

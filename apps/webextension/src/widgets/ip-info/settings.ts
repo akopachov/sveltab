@@ -11,6 +11,7 @@ export enum NetworkInfoVariables {
   IP = 'ip',
   ASN = 'asn',
   ISP = 'isp',
+  Location = 'location',
 }
 
 export class Settings extends WidgetSettingsExtra {
@@ -21,9 +22,7 @@ export class Settings extends WidgetSettingsExtra {
     this.textColor = useObservable(initial.textColor || '#000');
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
-    this.showVariables = useObservable(
-      initial.showVariables || [NetworkInfoVariables.IP, NetworkInfoVariables.ASN, NetworkInfoVariables.ISP],
-    );
+    this.showVariables = useObservable(initial.showVariables || Object.values(NetworkInfoVariables));
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 

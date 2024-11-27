@@ -25,4 +25,9 @@ test(`loads info`, async ({ page }) => {
   await expect(orgLocator).not.toBeNull();
   await expect(orgLocator).not.toBeEmpty();
   await expect(orgLocator).not.toHaveText('---');
+
+  const locationLocator = page.locator('.widget_ip-info .location');
+  await expect(locationLocator).not.toBeNull();
+  await expect(locationLocator).not.toBeEmpty();
+  await expect(locationLocator).not.toHaveText('---');
 });

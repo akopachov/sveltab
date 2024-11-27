@@ -1,4 +1,5 @@
 <script lang="ts">
+  import * as m from '$i18n/messages';
   import { NetworkInfoVariables, type Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
@@ -13,6 +14,8 @@
   let { settings }: { settings: Settings } = $props();
 
   let ipInfo: IpApiResponse | undefined | null = $state();
+
+  let location = $derived([ipInfo?.city, ipInfo?.region, ipInfo?.country].filter(Boolean).join(', '));
 
   $effect(() => {
     void $online;
@@ -82,6 +85,13 @@
       <div class="whitespace-nowrap pr-2 content-center">ISP:</div>
       <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
         <span class="org" title={ipInfo?.organization_name}>{ipInfo?.organization_name ?? '---'}</span>
+      </div>
+    {/if}
+
+    {#if settings.showVariables.value.includes(NetworkInfoVariables.Location)}
+      <div class="whitespace-nowrap pr-2 content-center">{m.Widgets_IpInfo_Settings_Variable_Location()}:</div>
+      <div class="whitespace-nowrap overflow-hidden text-ellipsis content-center">
+        <span class="location" title={location}>{location ?? '---'}</span>
       </div>
     {/if}
   </div>
