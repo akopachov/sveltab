@@ -9,5 +9,4 @@ export class MetacrawlerSearchProvider implements SearchProvider {
     return EmptySuggestionsPromise;
   }
   readonly iconClass = 'icon-[material-symbols--search]';
-  readonly name = 'Metacrawler';
 }

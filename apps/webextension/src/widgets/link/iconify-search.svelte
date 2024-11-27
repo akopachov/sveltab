@@ -2,8 +2,6 @@
   import * as m from '$i18n/messages';
   import { Paginator, type PaginationSettings, ProgressRadial } from '@skeletonlabs/skeleton';
   import { imgSrcEx } from '$actions/img-src-ex';
-
-  import pDebounce from 'p-debounce';
   import { AppliedColorScheme } from '$actions/color-scheme';
   import ColorPicker, { ColorPickerLayout } from '$shared-components/color-picker.svelte';
   import { getSvgUrl } from '../../lib/service-mirrors';

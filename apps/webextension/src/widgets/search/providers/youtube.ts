@@ -15,5 +15,4 @@ export class YouTubeSearchProvider implements SearchProvider {
     return response[1];
   }
   readonly iconClass = 'icon-[logos--youtube-icon]';
-  readonly name = 'YouTube';
 }

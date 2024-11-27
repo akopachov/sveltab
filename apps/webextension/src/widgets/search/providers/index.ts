@@ -6,12 +6,21 @@ import { GoogleSearchProvider } from './google';
 import type { SearchProvider } from './search-provider';
 import { YouTubeSearchProvider } from './youtube';
 import { MetacrawlerSearchProvider } from './metacrawler';
+import { SearxSearchProvider } from './searx';
+import { CustomSearchProvider } from './custom';
 
-export const SearchProviders = new Map<SearchProviderName, SearchProvider>([
-  ['duckduckgo', new DuckDuckGoSearchProvider()],
-  ['google', new GoogleSearchProvider()],
-  ['bing', new BingSearchProvider()],
-  ['youtube', new YouTubeSearchProvider()],
-  ['brave', new BraveSearchProvider()],
-  ['metacrawler', new MetacrawlerSearchProvider()],
+export type SearchProviderDescriptor = {
+  readonly displayName: string;
+  readonly factory: (...args: any[]) => SearchProvider;
+};
+
+export const SearchProviders = new Map<SearchProviderName, SearchProviderDescriptor>([
+  ['duckduckgo', { displayName: 'DuckDuckGo', factory: () => new DuckDuckGoSearchProvider() }],
+  ['google', { displayName: 'Google', factory: () => new GoogleSearchProvider() }],
+  ['bing', { displayName: 'Bing', factory: () => new BingSearchProvider() }],
+  ['youtube', { displayName: 'YouTube', factory: () => new YouTubeSearchProvider() }],
+  ['brave', { displayName: 'Brave', factory: () => new BraveSearchProvider() }],
+  ['metacrawler', { displayName: 'MetaCrawler', factory: () => new MetacrawlerSearchProvider() }],
+  ['searx', { displayName: 'Searx\\SearXNG', factory: s => new SearxSearchProvider(s) }],
+  ['custom', { displayName: 'Custom', factory: s => new CustomSearchProvider(s) }],
 ]);

@@ -172,6 +172,9 @@
 
   "Widgets_Search_Settings_SearchProvider": "Правайдэр пошуку",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Пошукавыя прапановы",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl": "URL пошуку",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl_Tip": "Выкарыстоўвайце {query} як плейсхолдэр для пошукавых тэрмінаў",
+  "Widgets_Search_Settings_SearxSearchProvider_BaseUrl": "URL Searx\\Searxng",
   "Widgets_Greeting_Name": "Прывітанне",
   "Widgets_Greeting_Settings_Tabs_Text": "Тэкст",
   "Widgets_Greeting_Settings_Tabs_Background": "Фон",

@@ -171,6 +171,9 @@
 
   "Widgets_Search_Settings_SearchProvider": "Dostawca wyszukiwania",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Sugestie wyszukiwania",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl": "Adres URL wyszukiwania",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl_Tip": "Użyj {query} jako zmienną zastępczą",
+  "Widgets_Search_Settings_SearxSearchProvider_BaseUrl": "Adres URL Searx\\Searxng",
   "Widgets_Greeting_Name": "Powitanie",
   "Widgets_Greeting_Settings_Tabs_Text": "Tekst",
   "Widgets_Greeting_Settings_Tabs_Background": "Tło",

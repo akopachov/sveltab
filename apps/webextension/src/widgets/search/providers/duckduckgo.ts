@@ -13,5 +13,4 @@ export class DuckDuckGoSearchProvider implements SearchProvider {
     return response[1];
   }
   readonly iconClass = 'icon-[logos--duckduckgo]';
-  readonly name = 'DuckDuckGo';
 }

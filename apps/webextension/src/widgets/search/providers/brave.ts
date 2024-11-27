@@ -13,5 +13,4 @@ export class BraveSearchProvider implements SearchProvider {
     return response[1].map((m: any) => m.q);
   }
   readonly iconClass = 'icon-[logos--brave]';
-  readonly name = 'Brave';
 }

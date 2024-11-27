@@ -31,7 +31,7 @@
   let searchSuggestions: string[] = $state([]);
   let searchSuggestionContainerEl: HTMLElement | undefined = $state();
 
-  let searchProviderAdapter = $derived(SearchProviders.get(settings.searchProvider.value));
+  let searchProviderAdapter = $derived(SearchProviders.get(settings.searchProvider.value)?.factory(settings));
 
   function doSearch(e: Event) {
     e.preventDefault();

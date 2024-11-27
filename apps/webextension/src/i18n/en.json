@@ -176,6 +176,9 @@
 
   "Widgets_Search_Settings_SearchProvider": "Search provider",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Search suggestions",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl": "Search URL",
+  "Widgets_Search_Settings_CustomSearchProvider_SearchUrl_Tip": "Use {query} as a placeholder for the search query",
+  "Widgets_Search_Settings_SearxSearchProvider_BaseUrl": "Searx\\Searxng base URL",
   "Widgets_Greeting_Name": "Greeting",
   "Widgets_Greeting_Settings_Tabs_Text": "Text",
   "Widgets_Greeting_Settings_Tabs_Background": "Background",

@@ -11,5 +11,4 @@ export class BingSearchProvider implements SearchProvider {
     return response[1];
   }
   readonly iconClass = 'icon-[logos--bing]';
-  readonly name = 'Bing';
 }

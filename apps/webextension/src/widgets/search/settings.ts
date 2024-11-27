@@ -6,7 +6,15 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export type SearchProviderName = 'google' | 'duckduckgo' | 'bing' | 'youtube' | 'brave' | 'metacrawler';
+export type SearchProviderName =
+  | 'google'
+  | 'duckduckgo'
+  | 'bing'
+  | 'youtube'
+  | 'brave'
+  | 'metacrawler'
+  | 'searx'
+  | 'custom';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
@@ -18,6 +26,8 @@ export class Settings extends WidgetSettingsExtra {
     this.searchSuggestionEnabled = useObservable(initial.searchSuggestionEnabled ?? true);
     this.font = new FontSettings(initial.font || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
+    this.customSearchProviderSearchUrl = useObservable(initial.customSearchProviderSearchUrl || '');
+    this.searxBaseUrl = useObservable(initial.searxBaseUrl || '');
   }
 
   readonly backgroundColor: Observable<string>;
@@ -27,4 +37,6 @@ export class Settings extends WidgetSettingsExtra {
   readonly searchSuggestionEnabled: Observable<boolean>;
   readonly font: FontSettings;
   readonly textStroke: TextStrokeSettings;
+  readonly customSearchProviderSearchUrl: Observable<string>;
+  readonly searxBaseUrl: Observable<string>;
 }
