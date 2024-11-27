@@ -9,7 +9,6 @@ import {
   type ReadOnlyObservable,
   unobserve,
 } from './observable.svelte';
-import { Opfs, OpfsSchema } from './opfs';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
@@ -55,7 +54,7 @@ export class WorkspaceInstance {
     this.#trackObjectChange(this.customStyles);
     this.#trackObjectChange(this.internalAssetsManager.internalAssets);
     this.#trackObjectChange(this.favicon);
-    this.#hasChanges.set(unsaved);
+    this.#hasChanges.value = unsaved;
   }
 
   readonly isLocked: Observable<boolean>;

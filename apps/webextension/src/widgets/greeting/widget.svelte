@@ -12,9 +12,9 @@
     'October',
     'November',
     'December',
-  ];
-  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const localeToLanguagesMap = new Map([
+  ] as const;
+  const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
+  const localeToLanguagesMap: ReadonlyMap<string, string> = new Map([
     ['en', 'English'],
     ['pl', 'Polish'],
     ['be', 'Belarusian'],
@@ -122,7 +122,8 @@
     weights: [settings.font.weight.value],
   }}
   use:textStroke={settings.textStroke}>
-  <p class="text-[calc(85cqh-1rem)] text-center leading-tight [-webkit-text-stroke:var(--sv-text-stroke)]">
+  <p
+    class="text-[calc(85cqh-1rem)] text-center leading-tight [-webkit-text-stroke:var(--sv-text-stroke)] greeting-text">
     {currentGreeting || ''}
   </p>
 </div>

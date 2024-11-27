@@ -46,6 +46,9 @@
 
   onMount(async () => {
     ({ id: workspaceId, workspace: workspace } = await Workspaces.getDefault());
+    if (workspace.hasChanges.value === true) {
+      Workspaces.save(workspaceId, workspace);
+    }
   });
 
   onDestroy(() => {
