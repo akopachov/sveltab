@@ -4,7 +4,9 @@ import { test, expect } from '@playwright/test';
 test('sets background image', async ({ page }) => {
   await page.goto('/');
   await page.locator('#btnMainMenu').click();
-  await page.locator('#aiBackgroundCatalog').click();
+  const bgCatalogLocator = page.locator('#aiBackgroundCatalog');
+  await bgCatalogLocator.waitFor({ state: 'visible' });
+  await bgCatalogLocator.click();
   const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'wallhaven');
   await Promise.all([
     page.selectOption('#cbxBackgroundType', providerIndex.toString()),

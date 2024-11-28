@@ -29,7 +29,7 @@ test('sets background image', async ({ page }) => {
   await expect(imgBackgroundLocator).not.toHaveJSProperty('naturalWidth', 0);
 });
 
-test('do not send api call after page reload', async ({ page }) => {
+test('do not send api call after page reload', async ({ page, browserName }) => {
   await page.goto('/');
   await page.locator('#btnMainMenu').click();
   await page.locator('#aiBackgroundCatalog').click();
@@ -48,6 +48,10 @@ test('do not send api call after page reload', async ({ page }) => {
     await page.waitForTimeout(500);
     await dialog.accept();
   });
+
+  if (browserName === 'firefox') {
+    await page.waitForTimeout(10000);
+  }
 
   await page.reload();
   let timeoutFired = false;
@@ -95,7 +99,7 @@ for (const topic of allTopics) {
   });
 }
 
-test('background image is not changing on refresh', async ({ page }) => {
+test('background image is not changing on refresh', async ({ page, browserName }) => {
   await page.goto('/');
   await page.locator('#btnMainMenu').click();
   await page.locator('#aiBackgroundCatalog').click();
@@ -120,6 +124,10 @@ test('background image is not changing on refresh', async ({ page }) => {
     await page.waitForTimeout(500);
     await dialog.accept();
   });
+
+  if (browserName === 'firefox') {
+    await page.waitForTimeout(10000);
+  }
 
   await page.reload();
   await page.waitForLoadState('networkidle');

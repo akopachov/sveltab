@@ -15,7 +15,7 @@ test(`loads greeting initially`, async ({ page }) => {
   await expect(greetingTextLocator).not.toBeEmpty();
 });
 
-test(`do not load greeting again when reload`, async ({ page }) => {
+test(`does not load greeting again when page reloads`, async ({ page, browserName }) => {
   await page.goto('/');
   const response = await page.waitForResponse(GetApiCallRegex());
   await expect(response.ok()).toBe(true);
@@ -26,6 +26,10 @@ test(`do not load greeting again when reload`, async ({ page }) => {
     await page.waitForTimeout(500);
     await dialog.accept();
   });
+
+  if (browserName === 'firefox') {
+    await page.waitForTimeout(10000);
+  }
 
   await page.reload();
   let timeoutFired = false;

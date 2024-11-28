@@ -55,6 +55,7 @@
       type: 'confirm',
       title: m.Widgets_Common_Menu_Delete_Confirm_Title(),
       body: m.Widgets_Common_Menu_Delete_Confirm_Body(),
+      backdropClasses: '!z-[9999999]',
       response: async (confirmed: boolean) => {
         if (confirmed && widgetComponent) {
           if (widgetComponent.onDelete) {
@@ -122,7 +123,7 @@
     class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
     <!-- svelte-ignore a11y_consider_explicit_label -->
     <button
-      class="btn-icon variant-filled-surface rounded-none w-full h-full"
+      class="btn-icon variant-filled-surface rounded-none w-full h-full btn_widget-settings"
       title={m.Widgets_Common_Menu_OpenSettings()}
       onclick={() => fakeEditButton?.click()}>
       <span class="w-full h-full icon-[fluent--settings-20-regular]"></span>
@@ -133,7 +134,7 @@
     class="absolute w-8 h-8 min-w-[16px] max-w-[32px] min-h-[16px] max-h-[32px] {controlsClassName} z-[99999]">
     <!-- svelte-ignore a11y_consider_explicit_label -->
     <button
-      class="{controlsClassName} btn-icon variant-filled-error rounded-none w-full h-full"
+      class="{controlsClassName} btn-icon variant-filled-error rounded-none w-full h-full btn_widget-delete"
       title={m.Widgets_Common_Menu_Delete()}
       onclick={onDeleteWidgetClick}>
       <span class="w-full h-full icon-[fluent--delete-28-regular]"></span>

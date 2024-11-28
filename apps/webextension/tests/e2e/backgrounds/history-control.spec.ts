@@ -51,7 +51,7 @@ test(`history navigation is working`, async ({ page }) => {
   await expect(page.locator('#btnPreviousBackground')).toHaveCount(0);
 });
 
-test('history preserved after refresh', async ({ page }) => {
+test('history preserved after refresh', async ({ page, browserName }) => {
   await page.goto('/');
   await page.locator('#btnMainMenu').click();
   await page.locator('#aiBackgroundCatalog').click();
@@ -82,6 +82,10 @@ test('history preserved after refresh', async ({ page }) => {
     await page.waitForTimeout(500);
     await dialog.accept();
   });
+
+  if (browserName === 'firefox') {
+    await page.waitForTimeout(10000);
+  }
 
   await page.reload();
   await page.waitForLoadState('networkidle');

@@ -12,7 +12,7 @@
 	},
 	"devDependencies": {
 		"@fontsource/inter": "^5.1.0",
-		"@iconify/json": "^2.2.276",
+		"@iconify/json": "^2.2.277",
 		"@iconify/tailwind": "^1.1.3",
 		"@iconify/utils": "^2.1.33",
 		"@neoconfetti/svelte": "^2.2.1",
@@ -41,7 +41,7 @@
 		"prettier": "^3.4.1",
 		"prettier-plugin-svelte": "^3.3.2",
 		"prettier-plugin-tailwindcss": "^0.6.9",
-		"svelte": "^5.2.9",
+		"svelte": "^5.2.10",
 		"svelte-body": "^2.0.0",
 		"svelte-check": "^4.1.0",
 		"tailwindcss": "^3.4.15",
