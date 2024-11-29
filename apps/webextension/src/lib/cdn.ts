@@ -121,6 +121,7 @@ class CloudImg extends ImageCDN {
     const url = new URL(encodeURIComponent(src), this.#baseUrl);
     url.searchParams.set('gravity', 'smart');
     url.searchParams.set('ci_url_encoded', '1');
+    url.searchParams.set('force_format', 'webp');
     return this.updateUrl(url, width, height, resizeType);
   }
 
