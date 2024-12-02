@@ -1,98 +1,70 @@
-import { Backgrounds } from '$backgrounds';
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 test.slow();
 test.describe.configure({ retries: 3 });
 
 test(`history navigation is working`, async ({ page }) => {
   await page.goto('/');
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiBackgroundCatalog').click();
-  const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'wallhaven');
-  await Promise.all([
-    page.selectOption('#cbxBackgroundType', providerIndex.toString()),
-    page.waitForResponse(/(https:\/\/wallhaven.cc\/api\/)|(https%3A%2F%2Fwallhaven\.cc%2Fapi%2F)/gi),
-  ]);
+  const workspacePage = new WorkspacePage(page);
+  await workspacePage.selectBackgroundProvider('wallhaven');
+  await workspacePage.expectBackgroundImageToLoad(
+    expect.stringContaining(encodeURIComponent('https://w.wallhaven.cc')),
+  );
 
-  const imgBackgroundLocator = page.locator('#imgBackground[src]');
-  await imgBackgroundLocator.waitFor({ state: 'visible' });
+  const originalSrc = (await workspacePage.BackgroundImage.getAttribute('src')) || '';
 
-  await page.locator('.drawer-backdrop').click();
-
-  await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
-
-  const originalSrc = (await imgBackgroundLocator.getAttribute('src')) || '';
-
-  await expect(page.locator('#btnPreviousBackground')).toHaveCount(0);
+  await expect(workspacePage.PreviousBackgroundButton).toHaveCount(0);
 
   await Promise.all([
-    page.locator('#btnNextBackground').click(),
+    workspacePage.MextBackgroundButton.click(),
     page.waitForResponse(r => r.url().includes(encodeURIComponent('https://w.wallhaven.cc'))),
   ]);
 
-  await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
-  await expect(page.locator('#btnPreviousBackground')).toBeVisible();
+  await workspacePage.expectBackgroundImageToLoad(
+    expect.stringContaining(encodeURIComponent('https://w.wallhaven.cc')),
+  );
 
-  const newSrc = (await imgBackgroundLocator.getAttribute('src')) || '';
+  await expect(workspacePage.PreviousBackgroundButton).toBeVisible();
+
+  const newSrc = (await workspacePage.BackgroundImage.getAttribute('src')) || '';
   await expect(newSrc).not.toEqual(originalSrc);
-  await page.locator('#btnPreviousBackground').click();
-  await expect(imgBackgroundLocator).toHaveAttribute('src', originalSrc);
-  await expect(page.locator('#btnPreviousBackground')).toHaveCount(0);
+  await workspacePage.PreviousBackgroundButton.click();
+  await expect(workspacePage.BackgroundImage).toHaveAttribute('src', originalSrc);
+  await expect(workspacePage.PreviousBackgroundButton).toHaveCount(0);
 
-  await page.locator('#btnNextBackground').click();
-  await expect(page.locator('#btnPreviousBackground')).toBeVisible();
-  await expect(imgBackgroundLocator).toHaveAttribute('src', newSrc);
+  await workspacePage.MextBackgroundButton.click();
+  await expect(workspacePage.PreviousBackgroundButton).toBeVisible();
+  await expect(workspacePage.BackgroundImage).toHaveAttribute('src', newSrc);
 
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiBackgroundCatalog').click();
-  const anotherProviderIndex = Backgrounds.findIndex(b => b.settings.type === 'pexels');
-  await page.selectOption('#cbxBackgroundType', anotherProviderIndex.toString());
-  await page.locator('.drawer-backdrop').click();
-  await expect(page.locator('#btnPreviousBackground')).toHaveCount(0);
+  await workspacePage.selectBackgroundProvider('pexels');
+
+  await expect(workspacePage.PreviousBackgroundButton).toHaveCount(0);
 });
 
 test('history preserved after refresh', async ({ page, browserName }) => {
   await page.goto('/');
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiBackgroundCatalog').click();
-  const providerIndex = Backgrounds.findIndex(b => b.settings.type === 'wallhaven');
-  await Promise.all([
-    page.selectOption('#cbxBackgroundType', providerIndex.toString()),
-    page.waitForResponse(/(https:\/\/wallhaven.cc\/api\/)|(https%3A%2F%2Fwallhaven\.cc%2Fapi%2F)/gi),
-  ]);
-
-  const imgBackgroundLocator = page.locator('#imgBackground[src]');
-  await imgBackgroundLocator.waitFor({ state: 'visible' });
-
-  await page.locator('.drawer-backdrop').click();
-
-  await expect(imgBackgroundLocator).toHaveJSProperty('complete', true);
+  const workspacePage = new WorkspacePage(page);
+  await workspacePage.selectBackgroundProvider('wallhaven');
+  await workspacePage.expectBackgroundImageToLoad(
+    expect.stringContaining(encodeURIComponent('https://w.wallhaven.cc')),
+  );
 
   const [, response] = await Promise.all([
-    page.locator('#btnNextBackground').click(),
+    workspacePage.MextBackgroundButton.click(),
     page.waitForResponse(r => r.url().includes(encodeURIComponent('https://w.wallhaven.cc'))),
   ]);
 
   await expect(response.ok()).toBe(true);
-  await imgBackgroundLocator.waitFor({ state: 'visible' });
 
-  const originalSrc = (await imgBackgroundLocator.getAttribute('src')) || '';
+  await workspacePage.expectBackgroundImageToLoad(
+    expect.stringContaining(encodeURIComponent('https://w.wallhaven.cc')),
+  );
 
-  page.on('dialog', async dialog => {
-    await page.waitForTimeout(500);
-    await dialog.accept();
-  });
+  const originalSrc = (await workspacePage.BackgroundImage.getAttribute('src')) || '';
 
-  if (browserName === 'firefox') {
-    await page.waitForTimeout(10000);
-  }
-
-  await page.reload();
+  await workspacePage.reload(browserName);
   await page.waitForLoadState('networkidle');
 
-  await imgBackgroundLocator.waitFor({ state: 'visible' });
-  await expect(imgBackgroundLocator).toHaveAttribute(
-    'src',
-    expect.stringContaining(encodeURIComponent(originalSrc.trim())),
-  );
+  await workspacePage.expectBackgroundImageToLoad(originalSrc);
 });

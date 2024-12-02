@@ -5,16 +5,7 @@ import {
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
-
-export type SearchProviderName =
-  | 'google'
-  | 'duckduckgo'
-  | 'bing'
-  | 'youtube'
-  | 'brave'
-  | 'metacrawler'
-  | 'searx'
-  | 'custom';
+import type { SearchProviderName } from './providers';
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {

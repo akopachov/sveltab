@@ -1,4 +1,3 @@
-import type { SearchProviderName } from '../settings';
 import { BingSearchProvider } from './bing';
 import { BraveSearchProvider } from './brave';
 import { DuckDuckGoSearchProvider } from './duckduckgo';
@@ -14,7 +13,20 @@ export type SearchProviderDescriptor = {
   readonly factory: (...args: any[]) => SearchProvider;
 };
 
-export const SearchProviders = new Map<SearchProviderName, SearchProviderDescriptor>([
+export type SearchProviderName =
+  | 'google'
+  | 'duckduckgo'
+  | 'bing'
+  | 'youtube'
+  | 'brave'
+  | 'metacrawler'
+  | 'searx'
+  | 'custom';
+
+export const SearchProviders: ReadonlyMap<SearchProviderName, SearchProviderDescriptor> = new Map<
+  SearchProviderName,
+  SearchProviderDescriptor
+>([
   ['duckduckgo', { displayName: 'DuckDuckGo', factory: () => new DuckDuckGoSearchProvider() }],
   ['google', { displayName: 'Google', factory: () => new GoogleSearchProvider() }],
   ['bing', { displayName: 'Bing', factory: () => new BingSearchProvider() }],
