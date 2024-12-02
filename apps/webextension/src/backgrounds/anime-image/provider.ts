@@ -80,7 +80,8 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
     if (
       navigator.onLine &&
       (timeSinceLastChange >= this.settings.updateInterval.value ||
-        this.#localSettings!.lastTopic !== this.settings.topic.value)
+        this.#localSettings!.lastTopic !== this.settings.topic.value ||
+        !this.history.current)
     ) {
       try {
         const topic =

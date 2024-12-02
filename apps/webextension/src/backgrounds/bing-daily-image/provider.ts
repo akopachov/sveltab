@@ -88,7 +88,9 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
     const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (
       navigator.onLine &&
-      (hoursSinceLastChange > 12 || this.settings.locale.value !== this.#localSettings!.lastLocale)
+      (hoursSinceLastChange > 12 ||
+        this.settings.locale.value !== this.#localSettings!.lastLocale ||
+        !this.history.current)
     ) {
       try {
         const bingImageUrl = await getDailyWalpaper(

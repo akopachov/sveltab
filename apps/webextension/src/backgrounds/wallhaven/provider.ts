@@ -96,7 +96,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
     this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
 
     const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
-    if (navigator.onLine && timeSinceLastChange >= this.settings.updateInterval.value) {
+    if (navigator.onLine && (timeSinceLastChange >= this.settings.updateInterval.value || !this.history.current)) {
       try {
         if (this.#localSettings!.pool.length <= 0) {
           if (this.#localSettings!.currentPage < this.#localSettings!.totalPages) {

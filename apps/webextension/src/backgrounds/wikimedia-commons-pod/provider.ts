@@ -54,7 +54,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
       return;
     }
     this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
-    if (navigator.onLine && !isToday(this.#localSettings!.lastChangedTime)) {
+    if (navigator.onLine && (!isToday(this.#localSettings!.lastChangedTime) || !this.history.current)) {
       try {
         const now = new Date();
         const year = String(now.getFullYear());

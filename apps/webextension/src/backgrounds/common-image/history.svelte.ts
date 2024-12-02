@@ -49,6 +49,7 @@ export class ImageBackgroundHistory {
   }
 
   add(url: string) {
+    if (!url) return;
     if (this.#history[this.#history.length - 1] === url) return;
     this.#history.push(url);
     if (this.#history.length > MAX_HISTORY_LENGTH) {
