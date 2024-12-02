@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 test.use({
   permissions: ['geolocation'],
@@ -18,19 +19,15 @@ for (const cityInfo of TestCities) {
   test(`loads air quality forecast for ${cityInfo.city}`, async ({ page, context }) => {
     await context.setGeolocation({ latitude: cityInfo.latitude, longitude: cityInfo.longitude });
     await page.goto('/');
-    await page.locator('#btnMainMenu').click();
-    await page.locator('#aiWidgetsCatalog').click();
-    await Promise.all([
-      page.locator('#wcipWidget_air-quality').click(),
-      page.locator('.widget_air-quality').waitFor({ state: 'visible' }),
-    ]);
+    const workspacePage = new WorkspacePage(page);
+    const widgetLocator = await workspacePage.addNewWidget('air-quality');
 
-    const qualityIndexTextLocator = page.locator('.widget_air-quality .quality-index-text');
+    const qualityIndexTextLocator = widgetLocator.locator('.quality-index-text');
     await qualityIndexTextLocator.waitFor({ state: 'visible' });
     await expect(qualityIndexTextLocator).not.toBeEmpty();
     await expect(qualityIndexTextLocator).toHaveAttribute('href', /https:\/\/.+/);
 
-    const qualityIndexValueLocator = page.locator('.widget_air-quality .quality-index-value');
+    const qualityIndexValueLocator = widgetLocator.locator('.quality-index-value');
     await qualityIndexValueLocator.waitFor({ state: 'visible' });
     await expect(qualityIndexValueLocator).toHaveText(/\d+/);
     await expect(qualityIndexValueLocator).toHaveAttribute('href', /https:\/\/.+/);

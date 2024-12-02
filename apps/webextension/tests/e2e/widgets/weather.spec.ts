@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 test.use({
   permissions: ['geolocation'],
@@ -18,22 +19,18 @@ for (const cityInfo of TestCities) {
   test(`loads weather forecast for ${cityInfo.city}`, async ({ page, context }) => {
     await context.setGeolocation({ latitude: cityInfo.latitude, longitude: cityInfo.longitude });
     await page.goto('/');
-    await page.locator('#btnMainMenu').click();
-    await page.locator('#aiWidgetsCatalog').click();
-    await Promise.all([
-      page.locator('#wcipWidget_weather').click(),
-      page.locator('.widget_weather').waitFor({ state: 'visible' }),
-      page.waitForLoadState('networkidle'),
-    ]);
+    const workspacePage = new WorkspacePage(page);
+    const widgetLocator = await workspacePage.addNewWidget('weather');
+    await page.waitForLoadState('networkidle');
 
-    const locationLocator = page.locator('.widget_weather .location');
+    const locationLocator = widgetLocator.locator('.location');
     await locationLocator.waitFor({ state: 'visible' });
     await expect(locationLocator).toContainText(new RegExp(`${cityInfo.city}, (.+, )?${cityInfo.country}`));
-    const currentWeatherIconLocator = page.locator('.widget_weather .current-weather-icon');
+    const currentWeatherIconLocator = widgetLocator.locator('.current-weather-icon');
     await currentWeatherIconLocator.waitFor({ state: 'visible' });
     await expect(currentWeatherIconLocator).toHaveAttribute('src', /https:\/\/.+/);
     await expect(currentWeatherIconLocator).toHaveJSProperty('complete', true);
-    const currentTemperatureLocator = page.locator('.widget_weather .current-weather-temperature');
+    const currentTemperatureLocator = widgetLocator.locator('.current-weather-temperature');
     await currentTemperatureLocator.waitFor({ state: 'visible' });
     await expect(currentTemperatureLocator).toHaveText(/-?\d+°/);
   });

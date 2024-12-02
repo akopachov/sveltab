@@ -1,19 +1,15 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures';
+import { WorkspacePage } from '../pom/workspace';
 
 test('loads image', async ({ page }) => {
   await page.goto('/');
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiWidgetsCatalog').click();
-  await Promise.all([
-    page.locator('#wcipWidget_flickr-image').click(),
-    page.locator('.widget_flickr-image').waitFor({ state: 'visible' }),
-    page.waitForLoadState('networkidle'),
-  ]);
+  const workspacePage = new WorkspacePage(page);
+  const widgetLocator = await workspacePage.addNewWidget('flickr-image');
+  await page.waitForLoadState('networkidle');
 
-  const linkLocator = page.locator('.widget_flickr-image a');
+  const linkLocator = widgetLocator.locator('a');
   await expect(linkLocator).toHaveAttribute('href', /https:\/\/www\.flickr\.com\/photos\/.+\/.+/);
-  const imageLocator = page.locator('.widget_flickr-image a img');
+  const imageLocator = widgetLocator.locator('a img');
   await expect(imageLocator).toHaveAttribute('src', /https:\/\/.+/);
-  await expect(imageLocator).toHaveJSProperty('complete', true);
-  await expect(imageLocator).not.toHaveJSProperty('naturalWidth', 0);
+  await expect(imageLocator).toImageLoaded();
 });

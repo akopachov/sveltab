@@ -1,15 +1,18 @@
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 const GetApiCallRegex = () => /https:\/\/cdn.statically.io\/gh\/akopachov\/greetings@master\/.+/;
 
 test(`loads greeting initially`, async ({ page }) => {
   await page.goto('/');
+  const workspacePage = new WorkspacePage(page);
   const response = await page.waitForResponse(GetApiCallRegex());
   await expect(response.ok()).toBe(true);
 
   await page.waitForLoadState('networkidle');
 
-  const greetingTextLocator = page.locator('.widget_greeting .greeting-text');
+  const widgetLocator = workspacePage.WidgetSection.getWidgetLocatorByType('greeting');
+  const greetingTextLocator = widgetLocator.locator('.greeting-text');
   await greetingTextLocator.waitFor({ state: 'visible' });
   await expect(greetingTextLocator).not.toBeNull();
   await expect(greetingTextLocator).not.toBeEmpty();
@@ -17,21 +20,14 @@ test(`loads greeting initially`, async ({ page }) => {
 
 test(`does not load greeting again when page reloads`, async ({ page, browserName }) => {
   await page.goto('/');
+  const workspacePage = new WorkspacePage(page);
   const response = await page.waitForResponse(GetApiCallRegex());
   await expect(response.ok()).toBe(true);
 
   await page.waitForLoadState('networkidle');
 
-  page.on('dialog', async dialog => {
-    await page.waitForTimeout(500);
-    await dialog.accept();
-  });
+  await workspacePage.reload(browserName);
 
-  if (browserName === 'firefox') {
-    await page.waitForTimeout(10000);
-  }
-
-  await page.reload();
   let timeoutFired = false;
   try {
     await page.waitForRequest(GetApiCallRegex(), {

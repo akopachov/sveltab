@@ -1,27 +1,29 @@
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 test(`loads info`, async ({ page }) => {
   await page.goto('/');
+  const workspacePage = new WorkspacePage(page);
   await page.waitForLoadState('networkidle');
-  const existingWidgetCount = await page.locator('.widget_random-quote').count();
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiWidgetsCatalog').click();
+  const widgetLocator = await workspacePage.WidgetSection.getWidgetLocatorByType('random-quote');
+  const existingWidgetCount = await widgetLocator.count();
+
   const [, response] = await Promise.all([
-    page.locator('#wcipWidget_random-quote').click(),
+    workspacePage.addNewWidget('random-quote'),
     page.waitForResponse('https://quoteslate.vercel.app/api/quotes/random'),
   ]);
 
   await expect(response.ok()).toBe(true);
 
-  await expect(page.locator('.widget_random-quote')).toHaveCount(existingWidgetCount + 1);
+  await expect(widgetLocator).toHaveCount(existingWidgetCount + 1);
 
-  const quoteLocator = page.locator('.widget_random-quote .quote');
+  const quoteLocator = widgetLocator.locator('.quote');
   for (const locator of await quoteLocator.all()) {
     await expect(locator).not.toBeNull();
     await expect(locator).not.toBeEmpty();
   }
 
-  const authorLocator = page.locator('.widget_random-quote .author');
+  const authorLocator = widgetLocator.locator('.author');
   for (const locator of await authorLocator.all()) {
     await expect(locator).not.toBeNull();
     await expect(locator).not.toBeEmpty();

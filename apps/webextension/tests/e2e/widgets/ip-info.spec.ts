@@ -1,32 +1,31 @@
 import { test, expect } from '@playwright/test';
+import { WorkspacePage } from '../pom/workspace';
 
 test(`loads info`, async ({ page }) => {
   await page.goto('/');
-  await page.locator('#btnMainMenu').click();
-  await page.locator('#aiWidgetsCatalog').click();
-  const [, , response] = await Promise.all([
-    page.locator('#wcipWidget_ip-info').click(),
-    page.locator('.widget_ip-info').waitFor({ state: 'visible' }),
+  const workspacePage = new WorkspacePage(page);
+  const [widgetLocator, response] = await Promise.all([
+    workspacePage.addNewWidget('ip-info'),
     page.waitForResponse(/https:\/\/get.geojs.io\/.+/),
   ]);
 
   await expect(response.ok()).toBe(true);
 
-  const ipLocator = page.locator('.widget_ip-info .ip');
+  const ipLocator = widgetLocator.locator('.ip');
   await expect(ipLocator).not.toBeNull();
   await expect(ipLocator).not.toBeEmpty();
   await expect(ipLocator).not.toHaveText('---');
 
-  const asnLocator = page.locator('.widget_ip-info .asn');
+  const asnLocator = widgetLocator.locator('.asn');
   await expect(asnLocator).toHaveText(/\d+/);
   await expect(asnLocator).toHaveAttribute('href', /https:\/\/bgpview.io\/asn\/\d+/);
 
-  const orgLocator = page.locator('.widget_ip-info .org');
+  const orgLocator = widgetLocator.locator('.org');
   await expect(orgLocator).not.toBeNull();
   await expect(orgLocator).not.toBeEmpty();
   await expect(orgLocator).not.toHaveText('---');
 
-  const locationLocator = page.locator('.widget_ip-info .location');
+  const locationLocator = widgetLocator.locator('.location');
   await expect(locationLocator).not.toBeNull();
   await expect(locationLocator).not.toBeEmpty();
   await expect(locationLocator).not.toHaveText('---');
