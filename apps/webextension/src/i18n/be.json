@@ -119,8 +119,9 @@
   "Backgrounds_Wallhaven_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
 
   "Backgrounds_AnimeImage_Name": "Малюнак анімэ",
-  "Backgrounds_AnimeImage_Settings_Topic": "Тэма",
-  "Backgrounds_AnimeImage_Settings_Topic_Any": "Любая",
+  "Backgrounds_AnimeImage_Settings_IncludeTags": "Уключыць тэгі",
+  "Backgrounds_AnimeImage_Settings_ExcludeTags": "Выключыць тэгі",
+  "Backgrounds_AnimeImage_Settings_IncludeTags_Placeholder": "Пошук...",
   "Backgrounds_AnimeImage_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
 
   "Backgrounds_StaticColor_Name": "Статычны колер",

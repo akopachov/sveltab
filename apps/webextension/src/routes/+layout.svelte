@@ -3,13 +3,13 @@
   import { setupCacheHouseKeeping } from '$stores/cache';
   import { initLocaleStore, locale } from '$stores/locale';
   import '../app.pcss';
-  import { computePosition, autoUpdate, offset, shift, flip, arrow } from '@floating-ui/dom';
+  import { computePosition, autoUpdate, offset, shift, flip, arrow, size } from '@floating-ui/dom';
   import { Modal, Toast, initializeStores, storePopup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { browser } from '$app/environment';
 
   setupCacheHouseKeeping();
-  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow });
+  storePopup.set({ computePosition, autoUpdate, offset, shift, flip, arrow, size });
   initializeStores();
   initLocaleStore();
 

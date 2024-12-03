@@ -6,15 +6,13 @@ import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
-import { AnimeTopics, getAnimeImageForTopic } from './api';
+import { getAnimeImage } from './api';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
-const availableTopics = Object.values(AnimeTopics);
 
 interface LocalSettings {
   lastChangedTime: number;
-  lastTopic: AnimeTopics | 'any';
 }
 
 export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
@@ -50,14 +48,16 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       }
     };
 
-    const topicUnsubsribe = this.settings.topic.subscribe(forceUpdateDebIfInitialized);
+    const includeTagsUnsubsribe = this.settings.includeTags.subscribe(forceUpdateDebIfInitialized);
+    const excludeTagsUnsubsribe = this.settings.excludeTags.subscribe(forceUpdateDebIfInitialized);
     const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
       clearInterval(interval);
-      topicUnsubsribe();
+      includeTagsUnsubsribe();
+      excludeTagsUnsubsribe();
       screenResolutionUnsubscribe();
       resizeTypeUnsubscribe();
     };
@@ -77,25 +77,24 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
 
     this.setImage(updateImageCdnUrl(this.history.current, 'screen', 'screen', this.settings.resizeType.value));
     const timeSinceLastChange = differenceInSeconds(Date.now(), this.#localSettings!.lastChangedTime);
-    if (
-      navigator.onLine &&
-      (timeSinceLastChange >= this.settings.updateInterval.value ||
-        this.#localSettings!.lastTopic !== this.settings.topic.value ||
-        !this.history.current)
-    ) {
+    if (navigator.onLine && (timeSinceLastChange >= this.settings.updateInterval.value || !this.history.current)) {
       try {
-        const topic =
-          this.settings.topic.value === 'any'
-            ? availableTopics[Math.floor(Math.random() * availableTopics.length)]
-            : this.settings.topic.value;
-        const responseImageUrl = await getAnimeImageForTopic(topic, abortSignal);
-        if (!responseImageUrl) {
+        const responseImageUrl = await getAnimeImage({
+          includeTags: this.settings.includeTags.value,
+          excludeTags: this.settings.excludeTags.value,
+          abortSignal,
+        });
+        if (!responseImageUrl?.file_url) {
           throw new Error('Unexpected response');
         }
 
-        const newSrc = await getImageCdnUrl(responseImageUrl, 'screen', 'screen', this.settings.resizeType.value);
+        const newSrc = await getImageCdnUrl(
+          responseImageUrl.file_url,
+          'screen',
+          'screen',
+          this.settings.resizeType.value,
+        );
         this.#localSettings!.lastChangedTime = Date.now();
-        this.#localSettings!.lastTopic = this.settings.topic.value;
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
         if (abortSignal.aborted) {

@@ -118,8 +118,9 @@
   "Backgrounds_Wallhaven_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
 
   "Backgrounds_AnimeImage_Name": "Obraz anime",
-  "Backgrounds_AnimeImage_Settings_Topic": "Temat",
-  "Backgrounds_AnimeImage_Settings_Topic_Any": "Dowolny",
+  "Backgrounds_AnimeImage_Settings_IncludeTags": "Zawiera tagi",
+  "Backgrounds_AnimeImage_Settings_ExcludeTags": "Wyklucza tagi",
+  "Backgrounds_AnimeImage_Settings_IncludeTags_Placeholder": "Szukaj...",
   "Backgrounds_AnimeImage_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
 
   "Backgrounds_StaticColor_Name": "Kolor statyczny",
