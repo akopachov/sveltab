@@ -400,7 +400,7 @@
     </div>
     <div
       id="ctrWidgetSettingsPopup"
-      class="card p-2 w-fit max-w-[100cqw] shadow-xl z-[99999]"
+      class="card p-2 w-fit max-w-[100cqw] shadow-xl z-[1000000]"
       data-popup={widgetSettingsPopupSettings.target}
       style:visibility={!workspace!.isLocked.value && selectedWidgets.size === 1 ? 'visible' : 'hidden'}>
       {#if widgetSettingsVisible}
