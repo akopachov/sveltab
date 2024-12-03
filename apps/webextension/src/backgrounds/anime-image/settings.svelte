@@ -4,7 +4,7 @@
   import * as m from '$i18n/messages';
   import SettingsBase from '$backgrounds/common-image/settings-base.svelte';
   import BackgroundHistoryControl from '$backgrounds/common-image/background-history-control.svelte';
-  import { getAnimeTags, type AnimeTagInfo } from './api';
+  import { getAnimeTags } from './api';
   import TagSelector, { type TagDisplayInfo } from './tag-selector.svelte';
   import { Lazy } from '$lib/lazy';
 
