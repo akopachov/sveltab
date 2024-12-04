@@ -2,7 +2,7 @@ import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-
 import { logger } from '$lib/logger';
 import { storage } from '$stores/storage';
 import type { Settings } from './settings';
-import { differenceInHours, secondsToMilliseconds } from 'date-fns';
+import { differenceInHours, formatISO, secondsToMilliseconds, subDays } from 'date-fns';
 import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
@@ -60,9 +60,24 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
     const hoursSinceLastChange = differenceInHours(Date.now(), this.#localSettings!.lastChangedTime);
     if (navigator.onLine && (hoursSinceLastChange > 12 || !this.history.current)) {
       try {
-        const response = await fetch(`https://api.nasa.gov/planetary/apod?api_key=${PUBLIC_NASA_APOD_API_KEY}`, {
-          signal: abortSignal,
-        }).then(r => r.json());
+        let response: any;
+        let triesCount = 0;
+        do {
+          const targetDateAsISO = formatISO(subDays(Date.now(), triesCount), { representation: 'date' });
+          response = await fetch(
+            `https://api.nasa.gov/planetary/apod?api_key=${PUBLIC_NASA_APOD_API_KEY}&date=${targetDateAsISO}`,
+            {
+              signal: abortSignal,
+            },
+          ).then(r => r.json());
+          triesCount++;
+        } while (
+          typeof response === 'object' &&
+          typeof response.media_type === 'string' &&
+          response.media_type !== 'image' &&
+          triesCount < 10
+        );
+
         if (!response?.hdurl) {
           throw new Error('Unexpected response');
         }
