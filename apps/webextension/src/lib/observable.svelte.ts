@@ -12,6 +12,10 @@ export interface ReadOnlyObservable<T> extends Subscribable<T> {
   value: T;
 }
 
+function safe_not_equal(a: unknown, b: unknown) {
+  return a != a ? b == b : a !== b || (a !== null && typeof a === 'object') || typeof a === 'function';
+}
+
 export class Observable<T> implements ReadOnlyObservable<T> {
   #subscribers = new Set<(value: T) => void>();
   #value: T | undefined = $state();
@@ -21,12 +25,10 @@ export class Observable<T> implements ReadOnlyObservable<T> {
   }
 
   set(value: T) {
-    if (value === this.#value) return;
-    if (value === undefined && this.#value === undefined) return;
-    if (typeof value === 'number' && isNaN(value) && typeof this.#value === 'number' && isNaN(this.#value)) return;
-    if (value === null && this.#value === null) return;
-    this.#value = value;
-    this.#subscribers.forEach(run => run(value));
+    if (safe_not_equal(this.#value, value)) {
+      this.#value = value;
+      this.#subscribers.forEach(run => run(value));
+    }
   }
 
   get() {

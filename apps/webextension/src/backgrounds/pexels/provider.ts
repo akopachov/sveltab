@@ -6,6 +6,9 @@ import type { Settings } from './settings';
 import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } from 'date-fns';
 import { PUBLIC_PEXELS_API_KEY } from '$env/static/public';
 import { ImageResizeType } from '$lib/cdn';
+import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import { getClockStore } from '$stores/clock-store';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'PexelsBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Pexels', 'Provider'] });
@@ -58,7 +61,6 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
   }
 
   async apply(abortSignal: AbortSignal) {
-    let initialized = false;
     await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -67,40 +69,30 @@ export class PexelsBackgroundProvider extends ImageBackgroundProviderBase<Settin
       };
     }
 
-    const interval = setInterval(() => {
-      this.#update(abortSignal);
-    }, minutesToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
 
-    const forceRefresh = () => {
+    const forceUpdateDebWithRefresh = () => {
       this.#localSettings!.pool = [];
       this.#localSettings!.currentPage = 0;
       this.#localSettings!.totalPages = 0;
       this.#localSettings!.lastChangedTime = 0;
+      updateDeb();
     };
 
-    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
-
-    const updateDebWithRefresh = () => {
-      if (initialized) {
-        forceRefresh();
-        updateDeb();
-      }
-    };
-
-    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
-
-    const resizeObserver = new ResizeObserver(() => updateDeb());
-    resizeObserver.observe(this.node);
+    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(skipFirstRun(forceUpdateDebWithRefresh));
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
+    const clockStoreUnsubscribe = getClockStore(minutesToMilliseconds(1)).subscribe(
+      skipFirstRun(() => this.#update(abortSignal)),
+    );
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
-      clearInterval(interval);
       searchTermUnsubsribe();
       resizeTypeUnsubscribe();
-      resizeObserver.unobserve(this.node);
+      screenResolutionUnsubscribe();
+      clockStoreUnsubscribe();
     };
-    initialized = true;
-    this.#update(abortSignal);
+    await this.#update(abortSignal);
   }
 
   forceUpdate(abortSignal: AbortSignal): void {

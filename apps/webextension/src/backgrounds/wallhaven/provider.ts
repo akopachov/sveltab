@@ -7,6 +7,8 @@ import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } fro
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import { getClockStore } from '$stores/clock-store';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'WallhavenBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wallhaven', 'Provider'] });
@@ -32,7 +34,6 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
   }
 
   async apply(abortSignal: AbortSignal) {
-    let initialized = false;
     await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -41,37 +42,30 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       };
     }
 
-    const forceRefresh = () => {
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
+
+    const updateDebWithRefresh = () => {
       this.#localSettings!.pool = [];
       this.#localSettings!.currentPage = 0;
       this.#localSettings!.totalPages = 0;
       this.#localSettings!.lastChangedTime = 0;
       this.#localSettings!.seed = '';
+      updateDeb();
     };
 
-    const interval = setInterval(() => {
-      this.#update(abortSignal);
-    }, minutesToMilliseconds(1));
-
-    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
-
-    const updateDebWithRefresh = () => {
-      if (initialized) {
-        forceRefresh();
-        updateDeb();
-      }
-    };
-
-    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(updateDebWithRefresh);
-    const purityUnsubsribe = this.settings.purity.subscribe(updateDebWithRefresh);
-    const apiKeyUnsubsribe = this.settings.apiKey.subscribe(updateDebWithRefresh);
-    const colorsUnsubsribe = this.settings.colors.subscribe(updateDebWithRefresh);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
+    const searchTermUnsubsribe = this.settings.searchTerms.subscribe(skipFirstRun(updateDebWithRefresh));
+    const purityUnsubsribe = this.settings.purity.subscribe(skipFirstRun(updateDebWithRefresh));
+    const apiKeyUnsubsribe = this.settings.apiKey.subscribe(skipFirstRun(updateDebWithRefresh));
+    const colorsUnsubsribe = this.settings.colors.subscribe(skipFirstRun(updateDebWithRefresh));
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
+    const clockStoreUnsubscribe = getClockStore(minutesToMilliseconds(1)).subscribe(
+      skipFirstRun(() => this.#update(abortSignal)),
+    );
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
-      clearInterval(interval);
+      clockStoreUnsubscribe();
       screenResolutionUnsubscribe();
       searchTermUnsubsribe();
       purityUnsubsribe();
@@ -79,8 +73,7 @@ export class WallhavenBackgroundProvider extends ImageBackgroundProviderBase<Set
       colorsUnsubsribe();
       resizeTypeUnsubscribe();
     };
-    initialized = true;
-    this.#update(abortSignal);
+    await this.#update(abortSignal);
   }
 
   forceUpdate(abortSignal: AbortSignal): void {

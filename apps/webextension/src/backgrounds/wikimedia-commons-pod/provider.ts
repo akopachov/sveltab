@@ -6,6 +6,7 @@ import { isToday, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'WikimediaCommonsPodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Wikimedia Commons POD', 'Provider'] });
@@ -34,7 +35,7 @@ export class WikimediaCommonsPodBackgroundProvider extends ImageBackgroundProvid
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(updateDeb);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
 
     this.#unsubscribe = () => {
       screenResolutionUnsubscribe();

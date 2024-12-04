@@ -4,6 +4,7 @@ import type { Settings } from './settings';
 import randomColor from 'randomcolor';
 import Color from 'color';
 import type { BackgroundCornerColorChangedEventArgs } from '$actions/dynamic-background';
+import { skipFirstRun } from '$lib/function-utils';
 
 export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> {
   #unsubscribe!: () => void;
@@ -26,8 +27,8 @@ export class RandomColorBackgroundProvider extends BackgroundProvider<Settings> 
   apply(): void {
     this.node.style.transition = 'background-color 0.3s ease';
     const forceUpdateDeb = debounce(() => this.forceUpdate(), 10);
-    const hueUnsubscribe = this.settings.hue.subscribe(() => forceUpdateDeb());
-    const luminosityUnsubscribe = this.settings.luminosity.subscribe(() => forceUpdateDeb());
+    const hueUnsubscribe = this.settings.hue.subscribe(skipFirstRun(forceUpdateDeb));
+    const luminosityUnsubscribe = this.settings.luminosity.subscribe(skipFirstRun(forceUpdateDeb));
     this.#unsubscribe = () => {
       hueUnsubscribe();
       luminosityUnsubscribe();

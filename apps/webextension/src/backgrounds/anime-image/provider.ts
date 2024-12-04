@@ -7,6 +7,8 @@ import { minutesToMilliseconds, secondsToMilliseconds, differenceInSeconds } fro
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 import { getAnimeImage } from './api';
+import { getClockStore } from '$stores/clock-store';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'AnimeImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Anime Image', 'Provider'] });
@@ -28,7 +30,6 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
   }
 
   async apply(abortSignal: AbortSignal) {
-    let initialized = false;
     await super.apply(abortSignal);
     if (!this.#localSettings) {
       this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
@@ -36,33 +37,26 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
       };
     }
 
-    const interval = setInterval(() => {
-      this.#update(abortSignal);
-    }, minutesToMilliseconds(1));
-
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
-    const forceUpdateDebIfInitialized = () => {
-      if (initialized) {
-        forceUpdateDeb();
-      }
-    };
 
-    const includeTagsUnsubsribe = this.settings.includeTags.subscribe(forceUpdateDebIfInitialized);
-    const excludeTagsUnsubsribe = this.settings.excludeTags.subscribe(forceUpdateDebIfInitialized);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
+    const includeTagsUnsubsribe = this.settings.includeTags.subscribe(skipFirstRun(forceUpdateDeb));
+    const excludeTagsUnsubsribe = this.settings.excludeTags.subscribe(skipFirstRun(forceUpdateDeb));
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
+    const clockStoreUnsubscribe = getClockStore(minutesToMilliseconds(1)).subscribe(
+      skipFirstRun(() => this.#update(abortSignal)),
+    );
 
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
 
     this.#unsubscribe = () => {
-      clearInterval(interval);
+      clockStoreUnsubscribe();
       includeTagsUnsubsribe();
       excludeTagsUnsubsribe();
       screenResolutionUnsubscribe();
       resizeTypeUnsubscribe();
     };
-    initialized = true;
-    this.#update(abortSignal);
+    await this.#update(abortSignal);
   }
 
   forceUpdate(abortSignal: AbortSignal): void {

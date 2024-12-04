@@ -7,6 +7,7 @@ import { differenceInHours, secondsToMilliseconds } from 'date-fns';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
 import { BingMarkets, BingResolutions, getDailyWalpaper, type BingMarket } from './api';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'BingDailyImageBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'Bing Daily Image', 'Provider'] });
@@ -47,31 +48,23 @@ export class BingDailyImageBackgroundProvider extends ImageBackgroundProviderBas
   }
 
   async apply(abortSignal: AbortSignal) {
-    let initialized = false;
     await super.apply(abortSignal);
     this.#localSettings = (await storage.local.get(LocalSettingsKey))[LocalSettingsKey] || {
       lastChangedTime: 0,
     };
 
-    const updateDeb = pDebounce.promise(() => this.#update(abortSignal));
-    const update1SecDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
+    const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const forceUpdateDeb = pDebounce(() => this.forceUpdate(abortSignal), secondsToMilliseconds(1));
-    const forceUpdateDebIfInitialized = () => {
-      if (initialized) {
-        forceUpdateDeb();
-      }
-    };
-    const localeUnsubscribe = this.settings.locale.subscribe(forceUpdateDebIfInitialized);
-    const screenResolutionUnsubscribe = observeScreenResolution(update1SecDeb);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
+    const localeUnsubscribe = this.settings.locale.subscribe(skipFirstRun(forceUpdateDeb));
+    const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
 
     this.#unsubscribe = () => {
       localeUnsubscribe();
       screenResolutionUnsubscribe();
       resizeTypeUnsubscribe();
     };
-    initialized = true;
-    updateDeb();
+    await this.#update(abortSignal);
   }
 
   forceUpdate(abortSignal: AbortSignal): void {

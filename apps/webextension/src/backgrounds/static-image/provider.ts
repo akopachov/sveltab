@@ -2,6 +2,7 @@ import { ImageBackgroundProviderBase } from '$backgrounds/common-image/provider-
 import debounce from 'debounce';
 import type { Settings } from './settings';
 import { secondsToMilliseconds } from 'date-fns';
+import { skipFirstRun } from '$lib/function-utils';
 
 export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<Settings> {
   #unsubscribe!: () => void;
@@ -14,7 +15,7 @@ export class StaticImageBackgroundProvider extends ImageBackgroundProviderBase<S
   async apply(abortSignal: AbortSignal) {
     await super.apply(abortSignal);
     const updateDeb = debounce(() => this.forceUpdate(), secondsToMilliseconds(1));
-    this.#unsubscribe = this.settings.url.subscribe(() => updateDeb());
+    this.#unsubscribe = this.settings.url.subscribe(skipFirstRun(updateDeb));
     this.forceUpdate();
   }
   forceUpdate(): void {

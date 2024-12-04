@@ -7,6 +7,7 @@ import { PUBLIC_NASA_APOD_API_KEY } from '$env/static/public';
 import { getImageCdnUrl, updateImageCdnUrl } from '$lib/cdn';
 import pDebounce from 'p-debounce';
 import { observeScreenResolution } from '$lib/screen-resolution-observer';
+import { skipFirstRun } from '$lib/function-utils';
 
 const LocalSettingsKey = 'NasaApodBackgroundProvider_LocalSettings';
 const log = logger.getSubLogger({ prefix: ['Backgrounds', 'NASA APOD', 'Provider'] });
@@ -35,7 +36,7 @@ export class NasaApodBackgroundProvider extends ImageBackgroundProviderBase<Sett
 
     const updateDeb = pDebounce(() => this.#update(abortSignal), secondsToMilliseconds(1));
     const screenResolutionUnsubscribe = observeScreenResolution(updateDeb);
-    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(() => updateDeb());
+    const resizeTypeUnsubscribe = this.settings.resizeType.subscribe(skipFirstRun(updateDeb));
 
     this.#unsubscribe = () => {
       screenResolutionUnsubscribe();
