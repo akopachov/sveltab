@@ -46,6 +46,7 @@
     selectedWidgetEl.style.height = `${absolutePos.height}px`;
     selectedWidgetEl.style.left = `${absolutePos.x}px`;
     selectedWidgetEl.style.top = `${absolutePos.y}px`;
+    selectedWidgetEl.style.transform = `rotate(${widget.settings.rotation.value}deg)`;
 
     selectedWidgetEl.classList.add('selected');
     selected.add(widget);
@@ -70,6 +71,7 @@
       selectedWidgetEl.style.height = '';
       selectedWidgetEl.style.left = '';
       selectedWidgetEl.style.top = '';
+      selectedWidgetEl.style.transform = '';
 
       selectedWidgetEl.classList.remove('selected');
       selected.delete(widget);
