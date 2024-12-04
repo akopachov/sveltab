@@ -71,12 +71,14 @@ export class ImageBackgroundHistory {
   getPrevious(): string | null {
     if (this.#currentIndex < 0) return null;
     this.#currentIndex--;
+    this.#hasChanges = true;
     return this.#history[this.#currentIndex];
   }
 
   getNext(): string | null {
     if (this.#currentIndex >= this.#history.length - 1) return null;
     this.#currentIndex++;
+    this.#hasChanges = true;
     return this.#history[this.#currentIndex];
   }
 
