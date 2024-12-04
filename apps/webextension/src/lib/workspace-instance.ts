@@ -13,6 +13,7 @@ import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
 import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
 import { InternalAssetsManager } from './internal-assets-manager';
+import { skipFirstRun } from './function-utils';
 
 export class WorkspaceInstance {
   #widgets: SvelteSet<WidgetInstance> = new SvelteSet();
@@ -67,16 +68,16 @@ export class WorkspaceInstance {
 
     if (!this.#trackingObjects.has(instance)) {
       if (typeof instance.subscribe === 'function') {
-        let subscribed = false;
         this.#trackingObjects.set(
           instance,
-          instance.subscribe(() => {
-            if (subscribed && !this.#hasChanges.value) {
-              this.#hasChanges.value = true;
-            }
-          }),
+          instance.subscribe(
+            skipFirstRun(() => {
+              if (!this.#hasChanges.value) {
+                this.#hasChanges.value = true;
+              }
+            }),
+          ),
         );
-        subscribed = true;
       }
       if (typeof instance === 'object') {
         for (const property of Object.getOwnPropertyNames(instance)) {
