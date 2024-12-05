@@ -17,6 +17,9 @@
     internalAssetsManager,
     delete: onDelete,
     onautosettingsupdate,
+    dirtyWidth = $bindable(),
+    dirtyHeight = $bindable(),
+    dirtyRotation = $bindable(),
     ...restProps
   }: {
     widget: WidgetInstance;
@@ -28,6 +31,9 @@
     internalAssetsManager: InternalAssetsManager;
     delete: (widget: WidgetInstance) => void;
     onautosettingsupdate: () => void;
+    dirtyWidth?: number;
+    dirtyHeight?: number;
+    dirtyRotation?: number;
     [key: string]: unknown;
   } = $props();
 
@@ -45,6 +51,24 @@
     strategy: 'absolute',
     placement: 'top-end',
     middleware: [offset({ mainAxis: 0, crossAxis: -1 }), flip(), shift()],
+  });
+
+  const [widthFloatingRef, widthFloatingContent] = createFloatingActions({
+    strategy: 'absolute',
+    placement: 'bottom',
+    middleware: [offset({ mainAxis: 5, crossAxis: 0 }), flip(), shift()],
+  });
+
+  const [heightFloatingRef, heightFloatingContent] = createFloatingActions({
+    strategy: 'absolute',
+    placement: 'right',
+    middleware: [offset({ mainAxis: 5, crossAxis: 0 }), flip(), shift()],
+  });
+
+  const [rotationFloatingRef, rotationFloatingContent] = createFloatingActions({
+    strategy: 'absolute',
+    placement: 'top',
+    middleware: [offset({ mainAxis: 48, crossAxis: 0 }), shift()],
   });
 
   let widgetSettings = $derived(widget.settings);
@@ -73,6 +97,9 @@
 <div
   use:settingsFloatingRef
   use:deleteFloatingRef
+  use:widthFloatingRef
+  use:heightFloatingRef
+  use:rotationFloatingRef
   class="absolute [container-type:size] relative-position {exClass || ''} focus-within:!z-[99999] focus:!z-[99999]"
   id={widget.htmlElementId}
   tabindex="-1"
@@ -140,6 +167,40 @@
       <span class="w-full h-full icon-[fluent--delete-28-regular]"></span>
     </button>
   </div>
+  {#if dirtyWidth !== undefined}
+    <div use:widthFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
+      <input
+        type="number"
+        size={(dirtyWidth || 1).toString().length}
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        bind:value={dirtyWidth}
+        step={1}
+        min={1} />
+    </div>
+  {/if}
+  {#if dirtyHeight !== undefined}
+    <div use:heightFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
+      <input
+        type="number"
+        size={(dirtyHeight || 1).toString().length}
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        bind:value={dirtyHeight}
+        step={1}
+        min={1} />
+    </div>
+  {/if}
+  {#if dirtyRotation !== undefined}
+    <div use:rotationFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
+      <input
+        type="number"
+        size={(dirtyRotation || 1).toString().length}
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        bind:value={dirtyRotation}
+        step={1}
+        min={0}
+        max={359} />
+    </div>
+  {/if}
 {/if}
 
 <style>
@@ -152,5 +213,14 @@
       var(--st-rotation);
     width: var(--relative-width);
     height: var(--relative-height);
+  }
+  .no-spinner::-webkit-outer-spin-button,
+  .no-spinner::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  .no-spinner {
+    -moz-appearance: textfield;
   }
 </style>

@@ -63,6 +63,10 @@
   let widgetSettingsVisible = $state(false);
   let menuButtonColor = $state('#fff');
   let menuButtonBackgroundColor = $state('transparent');
+  let dirtyWidgetWidth: number | undefined = $state();
+  let dirtyWidgetHeight: number | undefined = $state();
+  let dirtyWidgetRotation: number | undefined = $state();
+
   $effect(() => {
     if (workspace?.isLocked.value === true) {
       moveable?.unselectAll();
@@ -386,7 +390,10 @@
             class="widget widget_{widget.settings.type}"
             controlsClassName="widget-control"
             workspaceLocked={workspace!.isLocked.value}
-            onautosettingsupdate={saveWorkspaceChanges} />
+            onautosettingsupdate={saveWorkspaceChanges}
+            bind:dirtyWidth={dirtyWidgetWidth}
+            bind:dirtyHeight={dirtyWidgetHeight}
+            bind:dirtyRotation={dirtyWidgetRotation} />
         {/each}
       {/key}
       {#if !workspace!.isLocked.value}
@@ -395,6 +402,9 @@
           selected={selectedWidgets}
           widgets={workspace.widgets}
           workspace={workspaceEl}
+          bind:dirtyWidth={dirtyWidgetWidth}
+          bind:dirtyHeight={dirtyWidgetHeight}
+          bind:dirtyRotation={dirtyWidgetRotation}
           widgetControlsZone=".widget-control" />
       {/if}
     </div>
