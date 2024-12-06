@@ -76,9 +76,10 @@
   href={ensureFqdnUrl(settings.url.value)}
   rel="noreferrer"
   referrerpolicy="no-referrer"
-  class="w-full h-full btn !p-[5cqmin] rounded-[inherit] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
+  class="w-full h-full btn rounded-[inherit] !p-[--st-padding] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)]"
   style:background-color={settings.backgroundColor.value}
   style:--st-blur="{settings.backgroundBlur.value}px"
+  style:--st-padding="{settings.padding.value}cqmin"
   style:font-size="{settings.font.size.value}cqmin"
   draggable="false"
   title={settings.url.value}
@@ -87,7 +88,7 @@
   {settings.textShadow.color.value}">
   {#if iconUrl}
     <img
-      class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-5cqmin)]"
+      class="w-full h-full object-contain select-none rounded-[calc(var(--st-border-radius)-var(--st-padding))]"
       draggable="false"
       use:conditionalSrc={{ src: iconUrl, iconSource: settings.iconSource.value }}
       data-fallback="true"

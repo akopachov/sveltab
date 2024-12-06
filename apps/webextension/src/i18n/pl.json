@@ -194,6 +194,7 @@
   "Widgets_Link_Settings_Link_Label": "Adres URL",
   "Widgets_Link_Settings_Link_Placeholder": "https://...",
   "Widgets_Link_Settings_Title_Label": "Tytuł",
+  "Widgets_Link_Settings_Padding_Label": "Margines",
   "Widgets_Link_Settings_IconSource": "Źródło znaczków",
   "Widgets_Link_Settings_IconSource_Favicon": "Znaczek strony",
   "Widgets_Link_Settings_IconSource_Iconify": "Znaczek z kolekcji",

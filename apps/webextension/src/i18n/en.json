@@ -199,6 +199,7 @@
   "Widgets_Link_Settings_Link_Label": "Url",
   "Widgets_Link_Settings_Link_Placeholder": "https://...",
   "Widgets_Link_Settings_Title_Label": "Title",
+  "Widgets_Link_Settings_Padding_Label": "Padding",
   "Widgets_Link_Settings_IconSource": "Icon source",
   "Widgets_Link_Settings_IconSource_Favicon": "Site icon",
   "Widgets_Link_Settings_IconSource_Iconify": "Icon from collection",

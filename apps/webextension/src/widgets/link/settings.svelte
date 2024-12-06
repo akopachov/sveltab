@@ -34,6 +34,7 @@
   import { logger } from '$lib/logger';
   import { OpfsSchema } from '$lib/opfs';
   import { getFileExtension } from '$lib/path-utils';
+  import NumberInput from '$shared-components/number-input.svelte';
 
   const log = logger.getSubLogger({ prefix: ['Widget', 'Link'] });
 
@@ -89,6 +90,10 @@
   <label class="label">
     <span>{m.Widgets_Link_Settings_Title_Label()}</span>
     <input type="text" class="input" bind:value={settings.title.value} />
+  </label>
+  <label class="label">
+    <span>{m.Widgets_Link_Settings_Padding_Label()}</span>
+    <NumberInput bind:value={settings.padding.value} min={0} />
   </label>
 {:else if tab === IconTabId}
   <label class="label mb-2">

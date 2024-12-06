@@ -22,6 +22,7 @@ export class Settings extends WidgetSettingsExtra {
     this.icon = useObservable(initial.icon || '');
     this.iconColor = useObservable(initial.iconColor || '#000');
     this.iconSource = useObservable(initial.iconSource || IconSource.Favicon);
+    this.padding = useObservable(initial.padding ?? 5);
     this.backgroundColor = useObservable(initial.backgroundColor || '#fff');
     this.backgroundBlur = useObservable(initial.backgroundBlur || 0);
     this.font = new FontSettings(initial.font || { size: 5 });
@@ -35,6 +36,7 @@ export class Settings extends WidgetSettingsExtra {
   readonly icon: Observable<string>;
   readonly iconColor: Observable<string>;
   readonly iconSource: Observable<IconSource>;
+  readonly padding: Observable<number>;
   readonly backgroundColor: Observable<string>;
   readonly backgroundBlur: Observable<number>;
   readonly font: FontSettings;
