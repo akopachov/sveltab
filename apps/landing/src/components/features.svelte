@@ -1,7 +1,7 @@
 <script lang="ts">
 </script>
 
-<section class="relative">
+<section class="relative" data-aos="zoom-y-out" data-aos-delay="450">
   <div class="relative max-w-6xl mx-auto px-4 sm:px-6">
     <div class="py-12 md:py-20">
       <!-- Section header -->
