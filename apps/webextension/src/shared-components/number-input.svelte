@@ -81,15 +81,3 @@
     <span class="w-6 h-6 icon-[ic--baseline-plus]"></span>
   </button>
 </div>
-
-<style>
-  .no-spinner::-webkit-outer-spin-button,
-  .no-spinner::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .no-spinner {
-    -moz-appearance: textfield;
-  }
-</style>

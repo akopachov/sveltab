@@ -6,6 +6,7 @@
   import { createFloatingActions } from 'svelte-floating-ui';
   import type { WidgetComponentExports } from '$widgets/types';
   import type { InternalAssetsManager } from '$lib/internal-assets-manager';
+  import { rolledInput } from '$actions/rolled-input';
 
   let {
     widget,
@@ -192,6 +193,7 @@
   {#if dirtyRotation !== undefined}
     <div use:rotationFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
       <input
+        use:rolledInput
         type="number"
         size={(dirtyRotation || 1).toString().length}
         class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
@@ -213,14 +215,5 @@
       var(--st-rotation);
     width: var(--relative-width);
     height: var(--relative-height);
-  }
-  .no-spinner::-webkit-outer-spin-button,
-  .no-spinner::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  .no-spinner {
-    -moz-appearance: textfield;
   }
 </style>

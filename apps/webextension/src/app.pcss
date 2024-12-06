@@ -14,3 +14,14 @@ body {
 .moveable-control-box {
   @apply !z-[1000000];
 }
+
+@layer utilities {
+  .no-spinner {
+    -moz-appearance: textfield;
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      @apply appearance-none m-0;
+      -webkit-appearance: none;
+    }
+  }
+}

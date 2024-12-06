@@ -163,10 +163,9 @@
   }
 
   function onRotate({ detail: e }: CustomEvent<OnRotate>) {
-    let rotation = normalizeRotation(e.rotation);
-    e.target.style.transform = `rotate(${rotation}deg)`;
+    e.target.style.transform = `rotate(${normalizeRotation(e.rotation)}deg)`;
     if ((e as any).isRequest !== true) {
-      dirtyRotation = Math.round(rotation);
+      dirtyRotation = normalizeRotation(Math.round(e.rotation));
     }
   }
 
