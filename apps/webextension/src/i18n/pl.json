@@ -212,6 +212,11 @@
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
   "Widgets_Link_Settings_IconSource_Local": "Lokalny plik",
   "Widgets_Link_Settings_IconSource_Local_Select": "Wybierz plik",
+  "Widgets_Link_Settings_Title_Position": "Pozycja tytułu",
+  "Widgets_Link_Settings_Title_Position_Top": "Na górze",
+  "Widgets_Link_Settings_Title_Position_Bottom": "Na dole",
+  "Widgets_Link_Settings_Title_Position_Left": "Po lewej",
+  "Widgets_Link_Settings_Title_Position_Right": "Po prawej",
 
 
   "Widgets_Weather_Name": "Pogoda",

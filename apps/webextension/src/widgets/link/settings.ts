@@ -14,10 +14,18 @@ export enum IconSource {
   Local = 'local',
 }
 
+export enum TextPosition {
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+}
+
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
     super();
     this.title = useObservable(initial.title || '');
+    this.titlePosition = useObservable(initial.titlePosition || TextPosition.Bottom);
     this.url = useObservable(initial.url || '');
     this.icon = useObservable(initial.icon || '');
     this.iconColor = useObservable(initial.iconColor || '#000');
@@ -32,6 +40,7 @@ export class Settings extends WidgetSettingsExtra {
   }
 
   readonly title: Observable<string>;
+  readonly titlePosition: Observable<TextPosition>;
   readonly url: Observable<string>;
   readonly icon: Observable<string>;
   readonly iconColor: Observable<string>;

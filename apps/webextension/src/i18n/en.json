@@ -217,6 +217,11 @@
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
   "Widgets_Link_Settings_IconSource_Local": "Local file",
   "Widgets_Link_Settings_IconSource_Local_Select": "Select",
+  "Widgets_Link_Settings_Title_Position": "Title position",
+  "Widgets_Link_Settings_Title_Position_Top": "Top",
+  "Widgets_Link_Settings_Title_Position_Bottom": "Bottom",
+  "Widgets_Link_Settings_Title_Position_Left": "Left",
+  "Widgets_Link_Settings_Title_Position_Right": "Right",
 
 
   "Widgets_Weather_Name": "Weather",

@@ -213,6 +213,11 @@
   "Widgets_Link_Settings_IconSource_Direct_Placeholder": "https://...",
   "Widgets_Link_Settings_IconSource_Local": "Лакальны файл",
   "Widgets_Link_Settings_IconSource_Local_Select": "Выбраць файл",
+  "Widgets_Link_Settings_Title_Position": "Пазіцыя назвы",
+  "Widgets_Link_Settings_Title_Position_Top": "На вяршыні",
+  "Widgets_Link_Settings_Title_Position_Bottom": "На нізе",
+  "Widgets_Link_Settings_Title_Position_Left": "Злева",
+  "Widgets_Link_Settings_Title_Position_Right": "Справа",
 
 
   "Widgets_Weather_Name": "Надвор'е",

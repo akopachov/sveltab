@@ -22,7 +22,7 @@
 </script>
 
 <script lang="ts">
-  import { IconSource, type Settings } from './settings';
+  import { IconSource, TextPosition, type Settings } from './settings';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import IconifySearch from './iconify-search.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
@@ -91,6 +91,17 @@
     <span>{m.Widgets_Link_Settings_Title_Label()}</span>
     <input type="text" class="input" bind:value={settings.title.value} />
   </label>
+  {#if settings.title.value}
+    <label class="label">
+      <span>{m.Widgets_Link_Settings_Title_Position()}</span>
+      <select class="select" bind:value={settings.titlePosition.value}>
+        <option value={TextPosition.Top}>{m.Widgets_Link_Settings_Title_Position_Top()}</option>
+        <option value={TextPosition.Bottom}>{m.Widgets_Link_Settings_Title_Position_Bottom()}</option>
+        <option value={TextPosition.Left}>{m.Widgets_Link_Settings_Title_Position_Left()}</option>
+        <option value={TextPosition.Right}>{m.Widgets_Link_Settings_Title_Position_Right()}</option>
+      </select>
+    </label>
+  {/if}
   <label class="label">
     <span>{m.Widgets_Link_Settings_Padding_Label()}</span>
     <NumberInput bind:value={settings.padding.value} min={0} />
