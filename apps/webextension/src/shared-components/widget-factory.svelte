@@ -173,7 +173,7 @@
       <input
         style:width="{(dirtyWidth || 1).toString().length + 2}ch"
         type="number"
-        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] text-white border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyWidth}
         step={1}
         min={1} />
@@ -184,7 +184,7 @@
       <input
         style:width="{(dirtyHeight || 1).toString().length + 2}ch"
         type="number"
-        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] text-white border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyHeight}
         step={1}
         min={1} />
@@ -196,7 +196,7 @@
         use:rolledInput
         style:width="{(dirtyRotation || 1).toString().length + 2}ch"
         type="number"
-        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
+        class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] text-white border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyRotation}
         step={1}
         min={0}
