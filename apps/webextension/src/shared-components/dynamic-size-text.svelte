@@ -27,13 +27,21 @@
   let container: HTMLElement;
   let fontSize: number = $state(0);
   let whRatio: number;
+
   const resizeObserver = new ResizeObserver(() => {
+    if (whRatio <= 0) {
+      updateWHRatio();
+    }
     updateFontSize();
   });
 
   function updateWHRatio() {
     if (!container || !text) return;
     const containerHeight = container.clientHeight;
+    if (containerHeight <= 0) {
+      whRatio = 0;
+      return;
+    }
     const { fontFamily, fontWeight } = getComputedStyle(container);
     canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
     const { width: actualWidth } = canvasCtx.measureText(text);
@@ -41,9 +49,14 @@
   }
 
   function updateFontSize() {
-    if (!container || !text || whRatio <= 0) {
+    if (!container || !text) {
       return;
     }
+    if (whRatio <= 0) {
+      fontSize = 0;
+      return;
+    }
+
     const containerHeight = container.clientHeight;
     const containerWidth = container.clientWidth;
     const newFontSize = Math.min(containerHeight, containerWidth / whRatio);
