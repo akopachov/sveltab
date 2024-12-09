@@ -102,7 +102,7 @@
   </div>
   {#if settings.title.value}
     <span
-      class="title overflow-hidden min-h-[1em] text-ellipsis leading-none !m-0 [-webkit-text-stroke:var(--sv-text-stroke)]"
+      class="title overflow-hidden min-h-[1em] text-ellipsis leading-normal h-[1.5em] !m-0 [-webkit-text-stroke:var(--sv-text-stroke)]"
       style:color={settings.textColor.value}
       style:font-weight={settings.font.weight.value}
       use:fontsource={{
@@ -134,7 +134,7 @@
       }
     }
     .title {
-      @apply h-fit w-full;
+      @apply w-full;
       grid-column: 1;
     }
   }
