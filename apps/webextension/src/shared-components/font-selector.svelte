@@ -122,35 +122,37 @@
 {#await fonts}
   <ProgressRadial width="w-12 ml-[auto] mr-[auto]" />
 {:then fontsResult}
-  <div class="contents">
-    <div
-      class="input-group input-group-divider"
-      class:grid-cols-[auto_1fr_auto]={!!color}
-      class:grid-cols-[1fr_auto]={!color}>
-      {#if color}
-        <div class="input-group-shim !p-[0_20px]"></div>
-      {/if}
-      <input
-        type="search"
-        bind:value={searchValue}
-        placeholder={m.FontSelector_Search_Placeholder()}
-        use:popup={popupSettings}
-        use:debounce={debounceOpts} />
-      {#if selectedFontInfo}
-        <select bind:value={weight.value}>
-          {#each selectedFontInfo.weights as w}
-            {@const optionTextFn = fontWeightsMap.get(w) || (() => String(w))}
-            <option value={w}>{optionTextFn()}</option>
-          {/each}
-        </select>
-      {/if}
+  <div class="relative">
+    <div class="contents">
+      <div
+        class="input-group input-group-divider"
+        class:grid-cols-[auto_1fr_auto]={!!color}
+        class:grid-cols-[1fr_auto]={!color}>
+        {#if color}
+          <div class="input-group-shim !p-[0_20px]"></div>
+        {/if}
+        <input
+          type="search"
+          bind:value={searchValue}
+          placeholder={m.FontSelector_Search_Placeholder()}
+          use:popup={popupSettings}
+          use:debounce={debounceOpts} />
+        {#if selectedFontInfo}
+          <select bind:value={weight.value}>
+            {#each selectedFontInfo.weights as w}
+              {@const optionTextFn = fontWeightsMap.get(w) || (() => String(w))}
+              <option value={w}>{optionTextFn()}</option>
+            {/each}
+          </select>
+        {/if}
+      </div>
     </div>
+    {#if color}
+      <div class="absolute w-6 h-6 !mt-[-32px] !ml-[9px]">
+        <ColorPicker bind:color layout={ColorPickerLayout.ButtonPopup} />
+      </div>
+    {/if}
   </div>
-  {#if color}
-    <div class="absolute w-6 h-6 !mt-[-32px] !ml-[9px]">
-      <ColorPicker bind:color layout={ColorPickerLayout.ButtonPopup} />
-    </div>
-  {/if}
   <div
     class="card w-fit max-w-[100cqw] max-h-[calc(100cqh-16px)] h-fit overflow-y-auto flex"
     tabindex="-1"
