@@ -39,9 +39,12 @@
   let moveableRef: any = $state.raw();
   let moveableInstance: Moveable | undefined = $derived(moveableRef?.getInstance());
   const unspecified: any = undefined;
+  let rotationEffectRunning = false;
+  let resizeEffectRunning = false;
 
   $effect(() => {
     if (dirtyWidth !== undefined || dirtyHeight !== undefined) {
+      resizeEffectRunning = true;
       const requester = moveableInstance?.request('resizable');
       if (dirtyWidth !== undefined && dirtyWidth > 0) {
         requester?.request({ offsetWidth: dirtyWidth });
@@ -52,13 +55,16 @@
       }
 
       requester?.requestEnd();
+      resizeEffectRunning = false;
     }
   });
   $effect(() => {
     if (dirtyRotation !== undefined) {
+      rotationEffectRunning = true;
       const requester = moveableInstance?.request('rotatable');
       requester?.request({ rotate: normalizeRotation(dirtyRotation) });
       requester?.requestEnd();
+      rotationEffectRunning = false;
     }
   });
 
@@ -140,8 +146,10 @@
     e.target.style.left = `${e.drag.left}px`;
     e.target.style.top = `${e.drag.top}px`;
 
-    dirtyWidth = Math.round(e.width);
-    dirtyHeight = Math.round(e.height);
+    if ((e as any).isRequest !== true && !resizeEffectRunning) {
+      dirtyWidth = Math.round(e.width);
+      dirtyHeight = Math.round(e.height);
+    }
   }
 
   function onTargetChanged({ detail }: CustomEvent<OnChangeTargets>) {
@@ -164,7 +172,7 @@
 
   function onRotate({ detail: e }: CustomEvent<OnRotate>) {
     e.target.style.transform = `rotate(${normalizeRotation(e.rotation)}deg)`;
-    if ((e as any).isRequest !== true) {
+    if ((e as any).isRequest !== true && !rotationEffectRunning) {
       dirtyRotation = normalizeRotation(Math.round(e.rotation));
     }
   }
