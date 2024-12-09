@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { WorkspaceInstance } from '$lib/workspace-instance';
   import type { WorkspaceSettingsInitial } from '$lib/workspace-settings';
-  import { FileButton } from '@skeletonlabs/skeleton';
+  import { FileButton, getModalStore } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { logger } from '$lib/logger';
   import { Workspaces } from '$stores/workspace-index';
@@ -31,6 +31,7 @@
   }: { activeWorkspaceId: string; activeWorkspace?: WorkspaceInstance; dataImported?: () => void } = $props();
 
   let importFiles: FileList | undefined = $state();
+  let modalStore = getModalStore();
 
   async function* streamToIterable<T>(stream: ReadableStream<T>): AsyncGenerator<T> {
     const reader = stream.getReader();
@@ -227,6 +228,26 @@
 
     return importData;
   }
+
+  function resetToDefault() {
+    modalStore.trigger({
+      type: 'confirm',
+      title: m.DataManage_Reset_Confirm_Title(),
+      body: m.DataManage_Reset_Confirm_Body(),
+      backdropClasses: '!z-[9999999]',
+      response: async (confirmed: boolean) => {
+        if (confirmed) {
+          await Workspaces.wipeAll();
+          await Opfs.wipe();
+          await Workspaces.setDefault();
+          ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
+          dataImported && dataImported();
+          activeWorkspace = activeWorkspace;
+          toastFacade.show(m.DataManage_Reset_SuccessfullyDone(), CommonToastType.Success);
+        }
+      },
+    });
+  }
 </script>
 
 <div class="flex flex-col gap-1">
@@ -241,4 +262,5 @@
     accept=".json,.svtx">
     {m.DataManage_Restore()}
   </FileButton>
+  <button class="btn btn-md variant-soft-error mt-3" onclick={resetToDefault}>{m.DataManage_Reset()}</button>
 </div>

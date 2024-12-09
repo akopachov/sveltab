@@ -148,7 +148,7 @@ export class WorkspaceIndex {
     await storage.local.clear();
   }
 
-  async setDefault(id: string) {
+  async setDefault(id: string = defaultWorkspaceId) {
     this.#defaultWorkspaceId = id;
     await this.#updateIndex(i => i);
   }
