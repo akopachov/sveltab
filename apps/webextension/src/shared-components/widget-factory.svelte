@@ -171,8 +171,8 @@
   {#if dirtyWidth !== undefined}
     <div use:widthFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
       <input
+        style:width="{(dirtyWidth || 1).toString().length + 2}ch"
         type="number"
-        size={(dirtyWidth || 1).toString().length}
         class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyWidth}
         step={1}
@@ -182,8 +182,8 @@
   {#if dirtyHeight !== undefined}
     <div use:heightFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
       <input
+        style:width="{(dirtyHeight || 1).toString().length + 2}ch"
         type="number"
-        size={(dirtyHeight || 1).toString().length}
         class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyHeight}
         step={1}
@@ -194,8 +194,8 @@
     <div use:rotationFloatingContent class="absolute w-fit h-5 {controlsClassName} z-[99999]">
       <input
         use:rolledInput
+        style:width="{(dirtyRotation || 1).toString().length + 2}ch"
         type="number"
-        size={(dirtyRotation || 1).toString().length}
         class="text-xs py-1 px-0 block leading-none no-spinner h-full bg-[#4af] border-none text-center focus:!outline-0 focus:![box-shadow:none] {controlsClassName}"
         bind:value={dirtyRotation}
         step={1}
