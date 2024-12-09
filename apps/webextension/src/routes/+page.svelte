@@ -204,7 +204,7 @@
 
 <Drawer zIndex="z-[100000]">
   <div class="flex flex-col h-full w-full">
-    <Accordion autocollapse>
+    <Accordion>
       <AccordionItem id="aiWidgetsCatalog">
         <svelte:fragment slot="lead">
           <span class="w-6 h-6 icon-[streamline--widget]"></span>
