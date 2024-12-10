@@ -22,9 +22,10 @@
     }
   });
 
-  const canvas = new OffscreenCanvas(1, 1);
-  const canvasCtx = canvas.getContext('2d', { alpha: false })!;
+  const canvas = 'OffscreenCanvas' in window ? new OffscreenCanvas(1, 1) : undefined;
+  const canvasCtx = canvas?.getContext('2d', { alpha: false })!;
   let container: HTMLElement;
+  let textEl: HTMLElement;
   let fontSize: number = $state(0);
   let whRatio: number;
 
@@ -42,10 +43,19 @@
       whRatio = 0;
       return;
     }
-    const { fontFamily, fontWeight } = getComputedStyle(container);
-    canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
-    const { width: actualWidth } = canvasCtx.measureText(text);
-    whRatio = actualWidth / containerHeight;
+
+    if (canvasCtx) {
+      const { fontFamily, fontWeight } = getComputedStyle(container);
+      canvasCtx.font = `${fontWeight} ${containerHeight}px ${fontFamily}`;
+      const { width: actualWidth } = canvasCtx.measureText(text);
+      whRatio = actualWidth / containerHeight;
+    } else {
+      const fontSizeBefore = textEl.style.fontSize;
+      textEl.style.fontSize = `${containerHeight}px`;
+      whRatio = textEl.clientWidth / containerHeight;
+      textEl.style.fontSize = fontSizeBefore;
+      console.warn('OffscreenCanvas is not supported, using clientWidth instead');
+    }
   }
 
   function updateFontSize() {
@@ -77,6 +87,7 @@
 
 <div bind:this={container} class="w-full h-full flex justify-center items-center {exClass || ''}" {...otherProps}>
   <span
+    bind:this={textEl}
     style:font-size="{fontSize}px"
     class="leading-none whitespace-nowrap [-webkit-text-stroke:var(--sv-text-stroke)]"
     use:textStroke={stroke}>
