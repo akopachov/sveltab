@@ -38,25 +38,27 @@
           href={item.url}
           rel="noreferrer"
           referrerpolicy="no-referrer"
-          class="btn min-h-0 min-w-0 rounded-[var(--st-border-radius)] flex flex-col [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] overflow-hidden border-[color:var(--st-border-color)] [border-width:var(--st-border-size)] [-webkit-text-stroke:var(--sv-text-stroke)]"
-          style:padding="{5 / Math.min(settings.rowsCount.value, settings.itemsPerRow.value)}cqmin"
+          class="w-full h-full min-h-0 min-w-0 rounded-[var(--st-border-radius)] layout-{settings.titlePosition
+            .value} btn [&>*]:drop-shadow-[var(--st-shadow)] backdrop-blur-[var(--st-blur)] border-[color:var(--st-border-color)] [border-width:var(--st-border-size)] [-webkit-text-stroke:var(--sv-text-stroke)] !p-[--st-padding]"
+          style:--st-padding="{5 / Math.min(settings.rowsCount.value, settings.itemsPerRow.value)}cqmin"
           style:background-color={settings.backgroundColor.value}
           style:--st-blur="{settings.backgroundBlur.value}px"
           style:font-size="{settings.font.size.value}cqmin"
+          class:has-title={settings.showTitle.value}
           draggable="false"
           title={item.url}
           style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
             .textShadow.blur.value}cqmin
           {settings.textShadow.color.value}">
           <img
-            class="w-full h-full object-contain select-none !rounded-[inherit]"
+            class="img object-contain select-none rounded-[calc(var(--st-border-radius)-var(--st-padding))]"
             draggable="false"
             alt=""
             data-fallback="true"
             use:imgSrcEx={getFavIconUrl(item.url)} />
           {#if settings.showTitle.value && item.title}
-            <div
-              class="w-full overflow-hidden text-ellipsis whitespace-nowrap flex-shrink-0 leading-normal !m-0"
+            <span
+              class="title overflow-hidden min-h-[1em] text-ellipsis leading-normal h-[1.5em] !m-0 [-webkit-text-stroke:var(--sv-text-stroke)]"
               style:color={settings.textColor.value}
               style:font-weight={settings.font.weight.value}
               use:fontsource={{
@@ -66,7 +68,7 @@
                 weights: [settings.font.weight.value],
               }}>
               {item.title}
-            </div>
+            </span>
           {/if}
         </a>
       {/each}
@@ -79,3 +81,62 @@
     </h4>
   {/if}
 {/await}
+
+<style lang="postcss">
+  .layout-top,
+  .layout-bottom {
+    @apply grid h-full w-full grid-cols-1;
+
+    &.has-title {
+      @apply [grid-gap:--st-padding];
+    }
+    .img {
+      @apply h-full w-full [grid-column:1];
+    }
+    .title {
+      @apply w-full [grid-column:1];
+    }
+  }
+
+  .layout-top {
+    @apply grid-rows-[1fr_minmax(0,100%)];
+    .title {
+      @apply [grid-row:1];
+    }
+    .img {
+      @apply [grid-row:2];
+    }
+  }
+
+  .layout-bottom {
+    @apply grid-rows-[minmax(0,100%)_1fr];
+    .title {
+      @apply [grid-row:2];
+    }
+    .img {
+      @apply [grid-row:1];
+    }
+  }
+
+  .layout-left,
+  .layout-right {
+    @apply flex h-full w-full;
+    &.has-title {
+      @apply gap-[--st-padding];
+    }
+    .img {
+      @apply h-full w-fit;
+    }
+    .title {
+      @apply flex-1;
+    }
+  }
+
+  .layout-left {
+    @apply flex-row-reverse;
+  }
+
+  .layout-right {
+    @apply flex-row;
+  }
+</style>

@@ -283,6 +283,11 @@
   "Widgets_TopSites_NoMostVisitedSites": "Brak dostępnych najczęściej odwiedzanych stron",
   "Widgets_TopSites_Settings_Tabs_Text": "Tekst",
   "Widgets_TopSites_Settings_Tabs_Background": "Tło",
+  "Widgets_TopSites_Settings_Title_Position": "Pozycja tytułu",
+  "Widgets_TopSites_Settings_Title_Position_Top": "Na górze",
+  "Widgets_TopSites_Settings_Title_Position_Bottom": "Na dole",
+  "Widgets_TopSites_Settings_Title_Position_Left": "Po lewej",
+  "Widgets_TopSites_Settings_Title_Position_Right": "Po prawej",
 
 
   "Widgets_TopSites_Settings_ItemsPerRow": "Elementy w rzędzie",

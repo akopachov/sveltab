@@ -17,7 +17,7 @@
 </script>
 
 <script lang="ts">
-  import { type Settings } from './settings';
+  import { TextPosition, type Settings } from './settings';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import { SlideToggle } from '@skeletonlabs/skeleton';
   import NumberInput from '$shared-components/number-input.svelte';
@@ -49,6 +49,17 @@
       <SlideToggle name="showTitle" size="sm" bind:checked={settings.showTitle.value} />
     </div>
   </div>
+  {#if settings.showTitle.value}
+    <label class="label mb-2">
+      <span>{m.Widgets_TopSites_Settings_Title_Position()}</span>
+      <select class="select" bind:value={settings.titlePosition.value}>
+        <option value={TextPosition.Top}>{m.Widgets_TopSites_Settings_Title_Position_Top()}</option>
+        <option value={TextPosition.Bottom}>{m.Widgets_TopSites_Settings_Title_Position_Bottom()}</option>
+        <option value={TextPosition.Left}>{m.Widgets_TopSites_Settings_Title_Position_Left()}</option>
+        <option value={TextPosition.Right}>{m.Widgets_TopSites_Settings_Title_Position_Right()}</option>
+      </select>
+    </label>
+  {/if}
 {:else if tab === TextTabId}
   <TextSettings
     font={settings.font}

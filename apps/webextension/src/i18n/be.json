@@ -284,6 +284,11 @@
   "Widgets_TopSites_NoMostVisitedSites": "Няма даступных самых наведвальных сайтаў",
   "Widgets_TopSites_Settings_Tabs_Text": "Тэкст",
   "Widgets_TopSites_Settings_Tabs_Background": "Фон",
+  "Widgets_TopSites_Settings_Title_Position": "Пазіцыя назвы",
+  "Widgets_TopSites_Settings_Title_Position_Top": "На вяршыні",
+  "Widgets_TopSites_Settings_Title_Position_Bottom": "На нізе",
+  "Widgets_TopSites_Settings_Title_Position_Left": "Злева",
+  "Widgets_TopSites_Settings_Title_Position_Right": "Справа",
 
 
   "Widgets_TopSites_Settings_ItemsPerRow": "Элементаў у радку",

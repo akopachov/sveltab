@@ -16,6 +16,11 @@ if (import.meta.env.VITE_BUILD_FOR === 'webextension' && !import.meta.env.SSR) {
         },
         {
           url: 'https://www.mozilla.org',
+          title: 'Mozilla',
+        },
+        {
+          url: 'https://github.com',
+          title: 'GitHub',
         },
       ]);
     },

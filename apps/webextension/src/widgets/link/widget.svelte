@@ -88,18 +88,16 @@
   style:--st-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
     .textShadow.blur.value}cqmin
   {settings.textShadow.color.value}">
-  <div class="icon-container">
-    {#if iconUrl}
-      <img
-        class="img object-contain select-none rounded-[calc(var(--st-border-radius)-var(--st-padding))]"
-        draggable="false"
-        use:conditionalSrc={{ src: iconUrl, iconSource: settings.iconSource.value }}
-        data-fallback="true"
-        alt=" " />
-    {:else}
-      <span class="img icon-[bx--image] text-black"></span>
-    {/if}
-  </div>
+  {#if iconUrl}
+    <img
+      class="img object-contain select-none rounded-[calc(var(--st-border-radius)-var(--st-padding))]"
+      draggable="false"
+      use:conditionalSrc={{ src: iconUrl, iconSource: settings.iconSource.value }}
+      data-fallback="true"
+      alt=" " />
+  {:else}
+    <span class="img icon-[bx--image] text-black"></span>
+  {/if}
   {#if settings.title.value}
     <span
       class="title overflow-hidden min-h-[1em] text-ellipsis leading-normal h-[1.5em] !m-0 [-webkit-text-stroke:var(--sv-text-stroke)]"
@@ -125,37 +123,31 @@
     &.has-title {
       @apply [grid-gap:--st-padding];
     }
-    .icon-container {
-      @apply h-full w-full;
-      grid-column: 1;
-
-      .img {
-        @apply h-full w-full;
-      }
+    .img {
+      @apply h-full w-full [grid-column:1];
     }
     .title {
-      @apply w-full;
-      grid-column: 1;
+      @apply w-full [grid-column:1];
     }
   }
 
   .layout-top {
     @apply grid-rows-[1fr_minmax(0,100%)];
     .title {
-      grid-row: 1;
+      @apply [grid-row:1];
     }
-    .icon-container {
-      grid-row: 2;
+    .img {
+      @apply [grid-row:2];
     }
   }
 
   .layout-bottom {
     @apply grid-rows-[minmax(0,100%)_1fr];
     .title {
-      grid-row: 2;
+      @apply [grid-row:2];
     }
-    .icon-container {
-      grid-row: 1;
+    .img {
+      @apply [grid-row:1];
     }
   }
 
@@ -165,12 +157,8 @@
     &.has-title {
       @apply gap-[--st-padding];
     }
-    .icon-container {
+    .img {
       @apply h-full w-fit;
-
-      .img {
-        @apply h-full;
-      }
     }
     .title {
       @apply flex-1;
@@ -179,17 +167,9 @@
 
   .layout-left {
     @apply flex-row-reverse;
-    .title {
-    }
-    .icon-container {
-    }
   }
 
   .layout-right {
     @apply flex-row;
-    .title {
-    }
-    .icon-container {
-    }
   }
 </style>

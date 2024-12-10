@@ -288,6 +288,11 @@
   "Widgets_TopSites_NoMostVisitedSites": "No most visited sites available",
   "Widgets_TopSites_Settings_Tabs_Text": "Text",
   "Widgets_TopSites_Settings_Tabs_Background": "Background",
+  "Widgets_TopSites_Settings_Title_Position": "Title position",
+  "Widgets_TopSites_Settings_Title_Position_Top": "Top",
+  "Widgets_TopSites_Settings_Title_Position_Bottom": "Bottom",
+  "Widgets_TopSites_Settings_Title_Position_Left": "Left",
+  "Widgets_TopSites_Settings_Title_Position_Right": "Right",
 
 
   "Widgets_TopSites_Settings_ItemsPerRow": "Items per row",

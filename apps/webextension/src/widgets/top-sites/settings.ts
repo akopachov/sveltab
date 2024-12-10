@@ -7,6 +7,13 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
+export enum TextPosition {
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+}
+
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
     super();
@@ -18,6 +25,7 @@ export class Settings extends WidgetSettingsExtra {
     this.itemsPerRow = useObservable(initial.itemsPerRow || 10);
     this.rowsCount = useObservable(initial.rowsCount || 1);
     this.showTitle = useObservable(initial.showTitle ?? true);
+    this.titlePosition = useObservable(initial.titlePosition || TextPosition.Bottom);
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 
@@ -29,5 +37,6 @@ export class Settings extends WidgetSettingsExtra {
   readonly itemsPerRow: Observable<number>;
   readonly rowsCount: Observable<number>;
   readonly showTitle: Observable<boolean>;
+  readonly titlePosition: Observable<TextPosition>;
   readonly textStroke: TextStrokeSettings;
 }
