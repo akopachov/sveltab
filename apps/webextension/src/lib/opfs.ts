@@ -53,7 +53,7 @@ export class OpfsManager {
         break;
       }
 
-      if (isEmpty) {
+      if (isEmpty && i + 1 < dirHandles.length) {
         await dirHandles[i + 1].removeEntry(dirHandles[i].name, { recursive: true });
       } else {
         break;
