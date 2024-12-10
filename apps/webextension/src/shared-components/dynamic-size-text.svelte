@@ -54,7 +54,6 @@
       textEl.style.fontSize = `${containerHeight}px`;
       whRatio = textEl.clientWidth / containerHeight;
       textEl.style.fontSize = fontSizeBefore;
-      console.warn('OffscreenCanvas is not supported, using clientWidth instead');
     }
   }
 
