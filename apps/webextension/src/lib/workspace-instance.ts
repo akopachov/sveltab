@@ -11,7 +11,13 @@ import {
 } from './observable.svelte';
 import { WidgetInstance } from './widget-instance';
 import type { WidgetSettingsInitial } from './widget-settings';
-import { FaviconInfo, type FaviconInfoInitial, type WorkspaceSettingsInitial } from './workspace-settings';
+import {
+  FaviconInfo,
+  SnappableSettings,
+  type FaviconInfoInitial,
+  type SnappableSettingsInitial,
+  type WorkspaceSettingsInitial,
+} from './workspace-settings';
 import { InternalAssetsManager } from './internal-assets-manager';
 import { skipFirstRun } from './function-utils';
 
@@ -29,6 +35,7 @@ export class WorkspaceInstance {
     customStyles: string,
     assets: string[],
     favicon: FaviconInfoInitial,
+    snappableSettings: SnappableSettingsInitial,
     unsaved: boolean,
   ) {
     this.#widgets.clear();
@@ -50,11 +57,13 @@ export class WorkspaceInstance {
     this.customStyles = useObservable(customStyles);
     this.internalAssetsManager = new InternalAssetsManager(assets);
     this.favicon = new FaviconInfo(favicon);
+    this.snappableSettings = new SnappableSettings(snappableSettings);
 
     this.#trackObjectChange(this.name);
     this.#trackObjectChange(this.customStyles);
     this.#trackObjectChange(this.internalAssetsManager.internalAssets);
     this.#trackObjectChange(this.favicon);
+    this.#trackObjectChange(this.snappableSettings);
     this.#hasChanges.value = unsaved;
   }
 
@@ -62,6 +71,7 @@ export class WorkspaceInstance {
   readonly name: Observable<string>;
   readonly customStyles: Observable<string>;
   readonly favicon: FaviconInfo;
+  readonly snappableSettings: SnappableSettings;
 
   #trackObjectChange(instance: any) {
     if (!instance) return;
@@ -164,6 +174,7 @@ export class WorkspaceInstance {
       widgets: [...this.#widgets].map(m => unobserve(m.settings)),
       customStyles: this.customStyles.value,
       favicon: unobserve(this.favicon),
+      snappableSettings: unobserve(this.snappableSettings),
       assets: [...this.internalAssetsManager.internalAssets],
     } satisfies WorkspaceSettingsInitial;
   }
@@ -185,6 +196,7 @@ export class WorkspaceInstance {
       settings.customStyles || '',
       settings.assets || [],
       settings.favicon || {},
+      settings.snappableSettings || {},
       unsaved,
     );
   }

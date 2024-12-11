@@ -18,6 +18,20 @@ export class FaviconInfo {
   ico: Observable<string>;
 }
 
+export type SnappableSettingsInitial = Partial<Unobserved<SnappableSettings>>;
+
+export class SnappableSettings {
+  constructor(initial: SnappableSettingsInitial) {
+    this.enabled = useObservable(initial.enabled ?? false);
+    this.gridSnapWidth = useObservable(initial.gridSnapWidth ?? 10);
+    this.gridSnapHeight = useObservable(initial.gridSnapHeight ?? 10);
+  }
+
+  enabled: Observable<boolean>;
+  gridSnapWidth: Observable<number>;
+  gridSnapHeight: Observable<number>;
+}
+
 export class WorkspaceSettings {
   constructor(initial: WorkspaceSettingsInitial) {
     this.widgets = initial.widgets || [];
@@ -25,6 +39,8 @@ export class WorkspaceSettings {
     this.name = initial.name || '';
     this.customStyles = initial.customStyles || '';
     this.favicon = initial.favicon || { 16: '', 32: '', ico: '' };
+    this.assets = initial.assets || [];
+    this.snappableSettings = initial.snappableSettings || { enabled: false };
   }
 
   name: string;
@@ -32,5 +48,6 @@ export class WorkspaceSettings {
   background: BackgroundSettingsInitial;
   customStyles: string;
   favicon: FaviconInfoInitial;
-  assets: string[] = [];
+  assets: string[];
+  snappableSettings: SnappableSettingsInitial;
 }

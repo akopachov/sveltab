@@ -19,6 +19,7 @@
     dirtyWidth = $bindable(),
     dirtyHeight = $bindable(),
     dirtyRotation = $bindable(),
+    gridSnapOptions,
   }: {
     widgets: ReadonlySet<WidgetInstance>;
     selected: Set<WidgetInstance>;
@@ -27,6 +28,10 @@
     dirtyWidth?: number;
     dirtyHeight?: number;
     dirtyRotation?: number;
+    gridSnapOptions?: {
+      width: number;
+      height: number;
+    };
   } = $props();
 
   let snappableList = $derived([
@@ -255,6 +260,10 @@
   snapGap={true}
   snapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
   elementSnapDirections={{ top: true, left: true, bottom: true, right: true, center: true, middle: true }}
+  snapGridWidth={gridSnapOptions && gridSnapOptions.width > 0 ? gridSnapOptions.width : undefined}
+  snapGridHeight={gridSnapOptions && gridSnapOptions.height > 0 ? gridSnapOptions.height : undefined}
+  snapGridAll={gridSnapOptions !== undefined}
+  isDisplayGridGuidelines={gridSnapOptions !== undefined}
   elementGuidelines={snappableList}
   snapContainer={workspace}
   bounds={{ left: 0, top: 0, right: 0, bottom: 0, position: 'css' }}

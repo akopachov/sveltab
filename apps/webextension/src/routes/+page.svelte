@@ -38,6 +38,7 @@
   import Favicon from '$shared-components/favicon.svelte';
   import { forceNextBackground, forcePreviousBackground } from '$actions/dynamic-background';
   import { SvelteSet } from 'svelte/reactivity';
+  import SnappableGridSettings from '$shared-components/snappable-grid-settings.svelte';
 
   const drawerStore = getDrawerStore();
 
@@ -262,6 +263,12 @@
               <span>{m.Favicon_Settings_Label()}</span>
               <FaviconSettings workspaceInstance={workspace} />
             </div>
+            <div>
+              <SnappableGridSettings
+                bind:enabled={workspace.snappableSettings.enabled.value}
+                bind:width={workspace.snappableSettings.gridSnapWidth.value}
+                bind:height={workspace.snappableSettings.gridSnapHeight.value} />
+            </div>
           {/if}
           <!-- svelte-ignore a11y_label_has_associated_control -->
           <label class="label">
@@ -405,7 +412,13 @@
           bind:dirtyWidth={dirtyWidgetWidth}
           bind:dirtyHeight={dirtyWidgetHeight}
           bind:dirtyRotation={dirtyWidgetRotation}
-          widgetControlsZone=".widget-control" />
+          widgetControlsZone=".widget-control"
+          gridSnapOptions={workspace.snappableSettings.enabled.value === true
+            ? {
+                width: workspace.snappableSettings.gridSnapWidth.value,
+                height: workspace.snappableSettings.gridSnapHeight.value,
+              }
+            : undefined} />
       {/if}
     </div>
     <div

@@ -57,6 +57,9 @@
   "DataManage_Reset_Confirm_Body": "Are you sure you wish to reset all settings to default?",
   "DataManage_Reset_SuccessfullyDone": "Settings has been successfully reset to default",
   "BrowserSupports_NotSupported": "Not supported by your browser",
+  "SnappableGrid_Settings_Title": "Snappable grid",
+  "SnappableGrid_Settings_SnapSize_Width": "Width",
+  "SnappableGrid_Settings_SnapSize_Height": "Height",
 
   "TextSettings_Font": "Font",
   "TextSettings_Shadow": "Shadow",
