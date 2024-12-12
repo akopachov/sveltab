@@ -91,7 +91,7 @@
   function onSelected(e: FontInfo) {
     selectedFontInfo = e;
     searchValue = e.label;
-    $fontId = e.id;
+    fontId.value = e.id;
     if (weight && !e.weights.includes(weight.value)) {
       weight.value = e.weights[0];
     }
@@ -100,7 +100,7 @@
   async function scrollToCurrent() {
     if (font) {
       const loadedFonts = await fonts;
-      const index = loadedFonts.findIndex(f => f.id == $fontId);
+      const index = loadedFonts.findIndex(f => f.id == fontId.value);
       if (index >= 0 && fontList) {
         fontList.scrollToIndex(index);
       }
@@ -110,7 +110,7 @@
   onMount(async () => {
     if (font) {
       const loadedFonts = await fonts;
-      const index = loadedFonts.findIndex(f => f.id == $fontId);
+      const index = loadedFonts.findIndex(f => f.id == fontId.value);
       if (index >= 0) {
         selectedFontInfo = loadedFonts[index];
         searchValue = selectedFontInfo.label;
@@ -162,7 +162,9 @@
       {#if fontSelectVisible}
         <VirtualScroll bind:this={fontList} data={fontsResult} let:data>
           <button
-            class="btn {$fontId === data.id ? 'variant-filled' : 'variant-soft'} w-full mb-1 rounded-sm fontloading"
+            class="btn {fontId.value === data.id
+              ? 'variant-filled'
+              : 'variant-soft'} w-full mb-1 rounded-sm fontloading"
             use:fontsource={{
               font: data.id,
               subsets: ['latin'],
@@ -177,11 +179,11 @@
       {/if}
     </div>
   </div>
-  {#if $size}
+  {#if size.value}
     <!-- svelte-ignore -->
     <label class="label mt-2">
       <span>{m.FontSelector_Size()}</span>
-      <RangeSlider name="fontSizeSlider" bind:value={$size} min={5} max={20} step={0.1} />
+      <RangeSlider name="fontSizeSlider" bind:value={size.value} min={5} max={20} step={0.1} />
     </label>
   {/if}
 {/await}

@@ -366,5 +366,12 @@
   "Widgets_LiteratureClock_Name": "Literature Clock",
   "Widgets_LiteratureClock_Settings_Tabs_Text": "Text",
   "Widgets_LiteratureClock_Settings_Tabs_Time": "Time",
-  "Widgets_LiteratureClock_Settings_Tabs_Background": "Background"
+  "Widgets_LiteratureClock_Settings_Tabs_Background": "Background",
+
+  "Widgets_BibleVerse_Name": "Bible verse",
+  "Widgets_BibleVerse_Settings_Tabs_Text": "Text",
+  "Widgets_BibleVerse_Settings_Tabs_Background": "Background",
+  "Widgets_BibleVerse_Settings_UpdateInterval": "Update interval (minutes)",
+  "Widgets_BibleVerse_Settings_Translation_Language": "Language",
+  "Widgets_BibleVerse_Settings_Translation": "Translation"
 }

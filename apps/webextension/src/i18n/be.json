@@ -362,5 +362,12 @@
   "Widgets_LiteratureClock_Name": "Літаратурны гадзіннік",
   "Widgets_LiteratureClock_Settings_Tabs_Text": "Тэкст",
   "Widgets_LiteratureClock_Settings_Tabs_Time": "Час",
-  "Widgets_LiteratureClock_Settings_Tabs_Background": "Фон"
+  "Widgets_LiteratureClock_Settings_Tabs_Background": "Фон",
+
+  "Widgets_BibleVerse_Name": "Біблейскі верш",
+  "Widgets_BibleVerse_Settings_Tabs_Text": "Тэкст",
+  "Widgets_BibleVerse_Settings_Tabs_Background": "Фон",
+  "Widgets_BibleVerse_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
+  "Widgets_BibleVerse_Settings_Translation_Language": "Мова",
+  "Widgets_BibleVerse_Settings_Translation": "Пераклад"
 }

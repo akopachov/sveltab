@@ -361,5 +361,12 @@
   "Widgets_LiteratureClock_Name": "Zegar literacki",
   "Widgets_LiteratureClock_Settings_Tabs_Text": "Tekst",
   "Widgets_LiteratureClock_Settings_Tabs_Time": "Czas",
-  "Widgets_LiteratureClock_Settings_Tabs_Background": "Tło"
+  "Widgets_LiteratureClock_Settings_Tabs_Background": "Tło",
+
+  "Widgets_BibleVerse_Name": "Werset biblijny",
+  "Widgets_BibleVerse_Settings_Tabs_Text": "Tekst",
+  "Widgets_BibleVerse_Settings_Tabs_Background": "Tło",
+  "Widgets_BibleVerse_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
+  "Widgets_BibleVerse_Settings_Translation_Language": "Język",
+  "Widgets_BibleVerse_Settings_Translation": "Tłumaczenie"
 }
