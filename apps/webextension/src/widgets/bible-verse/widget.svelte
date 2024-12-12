@@ -99,10 +99,10 @@
     weights: [settings.font.weight.value],
   }}
   use:textStroke={settings.textStroke}>
-  {#if verse}
+  {#if verse && verse.text}
     <figure>
-      <blockquote class="quote">"{verse.text}"</blockquote>
-      <figcaption class="author text-right mt-2">
+      <blockquote class="verse">"{verse.text}"</blockquote>
+      <figcaption class="ref text-right mt-2">
         &mdash;&nbsp;{verse.book}&nbsp;{verse.chapter}:{verse.verse}
       </figcaption>
     </figure>
