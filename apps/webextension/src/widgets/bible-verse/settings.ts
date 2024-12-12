@@ -17,7 +17,7 @@ export class Settings extends WidgetSettingsExtra {
     this.font = new FontSettings(initial.font || { size: 15 });
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
-    this.translation = useObservable(initial.translation || 'eng_pev');
+    this.translation = useObservable(initial.translation || 'eng_kjv');
   }
 
   readonly backgroundColor: Observable<string>;
