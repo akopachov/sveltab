@@ -12,7 +12,7 @@
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
-    "@types/node": "^22.10.1",
+    "@types/node": "^22.10.2",
     "@types/picomatch": "^3.0.1",
     "typescript": "^5.7.2"
   },
