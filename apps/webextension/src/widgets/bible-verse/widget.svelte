@@ -101,10 +101,12 @@
   use:textStroke={settings.textStroke}>
   {#if verse && verse.text}
     <figure>
-      <blockquote class="verse">"{verse.text}"</blockquote>
-      <figcaption class="ref text-right mt-2">
-        &mdash;&nbsp;{verse.book}&nbsp;{verse.chapter}:{verse.verse}
-      </figcaption>
+      <blockquote class="verse" title="{verse.book} {verse.chapter}:{verse.verse}">"{verse.text}"</blockquote>
+      {#if settings.displayReference.value}
+        <figcaption class="ref text-right mt-2">
+          &mdash;&nbsp;{verse.book}&nbsp;{verse.chapter}:{verse.verse}
+        </figcaption>
+      {/if}
     </figure>
   {/if}
 </div>

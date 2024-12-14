@@ -23,6 +23,7 @@
   import BackgroundSettings from '$shared-components/background-settings.svelte';
   import { minutesToSeconds, secondsToMinutes } from 'date-fns';
   import { onMount } from 'svelte';
+  import { SlideToggle } from '@skeletonlabs/skeleton';
 
   let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
@@ -42,6 +43,14 @@
     <span>{m.Widgets_Quote_Settings_UpdateInterval()}</span>
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
+  <label class="label flex flex-row items-center gap-3 mb-2">
+    <span>{m.Widgets_Quote_Settings_DisplayAuthor()}</span>
+    <SlideToggle
+      name="quoteDisplayAuthor"
+      rounded="rounded-full !m-0"
+      bind:checked={settings.displayAuthor.value}
+      size="sm" />
+  </label>
 {:else if tab === TextTabId}
   <TextSettings
     font={settings.font}

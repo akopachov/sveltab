@@ -24,6 +24,7 @@
   import { minutesToSeconds, secondsToMinutes } from 'date-fns';
   import { onMount } from 'svelte';
   import TranslationSelector from './translation-selector.svelte';
+  import { SlideToggle } from '@skeletonlabs/skeleton';
 
   let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
@@ -44,6 +45,14 @@
     <NumberInput bind:value={updateInterval} min={1} />
   </div>
   <TranslationSelector bind:translationId={settings.translation.value} />
+  <label class="label flex flex-row items-center gap-3 mb-2">
+    <span>{m.Widgets_BibleVerse_Settings_DisplayReference()}</span>
+    <SlideToggle
+      name="bibleVerseDisplayReference"
+      rounded="rounded-full !m-0"
+      bind:checked={settings.displayReference.value}
+      size="sm" />
+  </label>
 {:else if tab === TextTabId}
   <TextSettings
     font={settings.font}

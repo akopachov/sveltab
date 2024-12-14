@@ -79,7 +79,9 @@
   {#if quote && quote.quote}
     <figure>
       <blockquote class="quote">"{quote.quote}"</blockquote>
-      <figcaption class="author text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
+      {#if settings.displayAuthor.value && quote.author}
+        <figcaption class="author text-right mt-2">&mdash;&nbsp;{quote.author}</figcaption>
+      {/if}
     </figure>
   {/if}
 </div>

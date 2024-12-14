@@ -18,6 +18,7 @@ export class Settings extends WidgetSettingsExtra {
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
     this.translation = useObservable(initial.translation || 'eng_kjv');
+    this.displayReference = useObservable(initial.displayReference ?? true);
   }
 
   readonly backgroundColor: Observable<string>;
@@ -28,4 +29,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly textShadow: ShadowSettings;
   readonly textStroke: TextStrokeSettings;
   readonly translation: Observable<string>;
+  readonly displayReference: Observable<boolean>;
 }
