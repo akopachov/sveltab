@@ -1,11 +1,10 @@
 import pica from 'pica';
 import init, { optimise } from '@jsquash/oxipng/codec/pkg/squoosh_oxipng.js';
-import wasmUrl from '@jsquash/oxipng/codec/pkg/squoosh_oxipng_bg.wasm?arraybuffer';
 import { convertToBlobAsync } from './png2icojs';
 
 export type FaviconData = { ico: Blob; 16: Blob; 32: Blob; 48: Blob };
 
-await init(wasmUrl);
+await init();
 
 export async function generateFavicon(input: Blob) {
   const image = new Image();

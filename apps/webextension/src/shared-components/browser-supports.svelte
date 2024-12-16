@@ -6,10 +6,12 @@
 
   export enum Constraints {
     OPFS = 'opfs',
+    OffscreenCanvas = 'offscreen-canvas',
   }
 
   const ConstraintChecks = {
     [Constraints.OPFS]: new Lazy(() => Opfs.isAvailable()),
+    [Constraints.OffscreenCanvas]: new Lazy(() => 'OffscreenCanvas' in window),
   };
 </script>
 
@@ -19,11 +21,15 @@
     class: exClass,
     children,
     ...otherProps
-  }: { constraint: Constraints; class: string; children: Snippet } = $props();
+  }: { constraint: Constraints | Constraints[]; class: string; children: Snippet } = $props();
   let isSupported: boolean | undefined = $state();
 
   onMount(async () => {
-    isSupported = await ConstraintChecks[constraint].value;
+    if (Array.isArray(constraint)) {
+      isSupported = (await Promise.all(constraint.map(c => ConstraintChecks[c].value))).every(x => x === true);
+    } else {
+      isSupported = await ConstraintChecks[constraint].value;
+    }
   });
 </script>
 

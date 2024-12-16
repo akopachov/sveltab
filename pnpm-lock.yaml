@@ -432,9 +432,6 @@ importers:
       vite:
         specifier: ^6.0.3
         version: 6.0.3(@types/node@22.10.2)(jiti@2.4.0)(terser@5.36.0)(yaml@2.6.1)
-      vite-plugin-arraybuffer:
-        specifier: ^0.0.8
-        version: 0.0.8
 
   packages/is-wsl2:
     devDependencies:
@@ -4595,9 +4592,6 @@ packages:
   vite-imagetools@7.0.5:
     resolution: {integrity: sha512-OOvVnaBTqJJ2J7X1cM1qpH4pj9jsfTxia1VSuWeyXtf+OnP8d0YI1LHpv8y2NT47wg+n7XiTgh3BvcSffuBWrw==}
     engines: {node: '>=18.0.0'}
-
-  vite-plugin-arraybuffer@0.0.8:
-    resolution: {integrity: sha512-F+InDQuxd93YDVRdXTjBr3lydgjyVHSpgRZS4izK/i85Anl5kmbvf2NwJ//XHAccHh1TScfX70MFJfBx/rf3cg==}
 
   vite-plugin-tailwind-purgecss@0.3.5:
     resolution: {integrity: sha512-Ds9My/ED/DMWwMGgGUfu/KVxHKQnacnu0b3Kvm7Dv6ubOGuJq50pfbShVxLuSXFc6dOQKLTLZaoqdW9qxpC26g==}
@@ -8984,8 +8978,6 @@ snapshots:
       sharp: 0.33.5
     transitivePeerDependencies:
       - rollup
-
-  vite-plugin-arraybuffer@0.0.8: {}
 
   vite-plugin-tailwind-purgecss@0.3.5(tailwindcss@3.4.16)(vite@6.0.3(@types/node@22.10.2)(jiti@2.4.0)(terser@5.36.0)(yaml@2.6.1)):
     dependencies:

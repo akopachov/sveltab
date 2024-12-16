@@ -116,7 +116,7 @@
   </RadioItem>
 </RadioGroup>
 {#if faviconType === FaviconType.Manual}
-  <BrowserSupports constraint={Constraints.OPFS} class="mt-4">
+  <BrowserSupports constraint={[Constraints.OPFS, Constraints.OffscreenCanvas]} class="mt-4">
     <div class="mt-2 flex justify-center">
       <FileButton
         bind:files={iconFileSources}

@@ -1,9 +1,7 @@
 import { defineConfig } from 'vite';
-import arraybuffer from 'vite-plugin-arraybuffer';
 import { resolve } from 'path';
 
 export default defineConfig({
-  plugins: [arraybuffer()],
   esbuild: {
     supported: {
       'top-level-await': true,
