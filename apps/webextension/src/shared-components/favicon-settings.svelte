@@ -122,6 +122,7 @@
         bind:files={iconFileSources}
         name="iconFile"
         button="btn variant-soft"
+        accept="image/*"
         on:change={onCustomIconFileChange}>
         <div id="faviconPreviewContainer" class="flex flex-row flex-nowrap gap-3 items-center">
           {#if isLoading}
