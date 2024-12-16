@@ -10,11 +10,13 @@ export class FaviconInfo {
   constructor(initial: FaviconInfoInitial) {
     this[16] = useObservable(initial[16] || '');
     this[32] = useObservable(initial[32] || '');
+    this[48] = useObservable(initial[48] || '');
     this.ico = useObservable(initial.ico || '');
   }
 
   16: Observable<string>;
   32: Observable<string>;
+  48: Observable<string>;
   ico: Observable<string>;
 }
 
@@ -38,7 +40,7 @@ export class WorkspaceSettings {
     this.background = initial.background || { type: 'static-color' };
     this.name = initial.name || '';
     this.customStyles = initial.customStyles || '';
-    this.favicon = initial.favicon || { 16: '', 32: '', ico: '' };
+    this.favicon = initial.favicon || { 16: '', 32: '', 48: '', ico: '' };
     this.assets = initial.assets || [];
     this.snappableSettings = initial.snappableSettings || { enabled: false };
   }

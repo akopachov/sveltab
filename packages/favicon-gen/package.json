@@ -1,0 +1,27 @@
+{
+  "name": "favicon-gen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/favicon-gen.js",
+  "type": "module",
+  "scripts": {
+    "build": "vite build"
+  },
+  "keywords": [],
+  "author": "Alexander Kopachov (@akopachov)",
+  "license": "GPL-3.0-only",
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/pica": "^9.0.4",
+    "pica": "^9.0.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.3",
+    "vite-plugin-arraybuffer": "^0.0.8"
+  },
+  "dependencies": {
+    "@jsquash/oxipng": "^2.3.0"
+  },
+  "files": [
+    "dist/**/*"
+  ]
+}

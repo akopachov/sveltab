@@ -83,6 +83,7 @@
     "vanilla-colorful": "^0.7.2",
     "vite": "^6.0.3",
     "vite-plugin-run-generator": "workspace:*",
+    "favicon-gen": "workspace:*",
     "vite-plugin-tailwind-purgecss": "^0.3.5",
     "web-ext": "^8.3.0",
     "webextension-polyfill": "^0.12.0"

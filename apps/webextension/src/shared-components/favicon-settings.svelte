@@ -1,16 +1,13 @@
 <script lang="ts">
   import { opfsSrc } from '$actions/opfs-src';
-  import { PUBLIC_REALFAVICON_API_KEY } from '$env/static/public';
-  import { getCorsFriendlyUrl } from '$lib/cors-bypass.gen';
   import type { WorkspaceInstance } from '$lib/workspace-instance';
   import { FileButton, ProgressRadial, RadioGroup, RadioItem } from '@skeletonlabs/skeleton';
   import { nanoid } from 'nanoid/non-secure';
   import { onMount } from 'svelte';
   import * as m from '$i18n/messages';
-  import type { RealFaviconGenerator } from '$lib/realfavicongenerator';
   import { logger } from '$lib/logger';
   import BrowserSupports, { Constraints } from './browser-supports.svelte';
-  import { getFileExtension } from '$lib/path-utils';
+  import { WeakLazy } from '$lib/lazy';
 
   enum FaviconType {
     Default = 'default',
@@ -27,17 +24,17 @@
 
   let icon16 = $derived(workspaceInstance.favicon[16]);
   let icon32 = $derived(workspaceInstance.favicon[32]);
+  let icon48 = $derived(workspaceInstance.favicon[48]);
   let iconIco = $derived(workspaceInstance.favicon.ico);
 
-  async function saveFavicon(url: string) {
-    if (!url) {
+  const generateFaviconContainer = new WeakLazy(() => import('favicon-gen').then(mod => mod.generateFavicon));
+
+  async function saveFavicon(iconData: Blob, extension: string) {
+    if (!iconData) {
       return '';
     }
-    const response = await fetch(url);
-    const blob = await response.blob();
-    const fileExtension = getFileExtension(url);
-    const filePath = `favicon-${nanoid()}.${fileExtension}`;
-    return await workspaceInstance?.internalAssetsManager.addAsset(filePath, blob);
+    const filePath = `favicon-${nanoid()}.${extension}`;
+    return await workspaceInstance?.internalAssetsManager.addAsset(filePath, iconData);
   }
 
   async function tryRemoveFavicon(fileName: string | undefined) {
@@ -52,24 +49,17 @@
     }
   }
 
-  function fileToBase64(file: File) {
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve((reader.result as string).replace(/^data:(.*,)?/, ''));
-      reader.onerror = reject;
-      reader.readAsDataURL(file);
-    });
-  }
-
   async function onFaviconTypeChange() {
     if (faviconType === FaviconType.Default) {
       await Promise.all([
         tryRemoveFavicon(icon16.value),
         tryRemoveFavicon(icon32.value),
+        tryRemoveFavicon(icon48.value),
         tryRemoveFavicon(iconIco.value),
       ]);
       icon16.value = '';
       icon32.value = '';
+      icon48.value = '';
       iconIco.value = '';
     }
   }
@@ -81,51 +71,27 @@
 
     isLoading = true;
     try {
-      const requestBody: RealFaviconGenerator.GenerationRequest = {
-        favicon_generation: {
-          api_key: PUBLIC_REALFAVICON_API_KEY,
-          master_picture: {
-            type: 'inline',
-            content: await fileToBase64(iconFileSources[0]),
-          },
-          files_location: {
-            type: 'root',
-          },
-          favicon_design: {
-            desktop_browser: {},
-          },
-          settings: {
-            compression: '3',
-            scaling_algorithm: 'Lanczos',
-            error_on_image_too_small: false,
-            readme_file: false,
-            html_code_file: false,
-            use_path_as_is: false,
-          },
-          versioning: true,
-        },
-      };
-      const favIconResponse = await fetch(getCorsFriendlyUrl('https://realfavicongenerator.net/api/favicon'), {
-        method: 'POST',
-        body: JSON.stringify(requestBody),
-      }).then<RealFaviconGenerator.GenerationResponse>(response => response.json());
-      const favIconUrls = favIconResponse.favicon_generation_result?.favicon?.files_urls || [];
+      const generateFavicon = await generateFaviconContainer.value;
+      const faviconInfo = await generateFavicon(iconFileSources[0]);
 
       await Promise.all([
         tryRemoveFavicon(icon16.value),
         tryRemoveFavicon(icon32.value),
+        tryRemoveFavicon(icon48.value),
         tryRemoveFavicon(iconIco.value),
       ]);
 
-      [icon16.value, icon32.value, iconIco.value] = await Promise.all([
-        saveFavicon(favIconUrls.find(url => url.includes('16x16')) || ''),
-        saveFavicon(favIconUrls.find(url => url.includes('32x32')) || ''),
-        saveFavicon(favIconUrls.find(url => url.endsWith('.ico')) || ''),
+      [icon16.value, icon32.value, icon48.value, iconIco.value] = await Promise.all([
+        saveFavicon(faviconInfo[16], 'png'),
+        saveFavicon(faviconInfo[32], 'png'),
+        saveFavicon(faviconInfo[48], 'png'),
+        saveFavicon(faviconInfo.ico, 'ico'),
       ]);
     } catch (error) {
       log.error(error);
       icon16.value = '';
       icon32.value = '';
+      icon48.value = '';
       iconIco.value = '';
     } finally {
       isLoading = false;
@@ -157,7 +123,7 @@
         name="iconFile"
         button="btn variant-soft"
         on:change={onCustomIconFileChange}>
-        <div class="flex flex-row flex-nowrap gap-3 items-center">
+        <div id="faviconPreviewContainer" class="flex flex-row flex-nowrap gap-3 items-center">
           {#if isLoading}
             <ProgressRadial width="w-[32px]" />
           {:else}

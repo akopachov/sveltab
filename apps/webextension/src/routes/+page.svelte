@@ -248,7 +248,7 @@
           {/if}
         </svelte:fragment>
       </AccordionItem>
-      <AccordionItem>
+      <AccordionItem id="aiSettings">
         <svelte:fragment slot="lead">
           <span class="w-6 h-6 icon-[gala--settings]"></span>
         </svelte:fragment>
