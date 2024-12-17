@@ -1,16 +1,29 @@
 import pica from 'pica';
 import init, { optimise } from '@jsquash/oxipng/codec/pkg/squoosh_oxipng.js';
+// @ts-ignore: TS1192
+import oxiPngWasm from '@jsquash/oxipng/codec/pkg/squoosh_oxipng_bg.wasm';
 import { convertToBlobAsync } from './png2icojs';
 
-export type FaviconData = { ico: Blob; 16: Blob; 32: Blob; 48: Blob };
+export type FaviconData<T extends ReadonlyArray<number>> = {
+  [K in T[number]]: Blob;
+} & { ico: Blob };
 
-await init();
+await init(oxiPngWasm);
 
-export async function generateFavicon(input: Blob) {
+export class ImageLoadError extends Error {
+  constructor(...args: unknown[]) {
+    super('Failed to load image');
+    this.additionalInfo = args;
+  }
+
+  readonly additionalInfo: ReadonlyArray<unknown>;
+}
+
+export async function generateFavicon<T extends ReadonlyArray<number>>(input: Blob, sizes: T) {
   const image = new Image();
-  let result: FaviconData;
+  let result: FaviconData<T>;
   try {
-    const promise = new Promise<FaviconData>((resolve, reject) => {
+    const promise = new Promise<FaviconData<T>>((resolve, reject) => {
       image.onload = async () => {
         if (image.width === 0 && image.height === 0) {
           const startText = await input.slice(0, 1024).text();
@@ -23,24 +36,17 @@ export async function generateFavicon(input: Blob) {
           }
         }
 
-        const isSvg = input.type === 'image/svg+xml';
-        const [icon48x48, icon32x32, icon16x16] = await Promise.all([
-          resizeToPng(image, 48, 48, isSvg),
-          resizeToPng(image, 32, 32, isSvg),
-          resizeToPng(image, 16, 16, isSvg),
-        ]);
+        const isVectorImage = input.type === 'image/svg+xml';
+        const iconResizeResults = await Promise.all(sizes.map(size => resizeToPng(image, size, size, isVectorImage)));
 
-        const ico = await convertToBlobAsync([{ png: icon48x48 }, { png: icon32x32 }, { png: icon16x16 }]);
-
+        const ico = await convertToBlobAsync(iconResizeResults.map(blob => ({ png: blob })));
         resolve({
           ico: ico,
-          16: icon16x16,
-          32: icon32x32,
-          48: icon48x48,
+          ...(Object.fromEntries(sizes.map((size, index) => [size, iconResizeResults[index]])) as any),
         });
       };
-      image.onerror = () => {
-        reject(new Error('Failed to load image'));
+      image.onerror = (...args) => {
+        reject(new ImageLoadError(...args));
       };
     });
     image.src = URL.createObjectURL(input);
@@ -52,7 +58,7 @@ export async function generateFavicon(input: Blob) {
   return result;
 }
 
-async function resizeToPng(image: HTMLImageElement, width: number, height: number, isSvg: boolean) {
+async function resizeToPng(image: HTMLImageElement, width: number, height: number, isVectorImage: boolean) {
   let newWidth = width;
   let newHeight = height;
   if (image.width < image.height) {
@@ -64,7 +70,7 @@ async function resizeToPng(image: HTMLImageElement, width: number, height: numbe
   const intermediateCanvas = new OffscreenCanvas(newWidth, newHeight);
   const intermediateCtx = intermediateCanvas.getContext('2d', { alpha: true })!;
   intermediateCtx.clearRect(0, 0, intermediateCanvas.width, intermediateCanvas.height);
-  if (isSvg) {
+  if (isVectorImage) {
     intermediateCtx.drawImage(image, 0, 0, newWidth, newHeight);
   } else {
     const picaInstance = pica({

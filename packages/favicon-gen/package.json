@@ -2,10 +2,10 @@
   "name": "favicon-gen",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/favicon-gen.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "vite build"
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Alexander Kopachov (@akopachov)",
@@ -13,14 +13,10 @@
   "devDependencies": {
     "@types/node": "^22.10.2",
     "@types/pica": "^9.0.4",
-    "pica": "^9.0.1",
-    "typescript": "^5.7.2",
-    "vite": "^6.0.3"
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@jsquash/oxipng": "^2.3.0"
-  },
-  "files": [
-    "dist/**/*"
-  ]
+    "@jsquash/oxipng": "^2.3.0",
+    "pica": "^9.0.1"
+  }
 }

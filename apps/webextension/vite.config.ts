@@ -34,5 +34,6 @@ export default async ({ mode }: { mode: string }) => {
         transformMixedEsModules: true,
       },
     },
+    assetsInclude: ['**/*.wasm'],
   });
 };

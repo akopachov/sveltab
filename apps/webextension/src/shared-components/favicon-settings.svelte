@@ -72,7 +72,7 @@
     isLoading = true;
     try {
       const generateFavicon = await generateFaviconContainer.value;
-      const faviconInfo = await generateFavicon(iconFileSources[0]);
+      const faviconInfo = await generateFavicon(iconFileSources[0], [16, 32, 48] as const);
 
       await Promise.all([
         tryRemoveFavicon(icon16.value),
