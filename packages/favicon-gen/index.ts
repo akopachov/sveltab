@@ -19,7 +19,7 @@ export class ImageLoadError extends Error {
   readonly additionalInfo: ReadonlyArray<unknown>;
 }
 
-export async function generateFavicon<T extends ReadonlyArray<number>>(input: Blob, sizes: T) {
+export async function generateFavicon<T extends [number, ...number[]]>(input: Blob, sizes: T) {
   const image = new Image();
   let result: FaviconData<T>;
   try {

@@ -28,7 +28,7 @@ export class OpfsManager {
     }
   }
 
-  async save(opfsFileUrl: string, data: ArrayBufferLike | Blob) {
+  async save(opfsFileUrl: string, data: Exclude<ArrayBufferLike, SharedArrayBuffer> | Blob) {
     const [fileName, dirHandle] = await this.#parseOpfsUrl(opfsFileUrl, true);
     const fileHandle = await dirHandle.getFileHandle(fileName, { create: true });
     const writable = await fileHandle.createWritable({ keepExistingData: false });

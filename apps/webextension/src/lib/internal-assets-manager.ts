@@ -12,7 +12,7 @@ export class InternalAssetsManager {
     return this.#internalAssets;
   }
 
-  async addAsset(opfsPath: string, data: ArrayBufferLike | Blob) {
+  async addAsset(opfsPath: string, data: Exclude<ArrayBufferLike, SharedArrayBuffer> | Blob) {
     if (!opfsPath.startsWith(`${OpfsSchema}://`)) {
       opfsPath = `${OpfsSchema}://${opfsPath}`;
     }
