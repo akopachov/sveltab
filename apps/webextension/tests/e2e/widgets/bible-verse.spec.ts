@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { WorkspacePage } from '../pom/workspace';
 
-test(`loads info`, async ({ page }) => {
+test(`loads bible verse`, async ({ page }) => {
   await page.goto('/');
   const workspacePage = new WorkspacePage(page);
   await page.waitForLoadState('networkidle');

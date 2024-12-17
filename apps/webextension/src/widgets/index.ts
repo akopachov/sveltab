@@ -17,6 +17,7 @@ import { Widget as IpInfoWidget } from './ip-info';
 import { Widget as HolidaysWidget } from './holidays';
 import { Widget as LiteratureClockWidget } from './literature-clock';
 import { Widget as BibleVerseWidget } from './bible-verse';
+import { Widget as AdviceSlipWidget } from './advice-slip';
 
 export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
@@ -30,6 +31,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   GreetingWidget,
   RandomQuoteWidget,
   BibleVerseWidget,
+  AdviceSlipWidget,
   FlickrWidget,
   FreeTextWidget,
   TopSitesWidget,

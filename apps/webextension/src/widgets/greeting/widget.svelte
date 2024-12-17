@@ -114,7 +114,6 @@
   style:text-shadow="{settings.textShadow.offsetX.value}cqmin {settings.textShadow.offsetY.value}cqmin {settings
     .textShadow.blur.value}cqmin
   {settings.textShadow.color.value}"
-  style:font-size="{settings.font.size.value}cqmin"
   use:fontsource={{
     font: settings.font.id.value,
     subsets: $localeCharSubset,

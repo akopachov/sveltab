@@ -11,7 +11,7 @@
   import { userPosssibleLocaleCharSubset } from '$stores/locale';
   import { getAvailableBooks, getChapter } from './api';
 
-  const log = logger.getSubLogger({ prefix: ['Widget', 'Quote'] });
+  const log = logger.getSubLogger({ prefix: ['Widget', 'Bible Verse'] });
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type LatestVerse = {

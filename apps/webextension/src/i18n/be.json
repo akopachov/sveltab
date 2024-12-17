@@ -370,5 +370,10 @@
   "Widgets_BibleVerse_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
   "Widgets_BibleVerse_Settings_Translation_Language": "Мова",
   "Widgets_BibleVerse_Settings_Translation": "Пераклад",
-  "Widgets_BibleVerse_Settings_DisplayReference": "Паказваць спасылку"
+  "Widgets_BibleVerse_Settings_DisplayReference": "Паказваць спасылку",
+
+  "Widgets_AdviceSlip_Name": "Парада",
+  "Widgets_AdviceSlip_Settings_Tabs_Text": "Тэкст",
+  "Widgets_AdviceSlip_Settings_Tabs_Background": "Фон",
+  "Widgets_AdviceSlip_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)"
 }

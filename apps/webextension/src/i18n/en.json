@@ -375,5 +375,10 @@
   "Widgets_BibleVerse_Settings_UpdateInterval": "Update interval (minutes)",
   "Widgets_BibleVerse_Settings_Translation_Language": "Language",
   "Widgets_BibleVerse_Settings_Translation": "Translation",
-  "Widgets_BibleVerse_Settings_DisplayReference": "Display reference"
+  "Widgets_BibleVerse_Settings_DisplayReference": "Display reference",
+
+  "Widgets_AdviceSlip_Name": "Advice slip",
+  "Widgets_AdviceSlip_Settings_Tabs_Text": "Text",
+  "Widgets_AdviceSlip_Settings_Tabs_Background": "Background",
+  "Widgets_AdviceSlip_Settings_UpdateInterval": "Update interval (minutes)"
 }
