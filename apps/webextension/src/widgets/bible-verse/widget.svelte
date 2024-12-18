@@ -65,9 +65,9 @@
       const chapterVerses = chapter.content.filter(f => f.type === 'verse');
       const randomVerse = chapterVerses[Math.floor(Math.random() * chapterVerses.length)];
       const firstContent = randomVerse.content.find(f => typeof f === 'string' || 'text' in f);
-      const verseText = typeof firstContent === 'string' ? firstContent : firstContent?.text || '';
+      const verseText = (typeof firstContent === 'string' ? firstContent : firstContent?.text) || '';
       verse = {
-        text: verseText,
+        text: trimVerseText(verseText),
         book: randomBook.name,
         chapter: randomChapter,
         verse: randomVerse.number,
@@ -79,6 +79,10 @@
     }
 
     await storage.local.set({ [storageKey]: $state.snapshot(verse) });
+  }
+
+  function trimVerseText(text: string) {
+    return text.replace(/(^[\u00B6\s]+)|([,\s]+$)/gi, '');
   }
 </script>
 

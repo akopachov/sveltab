@@ -37,7 +37,7 @@
     return await workspaceInstance?.internalAssetsManager.addAsset(filePath, iconData);
   }
 
-  async function tryRemoveFavicon(fileName: string | undefined) {
+  async function tryRemoveFavicon(fileName: string) {
     if (!fileName) {
       return;
     }
