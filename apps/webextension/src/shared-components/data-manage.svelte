@@ -47,17 +47,30 @@
   }
 
   async function exportData() {
+    const opfsIsAvailable = await Opfs.isAvailable();
     if (activeWorkspace?.hasChanges.value === true) {
       await Workspaces.save(activeWorkspaceId, activeWorkspace);
     }
 
     const tempExportFilePath = `${OpfsSchema}://__export.zip`;
-    const exportStream = await Opfs.createWritable(tempExportFilePath);
+    const exportStream: FileSystemWritableFileStream | BlobPart[] = opfsIsAvailable
+      ? await Opfs.createWritable(tempExportFilePath)
+      : [];
     const bundle = new Zip(async (_err, data, final) => {
-      await exportStream.write(data);
+      if (Array.isArray(exportStream)) {
+        exportStream.push(data);
+      } else {
+        await exportStream.write(data);
+      }
       if (final) {
-        await exportStream.close();
-        const blob = await Opfs.get(tempExportFilePath);
+        let blob: Blob;
+        if (Array.isArray(exportStream)) {
+          blob = new Blob(exportStream, { type: 'application/zip' });
+        } else {
+          await exportStream.close();
+          blob = await Opfs.get(tempExportFilePath);
+        }
+
         const downloadUrl = URL.createObjectURL(blob);
         try {
           const link = document.createElement('a');
@@ -68,9 +81,11 @@
           link.remove();
         } finally {
           URL.revokeObjectURL(downloadUrl);
-          setTimeout(() => {
-            Opfs.remove(tempExportFilePath);
-          }, secondsToMilliseconds(1));
+          if (opfsIsAvailable) {
+            setTimeout(() => {
+              Opfs.remove(tempExportFilePath);
+            }, secondsToMilliseconds(1));
+          }
         }
       }
     });
@@ -78,7 +93,7 @@
     for (const wi of await Workspaces.entries) {
       const { settings: workspaceSettings } = await Workspaces.getInitialSettings(wi.id);
       workspacesExportData[wi.id] = workspaceSettings;
-      if (workspaceSettings.assets) {
+      if (opfsIsAvailable && workspaceSettings.assets) {
         for (const assetPath of workspaceSettings.assets) {
           const zipAsset = new ZipPassThrough(assetPath.replace(`${OpfsSchema}://`, ''));
           bundle.add(zipAsset);
@@ -173,25 +188,27 @@
 
     const importedData = await importedDataPromise;
 
-    const unzipAssets = new Unzip(async stream => {
-      if (stream.name !== BundledWorkspacesJsonFileName) {
-        const writable = await Opfs.createWritable(`${OpfsSchema}://${stream.name}`);
-        stream.ondata = async (_err, chunk, final) => {
-          await writable.write(chunk);
-          if (final) {
-            await writable.close();
-          }
-        };
-        stream.start();
+    if (await Opfs.isAvailable()) {
+      const unzipAssets = new Unzip(async stream => {
+        if (stream.name !== BundledWorkspacesJsonFileName) {
+          const writable = await Opfs.createWritable(`${OpfsSchema}://${stream.name}`);
+          stream.ondata = async (_err, chunk, final) => {
+            await writable.write(chunk);
+            if (final) {
+              await writable.close();
+            }
+          };
+          stream.start();
+        }
+      });
+
+      unzipAssets.register(UnzipInflate);
+      for await (const value of streamToIterable(file.stream())) {
+        unzipAssets.push(value);
       }
-    });
 
-    unzipAssets.register(UnzipInflate);
-    for await (const value of streamToIterable(file.stream())) {
-      unzipAssets.push(value);
+      unzipAssets.push(new Uint8Array(0), true);
     }
-
-    unzipAssets.push(new Uint8Array(0), true);
 
     return importedData;
   }
@@ -217,12 +234,14 @@
       await Workspaces.save(id, initial);
     }
 
-    await Opfs.wipe();
+    if (await Opfs.isAvailable()) {
+      await Opfs.wipe();
 
-    if (importData.data) {
-      for (const [filePath, base64] of Object.entries(importData.data)) {
-        const arrayBuffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0)).buffer;
-        await Opfs.save(filePath, arrayBuffer);
+      if (importData.data) {
+        for (const [filePath, base64] of Object.entries(importData.data)) {
+          const arrayBuffer = Uint8Array.from(atob(base64), c => c.charCodeAt(0)).buffer;
+          await Opfs.save(filePath, arrayBuffer);
+        }
       }
     }
 
@@ -238,7 +257,9 @@
       response: async (confirmed: boolean) => {
         if (confirmed) {
           await Workspaces.wipeAll();
-          await Opfs.wipe();
+          if (await Opfs.isAvailable()) {
+            await Opfs.wipe();
+          }
           await Workspaces.setDefault();
           ({ id: activeWorkspaceId, workspace: activeWorkspace } = await Workspaces.getDefault());
           dataImported && dataImported();

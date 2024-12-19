@@ -36,11 +36,14 @@
     const fileName = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}.json`;
     let quotes: TimeQuote[] = [];
     let lastUpdatedTime: number = 0;
-    try {
-      const cachedFile = await Opfs.get(`${opfsCacheDir}/times/${fileName}`);
-      lastUpdatedTime = cachedFile.lastModified;
-      quotes = JSON.parse(await cachedFile.text());
-    } catch {}
+    const opfsIsAvailable = await Opfs.isAvailable();
+    if (opfsIsAvailable) {
+      try {
+        const cachedFile = await Opfs.get(`${opfsCacheDir}/times/${fileName}`);
+        lastUpdatedTime = cachedFile.lastModified;
+        quotes = JSON.parse(await cachedFile.text());
+      } catch {}
+    }
 
     if ((quotes.length <= 0 || differenceInDays(time, lastUpdatedTime) > 30) && $online) {
       try {
@@ -49,9 +52,11 @@
         );
         const blob = await response.blob();
         quotes = JSON.parse(await blob.text());
-        try {
-          await Opfs.save(`${opfsCacheDir}/times/${fileName}`, blob);
-        } catch {}
+        if (opfsIsAvailable) {
+          try {
+            await Opfs.save(`${opfsCacheDir}/times/${fileName}`, blob);
+          } catch {}
+        }
       } catch (error) {
         log.error('Failed to fetch time quote', error);
       }

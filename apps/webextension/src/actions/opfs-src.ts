@@ -31,6 +31,11 @@ export const opfsSrc: Action<HTMLElementWithRef, string | undefined> = function 
     }
 
     if (s.startsWith(`${OpfsSchema}://`)) {
+      if (!(await Opfs.isAvailable())) {
+        log.error('OPFS is not available, cannot load file:', s);
+        setRef('');
+        return;
+      }
       try {
         const file = await Opfs.get(s);
         if (file.size > BLOB_STRATEGY_THRESHOLD) {

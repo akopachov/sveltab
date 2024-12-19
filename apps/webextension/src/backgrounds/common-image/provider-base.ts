@@ -80,8 +80,12 @@ export abstract class ImageBackgroundProviderBase<
 
     if (url) {
       if (url.startsWith(`${OpfsSchema}://`)) {
-        const blob = await Opfs.get(this.settings.url.value);
-        url = URL.createObjectURL(blob);
+        if (await Opfs.isAvailable()) {
+          const blob = await Opfs.get(this.settings.url.value);
+          url = URL.createObjectURL(blob);
+        } else {
+          url = '';
+        }
       } else {
         ResourcesToPreload.add({ src: url, as: 'image' });
       }

@@ -22,7 +22,9 @@ export class InternalAssetsManager {
   }
 
   async removeAsset(opfsUrl: string) {
-    Opfs.remove(opfsUrl);
+    if (await Opfs.isAvailable()) {
+      Opfs.remove(opfsUrl);
+    }
     this.#internalAssets.delete(opfsUrl);
   }
 }
