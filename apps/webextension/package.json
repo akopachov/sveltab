@@ -26,7 +26,7 @@
     "@inlang/paraglide-sveltekit": "^0.15.0",
     "@playwright/test": "^1.49.1",
     "@putout/minify": "^4.8.2",
-    "@skeletonlabs/skeleton": "^2.10.4",
+    "@skeletonlabs/skeleton": "^2.10.3",
     "@skeletonlabs/tw-plugin": "^0.4.0",
     "@sveltejs/adapter-static": "^3.0.6",
     "@sveltejs/kit": "^2.13.0",
