@@ -18,7 +18,7 @@ const BaseNodeClassList = [
   'left-[calc(0px-var(--st-blur))]',
   '!w-[calc(100%+var(--st-blur)*2)]',
   '!h-[calc(100%+var(--st-blur)*2)]',
-  '[filter:blur(var(--st-blur))_var(--st-filter-url)]',
+  '[filter:blur(var(--st-blur))_var(--st-filter-url)_var(--st-brightness)]',
 ];
 
 export abstract class ImageBackgroundProviderBase<
@@ -219,6 +219,7 @@ export abstract class ImageBackgroundProviderBase<
     this.#img?.remove();
     this.node.classList.remove(...BaseNodeClassList);
     this.node.style.removeProperty('--st-blur');
+    this.node.style.removeProperty('--st-brightness');
     this.node.style.removeProperty('--st-filter-url');
   }
 
@@ -229,20 +230,23 @@ export abstract class ImageBackgroundProviderBase<
     const updateFiltersDeb = debounce(() => this.#updateFilters(), 0);
 
     this.#unsubscribe.push(
-      this.settings.blur.subscribe(() => updateFiltersDeb()),
-      this.settings.filter.subscribe(() => updateFiltersDeb()),
-      this.settings.resizeType.subscribe(() => updateFiltersDeb()),
+      this.settings.blur.subscribe(updateFiltersDeb),
+      this.settings.brightness.subscribe(updateFiltersDeb),
+      this.settings.filter.subscribe(updateFiltersDeb),
+      this.settings.resizeType.subscribe(updateFiltersDeb),
     );
   }
 
   #updateFilters() {
     const {
       blur: { value: blur },
+      brightness: { value: brightness },
       filter: { value: filter },
       resizeType: { value: resizeType },
     } = this.settings;
 
     this.node.style.setProperty('--st-blur', `${blur}px`);
+    this.node.style.setProperty('--st-brightness', brightness !== 1 ? `brightness(${brightness})` : ' ');
     this.node.style.setProperty('--st-filter-url', filter ? `url("#${filter}")` : ' ');
 
     if (resizeType === ImageResizeType.Cover) {
