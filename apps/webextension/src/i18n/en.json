@@ -60,16 +60,13 @@
   "SnappableGrid_Settings_Title": "Snappable grid",
   "SnappableGrid_Settings_SnapSize_Width": "Width",
   "SnappableGrid_Settings_SnapSize_Height": "Height",
-
   "TextSettings_Font": "Font",
   "TextSettings_Shadow": "Shadow",
   "TextSettings_Stroke": "Stroke",
   "TextStrokeSelector_Size": "Size",
   "TextStrokeSelector_Color": "Color",
-
   "Widgets_Common_Settings_Background_Color": "Color",
   "Widgets_Common_Settings_Background_Blur": "Blur",
-
   "Backgrounds_ImageCommon_Settings_Blur": "Blur",
   "Backgrounds_ImageCommon_Settings_Filter": "Filter",
   "Backgrounds_ImageCommon_Settings_Disclaimer": "Content provided by",
@@ -79,7 +76,6 @@
   "Backgrounds_ImageCommon_Settings_Next": "Next",
   "Backgrounds_ImageCommon_Settings_Previous": "Previous",
   "Backgrounds_ImageCommon_Settings_Brightness": "Brightness",
-  
   "Backgrounds_BingDaily_Name": "Bing daily image",
   "Backgrounds_BingDaily_Settings_Country": "Country",
   "Backgrounds_BingDaily_Settings_Country_Any": "Any",
@@ -113,12 +109,10 @@
   "Backgrounds_RandomImage_Settings_SearchTerms": "Search terms",
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_RandomImage_Settings_UpdateInterval": "Update interval (minutes)",
-
   "Backgrounds_Pexels_Name": "Pexels photo",
   "Backgrounds_Pexels_Settings_SearchTerms": "Search terms",
   "Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
   "Backgrounds_Pexels_Settings_UpdateInterval": "Update interval (minutes)",
-
   "Backgrounds_Wallhaven_Name": "Wallhaven",
   "Backgrounds_Wallhaven_Settings_SearchTerms": "Search terms",
   "Backgrounds_Wallhaven_Settings_SearchTerms_Placeholder": "Fruits, animals, buildings, ...",
@@ -129,13 +123,11 @@
   "Backgrounds_Wallhaven_Settings_Purity_NSFW": "Not safe for work",
   "Backgrounds_Wallhaven_Settings_Colors": "Colors",
   "Backgrounds_Wallhaven_Settings_UpdateInterval": "Update interval (minutes)",
-
   "Backgrounds_AnimeImage_Name": "Anime image",
   "Backgrounds_AnimeImage_Settings_IncludeTags": "Include tags",
   "Backgrounds_AnimeImage_Settings_ExcludeTags": "Exclude tags",
   "Backgrounds_AnimeImage_Settings_IncludeTags_Placeholder": "Search...",
   "Backgrounds_AnimeImage_Settings_UpdateInterval": "Update interval (minutes)",
-
   "Backgrounds_StaticColor_Name": "Static color",
   "Backgrounds_StaticColor_Settings_Color": "Color",
   "Backgrounds_StaticImage_Name": "Static image",
@@ -165,25 +157,17 @@
   "Widgets_Clock_Settings_Format": "Format",
   "Widgets_Clock_Settings_Format_12Hrs": "12-Hours",
   "Widgets_Clock_Settings_Format_24Hrs": "24-Hours",
-
-
   "Widgets_Date_Name": "Date",
   "Widgets_Date_Settings_Tabs_Text": "Text",
   "Widgets_Date_Settings_Tabs_Background": "Background",
-
-
   "Widgets_Quote_Name": "Quote",
   "Widgets_Quote_Settings_Tabs_Text": "Text",
   "Widgets_Quote_Settings_Tabs_Background": "Background",
   "Widgets_Quote_Settings_UpdateInterval": "Update interval (minutes)",
-  "Widgets_Quote_Settings_DisplayAuthor": "Display author",
-
-
   "Widgets_Search_Name": "Search",
   "Widgets_Search_Placeholder": "Search...",
   "Widgets_Search_Settings_Tabs_Text": "Text",
   "Widgets_Search_Settings_Tabs_Background": "Background",
-
   "Widgets_Search_Settings_SearchProvider": "Search provider",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Search suggestions",
   "Widgets_Search_Settings_CustomSearchProvider_SearchUrl": "Search URL",
@@ -193,8 +177,6 @@
   "Widgets_Greeting_Settings_Tabs_Text": "Text",
   "Widgets_Greeting_Settings_Tabs_Background": "Background",
   "Widgets_Greeting_Settings_Name": "Name",
-
-
   "Widgets_FlickrImage_Name": "Flickr",
   "Widgets_FlickrImage_Image_Alt": "Image",
   "Widgets_FlickrImage_Settings_Tabs_Image": "Image",
@@ -227,8 +209,6 @@
   "Widgets_Link_Settings_Title_Position_Bottom": "Bottom",
   "Widgets_Link_Settings_Title_Position_Left": "Left",
   "Widgets_Link_Settings_Title_Position_Right": "Right",
-
-
   "Widgets_Weather_Name": "Weather",
   "Widgets_Weather_Forecast_Hourly": "Hourly",
   "Widgets_Weather_Forecast_Daily": "Daily",
@@ -242,8 +222,6 @@
   "Widgets_Weather_Settings_Tabs_Text": "Text",
   "Widgets_Weather_Settings_Tabs_Layout": "Layout",
   "Widgets_Weather_Settings_Tabs_Background": "Background",
-
-
   "Widgets_Weather_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_Weather_Settings_MeasurementUnits": "Units",
   "Widgets_Weather_Settings_MeasurementUnits_Metric": "Metric",
@@ -262,8 +240,6 @@
   "Widgets_AirQuality_Settings_Tabs_Text": "Text",
   "Widgets_AirQuality_Settings_Tabs_Variables": "Variables",
   "Widgets_AirQuality_Settings_Tabs_Background": "Background",
-
-
   "Widgets_AirQuality_Settings_Location_QueryBrowser": "Query location from browser",
   "Widgets_AirQuality_Settings_Legislation": "Air Quality Legislation",
   "Widgets_AirQuality_Settings_Legislation_European": "European AQI",
@@ -285,8 +261,6 @@
   "Widgets_FreeText_Settings_Tabs_Background": "Background",
   "Widgets_FreeText_Settings_Text": "Text",
   "Widgets_FreeText_Settings_Align": "Align",
-
-
   "Widgets_Html_Name": "HTML",
   "Widgets_Html_Settings_Html": "HTML",
   "Widgets_TopSites_Name": "Top sites",
@@ -298,15 +272,12 @@
   "Widgets_TopSites_Settings_Title_Position_Bottom": "Bottom",
   "Widgets_TopSites_Settings_Title_Position_Left": "Left",
   "Widgets_TopSites_Settings_Title_Position_Right": "Right",
-
-
   "Widgets_TopSites_Settings_ItemsPerRow": "Items per row",
   "Widgets_TopSites_Settings_RowCount": "Row count",
   "Widgets_TopSites_Settings_ShowTitle": "Show titles",
   "Widgets_AnalogueClock_Name": "Analogue clock",
   "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Tabs_Background": "Background",
-
   "Widgets_AnalogueClock_Settings_Watchface": "Watchface",
   "Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Default",
   "Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Variant 1",
@@ -324,8 +295,6 @@
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Chart",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Text",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Background",
-
-
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Line color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Axis color",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AreaFillColor": "Area fill color",
@@ -339,15 +308,11 @@
   "Widgets_Common_Settings_Tabs_Border": "Border",
   "Widgets_Common_Settings_BorderSize": "Width",
   "Widgets_Common_Settings_BorderColor": "Color",
-
   "Widgets_IpInfo_Name": "IP Info",
   "Widgets_IpInfo_Settings_Tabs_Background": "Background",
   "Widgets_IpInfo_Settings_Tabs_Variables": "Variables",
   "Widgets_IpInfo_Settings_Tabs_Text": "Text",
   "Widgets_IpInfo_Settings_Variable_Location": "Location",
-
-
-
   "Widgets_Holidays_Name": "Holidays",
   "Widgets_Holidays_Settings_Tabs_Types": "Types",
   "Widgets_Holidays_Settings_Tabs_Text": "Text",
@@ -358,18 +323,14 @@
   "Widgets_Holidays_Settings_Types_Authorities": "Authorities (Authorities are closed)",
   "Widgets_Holidays_Settings_Types_Optional": "Optional (Majority of people take a day off)",
   "Widgets_Holidays_Settings_Types_Observance": "Observance (Optional festivity, no paid day off)",
-
   "Widgets_Holidays_Settings_FontToday": "Today's holiday font",
-
   "Widgets_Holidays_Settings_PastCount": "Past holidays count to show",
   "Widgets_Holidays_Settings_UpcommingCount": "Upcomming holidays count to show",
   "Widgets_Holidays_Settings_Country": "Country",
-
   "Widgets_LiteratureClock_Name": "Literature Clock",
   "Widgets_LiteratureClock_Settings_Tabs_Text": "Text",
   "Widgets_LiteratureClock_Settings_Tabs_Time": "Time",
   "Widgets_LiteratureClock_Settings_Tabs_Background": "Background",
-
   "Widgets_BibleVerse_Name": "Bible verse",
   "Widgets_BibleVerse_Settings_Tabs_Text": "Text",
   "Widgets_BibleVerse_Settings_Tabs_Background": "Background",
@@ -377,9 +338,9 @@
   "Widgets_BibleVerse_Settings_Translation_Language": "Language",
   "Widgets_BibleVerse_Settings_Translation": "Translation",
   "Widgets_BibleVerse_Settings_DisplayReference": "Display reference",
-
   "Widgets_AdviceSlip_Name": "Advice slip",
   "Widgets_AdviceSlip_Settings_Tabs_Text": "Text",
   "Widgets_AdviceSlip_Settings_Tabs_Background": "Background",
-  "Widgets_AdviceSlip_Settings_UpdateInterval": "Update interval (minutes)"
+  "Widgets_AdviceSlip_Settings_UpdateInterval": "Update interval (minutes)",
+  "Widgets_Quote_Settings_DisplayAuthor": "Display author"
 }
