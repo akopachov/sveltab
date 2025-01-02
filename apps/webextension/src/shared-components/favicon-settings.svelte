@@ -1,3 +1,10 @@
+<script lang="ts" module>
+  const enum FaviconType {
+    Default = 'default',
+    Manual = 'manual',
+  }
+</script>
+
 <script lang="ts">
   import { opfsSrc } from '$actions/opfs-src';
   import type { WorkspaceInstance } from '$lib/workspace-instance';
@@ -8,11 +15,6 @@
   import { logger } from '$lib/logger';
   import BrowserSupports, { Constraints } from './browser-supports.svelte';
   import { WeakLazy } from '$lib/lazy';
-
-  enum FaviconType {
-    Default = 'default',
-    Manual = 'manual',
-  }
 
   const log = logger.getSubLogger({ prefix: ['Favicon settings:'] });
 

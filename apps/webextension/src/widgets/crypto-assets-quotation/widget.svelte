@@ -1,3 +1,22 @@
+<script lang="ts" module>
+  type HistoryPrice = { price: number; date: number };
+
+  type PriceInfo = {
+    lastUpdate: number;
+    dailyHistoryPrices: HistoryPrice[];
+    hourlyHistoryPrices: HistoryPrice[];
+    minutelyHistoryPrices: HistoryPrice[];
+    currentPrice: number;
+    asset: CryptoAssetRef;
+  };
+
+  const enum HistoryTab {
+    Daily = 0,
+    Hourly = 1,
+    Minutely = 2,
+  }
+</script>
+
 <script lang="ts">
   import type { CryptoAssetRef, Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
@@ -33,23 +52,6 @@
 
   const storageKey = `Widget_CryptoAssets_${id}_LastPriceInfo`;
   let clockStore = getClockStore(minutesToMilliseconds(1));
-
-  type HistoryPrice = { price: number; date: number };
-
-  type PriceInfo = {
-    lastUpdate: number;
-    dailyHistoryPrices: HistoryPrice[];
-    hourlyHistoryPrices: HistoryPrice[];
-    minutelyHistoryPrices: HistoryPrice[];
-    currentPrice: number;
-    asset: CryptoAssetRef;
-  };
-
-  enum HistoryTab {
-    Daily = 0,
-    Hourly = 1,
-    Minutely = 2,
-  }
 
   let priceInfo: PriceInfo | undefined = $state();
 

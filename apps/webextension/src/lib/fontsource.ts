@@ -11,7 +11,7 @@ export type FontSubset =
 
 export type FontStyle = 'normal' | 'italic' | (string & NonNullable<unknown>);
 
-export enum FontWeight {
+export const enum FontWeight {
   Thin = 100,
   ExtraLight = 200,
   Light = 300,

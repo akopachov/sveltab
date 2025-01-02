@@ -7,7 +7,7 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export enum ClockFormat {
+export const enum ClockFormat {
   TwelveHrs,
   TwentyFourHrs,
 }

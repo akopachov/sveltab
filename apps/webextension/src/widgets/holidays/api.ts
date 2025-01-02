@@ -1,6 +1,6 @@
 const BASE_API_URL = 'https://date.nager.at';
 
-export enum HolidayType {
+export const enum HolidayType {
   Public = 'Public',
   Bank = 'Bank',
   School = 'School',

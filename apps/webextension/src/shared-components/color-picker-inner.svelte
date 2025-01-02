@@ -1,14 +1,16 @@
+<script lang="ts" module>
+  const enum Tabs {
+    Picker,
+    Pallet,
+  }
+</script>
+
 <script lang="ts">
   import { Accordion, AccordionItem, Tab, TabGroup } from '@skeletonlabs/skeleton';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
 
   let { color = $bindable(), hexInput = false }: { color: string; hexInput: boolean } = $props();
-
-  enum Tabs {
-    Picker,
-    Pallet,
-  }
 
   let currentTab: Tabs = $state(Tabs.Picker);
   let flatUIColorPalletsPromise: Promise<any[]> | null = $state(null);

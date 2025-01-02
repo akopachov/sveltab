@@ -1,4 +1,4 @@
-export enum TimeOfDay {
+export const enum TimeOfDay {
   Day = 'day',
   Night = 'night',
 }

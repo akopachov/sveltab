@@ -8,7 +8,7 @@ import {
 } from '$lib/widget-settings';
 import { GeoLocation } from '$shared-components/location-select.svelte';
 
-export enum MeasurementUnits {
+export const enum MeasurementUnits {
   Metric = 'metric',
   Imperial = 'imperial',
 }

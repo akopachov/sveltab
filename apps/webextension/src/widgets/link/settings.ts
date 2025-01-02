@@ -7,14 +7,14 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export enum IconSource {
+export const enum IconSource {
   Favicon = 'favicon',
   Direct = 'direct',
   Iconify = 'iconify',
   Local = 'local',
 }
 
-export enum TextPosition {
+export const enum TextPosition {
   Top = 'top',
   Bottom = 'bottom',
   Left = 'left',

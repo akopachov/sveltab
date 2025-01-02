@@ -4,7 +4,7 @@ import { useObservable, type Observable } from '$lib/observable.svelte';
 import { OpfsSchema } from '$lib/opfs';
 import type { WorkspaceInstance } from '$lib/workspace-instance';
 
-export enum StaticImageSource {
+export const enum StaticImageSource {
   Url = 'url',
   Local = 'local',
 }

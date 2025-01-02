@@ -8,6 +8,10 @@ const QuoteProviders: ReadonlyArray<QuoteProvider> = [
     const response = await fetch('https://quoteslate.vercel.app/api/quotes/random').then(r => r.json());
     return { quote: response.quote, author: response.author };
   },
+  async function dummyjson() {
+    const response = await fetch('https://dummyjson.com/quotes/random').then(r => r.json());
+    return { quote: response.quote, author: response.author };
+  },
   async function thequoteapi() {
     const response = await fetch('https://thequoteapi.com/api/quotes/random/', {
       headers: { api_key: PUBLIC_THEQUOTEAPI_KEY },

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-  export enum ColorPickerLayout {
+  export const enum ColorPickerLayout {
     Inline = 'inline',
     ButtonPopup = 'button-popup',
     InputPopup = 'input-popup',

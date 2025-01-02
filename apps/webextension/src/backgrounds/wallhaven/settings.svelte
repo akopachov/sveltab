@@ -1,3 +1,11 @@
+<script lang="ts" module>
+  const enum ContentPurity {
+    SFW = 0,
+    Sketchy = 1,
+    NSFW = 2,
+  }
+</script>
+
 <script lang="ts">
   import { type Settings, type WallhavenPurity, WallhavenSearchColors } from './settings';
   import NumberInput from '$shared-components/number-input.svelte';
@@ -8,12 +16,6 @@
   let { settings }: { settings: Settings } = $props();
 
   let updateInterval = $state(settings.updateInterval.value / 60);
-
-  enum ContentPurity {
-    SFW = 0,
-    Sketchy = 1,
-    NSFW = 2,
-  }
 
   $effect(() => {
     settings.updateInterval.value = Math.max(updateInterval, 1) * 60;

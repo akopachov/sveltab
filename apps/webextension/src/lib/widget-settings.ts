@@ -4,7 +4,7 @@ import { useObservable, type Observable, type Unobserved } from './observable.sv
 
 export type WidgetPositionInitial = Partial<Unobserved<WidgetPosition>>;
 
-export enum WidgetMeasurementUnits {
+export const enum WidgetMeasurementUnits {
   Scale = 'cqmin',
   Fixed = 'px',
 }

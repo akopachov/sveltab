@@ -1,6 +1,6 @@
 import { PUBLIC_CLOUDIMG_TOKEN } from '$env/static/public';
 
-export enum ImageResizeType {
+export const enum ImageResizeType {
   Cover = 'cover',
   Contain = 'contain',
 }

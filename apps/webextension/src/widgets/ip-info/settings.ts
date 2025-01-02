@@ -7,7 +7,7 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export enum NetworkInfoVariables {
+export const enum NetworkInfoVariables {
   IP = 'ip',
   ASN = 'asn',
   ISP = 'isp',
@@ -22,7 +22,14 @@ export class Settings extends WidgetSettingsExtra {
     this.textColor = useObservable(initial.textColor || '#000');
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
-    this.showVariables = useObservable(initial.showVariables || Object.values(NetworkInfoVariables));
+    this.showVariables = useObservable(
+      initial.showVariables || [
+        NetworkInfoVariables.IP,
+        NetworkInfoVariables.ISP,
+        NetworkInfoVariables.Location,
+        NetworkInfoVariables.ASN,
+      ],
+    );
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
   }
 

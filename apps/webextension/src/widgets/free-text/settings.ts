@@ -7,7 +7,7 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export enum TextAlign {
+export const enum TextAlign {
   Left = 'left',
   Middle = 'center',
   Right = 'right',

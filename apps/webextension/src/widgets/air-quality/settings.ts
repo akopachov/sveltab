@@ -8,12 +8,12 @@ import {
 } from '$lib/widget-settings';
 import { GeoLocation } from '$shared-components/location-select.svelte';
 
-export enum AirQualityLegislation {
+export const enum AirQualityLegislation {
   European = 'european_aqi',
   USA = 'us_aqi',
 }
 
-export enum AirQualityVariables {
+export const enum AirQualityVariables {
   PM2_5 = 'pm2_5',
   PM10 = 'pm10',
   CarbonMonoxide = 'carbon_monoxide',

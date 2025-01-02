@@ -20,7 +20,7 @@ export type CoincapioAssetsResponse = CoincapioResponseBase<CoincapioAsset[]>;
 export type CoincapioAssetHistoryItem = { priceUsd: number; time: number };
 export type CoincapioAssetHistoryResponse = CoincapioResponseBase<CoincapioAssetHistoryItem[]>;
 
-export enum CoincapioHistoryInterval {
+export const enum CoincapioHistoryInterval {
   Daily = 'd1',
   Hourly = 'h1',
   Minutely = 'm1',

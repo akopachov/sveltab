@@ -1,10 +1,8 @@
 <script lang="ts" module>
   import { Lazy } from '$lib/lazy';
   import { Opfs } from '$lib/opfs';
-  import { onMount, type Snippet } from 'svelte';
-  import * as m from '$i18n/messages';
 
-  export enum Constraints {
+  export const enum Constraints {
     OPFS = 'opfs',
     OffscreenCanvas = 'offscreen-canvas',
   }
@@ -16,6 +14,9 @@
 </script>
 
 <script lang="ts">
+  import { onMount, type Snippet } from 'svelte';
+  import * as m from '$i18n/messages';
+
   let {
     constraint,
     class: exClass,

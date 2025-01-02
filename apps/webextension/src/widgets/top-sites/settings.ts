@@ -7,7 +7,7 @@ import {
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
 
-export enum TextPosition {
+export const enum TextPosition {
   Top = 'top',
   Bottom = 'bottom',
   Left = 'left',
