@@ -109,12 +109,10 @@
   "Backgrounds_RandomImage_Settings_SearchTerms": "Warunki wyszukiwania",
   "Backgrounds_RandomImage_Settings_SearchTerms_Placeholder": "Owoce, zwierzęta, budynki, ...",
   "Backgrounds_RandomImage_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-
   "Backgrounds_Pexels_Name": "Zdjęcie od Pexels",
   "Backgrounds_Pexels_Settings_SearchTerms": "Warunki wyszukiwania",
   "Backgrounds_Pexels_Settings_SearchTerms_Placeholder": "Owoce, zwierzęta, budynki, ...",
   "Backgrounds_Pexels_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-
   "Backgrounds_Wallhaven_Name": "Wallhaven",
   "Backgrounds_Wallhaven_Settings_SearchTerms": "Warunki wyszukiwania",
   "Backgrounds_Wallhaven_Settings_ApiKey": "Klucz API (opcjonalnie)",
@@ -124,13 +122,11 @@
   "Backgrounds_Wallhaven_Settings_Purity_NSFW": "NSFW",
   "Backgrounds_Wallhaven_Settings_Colors": "Kolory",
   "Backgrounds_Wallhaven_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-
   "Backgrounds_AnimeImage_Name": "Obraz anime",
   "Backgrounds_AnimeImage_Settings_IncludeTags": "Zawiera tagi",
   "Backgrounds_AnimeImage_Settings_ExcludeTags": "Wyklucza tagi",
   "Backgrounds_AnimeImage_Settings_IncludeTags_Placeholder": "Szukaj...",
   "Backgrounds_AnimeImage_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-
   "Backgrounds_StaticColor_Name": "Kolor statyczny",
   "Backgrounds_StaticColor_Settings_Color": "Kolor",
   "Backgrounds_StaticImage_Name": "Obraz statyczny",
@@ -160,24 +156,17 @@
   "Widgets_Clock_Settings_Format": "Format",
   "Widgets_Clock_Settings_Format_12Hrs": "12 godzin",
   "Widgets_Clock_Settings_Format_24Hrs": "24 godziny",
-
-
   "Widgets_Date_Name": "Data",
   "Widgets_Date_Settings_Tabs_Text": "Tekst",
   "Widgets_Date_Settings_Tabs_Background": "Tło",
-
-
   "Widgets_Quote_Name": "Cytat",
   "Widgets_Quote_Settings_Tabs_Text": "Tekst",
   "Widgets_Quote_Settings_Tabs_Background": "Tło",
   "Widgets_Quote_Settings_UpdateInterval": "Interwał aktualizacji (minuty)",
-
-
   "Widgets_Search_Name": "Odzysk",
   "Widgets_Search_Placeholder": "Szukaj...",
   "Widgets_Search_Settings_Tabs_Text": "Tekst",
   "Widgets_Search_Settings_Tabs_Background": "Tło",
-
   "Widgets_Search_Settings_SearchProvider": "Dostawca wyszukiwania",
   "Widgets_Search_Settings_SearchSuggestionsEnabled": "Sugestie wyszukiwania",
   "Widgets_Search_Settings_CustomSearchProvider_SearchUrl": "Adres URL wyszukiwania",
@@ -187,8 +176,6 @@
   "Widgets_Greeting_Settings_Tabs_Text": "Tekst",
   "Widgets_Greeting_Settings_Tabs_Background": "Tło",
   "Widgets_Greeting_Settings_Name": "Imię",
-
-
   "Widgets_FlickrImage_Name": "Flickr",
   "Widgets_FlickrImage_Image_Alt": "Obraz",
   "Widgets_FlickrImage_Settings_Tabs_Image": "Obraz",
@@ -221,8 +208,6 @@
   "Widgets_Link_Settings_Title_Position_Bottom": "Na dole",
   "Widgets_Link_Settings_Title_Position_Left": "Po lewej",
   "Widgets_Link_Settings_Title_Position_Right": "Po prawej",
-
-
   "Widgets_Weather_Name": "Pogoda",
   "Widgets_Weather_Forecast_Hourly": "Godzinowa",
   "Widgets_Weather_Forecast_Daily": "Dzienna",
@@ -236,8 +221,6 @@
   "Widgets_Weather_Settings_Tabs_Text": "Tekst",
   "Widgets_Weather_Settings_Tabs_Layout": "Układ",
   "Widgets_Weather_Settings_Tabs_Background": "Tło",
-
-
   "Widgets_Weather_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
   "Widgets_Weather_Settings_MeasurementUnits": "Jednostki miary",
   "Widgets_Weather_Settings_MeasurementUnits_Metric": "Metryczne",
@@ -256,8 +239,6 @@
   "Widgets_AirQuality_Settings_Tabs_Text": "Tekst",
   "Widgets_AirQuality_Settings_Tabs_Variables": "Zmienne",
   "Widgets_AirQuality_Settings_Tabs_Background": "Tło",
-
-
   "Widgets_AirQuality_Settings_Location_QueryBrowser": "Lokalizacja z przeglądarki",
   "Widgets_AirQuality_Settings_Legislation": "Przepisy dotyczące jakości powietrza",
   "Widgets_AirQuality_Settings_Legislation_European": "Europa",
@@ -279,8 +260,6 @@
   "Widgets_FreeText_Settings_Tabs_Background": "Tło",
   "Widgets_FreeText_Settings_Text": "Tekst",
   "Widgets_FreeText_Settings_Align": "Wyrównywanie",
-
-
   "Widgets_Html_Name": "HTML",
   "Widgets_Html_Settings_Html": "HTML",
   "Widgets_TopSites_Name": "Najpopularniejsze strony",
@@ -292,15 +271,12 @@
   "Widgets_TopSites_Settings_Title_Position_Bottom": "Na dole",
   "Widgets_TopSites_Settings_Title_Position_Left": "Po lewej",
   "Widgets_TopSites_Settings_Title_Position_Right": "Po prawej",
-
-
   "Widgets_TopSites_Settings_ItemsPerRow": "Elementy w rzędzie",
   "Widgets_TopSites_Settings_RowCount": "Liczba wierszy",
   "Widgets_TopSites_Settings_ShowTitle": "Pokaż tytuły",
   "Widgets_AnalogueClock_Name": "Zegar analogowy",
   "Widgets_AnalogueClock_Settings_Tabs_Watchface": "Tarcza zegara",
   "Widgets_AnalogueClock_Settings_Tabs_Background": "Tło",
-
   "Widgets_AnalogueClock_Settings_Watchface": "Tarcza zegara",
   "Widgets_AnalogueClock_Settings_Watchface_Default_Name": "Domyślna",
   "Widgets_AnalogueClock_Settings_Watchface_Variant1_Name": "Wariant 1",
@@ -318,8 +294,6 @@
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Chart": "Wykres",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Text": "Tekst",
   "Widgets_CryptoAssetQuotation_Settings_Tabs_Background": "Tło",
-
-
   "Widgets_CryptoAssetQuotation_Settings_Chart_LineColor": "Kolor linii",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AxisColor": "Kolor osi",
   "Widgets_CryptoAssetQuotation_Settings_Chart_AreaFillColor": "Kolor wypełnienia obszaru",
@@ -333,15 +307,11 @@
   "Widgets_Common_Settings_Tabs_Border": "Granica",
   "Widgets_Common_Settings_BorderSize": "Szerokość",
   "Widgets_Common_Settings_BorderColor": "Kolor",
-
   "Widgets_IpInfo_Name": "IP Info",
   "Widgets_IpInfo_Settings_Tabs_Background": "Tło",
   "Widgets_IpInfo_Settings_Tabs_Variables": "Zmienne",
   "Widgets_IpInfo_Settings_Tabs_Text": "Tekst",
   "Widgets_IpInfo_Settings_Variable_Location": "Lokalizacja",
-
-
-
   "Widgets_Holidays_Name": "Święta",
   "Widgets_Holidays_Settings_Tabs_Types": "Typy",
   "Widgets_Holidays_Settings_Tabs_Text": "Tekst",
@@ -352,18 +322,14 @@
   "Widgets_Holidays_Settings_Types_Authorities": "Władze (Urzędy są zamknięte)",
   "Widgets_Holidays_Settings_Types_Optional": "Opcjonalne (Większość ludzi bierze dzień wolny)",
   "Widgets_Holidays_Settings_Types_Observance": "Obserwacja (Opcjonalne święto, bez płatnego dnia wolnego)",
-
   "Widgets_Holidays_Settings_FontToday": "Czcionka dzisiejszego święta",
-
   "Widgets_Holidays_Settings_PastCount": "Ilość przeszłych świąt do pokazania",
   "Widgets_Holidays_Settings_UpcommingCount": "Ilość nadchodzących świąt do pokazania",
   "Widgets_Holidays_Settings_Country": "Kraj",
-
   "Widgets_LiteratureClock_Name": "Zegar literacki",
   "Widgets_LiteratureClock_Settings_Tabs_Text": "Tekst",
   "Widgets_LiteratureClock_Settings_Tabs_Time": "Czas",
   "Widgets_LiteratureClock_Settings_Tabs_Background": "Tło",
-
   "Widgets_BibleVerse_Name": "Werset biblijny",
   "Widgets_BibleVerse_Settings_Tabs_Text": "Tekst",
   "Widgets_BibleVerse_Settings_Tabs_Background": "Tło",
@@ -371,7 +337,6 @@
   "Widgets_BibleVerse_Settings_Translation_Language": "Język",
   "Widgets_BibleVerse_Settings_Translation": "Tłumaczenie",
   "Widgets_BibleVerse_Settings_DisplayReference": "Wyświetl odniesienie",
-
   "Widgets_AdviceSlip_Name": "Porada",
   "Widgets_AdviceSlip_Settings_Tabs_Text": "Tekst",
   "Widgets_AdviceSlip_Settings_Tabs_Background": "Tło",
