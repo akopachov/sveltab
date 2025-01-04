@@ -22,17 +22,30 @@ export const BingResolutions = [
 ] as const;
 
 export const BingMarkets = [
-  'en-US',
-  'zh-CN',
-  'ja-JP',
-  'en-AU',
-  'en-GB',
+  'da-DK',
+  'de-AT',
   'de-DE',
-  'en-NZ',
+  'en-AU',
   'en-CA',
+  'en-GB',
   'en-IN',
-  'fr-FR',
+  'en-NZ',
+  'en-US',
+  'es-AR',
+  'es-CL',
+  'es-ES',
+  'es-MX',
+  'fi-FI',
   'fr-CA',
+  'fr-FR',
+  'it-IT',
+  'ja-JP',
+  'no-NO',
+  'pl-PL',
+  'pt-BR',
+  'pt-PT',
+  'sv-SE',
+  'zh-CN',
 ] as const;
 
 export type BingResolution = (typeof BingResolutions)[number]['resolution'];
