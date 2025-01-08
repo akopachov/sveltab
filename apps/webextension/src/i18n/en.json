@@ -357,5 +357,14 @@
   "Widgets_AdviceSlip_Settings_Tabs_Text": "Text",
   "Widgets_AdviceSlip_Settings_Tabs_Background": "Background",
   "Widgets_AdviceSlip_Settings_UpdateInterval": "Update interval (minutes)",
-  "Widgets_Quote_Settings_DisplayAuthor": "Display author"
+  "Widgets_Quote_Settings_DisplayAuthor": "Display author",
+  "Widgets_XKCDComics_Name": "xkcd comics",
+  "Widgets_XKCDComics_Image_Alt": "Comics",
+  "Widgets_XKCDComics_Settings_Tabs_Image": "Image",
+  "Widgets_XKCDComics_Settings_Stream": "Stream",
+  "Widgets_XKCDComics_Settings_Stream_Latest": "Latest",
+  "Widgets_XKCDComics_Settings_Stream_Random": "Random",
+  "Widgets_XKCDComics_Settings_UpdateInterval": "Update interval (minutes)",
+  "Widgets_XKCDComics_Settings_Disclaimer": "Content provided by",
+  "Widgets_XKCDComics_Settings_Background": "Background"
 }

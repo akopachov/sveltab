@@ -18,6 +18,7 @@ import { Widget as HolidaysWidget } from './holidays';
 import { Widget as LiteratureClockWidget } from './literature-clock';
 import { Widget as BibleVerseWidget } from './bible-verse';
 import { Widget as AdviceSlipWidget } from './advice-slip';
+import { Widget as XKCDComicsWidget } from './xkcd-comics';
 
 export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
@@ -33,6 +34,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   BibleVerseWidget,
   AdviceSlipWidget,
   FlickrWidget,
+  XKCDComicsWidget,
   FreeTextWidget,
   TopSitesWidget,
   HtmlWidget,
