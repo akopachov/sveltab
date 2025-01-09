@@ -361,7 +361,7 @@
   "Widgets_XKCDComics_Name": "xkcd comics",
   "Widgets_XKCDComics_Image_Alt": "Comics",
   "Widgets_XKCDComics_Settings_Tabs_Image": "Image",
-  "Widgets_XKCDComics_Settings_Stream": "Stream",
+  "Widgets_XKCDComics_Settings_Stream": "Topic",
   "Widgets_XKCDComics_Settings_Stream_Latest": "Latest",
   "Widgets_XKCDComics_Settings_Stream_Random": "Random",
   "Widgets_XKCDComics_Settings_UpdateInterval": "Update interval (minutes)",
