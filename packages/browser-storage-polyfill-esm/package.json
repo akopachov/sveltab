@@ -13,7 +13,7 @@
   "devDependencies": {
     "@types/node": "^22.10.5",
     "@types/webextension-polyfill": "^0.12.1",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.3"
   },
   "dependencies": {
     "browser-storage-polyfill": "^1.0.11",

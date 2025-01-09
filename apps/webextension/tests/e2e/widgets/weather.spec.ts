@@ -11,7 +11,6 @@ const TestCities = [
   { city: 'Shinjuku', country: 'Japan', latitude: 35.6895, longitude: 139.69171 },
   { city: 'Shanghai', country: 'China', latitude: 31.2304, longitude: 121.4737 },
   { city: 'Paris', country: 'France', latitude: 48.8566, longitude: 2.3522 },
-  { city: 'Berlin', country: 'Germany', latitude: 52.52, longitude: 13.405 },
   { city: 'San Francisco', country: 'United States', latitude: 37.7749, longitude: -122.4194 },
 ];
 
