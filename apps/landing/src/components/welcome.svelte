@@ -23,7 +23,8 @@
         </h1>
         <div class="max-w-3xl mx-auto">
           <p class="text-xl text-gray-600" data-aos="zoom-y-out" data-aos-delay="150">
-            A beautiful, customizable New Tab page for Firefox, Chrome, Edge and other Chromium-based browsers.
+            A beautiful, customizable, privacy-focused New Tab page for Firefox, Chrome, Edge and other Chromium-based
+            browsers.
           </p>
           <p class="text-xl text-gray-600 mb-8" data-aos="zoom-y-out" data-aos-delay="150">
             Transform your new tab page into something beautiful and yours.

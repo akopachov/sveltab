@@ -6,7 +6,7 @@
 [![Microsoft Edge Addons](https://img.shields.io/badge/dynamic/json?label=edge%20add-on&prefix=v&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fgjmmknaifmjpakigdnodcdmpfkkccegj)](https://microsoftedge.microsoft.com/addons/detail/gjmmknaifmjpakigdnodcdmpfkkccegj)
 [![Netlify Status](https://api.netlify.com/api/v1/badges/dce10aad-7467-4c01-a091-63d45eaf29f6/deploy-status)](https://app.netlify.com/sites/sveltab/deploys)
 
-A beautiful, customizable New Tab page for Firefox, Chrome, Edge, and other Chromium-based browsers.
+A beautiful, customizable, privacy-focused New Tab page for Firefox, Chrome, Edge, and other Chromium-based browsers.
 
 Transform your new tab page into something beautiful and yours. SvelTab offers hundreds of customization options to create a new tab page that is unique to you. Choose from many background providers, and be rewarded with stunning, new pictures every time you open a new tab. Add your favorite widgets to stay productive throughout your day. Create your own new tab experience.
 
