@@ -9,6 +9,7 @@
   import * as m from '$i18n/messages';
   import { type FlickrImageData, flickrSrc } from './flickr-src';
   import { getImageSizes, searchImages } from './api';
+  import fallbackImage from '$lib/assets/image-fallback.svg';
 
   let clockStore = getClockStore(minutesToMilliseconds(1));
   type CachedData = {
@@ -27,6 +28,7 @@
   let latestSearchResult: CachedData | undefined = $state();
 
   let activeImage = $derived(latestSearchResult?.activeImage);
+
   $effect(() => {
     void (settings.searchTopic.value, settings.updateInterval.value, $clockStore);
     pickRandomPhotoDebounced();
@@ -81,21 +83,35 @@
         }));
       }
 
-      const randomIndex = Math.floor(Math.random() * latestSearchResult.images.length);
+      if (latestSearchResult.images.length > 0) {
+        const randomIndex = Math.floor(Math.random() * latestSearchResult.images.length);
 
-      const randomImage = latestSearchResult.images.splice(randomIndex, 1)[0];
+        const randomImage = latestSearchResult.images.splice(randomIndex, 1)[0];
 
-      const sizesResponse = await getImageSizes(randomImage.id);
-      const sources: FlickrImageData['sources'] = sizesResponse.sizes.size.map(x => ({
-        width: x.width,
-        height: x.height,
-        source: x.source,
-      }));
+        const sizesResponse = await getImageSizes(randomImage.id);
+        const sources: FlickrImageData['sources'] = sizesResponse.sizes.size.map(x => ({
+          width: x.width,
+          height: x.height,
+          source: x.source,
+        }));
 
-      latestSearchResult.activeImage = {
-        ...randomImage,
-        sources,
-      };
+        latestSearchResult.activeImage = {
+          ...randomImage,
+          sources,
+        };
+      } else {
+        latestSearchResult.activeImage = {
+          id: '',
+          owner: '',
+          sources: [
+            {
+              width: Number.MAX_SAFE_INTEGER,
+              height: Number.MAX_SAFE_INTEGER,
+              source: fallbackImage,
+            },
+          ],
+        };
+      }
 
       await storage.local.set({ [storageKey]: $state.snapshot(latestSearchResult) });
     }
@@ -103,7 +119,7 @@
 </script>
 
 <a
-  href={activeImage ? `https://www.flickr.com/photos/${activeImage.owner}/${activeImage.id}` : ''}
+  href={activeImage?.id ? `https://www.flickr.com/photos/${activeImage.owner}/${activeImage.id}` : ''}
   rel="noreferrer"
   referrerpolicy="no-referrer"
   class="w-full h-full btn !p-0 rounded-[inherit]"
