@@ -2,6 +2,7 @@ import { getMirrorFor } from '$lib/service-mirrors';
 import type { Action } from 'svelte/action';
 import fallbackImage from '$lib/assets/image-fallback.svg';
 import { secondsToMilliseconds } from 'date-fns';
+import { ResourcesToPreload } from '$stores/preload-resources';
 
 const placeholderClasses = ['placeholder', 'animate-pulse', '!rounded-[inherit]'];
 
@@ -10,6 +11,7 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   src: string | undefined,
 ) {
   let timeout: ReturnType<typeof setTimeout>;
+  const addToResourcePreload = Boolean(node.dataset['preload']) === true;
 
   function updateSrc(s: string | undefined) {
     clearTimeout(timeout);
@@ -43,6 +45,10 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   function loadEnd() {
     clearTimeout(timeout);
     node.classList.remove(...placeholderClasses);
+
+    if (addToResourcePreload && node.src && !node.src.startsWith('data:') && !node.src.startsWith('blob:')) {
+      ResourcesToPreload.add({ src: node.src, as: 'image' });
+    }
   }
 
   node.addEventListener('loadstart', loadStart);

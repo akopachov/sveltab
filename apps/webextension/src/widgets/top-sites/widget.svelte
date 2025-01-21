@@ -55,6 +55,7 @@
             draggable="false"
             alt=""
             data-fallback="true"
+            data-preload="true"
             use:imgSrcEx={getFavIconUrl(item.url)} />
           {#if settings.showTitle.value && item.title}
             <span

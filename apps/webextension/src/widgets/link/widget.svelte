@@ -94,6 +94,7 @@
       draggable="false"
       use:conditionalSrc={{ src: iconUrl, iconSource: settings.iconSource.value }}
       data-fallback="true"
+      data-preload="true"
       alt=" " />
   {:else}
     <span class="img icon-[bx--image] text-black"></span>

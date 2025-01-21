@@ -345,6 +345,7 @@
             <img
               class="block object-contain object-left-top w-full h-full current-weather-icon"
               draggable="false"
+              data-preload="true"
               use:imgSrcEx={assetPack.getIconUrl(
                 forecast.current.weatherCode,
                 forecast.current.timeOfDay,
@@ -400,6 +401,7 @@
                         <img
                           class="object-contain w-full h-full"
                           draggable="false"
+                          data-preload="true"
                           use:imgSrcEx={assetPack.getIconUrl(
                             forecast.hourly.weatherCode[item[1]],
                             forecast.hourly.timeOfDay[item[1]],
@@ -428,6 +430,7 @@
                         <img
                           class="object-contain w-full h-full"
                           draggable="false"
+                          data-preload="true"
                           use:imgSrcEx={assetPack.getIconUrl(
                             forecast.daily.weatherCode[item[1]],
                             forecast.current.timeOfDay,

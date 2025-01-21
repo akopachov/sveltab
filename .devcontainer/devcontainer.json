@@ -16,7 +16,8 @@
         "bradlc.vscode-tailwindcss",
         "inlang.vs-code-extension",
         "csstools.postcss",
-        "DavidAnson.vscode-markdownlint"
+        "DavidAnson.vscode-markdownlint",
+        "ms-playwright.playwright"
 			]
 		}
 	},

@@ -79,8 +79,13 @@ export class OpfsManager {
     }
 
     const parts = opfsUrl.split('/');
-    const fileName = parts.pop()!;
     let dirHandle = await this.#opfsRoot.value;
+
+    if (parts.length === 1) {
+      return [parts[0], dirHandle];
+    }
+
+    const fileName = parts.pop()!;
     const allDirHandles = [dirHandle];
     for (const part of parts) {
       dirHandle = await dirHandle.getDirectoryHandle(part, { create: create });
