@@ -14,6 +14,9 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
 
   function updateSrc(s: string | undefined) {
     clearTimeout(timeout);
+    if (node.src) {
+      ResourcesToPreload.delete({ src: node.src });
+    }
     if (s) {
       if (node.src !== s) {
         node.src = s;
