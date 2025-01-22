@@ -11,7 +11,6 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
   src: string | undefined,
 ) {
   let timeout: ReturnType<typeof setTimeout>;
-  const addToResourcePreload = Boolean(node.dataset['preload']) === true;
 
   function updateSrc(s: string | undefined) {
     clearTimeout(timeout);
@@ -46,7 +45,12 @@ export const imgSrcEx: Action<HTMLImageElement, string | undefined> = function (
     clearTimeout(timeout);
     node.classList.remove(...placeholderClasses);
 
-    if (addToResourcePreload && node.src && !node.src.startsWith('data:') && !node.src.startsWith('blob:')) {
+    if (
+      Boolean(node.dataset['preload']) &&
+      node.src &&
+      !node.src.startsWith('data:') &&
+      !node.src.startsWith('blob:')
+    ) {
       ResourcesToPreload.add({ src: node.src, as: 'image' });
     }
   }
