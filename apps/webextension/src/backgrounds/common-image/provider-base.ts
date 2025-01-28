@@ -19,7 +19,7 @@ const BaseNodeClassList = [
   '!w-[calc(100%+var(--st-blur)*2)]',
   '!h-[calc(100%+var(--st-blur)*2)]',
   '[filter:blur(var(--st-blur))_var(--st-filter-url)_var(--st-brightness)]',
-];
+] as const;
 
 export abstract class ImageBackgroundProviderBase<
   T extends ImageBackgroundProviderSettingsBase,

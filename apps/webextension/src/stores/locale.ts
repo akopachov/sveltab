@@ -2,7 +2,7 @@ import { browser } from '$app/environment';
 import { isAvailableLocale, setLocale, baseLocale, type AvailableLocale } from '$i18n/runtime';
 import { derived, writable } from 'svelte/store';
 
-const LocaleCharSubsetMap = new Map<string, string[]>([
+const LocaleCharSubsetMap: ReadonlyMap<string, string[]> = new Map<string, string[]>([
   ['en', ['latin']],
   ['cs', ['latin', 'latin-ext']],
   ['ro', ['latin', 'latin-ext']],
@@ -34,7 +34,9 @@ export const locale = {
   },
 };
 
-export const browserLocales = browser ? navigator.languages.map(m => new Intl.Locale(m)) : [new Intl.Locale('en')];
+export const browserLocales: ReadonlyArray<Intl.Locale> = browser
+  ? navigator.languages.map(m => new Intl.Locale(m))
+  : [new Intl.Locale('en')];
 
 export const localeCharSubset = derived(locale, $locale => LocaleCharSubsetMap.get($locale));
 export const userPosssibleLocaleCharSubset = derived(localeCharSubset, $v => {
