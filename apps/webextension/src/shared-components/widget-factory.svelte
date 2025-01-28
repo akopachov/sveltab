@@ -91,6 +91,10 @@
       },
     });
   }
+
+  function onWidgetSettingsCLick() {
+    setTimeout(() => fakeEditButton?.click(), 150); // Hack for latest @skeletonlabs/skeleton to force it to do not instantly close popup
+  }
 </script>
 
 <!-- svelte-ignore -->
@@ -153,7 +157,7 @@
     <button
       class="btn-icon variant-filled-surface rounded-none w-full h-full btn_widget-settings"
       title={m.Widgets_Common_Menu_OpenSettings()}
-      onclick={() => fakeEditButton?.click()}>
+      onclick={onWidgetSettingsCLick}>
       <span class="w-full h-full icon-[fluent--settings-20-regular]"></span>
     </button>
   </div>
