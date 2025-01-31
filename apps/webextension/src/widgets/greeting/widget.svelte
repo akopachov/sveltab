@@ -18,6 +18,7 @@
     ['en', 'English'],
     ['pl', 'Polish'],
     ['be', 'Belarusian'],
+    ['es', 'Spanish'],
   ]);
   const namePlaceholder = '{name}';
 </script>
