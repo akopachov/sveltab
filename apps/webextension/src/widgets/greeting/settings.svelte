@@ -16,13 +16,18 @@
 </script>
 
 <script lang="ts">
-  import type { Settings } from './settings';
+  import type { GreetingLanguage, Settings } from './settings';
   import { GeneralTabId } from '$shared-components/widget-settings.svelte';
   import TextSettings from '$shared-components/text-settings.svelte';
   import BackgroundSettings from '$shared-components/background-settings.svelte';
   import { onMount } from 'svelte';
+  import { locale } from '$stores/locale';
+  import { firstLetterToUpperCase } from '$lib/string-utils';
 
   let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
+
+  let langDisplayNames = $derived(new Intl.DisplayNames([$locale], { type: 'language' }));
+  const availableLanguages: ReadonlyArray<Exclude<GreetingLanguage, 'default'>> = ['en', 'pl', 'be', 'es'] as const;
 
   onMount(() => {
     tabs = Tabs;
@@ -33,6 +38,15 @@
   <label class="label mb-2">
     <span>{m.Widgets_Greeting_Settings_Name()}</span>
     <input type="text" class="input" bind:value={settings.name.value} />
+  </label>
+  <label class="label mb-2">
+    <span>{m.Widgets_Greeting_Settings_Language()}</span>
+    <select class="select" bind:value={settings.language.value}>
+      <option value="default">{m.Widgets_Greeting_Settings_Language_Default()}</option>
+      {#each availableLanguages as lang}
+        <option value={lang}>{firstLetterToUpperCase(langDisplayNames.of(lang))}</option>
+      {/each}
+    </select>
   </label>
 {:else if tab === TextTabId}
   <TextSettings

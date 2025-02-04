@@ -14,7 +14,7 @@
     'December',
   ] as const;
   const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'] as const;
-  const localeToLanguagesMap: ReadonlyMap<string, string> = new Map([
+  const localeToLanguagesMap: ReadonlyMap<Exclude<GreetingLanguage, 'default'>, string> = new Map([
     ['en', 'English'],
     ['pl', 'Polish'],
     ['be', 'Belarusian'],
@@ -24,7 +24,7 @@
 </script>
 
 <script lang="ts">
-  import type { Settings } from './settings';
+  import type { GreetingLanguage, Settings } from './settings';
   import { fontsource } from '$actions/fontsource';
   import { getPreciselyAlignedClockStore } from '$stores/clock-store';
   import { locale, localeCharSubset } from '$stores/locale';
@@ -44,13 +44,14 @@
   const storageKey = `Widget_Greeting_${id}_CachedPool`;
 
   $effect(() => {
-    updateGreetingsPool($clockStore, $locale);
+    updateGreetingsPool($clockStore, greetingLanguage);
   });
 
   let cache: CachedGreetings | undefined | null = $state.raw();
   let currentGreeting: string | undefined | null = $derived(
     cache ? updateGreeting(cache.pool, settings.name.value) : undefined,
   );
+  let greetingLanguage = $derived(settings.language.value === 'default' ? $locale : settings.language.value);
 
   onMount(async () => {
     cache = <CachedGreetings>(await storage.local.get(storageKey))[storageKey] || {
@@ -59,7 +60,7 @@
       hour: 0,
       locale: '',
     };
-    await updateGreetingsPool($clockStore, $locale);
+    await updateGreetingsPool($clockStore, greetingLanguage);
   });
 
   export async function onDelete() {

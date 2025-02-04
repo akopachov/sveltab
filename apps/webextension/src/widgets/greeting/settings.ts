@@ -6,6 +6,9 @@ import {
   WidgetSettingsExtra,
   type WidgetSettingsExtraInitial,
 } from '$lib/widget-settings';
+import type { AvailableLocale } from '$i18n/runtime';
+
+export type GreetingLanguage = 'default' | Extract<AvailableLocale, 'en' | 'es' | 'pl' | 'be'>;
 
 export class Settings extends WidgetSettingsExtra {
   constructor(initial: WidgetSettingsExtraInitial<Settings>) {
@@ -17,6 +20,7 @@ export class Settings extends WidgetSettingsExtra {
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
+    this.language = useObservable(initial.language || 'default');
   }
 
   readonly backgroundColor: Observable<string>;
@@ -26,4 +30,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
   readonly textStroke: TextStrokeSettings;
+  readonly language: Observable<GreetingLanguage>;
 }

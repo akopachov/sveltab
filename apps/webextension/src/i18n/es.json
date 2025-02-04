@@ -192,6 +192,8 @@
 	"Widgets_Greeting_Settings_Tabs_Text": "Texto",
 	"Widgets_Greeting_Settings_Tabs_Background": "Fondo",
 	"Widgets_Greeting_Settings_Name": "Nombre",
+  "Widgets_Greeting_Settings_Language": "Idioma",
+  "Widgets_Greeting_Settings_Language_Default": "Por defecto",
 	"Widgets_FlickrImage_Name": "Flickr",
 	"Widgets_FlickrImage_Image_Alt": "Imagen",
 	"Widgets_FlickrImage_Settings_Tabs_Image": "Imagen",
