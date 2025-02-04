@@ -18,10 +18,10 @@
   let allIcons: string[] = $state([]);
   let previewIconColor = $derived($AppliedColorScheme === 'dark' ? '#fff' : '#000');
 
-  let paginationSettings: PaginationSettings = $derived({
+  let paginationSettings: PaginationSettings = $state({
     page: 0,
     limit: 15,
-    size: allIcons.length,
+    size: 0,
     amounts: [15],
   });
 
@@ -100,7 +100,7 @@
 {#if allIcons.length > paginationSettings.limit}
   <div class="mt-2">
     <Paginator
-      settings={paginationSettings}
+      bind:settings={paginationSettings}
       showFirstLastButtons={false}
       showPreviousNextButtons={true}
       showNumerals={true}
