@@ -11,7 +11,7 @@
   "author": "Alexander Kopachov (@akopachov)",
   "license": "GPL-3.0-only",
   "devDependencies": {
-    "@types/node": "^22.13.1",
+    "@types/node": "^22.13.2",
     "@types/pica": "^9.0.5",
     "typescript": "^5.7.3"
   },
