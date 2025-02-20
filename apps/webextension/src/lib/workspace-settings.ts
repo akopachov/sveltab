@@ -43,6 +43,7 @@ export class WorkspaceSettings {
     this.favicon = initial.favicon || { 16: '', 32: '', 48: '', ico: '' };
     this.assets = initial.assets || [];
     this.snappableSettings = initial.snappableSettings || { enabled: false };
+    this.corsProvider = initial.corsProvider;
   }
 
   name: string;
@@ -52,4 +53,5 @@ export class WorkspaceSettings {
   favicon: FaviconInfoInitial;
   assets: string[];
   snappableSettings: SnappableSettingsInitial;
+  corsProvider: string | null | undefined;
 }

@@ -10,6 +10,8 @@
   "Core_Sidebar_Settings_Data": "Data",
   "Core_Sidebar_Advanced": "Advanced",
   "Core_Sidebar_Advanced_CustomStyles": "Custom Styles (CSS)",
+  "Core_Sidebar_Advanced_CorsProvider": "CORS provider",
+  "Core_Sidebar_Advanced_CorsProvider_Tip": "Use {origin} as a placeholder for the target url",
   "Core_Sidebar_SayThanksDev": "Say thank you to a developer",
   "Core_Sidebar_LockWorkspace": "Lock workspace",
   "Core_MainMenu_Menu_Title": "Open main menu",

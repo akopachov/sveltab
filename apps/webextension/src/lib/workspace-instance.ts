@@ -37,6 +37,7 @@ export class WorkspaceInstance {
     favicon: FaviconInfoInitial,
     snappableSettings: SnappableSettingsInitial,
     unsaved: boolean,
+    corsProvider: string | null | undefined
   ) {
     this.#widgets.clear();
     widgets.forEach(w => this.#widgets.add(w));
@@ -58,6 +59,7 @@ export class WorkspaceInstance {
     this.internalAssetsManager = new InternalAssetsManager(assets);
     this.favicon = new FaviconInfo(favicon);
     this.snappableSettings = new SnappableSettings(snappableSettings);
+    this.corsProvider = useObservable(corsProvider);
 
     this.#trackObjectChange(this.name);
     this.#trackObjectChange(this.customStyles);
@@ -72,6 +74,7 @@ export class WorkspaceInstance {
   readonly customStyles: Observable<string>;
   readonly favicon: FaviconInfo;
   readonly snappableSettings: SnappableSettings;
+  readonly corsProvider: Observable<string>;
 
   #trackObjectChange(instance: any) {
     if (!instance) return;
@@ -176,6 +179,7 @@ export class WorkspaceInstance {
       favicon: unobserve(this.favicon),
       snappableSettings: unobserve(this.snappableSettings),
       assets: [...this.internalAssetsManager.internalAssets],
+      corsProvider: this.corsProvider.value
     } satisfies WorkspaceSettingsInitial;
   }
 
@@ -198,6 +202,7 @@ export class WorkspaceInstance {
       settings.favicon || {},
       settings.snappableSettings || {},
       unsaved,
+      settings.corsProvider
     );
   }
 }

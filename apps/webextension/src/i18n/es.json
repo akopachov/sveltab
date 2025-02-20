@@ -10,6 +10,8 @@
 	"Core_Sidebar_Settings_Data": "Datos",
 	"Core_Sidebar_Advanced": "Avanzado",
 	"Core_Sidebar_Advanced_CustomStyles": "Hoja de estilos (CSS)",
+  "Core_Sidebar_Advanced_CorsProvider": "Proveedor CORS",
+  "Core_Sidebar_Advanced_CorsProvider_Tip": "Use {origin} como marcador de posición para la URL de destino",
 	"Core_Sidebar_SayThanksDev": "Agradece a un desarrollador",
 	"Core_Sidebar_LockWorkspace": "Bloquear espacio de trabajo",
 	"Core_MainMenu_Menu_Title": "Abrir el menú",

@@ -39,6 +39,7 @@
   import { forceNextBackground, forcePreviousBackground } from '$actions/dynamic-background';
   import { SvelteSet } from 'svelte/reactivity';
   import SnappableGridSettings from '$shared-components/snappable-grid-settings.svelte';
+  import { setCorsProvider } from '$lib/cors-bypass.gen';
 
   const drawerStore = getDrawerStore();
 
@@ -78,6 +79,9 @@
       saveWorkspaceChangesDefer();
     }
   });
+  $effect(() => {
+    setCorsProvider(workspace?.corsProvider.value);
+  })
 
   const widgetSettingsPopupSettings: PopupSettings = {
     event: 'click',
@@ -295,6 +299,13 @@
               <span>{m.Core_Sidebar_Advanced_CustomStyles()}</span>
               <CustomStyles bind:styles={workspace.customStyles.value} />
             </div>
+            <label class="label">
+              <span>{m.Core_Sidebar_Advanced_CorsProvider()}</span>
+              <input type="url" class="input" bind:value={workspace.corsProvider.value} />
+            </label>
+            <span class="block text-xs mb-3 !mt-1">
+              {m.Core_Sidebar_Advanced_CorsProvider_Tip({ origin: '{origin}' })}
+            </span>
           {/if}
         </svelte:fragment>
       </AccordionItem>
