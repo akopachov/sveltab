@@ -4,7 +4,7 @@ export const IconifyMainUrl = 'https://api.iconify.design';
 const IconifyMirror1Url = 'https://api.simplesvg.com';
 const IconifyMirror2Url = 'https://api.unisvg.com';
 
-export const FaviconPrimaryUrl = 'https://favicon.twenty.com';
+export const FaviconPrimaryUrl = 'https://twenty-icons.com';
 const FaviconMirror1Url = 'https://icon.horse/icon';
 
 export function getSvgUrl(icon: string, color: string) {
