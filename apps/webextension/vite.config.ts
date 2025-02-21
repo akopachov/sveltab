@@ -25,6 +25,7 @@ export default async ({ mode }: { mode: string }) => {
       paraglideVitePlugin({
         project: './project.inlang',
         outdir: './src/i18n/generated',
+        strategy: [],
       }),
       sveltekit(),
       purgeCss(),

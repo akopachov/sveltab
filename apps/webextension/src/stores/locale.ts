@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isLocale, setLocale, baseLocale, type Locale } from '$i18n/runtime';
+import { isLocale, overwriteGetLocale, overwriteSetLocale, baseLocale, type Locale } from '$i18n/runtime';
 import { derived, writable } from 'svelte/store';
 
 const LocaleCharSubsetMap: ReadonlyMap<string, string[]> = new Map<string, string[]>([
@@ -23,14 +23,39 @@ const LocaleCharSubsetMap: ReadonlyMap<string, string[]> = new Map<string, strin
 
 const LocalStorageLocaleKey = 'locale';
 
-const { subscribe, set } = writable<Locale>();
+let _currentLocale: Locale = baseLocale;
+const { subscribe, set } = writable<Locale>(_currentLocale);
+
+function getLocale() {
+  return _currentLocale;
+}
+
+function setLocale(newLocale: Locale) {
+  if (!isLocale(newLocale) || newLocale === _currentLocale) {
+    return;
+  }
+
+  _currentLocale = newLocale;
+  set(newLocale);
+  localStorage.setItem(LocalStorageLocaleKey, newLocale);
+}
+
+function setLocaleWithoutPersist(newLocale: Locale) {
+  if (newLocale === _currentLocale) {
+    return;
+  }
+
+  _currentLocale = newLocale;
+  set(newLocale);
+}
+
+overwriteGetLocale(getLocale);
+overwriteSetLocale(setLocale);
 
 export const locale = {
   subscribe,
   set(locale: Locale) {
     setLocale(locale);
-    localStorage.setItem(LocalStorageLocaleKey, locale);
-    set(locale);
   },
 };
 
@@ -48,30 +73,25 @@ export const userPosssibleLocaleCharSubset = derived(localeCharSubset, $v => {
 });
 
 export function initLocaleStore() {
-  function initLocale(locale: Locale) {
-    setLocale(locale);
-    set(locale);
-  }
-
   if (browser) {
     const localeTag: string | null = localStorage.getItem(LocalStorageLocaleKey);
     if (isLocale(localeTag)) {
-      initLocale(localeTag);
+      setLocaleWithoutPersist(localeTag);
       return;
     }
 
     for (const lang of navigator.languages) {
       if (isLocale(lang)) {
-        initLocale(lang);
+        setLocale(lang);
         return;
       }
       const intl = new Intl.Locale(lang);
       if (isLocale(intl.language)) {
-        initLocale(intl.language);
+        setLocale(intl.language);
         return;
       }
     }
   }
 
-  initLocale(baseLocale);
+  setLocale(baseLocale);
 }
