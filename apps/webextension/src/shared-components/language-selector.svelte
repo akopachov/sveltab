@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { availableLocales } from '$i18n/runtime';
+  import { locales } from '$i18n/runtime';
   import { firstLetterToUpperCase } from '$lib/string-utils';
   import { locale } from '$stores/locale';
 
@@ -7,7 +7,7 @@
 </script>
 
 <select class="select" bind:value={$locale}>
-  {#each availableLocales as lang}
+  {#each locales as lang}
     <option value={lang}>{firstLetterToUpperCase(langDisplayNames.of(lang))}</option>
   {/each}
 </select>

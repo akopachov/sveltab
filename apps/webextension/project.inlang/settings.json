@@ -12,5 +12,6 @@
   ],
   "plugin.inlang.messageFormat": {
     "pathPattern": "./src/i18n/{languageTag}.json"
-  }
+  },
+  "telemetry": "off"
 }

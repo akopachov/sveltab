@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import { isAvailableLocale, setLocale, baseLocale, type AvailableLocale } from '$i18n/runtime';
+import { isLocale, setLocale, baseLocale, type Locale } from '$i18n/runtime';
 import { derived, writable } from 'svelte/store';
 
 const LocaleCharSubsetMap: ReadonlyMap<string, string[]> = new Map<string, string[]>([
@@ -23,11 +23,11 @@ const LocaleCharSubsetMap: ReadonlyMap<string, string[]> = new Map<string, strin
 
 const LocalStorageLocaleKey = 'locale';
 
-const { subscribe, set } = writable<AvailableLocale>();
+const { subscribe, set } = writable<Locale>();
 
 export const locale = {
   subscribe,
-  set(locale: AvailableLocale) {
+  set(locale: Locale) {
     setLocale(locale);
     localStorage.setItem(LocalStorageLocaleKey, locale);
     set(locale);
@@ -48,21 +48,25 @@ export const userPosssibleLocaleCharSubset = derived(localeCharSubset, $v => {
 });
 
 export function initLocaleStore() {
-  function initLocale(locale: AvailableLocale) {
+  function initLocale(locale: Locale) {
     setLocale(locale);
     set(locale);
   }
 
   if (browser) {
     const localeTag: string | null = localStorage.getItem(LocalStorageLocaleKey);
-    if (isAvailableLocale(localeTag)) {
+    if (isLocale(localeTag)) {
       initLocale(localeTag);
       return;
     }
 
     for (const lang of navigator.languages) {
+      if (isLocale(lang)) {
+        initLocale(lang);
+        return;
+      }
       const intl = new Intl.Locale(lang);
-      if (isAvailableLocale(intl.language)) {
+      if (isLocale(intl.language)) {
         initLocale(intl.language);
         return;
       }
