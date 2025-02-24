@@ -11,8 +11,8 @@
     "build": "tsc"
   },
   "devDependencies": {
-    "@types/node": "^22.13.4",
-    "@types/webextension-polyfill": "^0.12.1",
+    "@types/node": "^22.13.5",
+    "@types/webextension-polyfill": "^0.12.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {

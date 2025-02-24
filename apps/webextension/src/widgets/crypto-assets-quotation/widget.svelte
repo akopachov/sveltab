@@ -36,13 +36,13 @@
     type GridComponentOption,
     type TooltipComponentOption,
   } from 'echarts/components';
-  import { CanvasRenderer } from 'echarts/renderers';
+  import { SVGRenderer } from 'echarts/renderers';
   import * as m from '$i18n/messages';
   import { onMount } from 'svelte';
   import { exchangeRates } from './exchange-rate-store';
   import { textStroke } from '$actions/text-stroke';
 
-  use([GridComponent, CanvasRenderer, TooltipComponent, LineChart]);
+  use([GridComponent, SVGRenderer, TooltipComponent, LineChart]);
 
   let { settings, id }: { settings: Settings; id: string } = $props();
 
