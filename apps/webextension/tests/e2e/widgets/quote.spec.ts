@@ -10,7 +10,7 @@ test(`loads quote`, async ({ page }) => {
 
   const [, response] = await Promise.all([
     workspacePage.addNewWidget('random-quote'),
-    page.waitForResponse('https://quoteslate.vercel.app/api/quotes/random'),
+    page.waitForResponse(r => ['https://quoteslate.vercel.app/api/quotes/random', 'https://dummyjson.com/quotes/random'].includes(r.url())),
   ]);
 
   await expect(response.ok()).toBe(true);

@@ -11,6 +11,6 @@ test('loads default asset info', async ({ page }) => {
   await currentPriceLocator.waitFor({ state: 'visible' });
   await expect(currentPriceLocator).toHaveText(/Bitcoin \(BTC\):\s+\$[0-9,.]+/);
 
-  const chartLocator = widgetLocator.locator('.chart canvas');
+  const chartLocator = widgetLocator.locator('.chart svg');
   await expect(chartLocator).toBeVisible();
 });
