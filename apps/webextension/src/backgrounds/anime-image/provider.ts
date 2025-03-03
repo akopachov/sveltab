@@ -82,12 +82,15 @@ export class AnimeImageBackgroundProvider extends ImageBackgroundProviderBase<Se
           throw new Error('Unexpected response');
         }
 
-        const newSrc = await getImageCdnUrl(
-          responseImageUrl.file_url,
-          'screen',
-          'screen',
-          this.settings.resizeType.value,
-        );
+        let imgFileUrl = responseImageUrl.file_url;
+        if (!/^https?:/.test(imgFileUrl)) {
+          if (!imgFileUrl.startsWith('//')) {
+            imgFileUrl = `//${imgFileUrl}`;
+          }
+          imgFileUrl = `https:${imgFileUrl}`;
+        }
+
+        const newSrc = await getImageCdnUrl(imgFileUrl, 'screen', 'screen', this.settings.resizeType.value);
         this.#localSettings!.lastChangedTime = Date.now();
         await storage.local.set({ [LocalSettingsKey]: this.#localSettings });
 
