@@ -24,6 +24,7 @@
     "@iconify/utils": "^2.3.0",
     "@inlang/paraglide-js": "2.0.0-beta.26",
     "@inlang/plugin-message-format": "^4.0.0",
+    "@minify-html/node": "^0.15.0",
     "@playwright/test": "^1.50.1",
     "@putout/minify": "^4.12.3",
     "@skeletonlabs/skeleton": "^2.11.0",
