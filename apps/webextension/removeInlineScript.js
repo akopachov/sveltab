@@ -1,7 +1,7 @@
 import glob from 'tiny-glob';
 import path from 'node:path';
 import fs from 'node:fs/promises';
-import { hashSync } from 'hasha';
+import revisionHash from 'rev-hash';
 import { minify } from '@putout/minify';
 
 async function removeInlineScript(directory) {
@@ -24,7 +24,7 @@ async function removeInlineScript(directory) {
             .replace('__sveltekit', 'const __sveltekit')
             .replace('document.currentScript.parentElement', 'document.body.firstElementChild'),
         );
-        const hash = hashSync(inlineContent, { encoding: 'base64', algorithm: 'md5' }).replace(/\W/gi, '');
+        const hash = revisionHash(inlineContent);
         const scriptFileName = `script-${hash}.js`;
         const scriptFilePath = path.join(directory, scriptFileName);
         scriptWritePromises.push(fs.writeFile(scriptFilePath, inlineContent));
