@@ -370,5 +370,9 @@
   "Widgets_XKCDComics_Settings_Stream_Random": "Random",
   "Widgets_XKCDComics_Settings_UpdateInterval": "Update interval (minutes)",
   "Widgets_XKCDComics_Settings_Disclaimer": "Content provided by",
-  "Widgets_XKCDComics_Settings_Background": "Background"
+  "Widgets_XKCDComics_Settings_Background": "Background",
+  "Widgets_Markdown_Name": "Markdown",
+  "Widgets_Markdown_Settings_Tabs_Text": "Text",
+  "Widgets_Markdown_Settings_Tabs_Background": "Background",
+  "Widgets_Markdown_Settings_Markdown": "Markdown"
 }

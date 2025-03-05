@@ -370,5 +370,9 @@
   "Widgets_XKCDComics_Settings_Stream_Random": "Выпадковы",
   "Widgets_XKCDComics_Settings_UpdateInterval": "Інтэрвал абнаўлення (хвілін)",
   "Widgets_XKCDComics_Settings_Disclaimer": "Змест прадастаўлены",
-  "Widgets_XKCDComics_Settings_Background": "Фон"
+  "Widgets_XKCDComics_Settings_Background": "Фон",
+  "Widgets_Markdown_Name": "Markdown",
+  "Widgets_Markdown_Settings_Tabs_Text": "Тэкст",
+  "Widgets_Markdown_Settings_Tabs_Background": "Фон",
+  "Widgets_Markdown_Settings_Markdown": "Markdown"
 }

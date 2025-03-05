@@ -19,6 +19,7 @@ import { Widget as LiteratureClockWidget } from './literature-clock';
 import { Widget as BibleVerseWidget } from './bible-verse';
 import { Widget as AdviceSlipWidget } from './advice-slip';
 import { Widget as XKCDComicsWidget } from './xkcd-comics';
+import { Widget as MarkdownWidget } from './markdown';
 
 export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   ClockWidget,
@@ -38,6 +39,7 @@ export const Widgets: ReadonlyArray<WidgetCatalogItem> = [
   FreeTextWidget,
   TopSitesWidget,
   HtmlWidget,
+  MarkdownWidget,
   CryptoAssetQuotationWidget,
   IpInfoWidget,
   HolidaysWidget,
