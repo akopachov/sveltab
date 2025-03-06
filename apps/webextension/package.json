@@ -19,7 +19,7 @@
   "devDependencies": {
     "@floating-ui/core": "^1.6.9",
     "@floating-ui/dom": "^1.6.13",
-    "@iconify/json": "^2.2.313",
+    "@iconify/json": "^2.2.314",
     "@iconify/tailwind": "^1.2.0",
     "@iconify/utils": "^2.3.0",
     "@inlang/paraglide-js": "2.0.0-beta.26",
@@ -71,7 +71,7 @@
     "prettier-plugin-tailwindcss": "^0.6.11",
     "randomcolor": "^0.6.2",
     "rev-hash": "^4.1.0",
-    "svelte": "^5.22.2",
+    "svelte": "^5.22.5",
     "svelte-check": "^4.1.4",
     "svelte-echarts": "1.0.0-rc3",
     "svelte-floating-ui": "^1.5.9",
