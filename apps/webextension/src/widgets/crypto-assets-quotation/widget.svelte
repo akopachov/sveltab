@@ -1,12 +1,12 @@
 <script lang="ts" module>
-  type HistoryPrice = { price: number; date: number };
+  type HistoryPrice = { price: string; date: number };
 
   type PriceInfo = {
     lastUpdate: number;
     dailyHistoryPrices: HistoryPrice[];
     hourlyHistoryPrices: HistoryPrice[];
     minutelyHistoryPrices: HistoryPrice[];
-    currentPrice: number;
+    currentPrice: string;
     asset: CryptoAssetRef;
   };
 
@@ -22,6 +22,7 @@
   import { fontsource } from '$actions/fontsource';
   import { browserLocales, userPosssibleLocaleCharSubset } from '$stores/locale';
   import pDebounce from 'p-debounce';
+  import { Decimal } from 'decimal.js-light';
   import { CoincapioHistoryInterval, getAsset, getAssetHistory } from './coincapio-api';
   import { storage } from '$stores/storage';
   import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
@@ -154,7 +155,10 @@
         animation: true,
         animationDuration: () => chartAnimationDuration,
         color: settings.chartLineColor.value,
-        data: historyDataForTab(priceInfo, currentTab).map(x => [x.date, x.price * currentExchangeRate]),
+        data: historyDataForTab(priceInfo, currentTab).map(x => [
+          x.date,
+          calculatePriceInCurrency(x.price, currentExchangeRate),
+        ]),
       },
     ],
   });
@@ -234,6 +238,18 @@
     chartGlobalCursorPosition.x = event.pageX;
     chartGlobalCursorPosition.y = event.pageY;
   }
+
+  function calculatePriceInCurrency(price: string, exchangeRate: number) {
+    if (!price || !exchangeRate) return 0;
+    if (price === '0') return 0;
+    if (exchangeRate === 0) return 0;
+    let decimal = new Decimal(price);
+    if (Math.abs(exchangeRate - 1.0) > Number.EPSILON) {
+      decimal = decimal.times(exchangeRate);
+    }
+
+    return decimal.toNumber();
+  }
 </script>
 
 <div
@@ -256,7 +272,9 @@
   {#if priceInfo}
     <p class="mb-1 text-[max(0.5em,12px)] current-price">
       {priceInfo.asset.name} ({priceInfo.asset.code}):&nbsp;
-      <span class="font-medium">{currencyFormatter.format(priceInfo.currentPrice * currentExchangeRate)}</span>
+      <span class="font-medium">
+        {currencyFormatter.format(calculatePriceInCurrency(priceInfo.currentPrice, currentExchangeRate))}
+      </span>
     </p>
     <div
       class="w-full flex-1 min-h-0 text-[max(.3em,8px)] [&>.tab-group]:h-full [&>.tab-group]:flex [&>.tab-group]:flex-col">

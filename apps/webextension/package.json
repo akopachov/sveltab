@@ -51,6 +51,7 @@
     "cssnano-preset-lite": "^4.0.3",
     "date-fns": "^4.1.0",
     "debounce": "^2.2.0",
+    "decimal.js-light": "^2.5.1",
     "echarts": "^5.6.0",
     "eslint": "^9.21.0",
     "eslint-config-prettier": "^10.0.2",
