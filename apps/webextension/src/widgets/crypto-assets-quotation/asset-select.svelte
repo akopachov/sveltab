@@ -5,7 +5,7 @@
   import type { CryptoAssetRef } from './settings';
   import type { CoincapioAsset, CoincapioAssetsResponse } from './coincapio-api';
 
-  let { asset = $bindable() }: { asset: CryptoAssetRef } = $props();
+  let { asset = $bindable(), apiKey }: { asset: CryptoAssetRef; apiKey: string } = $props();
 
   const assetsPopupSettings: PopupSettings = {
     event: 'focus-click',
@@ -18,7 +18,7 @@
     callback: async str => {
       if (str?.length > 2) {
         const response: CoincapioAssetsResponse = await fetch(
-          `https://api.coincap.io/v2/assets?search=${encodeURIComponent(str)}&limit=15`,
+          `https://rest.coincap.io/v3/assets?search=${encodeURIComponent(str)}&limit=15&apiKey=${encodeURIComponent(apiKey)}`,
         ).then(r => r.json());
         assetSearchSuggestion = response.data || [];
       } else {
@@ -35,7 +35,9 @@
 </script>
 
 <label class="label">
-  <span>{m.Widgets_CryptoAssetQuotation_Settings_Asset_Label()}</span>
+  <span>
+    {m.Widgets_CryptoAssetQuotation_Settings_Asset_Label()}
+  </span>
   <input
     class="input"
     type="search"

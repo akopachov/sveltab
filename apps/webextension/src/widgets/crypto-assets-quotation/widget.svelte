@@ -164,7 +164,7 @@
   });
 
   $effect(() => {
-    void (settings.asset.value, $clockStore);
+    void (settings.asset.value, $clockStore, settings.apiKey.value);
     updateDebounced();
   });
 
@@ -186,10 +186,10 @@
         priceInfo.asset.id !== settings.asset.value.id)
     ) {
       const [assetData, dailyHistoryData, hourlyHistoryData, minutelyHistoryData] = await Promise.all([
-        getAsset(settings.asset.value.id),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Daily),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Hourly),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Minutely),
+        getAsset(settings.asset.value.id, settings.apiKey.value),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Daily, settings.apiKey.value),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Hourly, settings.apiKey.value),
+        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Minutely, settings.apiKey.value),
       ]);
 
       priceInfo = {

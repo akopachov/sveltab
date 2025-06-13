@@ -320,6 +320,7 @@
   "Widgets_CryptoAssetQuotation_Settings_Asset_Label": "Crypto asset",
   "Widgets_CryptoAssetQuotation_Settings_Asset_Placeholder": "BTC, Bitcoin, Eth, ....",
   "Widgets_CryptoAssetQuotation_Settings_DisplayCurrency": "Display currency",
+  "Widgets_CryptoAssetQuotation_Settings_ApiKey": "CoinCap.io API key",
   "Widgets_CryptoAssetQuotation_Quotation_Hourly": "Hourly",
   "Widgets_CryptoAssetQuotation_Quotation_Minutely": "Minutely",
   "Widgets_CryptoAssetQuotation_Quotation_Daily": "Daily",

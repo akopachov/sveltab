@@ -324,6 +324,7 @@
 	"Widgets_CryptoAssetQuotation_Quotation_Minutely": "Cada minuto",
 	"Widgets_CryptoAssetQuotation_Quotation_Daily": "Diariamente",
 	"Widgets_CryptoAssetQuotation_Quotation_Details": "Detalles",
+  "Widgets_CryptoAssetQuotation_Settings_ApiKey": "CoinCap.io API Key",
 	"Widgets_Common_Settings_Tabs_Border": "Borde",
 	"Widgets_Common_Settings_BorderSize": "Ancho",
 	"Widgets_Common_Settings_BorderColor": "Color",

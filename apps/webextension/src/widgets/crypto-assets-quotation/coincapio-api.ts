@@ -26,12 +26,14 @@ export const enum CoincapioHistoryInterval {
   Minutely = 'm1',
 }
 
-export function getAsset(assetId: string) {
-  return fetch(`https://api.coincap.io/v2/assets/${assetId}`).then<CoincapioAssetResponse>(r => r.json());
+export function getAsset(assetId: string, apiKey: string) {
+  return fetch(
+    `https://rest.coincap.io/v3/assets/${assetId}?apiKey=${encodeURIComponent(apiKey)}`,
+  ).then<CoincapioAssetResponse>(r => r.json());
 }
 
-export function getAssetHistory(assetId: string, interval: CoincapioHistoryInterval) {
+export function getAssetHistory(assetId: string, interval: CoincapioHistoryInterval, apiKey: string) {
   return fetch(
-    `https://api.coincap.io/v2/assets/${assetId}/history?interval=${interval}`,
+    `https://rest.coincap.io/v3/assets/${assetId}/history?interval=${interval}&apiKey=${encodeURIComponent(apiKey)}`,
   ).then<CoincapioAssetHistoryResponse>(r => r.json());
 }

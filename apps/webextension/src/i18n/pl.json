@@ -324,6 +324,7 @@
   "Widgets_CryptoAssetQuotation_Quotation_Minutely": "Minutowo",
   "Widgets_CryptoAssetQuotation_Quotation_Daily": "Dziennie",
   "Widgets_CryptoAssetQuotation_Quotation_Details": "Szczegoły",
+  "Widgets_CryptoAssetQuotation_Settings_ApiKey": "CoinCap.io klucz API",
   "Widgets_Common_Settings_Tabs_Border": "Granica",
   "Widgets_Common_Settings_BorderSize": "Szerokość",
   "Widgets_Common_Settings_BorderColor": "Kolor",

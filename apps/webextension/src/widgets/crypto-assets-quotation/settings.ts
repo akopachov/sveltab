@@ -24,6 +24,7 @@ export class Settings extends WidgetSettingsExtra {
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
     this.textStroke = new TextStrokeSettings(initial.textStroke || {});
+    this.apiKey = useObservable(initial.apiKey || '');
   }
 
   readonly backgroundColor: Observable<string>;
@@ -37,4 +38,5 @@ export class Settings extends WidgetSettingsExtra {
   readonly font: FontSettings;
   readonly textShadow: ShadowSettings;
   readonly textStroke: TextStrokeSettings;
+  readonly apiKey: Observable<string>;
 }
