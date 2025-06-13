@@ -135,6 +135,8 @@
           color: settings.chartAxisColor.value,
         },
       },
+      min: 'dataMin',
+      max: 'dataMax',
     },
     grid: {
       left: 0,
