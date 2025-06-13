@@ -37,7 +37,7 @@
 
   function ensureFqdnUrl(url: string | null | undefined) {
     url = url?.trim();
-    if (url && url.match('^http(s)?://')) return url;
+    if (url && url.match(/^[^:]+:\/\//gi)) return url;
     return `https://${url}`;
   }
 
