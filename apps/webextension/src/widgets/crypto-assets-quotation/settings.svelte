@@ -46,7 +46,7 @@
       {m.Widgets_CryptoAssetQuotation_Settings_ApiKey()}
       <!-- svelte-ignore a11y_consider_explicit_label -->
       <a
-        href="https://splash.coincap.io/"
+        href="https://www.livecoinwatch.com/tools/api"
         target="_blank"
         referrerpolicy="no-referrer"
         class="anchor icon-[gridicons--external]">
@@ -55,7 +55,7 @@
     <input type="password" class="input" bind:value={settings.apiKey.value} />
   </label>
   <div>
-    <AssetSelect bind:asset={settings.asset.value} apiKey={settings.apiKey.value} />
+    <AssetSelect bind:asset={settings.asset.value} />
   </div>
   <label class="label mb-2">
     <span>{m.Widgets_CryptoAssetQuotation_Settings_DisplayCurrency()}</span>

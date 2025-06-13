@@ -1,19 +1,21 @@
 <script lang="ts" module>
-  type HistoryPrice = { price: string; date: number };
+  type HistoryPrice = { price: number; date: number };
 
   type PriceInfo = {
     lastUpdate: number;
-    dailyHistoryPrices: HistoryPrice[];
-    hourlyHistoryPrices: HistoryPrice[];
-    minutelyHistoryPrices: HistoryPrice[];
-    currentPrice: string;
+    hourHistoryPrices: HistoryPrice[];
+    dayHistoryPrices: HistoryPrice[];
+    monthHistoryPrices: HistoryPrice[];
+    yearHistoryPrices: HistoryPrice[];
+    currentPrice: number;
     asset: CryptoAssetRef;
   };
 
   const enum HistoryTab {
-    Daily = 0,
-    Hourly = 1,
-    Minutely = 2,
+    Day = 0,
+    Hour = 1,
+    Month = 2,
+    Year = 3,
   }
 </script>
 
@@ -22,10 +24,9 @@
   import { fontsource } from '$actions/fontsource';
   import { browserLocales, userPosssibleLocaleCharSubset } from '$stores/locale';
   import pDebounce from 'p-debounce';
-  import { Decimal } from 'decimal.js-light';
-  import { CoincapioHistoryInterval, getAsset, getAssetHistory } from './coincapio-api';
+  import { getAsset, getAssetHistory } from './livecoinwatch-api';
   import { storage } from '$stores/storage';
-  import { differenceInMinutes, minutesToMilliseconds } from 'date-fns';
+  import { addDays, addHours, addMonths, addYears, differenceInMinutes, minutesToMilliseconds } from 'date-fns';
   import { getClockStore } from '$stores/clock-store';
   import { Tab, TabAnchor, TabGroup } from '@skeletonlabs/skeleton';
   import { Chart } from 'svelte-echarts';
@@ -67,7 +68,7 @@
     { dateStyle: 'medium', timeStyle: 'medium' },
   );
 
-  let currentTab = $state(HistoryTab.Daily);
+  let currentTab = $state(HistoryTab.Day);
   let chartAnimationDuration = 0;
   let chartGlobalCursorPosition = { x: 0, y: 0 };
 
@@ -164,7 +165,9 @@
   });
 
   $effect(() => {
-    void (settings.asset.value, $clockStore, settings.apiKey.value);
+    settings.asset.value;
+    $clockStore;
+    settings.apiKey.value;
     updateDebounced();
   });
 
@@ -176,7 +179,21 @@
     if (!priceInfo) {
       priceInfo = <PriceInfo>(await storage.local.get(storageKey))[storageKey];
     }
-    if (!settings.asset.value) {
+    if (priceInfo) {
+      if (priceInfo.dayHistoryPrices === undefined) {
+        priceInfo.dayHistoryPrices = [];
+      }
+      if (priceInfo.hourHistoryPrices === undefined) {
+        priceInfo.hourHistoryPrices = [];
+      }
+      if (priceInfo.monthHistoryPrices === undefined) {
+        priceInfo.monthHistoryPrices = [];
+      }
+      if (priceInfo.yearHistoryPrices === undefined) {
+        priceInfo.yearHistoryPrices = [];
+      }
+    }
+    if (!settings.asset.value || !settings.apiKey.value) {
       return;
     }
     if (
@@ -185,28 +202,38 @@
         differenceInMinutes(Date.now(), priceInfo.lastUpdate) > 5 ||
         priceInfo.asset.id !== settings.asset.value.id)
     ) {
-      const [assetData, dailyHistoryData, hourlyHistoryData, minutelyHistoryData] = await Promise.all([
+      const historyDataEnd = Date.now();
+      const [assetData, yearHistoryData, monthHistoryData, dayHistoryData, hourHistoryData] = await Promise.all([
         getAsset(settings.asset.value.id, settings.apiKey.value),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Daily, settings.apiKey.value),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Hourly, settings.apiKey.value),
-        getAssetHistory(settings.asset.value.id, CoincapioHistoryInterval.Minutely, settings.apiKey.value),
+        getAssetHistory(settings.asset.value.id, settings.apiKey.value, addYears(historyDataEnd, -1).getTime()),
+        getAssetHistory(settings.asset.value.id, settings.apiKey.value, addMonths(historyDataEnd, -1).getTime()),
+        getAssetHistory(settings.asset.value.id, settings.apiKey.value, addDays(historyDataEnd, -1).getTime()),
+        getAssetHistory(settings.asset.value.id, settings.apiKey.value, addHours(historyDataEnd, -1).getTime()),
       ]);
 
       priceInfo = {
         lastUpdate: Date.now(),
-        currentPrice: assetData.data.priceUsd,
-        dailyHistoryPrices: dailyHistoryData.data.map(d => ({
-          price: d.priceUsd,
-          date: d.time,
-        })),
-        hourlyHistoryPrices: hourlyHistoryData.data.map(d => ({
-          price: d.priceUsd,
-          date: d.time,
-        })),
-        minutelyHistoryPrices: minutelyHistoryData.data.map(d => ({
-          price: d.priceUsd,
-          date: d.time,
-        })),
+        currentPrice: assetData.rate,
+        yearHistoryPrices:
+          yearHistoryData?.history?.map(d => ({
+            price: d.rate,
+            date: d.date,
+          })) || [],
+        monthHistoryPrices:
+          monthHistoryData?.history?.map(d => ({
+            price: d.rate,
+            date: d.date,
+          })) || [],
+        dayHistoryPrices:
+          dayHistoryData?.history?.map(d => ({
+            price: d.rate,
+            date: d.date,
+          })) || [],
+        hourHistoryPrices:
+          hourHistoryData?.history?.map(d => ({
+            price: d.rate,
+            date: d.date,
+          })) || [],
         asset: settings.asset.value,
       };
       await storage.local.set({ [storageKey]: $state.snapshot(priceInfo) });
@@ -218,12 +245,14 @@
   function historyDataForTab(info: PriceInfo | undefined | null, tab: HistoryTab) {
     if (!info) return [];
     switch (tab) {
-      case HistoryTab.Daily:
-        return info.dailyHistoryPrices;
-      case HistoryTab.Hourly:
-        return info.hourlyHistoryPrices;
-      case HistoryTab.Minutely:
-        return info.minutelyHistoryPrices;
+      case HistoryTab.Day:
+        return info.dayHistoryPrices || [];
+      case HistoryTab.Hour:
+        return info.hourHistoryPrices || [];
+      case HistoryTab.Month:
+        return info.monthHistoryPrices || [];
+      case HistoryTab.Year:
+        return info.yearHistoryPrices || [];
       default:
         return [];
     }
@@ -239,16 +268,14 @@
     chartGlobalCursorPosition.y = event.pageY;
   }
 
-  function calculatePriceInCurrency(price: string, exchangeRate: number) {
+  function calculatePriceInCurrency(price: number, exchangeRate: number) {
     if (!price || !exchangeRate) return 0;
-    if (price === '0') return 0;
     if (exchangeRate === 0) return 0;
-    let decimal = new Decimal(price);
     if (Math.abs(exchangeRate - 1.0) > Number.EPSILON) {
-      decimal = decimal.times(exchangeRate);
+      return price * exchangeRate;
     }
 
-    return decimal.toNumber();
+    return price;
   }
 </script>
 
@@ -269,7 +296,11 @@
     weights: [settings.font.weight.value],
   }}
   use:textStroke={settings.textStroke}>
-  {#if priceInfo}
+  {#if !settings.apiKey.value}
+    <div class="w-full h-full flex justify-center items-center">
+      <p class="w-full text-center">{m.Widgets_CryptoAssetQuotation_NoApiKey()}</p>
+    </div>
+  {:else if priceInfo}
     <p class="mb-1 text-[max(0.5em,12px)] current-price">
       {priceInfo.asset.name} ({priceInfo.asset.code}):&nbsp;
       <span class="font-medium">
@@ -285,16 +316,22 @@
         border="border-b border-[var(--st--text-color)]"
         active="border-b-2 border-[var(--st--text-color)]"
         hover="hover:bg-[color-mix(in_srgb,currentColor_20%,transparent)]">
-        <Tab bind:group={currentTab} name="Widget_{id}_tab_daily" value={HistoryTab.Daily}>
-          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Daily()}</span>
+        <Tab bind:group={currentTab} name="Widget_{id}_tab_hour" value={HistoryTab.Hour}>
+          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Hour()}</span>
         </Tab>
-        <Tab bind:group={currentTab} name="Widget_{id}_tab_hourly" value={HistoryTab.Hourly}>
-          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Hourly()}</span>
+        <Tab bind:group={currentTab} name="Widget_{id}_tab_day" value={HistoryTab.Day}>
+          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Day()}</span>
         </Tab>
-        <Tab bind:group={currentTab} name="Widget_{id}_tab_minutely" value={HistoryTab.Minutely}>
-          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Minutely()}</span>
+        <Tab bind:group={currentTab} name="Widget_{id}_tab_month" value={HistoryTab.Month}>
+          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Month()}</span>
         </Tab>
-        <TabAnchor href="https://coincap.io/assets/{priceInfo.asset.id}" rel="noreferrer" referrerpolicy="no-referrer">
+        <Tab bind:group={currentTab} name="Widget_{id}_tab_year" value={HistoryTab.Year}>
+          <span>{m.Widgets_CryptoAssetQuotation_Quotation_Year()}</span>
+        </Tab>
+        <TabAnchor
+          href="https://www.livecoinwatch.com/price/{priceInfo.asset.name}-{priceInfo.asset.id}"
+          rel="noreferrer"
+          referrerpolicy="no-referrer">
           {m.Widgets_CryptoAssetQuotation_Quotation_Details()}
           <span class="icon-[heroicons-solid--external-link]"></span>
         </TabAnchor>

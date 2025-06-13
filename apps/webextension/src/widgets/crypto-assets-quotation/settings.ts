@@ -19,7 +19,7 @@ export class Settings extends WidgetSettingsExtra {
     this.chartLineColor = useObservable(initial.chartLineColor || '#000');
     this.chartAxisColor = useObservable(initial.chartAxisColor || 'rgba(0, 0, 0, 0.1)');
     this.chartFillAreaColor = useObservable(initial.chartFillAreaColor || 'rgba(0, 0, 0, 0.3)');
-    this.asset = useObservable(initial.asset || { id: 'bitcoin', name: 'Bitcoin', code: 'BTC' });
+    this.asset = useObservable(initial.asset || { id: 'BTC', name: 'Bitcoin', code: 'BTC' });
     this.displayCurrency = useObservable(initial.displayCurrency || 'USD');
     this.font = new FontSettings(initial.font || {});
     this.textShadow = new ShadowSettings(initial.textShadow || {});
