@@ -7,6 +7,7 @@ import { YouTubeSearchProvider } from './youtube';
 import { MetacrawlerSearchProvider } from './metacrawler';
 import { SearxSearchProvider } from './searx';
 import { CustomSearchProvider } from './custom';
+import { WikipediaSearchProvider } from './wikipedia';
 
 export type SearchProviderDescriptor = {
   readonly displayName: string;
@@ -21,6 +22,7 @@ export type SearchProviderName =
   | 'brave'
   | 'metacrawler'
   | 'searx'
+  | 'wikipedia'
   | 'custom';
 
 export const SearchProviders: ReadonlyMap<SearchProviderName, SearchProviderDescriptor> = new Map<
@@ -34,5 +36,6 @@ export const SearchProviders: ReadonlyMap<SearchProviderName, SearchProviderDesc
   ['brave', { displayName: 'Brave', factory: () => new BraveSearchProvider() }],
   ['metacrawler', { displayName: 'MetaCrawler', factory: () => new MetacrawlerSearchProvider() }],
   ['searx', { displayName: 'Searx\\SearXNG', factory: s => new SearxSearchProvider(s) }],
+  ['wikipedia', { displayName: 'Wikipedia', factory: () => new WikipediaSearchProvider() }],
   ['custom', { displayName: 'Custom', factory: s => new CustomSearchProvider(s) }],
 ]);
