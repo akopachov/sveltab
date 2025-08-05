@@ -17,7 +17,13 @@
     widget,
     workspace,
     internalAssetsManager,
-  }: { widget: WidgetInstance; workspace: HTMLElement; internalAssetsManager: InternalAssetsManager } = $props();
+    onWidgetCloneRequested,
+  }: {
+    widget: WidgetInstance;
+    workspace: HTMLElement;
+    internalAssetsManager: InternalAssetsManager;
+    onWidgetCloneRequested: (widget: WidgetInstance) => void;
+  } = $props();
 
   let currentTabId: number = $state(GeneralTabId);
 
@@ -183,6 +189,11 @@
           <span>{m.Widgets_Common_Settings_Filter()}</span>
           <FilterSelector bind:filter={widgetSettings.filter.value} />
         </label>
+        <div class="mt-2 flex justify-center">
+          <button class="btn btn-sm variant-filled-surface" onclick={() => onWidgetCloneRequested(widget)}>
+            {m.Widgets_Common_Settings_Clone()}
+          </button>
+        </div>
       {:else if currentTabId === BorderTabId}
         <label class="label mb-2">
           <span>{m.Widgets_Common_Settings_BorderSize()}</span>

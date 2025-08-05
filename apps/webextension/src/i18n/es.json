@@ -330,6 +330,7 @@
 	"Widgets_Common_Settings_Tabs_Border": "Borde",
 	"Widgets_Common_Settings_BorderSize": "Ancho",
 	"Widgets_Common_Settings_BorderColor": "Color",
+  "Widgets_Common_Settings_Clone": "Clonar widget",
 	"Widgets_IpInfo_Name": "IP Info",
 	"Widgets_IpInfo_Settings_Tabs_Background": "Fondo",
 	"Widgets_IpInfo_Settings_Tabs_Variables": "Variables",
