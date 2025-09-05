@@ -40,6 +40,8 @@
   import { SvelteSet } from 'svelte/reactivity';
   import SnappableGridSettings from '$shared-components/snappable-grid-settings.svelte';
   import { setCorsProvider } from '$lib/cors-bypass.gen';
+  import { unobserve } from '$lib/observable.svelte';
+  import type { WidgetSettingsInitial } from '$lib/widget-settings';
 
   const drawerStore = getDrawerStore();
 
@@ -81,7 +83,7 @@
   });
   $effect(() => {
     setCorsProvider(workspace?.corsProvider.value);
-  })
+  });
 
   const widgetSettingsPopupSettings: PopupSettings = {
     event: 'click',
@@ -195,6 +197,16 @@
       return [item, set.size];
     }
     return [null, 0];
+  }
+
+  function onWidgetCloneRequested(widget: WidgetInstance) {
+    if (!workspace || !workspaceEl) return;
+    workspace.isLocked.value = false;
+    const widgetSettings: WidgetSettingsInitial = unobserve(widget.settings);
+    delete widgetSettings.id;
+    widgetSettings.position!.x! += 10;
+    widgetSettings.position!.y! += 10;
+    workspace.addWidget(widgetSettings);
   }
 </script>
 
@@ -443,7 +455,8 @@
           <WidgetSettingsComponent
             {widget}
             workspace={workspaceEl}
-            internalAssetsManager={workspace.internalAssetsManager} />
+            internalAssetsManager={workspace.internalAssetsManager}
+            {onWidgetCloneRequested} />
         {/if}
       {/if}
     </div>

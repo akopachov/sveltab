@@ -1,3 +1,16 @@
 {
-  "recommendations": ["inlang.vs-code-extension", "svelte.svelte-vscode", "esbenp.prettier-vscode"]
+  "recommendations": [
+    "mikestead.dotenv",
+    "dbaeumer.vscode-eslint",
+    "EditorConfig.EditorConfig",
+    "github.vscode-github-actions",
+    "esbenp.prettier-vscode",
+    "svelte.svelte-vscode",
+    "jock.svg",
+    "bradlc.vscode-tailwindcss",
+    "inlang.vs-code-extension",
+    "csstools.postcss",
+    "DavidAnson.vscode-markdownlint",
+    "ms-playwright.playwright"
+  ]
 }

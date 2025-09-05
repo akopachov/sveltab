@@ -5,6 +5,7 @@
   import Header from '../components/header.svelte';
   import Footer from '../components/footer.svelte';
   // CSS
+  import '@fontsource/inter/latin';
   import '../app.pcss';
   import 'aos/dist/aos.css';
 

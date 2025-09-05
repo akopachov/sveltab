@@ -1,8 +1,55 @@
 /* Write your global styles here, in PostCSS syntax */
-@import '@fontsource/inter';
 @import 'lib/css/utility-patterns.css';
 @import 'lib/css/theme.css';
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: light --default;
+}
+@plugin "@iconify/tailwind4";
+
+@theme {
+    --font-inter: 'Inter', sans-serif;
+    --breakpoint-mdd: 1024px;
+    --color-gray-100: #FBFBFB;
+    --color-gray-200: #EAEAEA;
+    --color-gray-300: #DFDFDF;
+    --color-gray-400: #999999;
+    --color-gray-500: #7F7F7F;
+    --color-gray-600: #666666;
+    --color-gray-700: #4C4C4C;
+    --color-gray-800: #333333;
+    --color-gray-900: #191919;
+    --color-blue-100: #E6F0FD;
+    --color-blue-200: #CCE2FC;
+    --color-blue-300: #99C5FA;
+    --color-blue-400: #66A9F7;
+    --color-blue-500: #338CF5;
+    --color-blue-600: #0070F4;
+    --color-blue-700: #0064DA;
+    --color-blue-800: #0059C2;
+    --color-blue-900: #004391;
+    --color-teal-100: #E6FFFA;
+    --color-teal-200: #B2F5EA;
+    --color-teal-300: #81E6D9;
+    --color-teal-400: #4FD1C5;
+    --color-teal-500: #3ABAB4;
+    --color-teal-600: #319795;
+    --color-teal-700: #2C7A7B;
+    --color-teal-800: #285E61;
+    --color-teal-900: #234E52;
+
+    --text-xs: 0.75rem;
+    --text-sm: 0.875rem;
+    --text-base: 1rem;
+    --text-lg: 1.125rem;
+    --text-xl: 1.25rem;
+    --text-2xl: 1.5rem;
+    --text-3xl: 2rem;
+    --text-4xl: 2.625rem;
+    --text-5xl: 3.25rem;
+    --text-6xl: 5.5rem;
+
+    --min-w-10: 2.5rem;
+    --min-w-48: 12rem;
+}

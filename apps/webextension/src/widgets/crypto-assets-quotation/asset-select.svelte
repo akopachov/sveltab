@@ -3,7 +3,7 @@
   import { popup, type PopupSettings } from '@skeletonlabs/skeleton';
   import { debounce, type DebounceOptions } from 'svelte-use-debounce';
   import type { CryptoAssetRef } from './settings';
-  import type { CoincapioAsset, CoincapioAssetsResponse } from './coincapio-api';
+  import type { CryptoAssetInfo, CryptoAssetsResponse } from './livecoinwatch-api';
 
   let { asset = $bindable() }: { asset: CryptoAssetRef } = $props();
 
@@ -17,8 +17,8 @@
     ms: 500,
     callback: async str => {
       if (str?.length > 2) {
-        const response: CoincapioAssetsResponse = await fetch(
-          `https://api.coincap.io/v2/assets?search=${encodeURIComponent(str)}&limit=15`,
+        const response: CryptoAssetsResponse = await fetch(
+          `https://http-api.livecoinwatch.com/search?type=c&term=${encodeURIComponent(str)}&limit=10`,
         ).then(r => r.json());
         assetSearchSuggestion = response.data || [];
       } else {
@@ -26,16 +26,18 @@
       }
     },
   };
-  let assetSearchSuggestion: Required<CoincapioAsset>[] = $state([]);
+  let assetSearchSuggestion = $state<CryptoAssetInfo[]>([]);
 
-  function selectAsset(newAsset: Required<CoincapioAsset>) {
-    asset = { id: newAsset.id, name: newAsset.name, code: newAsset.symbol };
+  function selectAsset(newAsset: CryptoAssetInfo) {
+    asset = { id: newAsset.code, name: newAsset.name, code: newAsset.code };
     assetSearchSuggestion = [];
   }
 </script>
 
 <label class="label">
-  <span>{m.Widgets_CryptoAssetQuotation_Settings_Asset_Label()}</span>
+  <span>
+    {m.Widgets_CryptoAssetQuotation_Settings_Asset_Label()}
+  </span>
   <input
     class="input"
     type="search"
@@ -51,9 +53,24 @@
   <ul class="list">
     {#each assetSearchSuggestion as suggestion}
       <li>
-        <button class="btn variant-soft w-full mb-1 rounded-sm" onclick={() => selectAsset(suggestion)}>
+        <button class="btn variant-soft w-full mb-1 rounded-sm flex" onclick={() => selectAsset(suggestion)}>
+          <picture class="w-8 h-8 mr-2">
+            <source
+              srcset="https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/32/{suggestion.code.toLowerCase()}.webp, https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/64/{suggestion.code.toLowerCase()}.webp 2x"
+              type="image/webp" />
+            <source
+              srcset="https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/32/{suggestion.code.toLowerCase()}.png, https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/64/{suggestion.code.toLowerCase()}.png 2x"
+              type="image/png" />
+            <img
+              class="bordered-img"
+              src="https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/32/{suggestion.code.toLowerCase()}.png"
+              alt="{suggestion.name} price logo"
+              srcset="https://lcw.nyc3.cdn.digitaloceanspaces.com/production/currencies/64/{suggestion.code.toLowerCase()}.png 2x"
+              width="30"
+              height="30" />
+          </picture>
           <span class="flex-auto">
-            {suggestion.name} ({suggestion.symbol})
+            {suggestion.name} ({suggestion.code})
           </span>
         </button>
       </li>
