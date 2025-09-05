@@ -25,6 +25,8 @@
 
   let { settings, tab, tabs = $bindable() }: { settings: Settings; tab: number; tabs: object[] } = $props();
 
+  const timeZones = Intl.supportedValuesOf('timeZone');
+
   onMount(() => {
     tabs = Tabs;
   });
@@ -42,6 +44,16 @@
         {m.Widgets_Clock_Settings_Format_24Hrs()}
       </RadioItem>
     </RadioGroup>
+  </label>
+  <label class="label mb-2">
+    <span class="block">{m.Widgets_Clock_Settings_TimeZone()}</span>
+    <select class="select" bind:value={settings.timezone.value}>
+      <option value="local">{m.Widgets_Clock_Settings_TimeZone_Local()}</option>
+      <option disabled>──────────</option>
+      {#each timeZones as tz}
+        <option value={tz}>{tz}</option>
+      {/each}
+    </select>
   </label>
 {:else if tab === TextTabId}
   <TextSettings

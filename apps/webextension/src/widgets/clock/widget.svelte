@@ -11,11 +11,15 @@
 
   let { settings }: { settings: Settings } = $props();
 
+  let timezone = $derived(
+    settings.timezone.value === 'local' ? Intl.DateTimeFormat().resolvedOptions().timeZone : settings.timezone.value,
+  );
   let intlFormat = $derived(
     new Intl.DateTimeFormat($locale, {
       hour: 'numeric',
       minute: '2-digit',
       hour12: settings.clockFormat.value == ClockFormat.TwelveHrs,
+      timeZone: timezone,
     }),
   );
   let time = $derived(intlFormat.format($clockStore));
