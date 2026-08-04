@@ -18,7 +18,7 @@
         "width": 54.86067251461989,
         "height": 11.464970760233918,
         "sizeUnits": "cqmin",
-        "positionUnits": "px"
+        "positionUnits": "cqmin"
       },
       "rotation": 0,
       "zIndex": 0,
@@ -52,7 +52,7 @@
         "width": 480,
         "height": 43,
         "sizeUnits": "px",
-        "positionUnits": "px"
+        "positionUnits": "cqmin"
       },
       "rotation": 0,
       "zIndex": 0,
@@ -86,7 +86,7 @@
         "width": 522,
         "height": 44.1,
         "sizeUnits": "px",
-        "positionUnits": "px"
+        "positionUnits": "cqmin"
       },
       "rotation": 0,
       "zIndex": 3,
@@ -145,7 +145,7 @@
         "width": 90.97119883040936,
         "height": 23.823976608187134,
         "sizeUnits": "cqmin",
-        "positionUnits": "px"
+        "positionUnits": "cqmin"
       },
       "rotation": 0,
       "zIndex": 0,
